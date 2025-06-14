@@ -29,8 +29,8 @@ return new class extends Migration {
             $table->string('pen_kjnama', 100)->nullable();
             $table->string('pen_kjgelaran', 100)->nullable();
             $table->string('pen_kjemel', 100)->nullable();
-            $table->string('pen_plbnama')->nullable();
-            $table->string('pen_plbemel')->nullable();
+            $table->string('pen_ppnama')->nullable();
+            $table->string('pen_ppemel')->nullable();
             $table->timestamps();
         });
     }

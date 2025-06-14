@@ -26,8 +26,8 @@ class EproPengguna extends Model
         'pen_kjnama',
         'pen_kjgelaran',
         'pen_kjemel',
-        'pen_plbnama',
-        'pen_plbemel'
+        'pen_ppnama',
+        'pen_ppemel'
     ];
 
     public function user()

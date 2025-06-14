@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\PenggunaController;
 use Illuminate\Support\Facades\Route;
 
 // ========== Authentication Routes ==========
@@ -16,7 +17,8 @@ Route::controller(AuthController::class)->middleware('auth')->group(function () 
     // ========== Dashboard ==========
     Route::get('/', 'dashboard')->name('dashboard');
 
-    Route::get('/example', function () {
-        return view('pages.form-validation');
-    });
+    // ========== Profil ==========
+    Route::resource('profil', PenggunaController::class)->names([
+        'index' => 'profil'
+    ]);
 });

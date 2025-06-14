@@ -48,8 +48,8 @@ class PenggunaController extends Controller
                 'pen_kjnama' => $request->pen_kjnama,
                 'pen_kjgelaran' => $request->pen_kjgelaran,
                 'pen_kjemel' => $request->pen_kjemel,
-                'pen_plbnama' => $request->pen_plbnama,
-                'pen_plbemel' => $request->pen_plbemel,
+                'pen_ppnama' => $request->pen_ppnama,
+                'pen_ppemel' => $request->pen_ppemel,
             ]
         );
     }

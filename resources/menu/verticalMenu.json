@@ -2,9 +2,15 @@
   "menu": [
     {
       "url": "/",
-      "name": "Dashboard",
-      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "name": "Laman Utama",
+      "icon": "menu-icon tf-icons ti ti-home",
       "slug": "dashboard"
+    },
+    {
+      "url": "/profil",
+      "name": "Profil",
+      "icon": "menu-icon tf-icons ti ti-user-circle",
+      "slug": "profil"
     }
   ]
 }

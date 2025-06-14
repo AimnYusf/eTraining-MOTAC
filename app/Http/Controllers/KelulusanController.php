@@ -13,7 +13,7 @@ class KelulusanController extends Controller
         $kelulusan = EproIsytihar::with('user.eproPengguna')
             ->where('isy_status', 1)
             ->whereHas('user.eproPengguna', function ($query) {
-                $query->where('pen_plbemel', \Auth::user()->email);
+                $query->where('pen_ppemel', \Auth::user()->email);
             })
             ->get();
 
