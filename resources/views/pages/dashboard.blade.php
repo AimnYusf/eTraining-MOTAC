@@ -6,20 +6,30 @@
     @vite([
         'resources/assets/vendor/libs/apex-charts/apex-charts.scss',
         'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
-        'resources/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.scss'
+        'resources/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.scss',
+        'resources/assets/vendor/libs/apex-charts/apex-charts.scss'
     ])
 @endsection
 
 @section('vendor-script')
     @vite([
         'resources/assets/vendor/libs/apex-charts/apexcharts.js',
-        'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js'
+        'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js',
+        'resources/assets/vendor/libs/apex-charts/apexcharts.js'
     ])
 @endsection
 
+@section('page-script')
+    @vite(['resources/assets/js/dashboards.js'])
+@endsection
+
+@php
+    use Illuminate\Support\Facades\Auth;
+@endphp
+
 @section('content')
     <div class="row g-6">
-        <!-- Card Border Shadow -->
+        <!-- Card Border -->
         <div class="col-lg-3 col-sm-6">
             <div class="card card-border-shadow-primary h-100">
                 <div class="card-body">
@@ -76,36 +86,54 @@
                 </div>
             </div>
         </div>
-        <!--/ Card Border Shadow -->
+        <!--/ Card Border -->
 
-        <!-- Vehicles overview -->
-        <div class="col-xxl-6">
+        <!-- Upcoming Webinar -->
+        <div class="col-lg-4 col-md-12">
             <div class="card h-100">
-                <div class="card-body d-flex flex-column flex-md-row justify-content-between p-0 pt-6">
-                    <div class="app-academy-md-25 card-body py-0 pt-6 ps-12">
+                <div class="card-body text-center">
+                    <div class="bg-label-primary rounded">
+                        <img src="{{ asset('images/logo-motac.png') }}" alt="Logo MOTAC" class="img-fluid w-50 py-2" />
                     </div>
-                    <div
-                        class="app-academy-md-50 card-body d-flex align-items-md-center flex-column text-md-center mb-6 py-6">
-                        <span class="card-title mb-4 lh-lg px-md-12 h4 text-heading">
-                            Selamat Datang ke<br>
-                            <span class="text-primary text-nowrap">eProgram MOTAC</span>.
-                        </span>
-                        <p class="mb-4 px-0 px-md-2">
-                            Sistem ini dibangunkan berdasarkan Pekeliling Perkhidmatan Bil.6 Tahun 2005 yang bertujuan untuk
-                            memudahkan penjawat awam membuat permohonan kursus dan menyemak status permohonan kursus dengan
-                            lebih efisien.
-                        </p>
+
+                    <h5 class="my-2">
+                        Selamat Datang ke <span class="h4">eProgram 👋🏻</span>
+                    </h5>
+
+                    <p class="small">
+                        Sistem ini dibangunkan untuk memudahkan penjawat awam membuat permohonan kursus dan menyemak status
+                        permohonan dengan lebih efisien.
+                    </p>
+
+                    @if(Auth::user()->role === 'guest')
+                        <a href="/profil" class="btn btn-primary w-100 mt-4">Lengkapkan Profil</a>
+                    @elseif(Auth::user()->role === 'user')
+                        <a href="#" class="btn btn-primary w-100 mt-4">Lihat Kursus</a>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <!--/ Upcoming Webinar -->
+
+        <!-- Course Reports Tabs -->
+        <div class="col-lg-8 col-md-12">
+            <div class="card">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <div class="card-title mb-0">
+                        <h5 class="mb-1">Statistik Kursus 2025</h5>
+                        <p class="card-subtitle">Jumlah kursus yang dihadiri 23.8k</p>
                     </div>
-                    <div class="app-academy-md-25 d-flex align-items-end justify-content-end">
-                        <img src="{{asset('assets/img/illustrations/pencil-rocket.png')}}" alt="pencil rocket" height="188"
-                            class="scaleX-n1-rtl" />
+                    <a href="#" class="btn btn-primary">Laporan Lengkap</a>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content p-0 ms-0 ms-sm-2">
+                        <div class="tab-pane fade show active" id="navs-orders-id" role="tabpanel">
+                            <div id="earningReportsTabsOrders"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--/ Vehicles overview -->
-
-
     </div>
 
 @endsection
