@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:guest,user,supervisor')->group(function () {
 
         // Profil
-        Route::resource('profil', PenggunaController::class)->only('index')->names([
+        Route::resource('profil', PenggunaController::class)->names([
             'index' => 'profil'
         ]);
     });
