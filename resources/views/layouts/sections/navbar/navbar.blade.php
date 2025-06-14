@@ -41,10 +41,11 @@
         <!-- Filter -->
         <div class="navbar-nav align-items-center">
           <div class="nav-item d-flex align-items-center">
-            <select id="user_filter" class="form-select">
-              <option value="user">Pengguna</option>
-              <option value="admin">Pentadbir Bahagian</option>
-              <option value="superadmin">Sumber Manusia</option>
+            <select id="role_filter" class="form-select">
+              <option value="guest" {{ Auth::user()->role == 'guest' ? 'selected' : '' }}>Guest</option>
+              <option value="user" {{ Auth::user()->role == 'user' ? 'selected' : '' }}>User</option>
+              <option value="supervisor" {{ Auth::user()->role == 'supervisor' ? 'selected' : '' }}>Supervisor</option>
+              <option value="admin" {{ Auth::user()->role == 'admin' ? 'selected' : '' }}>Admin</option>
             </select>
           </div>
         </div>
@@ -84,3 +85,25 @@
   @endif
   </nav>
   <!-- / Navbar -->
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $('#role_filter').on('change', function () {
+      let filter = $(this).val();
+
+      $.ajax({
+        type: 'PUT',
+        url: '/update-role',
+        data: {
+          role: filter,
+          _token: '{{ csrf_token() }}'
+        },
+        success: function (response) {
+          window.location.href = '/';
+        },
+        error: function (xhr) {
+          alert('Failed to update role.');
+        }
+      });
+    })
+  </script>

@@ -42,5 +42,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('profil', PenggunaController::class)->names([
             'index' => 'profil'
         ]);
+        // ========== Sementara ==========
+        Route::put('/update-role', [PenggunaController::class, 'update']);
     });
 });
