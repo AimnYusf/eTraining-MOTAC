@@ -1,7 +1,5 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Logistics Dashboard - Apps')
-
 @section('vendor-style')
     @vite([
         'resources/assets/vendor/libs/apex-charts/apex-charts.scss',

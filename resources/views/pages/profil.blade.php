@@ -1,7 +1,5 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Validation - Forms')
-
 <!-- Vendor Styles -->
 @section('vendor-style')
   @vite([
