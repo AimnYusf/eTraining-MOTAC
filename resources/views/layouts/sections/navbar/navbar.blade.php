@@ -63,10 +63,14 @@
               </li>
               <li>
                 <div class="d-grid px-2 pt-2 pb-1">
-                  <a class="btn btn-sm btn-danger d-flex" href="#">
+                  <a class="btn btn-sm btn-danger d-flex" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
                     <small class="align-middle">Log Keluar</small>
                     <i class="ti ti-login ms-2 ti-14px"></i>
                   </a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                    @csrf
+                  </form>
                 </div>
               </li>
             </ul>
@@ -80,24 +84,3 @@
   @endif
   </nav>
   <!-- / Navbar -->
-
-  <script>
-    $('#user_filter').on('change', function () {
-      let filter = $(this).val();
-
-      $.ajax({
-        type: 'PUT',
-        url: '/update-role',
-        data: {
-          role: filter,
-          _token: '{{ csrf_token() }}'
-        },
-        success: function (response) {
-          window.location.href = '/';
-        },
-        error: function (xhr) {
-          alert('Failed to update role.');
-        }
-      });
-    });
-  </script>
