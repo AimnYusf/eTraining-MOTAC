@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class EproKategori extends Model
+{
+    protected $table = 'epro_kategori';
+    protected $primaryKey = 'kat_id';
+    protected $fillable = [
+        'kat_keterangan',
+    ];
+
+    public function eproKursus()
+    {
+        return $this->hasMany(EproKursus::class, 'kur_idkategori', 'kat_id');
+    }
+}

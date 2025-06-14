@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('epro_permohonan', function (Blueprint $table) {
+            $table->id('per_id');
+            $table->foreignId('per_idusers')->constrained('users')->onDelete('cascade');
+            $table->foreignId('per_idkursus')->constrained('epro_kursus', 'kur_id')->onDelete('cascade');
+            $table->date('per_tkhmohon')->nullable();
+            $table->string('per_pengangkutan');
+            $table->string('per_makanan');
+            $table->foreignId('per_status')->constrained('epro_status', 'stp_id');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('epro_permohonan');
+    }
+};
