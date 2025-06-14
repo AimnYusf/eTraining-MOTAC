@@ -17,10 +17,6 @@
     ])
 @endsection
 
-@section('page-script')
-    @vite('')
-@endsection
-
 @section('content')
     <div class="row g-6">
         <!-- Card Border Shadow -->
