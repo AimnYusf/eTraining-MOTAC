@@ -7,6 +7,82 @@
       "slug": "dashboard"
     },
     {
+      "url": "/",
+      "name": "Katalog Kursus",
+      "icon": "menu-icon tf-icons ti ti-book",
+      "slug": "kursus"
+    },
+    {
+      "url": "/",
+      "name": "Status Permohonan",
+      "icon": "menu-icon tf-icons ti ti-checkup-list",
+      "slug": "permohonan"
+    },
+    {
+      "url": "/",
+      "name": "Isytihar Kursus",
+      "icon": "menu-icon tf-icons ti ti-clipboard-text",
+      "slug": "isytihar"
+    },
+    {
+      "url": "/",
+      "name": "Senarai Kursus",
+      "icon": "menu-icon tf-icons ti ti-list",
+      "slug": "urusetia-kursus"
+    },
+    {
+      "url": "/",
+      "name": "Senarai Permohonan",
+      "icon": "menu-icon tf-icons ti ti-list-check",
+      "slug": "urusetia-permohonan"
+    },
+    {
+      "url": "/",
+      "name": "Senarai Tempat Kursus",
+      "icon": "menu-icon tf-icons ti ti-map-pin",
+      "slug": "urusetia-tempat"
+    },
+    {
+      "name": "Pegawai Penyelia",
+      "icon": "menu-icon tf-icons ti ti-user-check",
+      "slug": "penyelia",
+      "submenu": [
+        {
+          "url": "/",
+          "name": "Menunggu Kelulusan",
+          "slug": "penyelia-kelulusan"
+        },
+        {
+          "url": "/",
+          "name": "Rekod Latihan",
+          "slug": "penyelia-latihan"
+        },
+        {
+          "url": "/",
+          "name": "Rekod Pegawai",
+          "slug": "penyelia-pegawai"
+        }
+      ]
+    },
+    {
+      "url": "/",
+      "name": "Laporan Keseluruhan",
+      "icon": "menu-icon tf-icons ti ti-chart-bar",
+      "slug": "laporan"
+    },
+    {
+      "url": "/",
+      "name": "Laporan Kehadiran",
+      "icon": "menu-icon tf-icons ti ti-chart-infographic",
+      "slug": "kehadiran"
+    },
+    {
+      "url": "/",
+      "name": "Pengguna Sistem",
+      "icon": "menu-icon tf-icons ti ti-users",
+      "slug": "pengguna"
+    },
+    {
       "url": "/profil",
       "name": "Profil",
       "icon": "menu-icon tf-icons ti ti-user-circle",

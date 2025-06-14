@@ -24,10 +24,13 @@ class PenggunaController extends Controller
 
     public function store(Request $request)
     {
-        User::updateOrCreate(
-            ['id' => Auth::id()],
-            ['user_verified' => '1']
-        );
+        //update role
+        if (Auth::user()->role == 'guest') {
+            User::updateOrCreate(
+                ['id' => Auth::id()],
+                ['role' => 'user']
+            );
+        }
 
         EproPengguna::updateOrCreate(
             ['pen_idusers' => Auth::id()],

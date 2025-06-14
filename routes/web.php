@@ -1,24 +1,46 @@
 <?php
+
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PenggunaController;
 use Illuminate\Support\Facades\Route;
 
-// ========== Authentication Routes ==========
-Route::controller(AuthController::class)->middleware('guest')->group(function () {
-    Route::get('/register', 'register')->name('register');
-    Route::post('/store', 'store')->name('store');
-    Route::get('/login', 'login')->name('login');
-    Route::post('/authenticate', 'authenticate')->name('authenticate');
-});
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes (Guest Only)
+|--------------------------------------------------------------------------
+*/
+Route::controller(AuthController::class)
+    ->middleware('guest')
+    ->group(function () {
+        Route::get('/register', 'register')->name('register');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/login', 'login')->name('login');
+        Route::post('/authenticate', 'authenticate')->name('authenticate');
+    });
 
-Route::controller(AuthController::class)->middleware('auth')->group(function () {
-    Route::post('/logout', 'logout')->name('logout');
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
 
-    // ========== Dashboard ==========
-    Route::get('/', 'dashboard')->name('dashboard');
+    // Logout
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // ========== Profil ==========
-    Route::resource('profil', PenggunaController::class)->names([
-        'index' => 'profil'
-    ]);
+    // Dashboard (All Authenticated Users)
+    Route::get('/', [AuthController::class, 'dashboard'])->name('dashboard');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Routes for Roles: guest, user, supervisor
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware('role:guest,user,supervisor')->group(function () {
+
+        // Profil
+        Route::resource('profil', PenggunaController::class)->only('index')->names([
+            'index' => 'profil'
+        ]);
+    });
 });
