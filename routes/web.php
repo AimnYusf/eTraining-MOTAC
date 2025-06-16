@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\KursusController;
 use App\Http\Controllers\PenggunaController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,7 +43,23 @@ Route::middleware('auth')->group(function () {
         Route::resource('profil', PenggunaController::class)->names([
             'index' => 'profil'
         ]);
-        // ========== Sementara ==========
-        Route::put('/update-role', [PenggunaController::class, 'update']);
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Routes for Roles: admin
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware('role:admin')->group(function () {
+
+        // Urusetia Kursus
+        Route::resource('/urusetia/kursus', KursusController::class)->names([
+            'index' => 'urusetia-kursus'
+        ]);
+        Route::get('urus-kursus', [KursusController::class, 'urusKursus'])->name('urusetia-kursus');
     });
 });
+
+// ========== Sementara ==========
+Route::put('/update-role', [PenggunaController::class, 'update']);

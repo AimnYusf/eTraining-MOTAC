@@ -13,7 +13,8 @@ class KursusController extends Controller
 {
     public function index(Request $request)
     {
-        $kursus = EproKursus::orderBy('created_at', 'desc')->get();
+        $kursus = EproKursus::with('eproKategori')
+            ->orderBy('created_at', 'desc')->get();
 
         if ($request->ajax()) {
             return response()->json([
@@ -21,7 +22,7 @@ class KursusController extends Controller
             ]);
         }
 
-        return view('pages.senarai-kursus', compact('kursus'));
+        return view('pages.urusetia-kursus', compact('kursus'));
     }
 
     public function urusKursus(Request $request)
