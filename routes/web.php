@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\TempatController;
@@ -44,7 +45,10 @@ Route::middleware('auth')->group(function () {
         Route::resource('profil', PenggunaController::class)->names([
             'index' => 'profil'
         ]);
-
+        // Pengguna Kursus
+        Route::resource('/kursus', KatalogController::class)->names([
+            'index' => 'kursus'
+        ]);
     });
 
     /*

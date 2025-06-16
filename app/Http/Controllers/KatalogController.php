@@ -7,6 +7,7 @@ use App\Models\EproKursus;
 use App\Models\EproPengguna;
 use App\Models\EproPermohonan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -15,10 +16,11 @@ class KatalogController extends Controller
 {
     public function index(Request $request)
     {
-        $pengguna = EproPengguna::where('pen_idusers', \Auth::id())->first();
-        $permohonan = EproPermohonan::where('per_idusers', \Auth::id())->pluck('per_idkursus');
+        $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
+        $permohonan = EproPermohonan::where('per_idusers', Auth::id())->pluck('per_idkursus');
 
-        $kursus = EproKursus::where('kur_status', 1)
+        $kursus = EproKursus::with('eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan')
+            ->where('kur_status', 1)
             ->where(function ($query) use ($pengguna) {
                 $query->where('kur_idkumpulan', $pengguna->pen_idkumpulan)
                     ->orWhere('kur_idkumpulan', 4);
@@ -33,8 +35,23 @@ class KatalogController extends Controller
             ]);
         }
 
-        return view('pages.katalog-kursus', compact('kursus'));
+        return view('pages.pengguna-kursus', compact('kursus'));
     }
+
+    // public function show($id)
+    // {
+    //     $kursus = EproKursus::with(['eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
+    //         ->where('kur_id', $id)
+    //         ->first();
+
+    //     $pengguna = EproPengguna::with('eproBahagian')
+    //         ->where('pen_idusers', Auth::id())->first();
+
+    //     return view('pages.maklumat-kursus', [
+    //         'kursus' => $kursus,
+    //         'pengguna' => $pengguna
+    //     ]);
+    // }
 
     public function show($id)
     {
@@ -42,30 +59,22 @@ class KatalogController extends Controller
             ->where('kur_id', $id)
             ->first();
 
-        $pengguna = EproPengguna::with('eproBahagian')
-            ->where('pen_idusers', \Auth::id())->first();
-
-        return view('pages.maklumat-kursus', [
-            'kursus' => $kursus,
-            'pengguna' => $pengguna
-        ]);
+        return response()->json($kursus);
     }
 
     public function store(Request $request)
     {
         // Create the application
         $permohonan = EproPermohonan::create([
-            'per_idusers' => \Auth::id(),
-            'per_idkursus' => $request->per_idkursus,
+            'per_idusers' => Auth::id(),
+            'per_idkursus' => $request->kur_id,
             'per_tkhmohon' => now(),
-            'per_pengangkutan' => $request->per_pengangkutan,
-            'per_makanan' => $request->per_makanan,
             'per_status' => 1,
         ]);
 
         // Get user and course details
-        $pengguna = EproPengguna::where('pen_idusers', \Auth::id())->first();
-        $kursus = EproKursus::find($request->per_idkursus);
+        $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
+        $kursus = EproKursus::find($request->kur_id);
 
         // Prepare data for email
         $mailData = [

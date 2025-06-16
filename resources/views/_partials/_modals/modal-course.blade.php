@@ -1,7 +1,15 @@
+@php
+  use Illuminate\Support\Facades\Auth;
+@endphp
+
 <!-- Edit User Modal -->
 <div class="modal fade" id="viewRecord" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-lg modal-simple modal-edit-user">
     <div class="modal-content">
+      <form id="courseForm">
+        @csrf
+        <input type="hidden" id="kur_id" class="mb-6" name="kur_id"></input>
+      </form>
       <div class="modal-body">
         <div class="d-flex justify-content-between align-items-center flex-wrap mb-6 gap-2">
           <div class="me-1">
@@ -22,6 +30,7 @@
               </div>
             </div>
 
+            <!-- Dinamic input -->
             <div class="row mb-2">
               <div class="col-sm-4">
                 <i class="ti ti-map-pin me-2 align-top"></i>
@@ -61,7 +70,6 @@
                 <span id="kur_penganjur"></span>
               </div>
             </div>
-
             <!--/ Dinamic input -->
 
             <hr class="my-6">
@@ -72,10 +80,17 @@
       </div>
       <div class="modal-footer p-0">
         <div class="col-12 text-center">
-          <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">Tutup</button>
+          @if (Auth::user()->role == 'user' || Auth::user()->role == 'supervisor')
+        <button type="reset" class="btn btn-label-secondary me-2" data-bs-dismiss="modal"
+        aria-label="Close">Batal</button>
+        <button type="button" class="btn btn-primary apply-record" aria-label="Close">Mohon</button>
+      @elseif (Auth::user()->role == 'admin')
+        <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">Tutup</button>
+      @endif
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <!--/ Edit User Modal -->
