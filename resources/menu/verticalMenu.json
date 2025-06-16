@@ -7,7 +7,7 @@
       "slug": "dashboard"
     },
     {
-      "url": "/",
+      "url": "/kursus",
       "name": "Katalog Kursus",
       "icon": "menu-icon tf-icons ti ti-book",
       "slug": "kursus"
