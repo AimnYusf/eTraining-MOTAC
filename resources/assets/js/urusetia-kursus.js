@@ -98,7 +98,7 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-block text-nowrap">' +
-              '<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light" data-bs-toggle="tooltip" title="Edit"><i class="ti ti-edit ti-md"></i></button>' +
+              `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light edit-record" data-id=${full.kur_id} data-bs-toggle="tooltip" title="Edit"><i class="ti ti-edit ti-md"></i></button>` +
               '</div>'
             );
           }
@@ -134,7 +134,7 @@ $(function () {
           text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Rekod Baru</span>',
           className: 'add-new btn btn-primary ms-2 ms-sm-0 waves-effect waves-light',
           action: function () {
-            console.log('add record');
+            window.location.href = getUrl('?');
           }
         }
       ],
@@ -300,6 +300,12 @@ $(function () {
     });
 
     $('#viewRecord').modal('show');
+  });
+
+  // Edit record
+  table.on('click', '.edit-record', function () {
+    const kur_id = $(this).data('id');
+    window.location.href = getUrl(kur_id);
   });
 
   // Format date to DD/MM/YYYY

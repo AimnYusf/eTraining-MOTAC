@@ -61,4 +61,11 @@
 
   @include('_partials/_modals/modal-course')
 
+  <script>
+    const baseKursusUrl = "{{ route('urusetia-kursus') }}";
+
+    function getUrl(id) {
+    return `${baseKursusUrl}?kid=${id}`;
+    }
+  </script>
 @endsection

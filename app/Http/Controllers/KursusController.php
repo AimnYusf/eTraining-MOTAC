@@ -13,24 +13,52 @@ class KursusController extends Controller
 {
     public function index(Request $request)
     {
+        $kid = $request->query('kid');
+
+        // If adding or editing a record
+        if ($kid !== null) {
+            $sharedData = [
+                'kategori' => EproKategori::all(),
+                'penganjur' => EproPenganjur::all(),
+                'tempat' => EproTempat::all(),
+                'kumpulan' => EproKumpulan::all()
+            ];
+
+            // Add new
+            if ($kid === '?') {
+                return view('pages.urusetia-kursus-tambah', [
+                    'tajuk' => 'Tambah rekod baru',
+                    ...$sharedData
+                ]);
+            }
+
+            // Edit existing
+            $kursus = EproKursus::where('kur_id', $kid)->first();
+            return view('pages.urusetia-kursus-tambah', [
+                'tajuk' => 'Kemaskini rekod',
+                'kursus' => $kursus,
+                ...$sharedData
+            ]);
+        }
+
+        // Main list page
         $kursus = EproKursus::with('eproKategori')
-            ->orderBy('created_at', 'desc')->get();
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         if ($request->ajax()) {
-            return response()->json([
-                'data' => $kursus
-            ]);
+            return response()->json(['data' => $kursus]);
         }
 
         return view('pages.urusetia-kursus', compact('kursus'));
     }
 
-    public function urusKursus(Request $request)
+    public function tambahKursus(Request $request)
     {
         $kursus = $request->query('kid') ? EproKursus::find($request->query('kid')) : null;
         $tajuk = $kursus ? 'Kemaskini Kursus' : 'Tambah Kursus';
 
-        return view('pages.urus-kursus', [
+        return view('pages.urusetia-kursus-tambah', [
             'tajuk' => $tajuk,
             'kursus' => $kursus,
             'kategori' => EproKategori::get(),

@@ -57,7 +57,6 @@ Route::middleware('auth')->group(function () {
         Route::resource('/urusetia/kursus', KursusController::class)->names([
             'index' => 'urusetia-kursus'
         ]);
-        Route::get('urus-kursus', [KursusController::class, 'urusKursus'])->name('urusetia-kursus');
     });
 });
 
