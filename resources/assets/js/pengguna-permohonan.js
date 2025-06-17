@@ -8,29 +8,20 @@
 $(function () {
   // Variable declaration
   var dt_table = $('.datatables'),
-    statusObj = {
-      0: { title: 'Tidak Aktif', badge: 'bg-label-danger' },
-      1: { title: 'Aktif', badge: 'bg-label-success' }
-    };
+    statusObj = ['Baru', 'Pengesahan', 'Tidak Lulus', 'Berjaya', 'Tidak Berjaya', 'KIV'];
 
-  // Katalog Kursus datatable
+  // Status Permohonan datatable
   if (dt_table.length) {
     var table = dt_table.DataTable({
       ajax: {
-        url: '/kursus',
-        type: 'GET',
-        data: function (d) {
-          return $.extend({}, d, {
-            filter: $('#filter').val()
-          });
-        }
+        url: '/permohonan',
+        type: 'GET'
       },
       columns: [
-        { data: 'kur_id' },
-        { data: 'kur_nama' },
-        { data: 'kur_tkhmula' },
-        { data: 'epro_kategori.kat_keterangan' },
-        { data: 'kur_tkhtutup' },
+        { data: 'per_id' },
+        { data: 'epro_kursus.kur_nama' },
+        { data: 'per_tkhmohon' },
+        { data: 'per_status' },
         { data: '' }
       ],
       columnDefs: [
@@ -60,25 +51,11 @@ $(function () {
             return rawDate;
           }
         },
-
         {
           targets: 3,
           autoWidth: false,
           render: function (data, type, full, meta) {
-            return `<span class="badge bg-label-warning" style="white-space: normal;">${data}</span>`;
-          }
-        },
-        {
-          targets: 4,
-          render: function (data, type, full, meta) {
-            const rawDate = data;
-
-            if (type === 'display') {
-              const [y, m, d] = rawDate.split('-');
-              return `${d}/${m}/${y}`;
-            }
-
-            return rawDate;
+            return `<span class="badge bg-label-${full.epro_status.stp_class}" style="white-space: normal;">${full.epro_status.stp_ketring}</span>`;
           }
         },
         {
@@ -90,13 +67,13 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-block text-nowrap">' +
-              `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.kur_id} data-bs-toggle="tooltip" title="Mohon"><i class="ti ti-send ti-md"></i></button>` +
+              `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.epro_kursus.kur_id} data-bs-toggle="tooltip" title="Lihat"><i class="ti ti-eye ti-md"></i></button>` +
               '</div>'
             );
           }
         },
         {
-          targets: [0, 2, 3, 4, 5],
+          targets: [0, 2, 3, 4],
           className: 'text-center'
         }
       ],
@@ -119,6 +96,32 @@ $(function () {
           next: '<i class="ti ti-chevron-right ti-sm"></i>',
           previous: '<i class="ti ti-chevron-left ti-sm"></i>'
         }
+      },
+      initComplete: function () {
+        this.api()
+          .columns(3)
+          .every(function () {
+            var column = this;
+            var select = $(
+              '<select id="filterStatus" class="selectpicker" data-style="btn-default" title="Status"></select>'
+            )
+              .appendTo('.dt-action-buttons')
+              .on('change', function () {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                column.search(val ? '^' + val + '$' : '', true, false).draw();
+              });
+
+            column
+              .data()
+              .unique()
+              .sort()
+              .each(function (d, j) {
+                select.append('<option value="' + statusObj[d - 1] + '">' + statusObj[d - 1] + '</option>');
+              });
+          });
+
+        // Bootstrap Select
+        $('.selectpicker').selectpicker();
       },
       drawCallback: function () {
         // Initialize tooltip
@@ -155,48 +158,8 @@ $(function () {
       $('#kur_objektif').html(data.kur_objektif);
     });
 
-    $('.btn-apply-modal').removeClass('d-none');
+    $('.btn-close-modal').removeClass('d-none');
     $('#viewRecord').modal('show');
-  });
-
-  // Apply record
-  $('.apply-record').on('click', function () {
-    const kur_id = $('#kur_id').val();
-    console.log($('#courseForm').serializeArray());
-
-    Swal.fire({
-      icon: 'question',
-      title: 'Teruskan permohonan?',
-      showCancelButton: true,
-      confirmButtonText: 'Ya',
-      cancelButtonText: 'Batal',
-      customClass: {
-        title: 'm-0',
-        confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
-        cancelButton: 'btn btn-label-secondary waves-effect waves-light'
-      },
-      buttonsStyling: false
-    }).then(function (result) {
-      if (result.value) {
-        $.ajax({
-          data: $('#courseForm').serialize(),
-          url: '/kursus',
-          type: 'POST',
-          success: function () {
-            Swal.fire({
-              icon: 'success',
-              title: 'Permohonan Berjaya!',
-              customClass: {
-                title: 'm-0',
-                confirmButton: 'btn btn-primary waves-effect waves-light'
-              }
-            }).then(function (result) {
-              window.location.href = '/permohonan';
-            });
-          }
-        });
-      }
-    });
   });
 
   // Format date to DD/MM/YYYY

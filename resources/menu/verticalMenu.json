@@ -13,7 +13,7 @@
       "slug": "kursus"
     },
     {
-      "url": "/",
+      "url": "/permohonan",
       "name": "Status Permohonan",
       "icon": "menu-icon tf-icons ti ti-checkup-list",
       "slug": "permohonan"

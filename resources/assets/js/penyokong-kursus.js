@@ -98,8 +98,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
                         title: 'm-0',
                         confirmButton: 'btn btn-primary waves-effect waves-light'
                       }
-                    }).then(function (result) {
-                      window.location.href = '/';
                     });
                   }
                 });

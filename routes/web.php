@@ -5,6 +5,7 @@ use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenyokongController;
+use App\Http\Controllers\StatusController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,8 +47,12 @@ Route::middleware('auth')->group(function () {
             'index' => 'profil'
         ]);
         // Pengguna Kursus
-        Route::resource('/kursus', KatalogController::class)->names([
+        Route::resource('kursus', KatalogController::class)->names([
             'index' => 'kursus'
+        ]);
+        // Pengguna Permohonan
+        Route::resource('permohonan', StatusController::class)->names([
+            'index' => 'permohonan'
         ]);
     });
 
