@@ -44,7 +44,7 @@ $(function () {
         {
           targets: 1,
           render: function (data, type, full, meta) {
-            return `<span class="view-record text-uppercase">${data}</span>`;
+            return `<span class="text-uppercase">${data}</span>`;
           }
         },
         {
@@ -155,6 +155,7 @@ $(function () {
       $('#kur_objektif').html(data.kur_objektif);
     });
 
+    $('.btn-apply-modal').removeClass('d-none');
     $('#viewRecord').modal('show');
   });
 
