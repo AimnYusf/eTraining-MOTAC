@@ -3,70 +3,60 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Sahkan Permohonan Kursus</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f6f6f6;
-            padding: 20px;
-            color: #333;
-        }
-
-        .container {
-            background-color: #ffffff;
-            padding: 30px;
-            max-width: 600px;
-            margin: auto;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .button {
-            display: inline-block;
-            background-color: #007BFF;
-            color: white;
-            padding: 12px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-
-        .footer {
-            font-size: 12px;
-            color: #777;
-            margin-top: 30px;
-        }
-    </style>
+    <title>Permohonan Akaun E-mel dan ID Pengguna</title>
 </head>
 
 <body>
-    <div class="container">
-        <h2>eProgram</h2>
-        <p>Assalamualaikum dan salam sejahtera,</p>
 
-        <p>Tuan/Puan,</p>
+    <p>Assalamualaikum dan Salam Sejahtera,</p>
+    <br>
+    <p>Tuan/Puan,</p>
+    <br>
+    <p>Perkara di atas adalah dirujuk.</p>
 
-        <p>Perkara di atas adalah dirujuk. <br>
-            Permohonan kursus bagi pemohon berikut telah direkodkan dan memerlukan tindakan sokongan Tuan/Puan.</p>
+    <p>
+        Adalah dimaklumkan terdapat transaksi Permohonan Akaun E-mel Individu dan ID Pengguna untuk tindakan sokongan
+        tuan/puan.
+    </p>
+    <br>
+    <p><strong><u>Maklumat Permohonan</u></strong></p>
+    <table cellpadding="4" cellspacing="0">
+        <tr>
+            <td>Tindakan</td>
+            <td>: (<a href="http://127.0.0.1:8000/pengesahan/{{ $mailData['encrypted_id'] }}">Sila klik di
+                    sini</a>)</td>
+        </tr>
+        <tr>
+            <td>Nama Kursus</td>
+            <td>: {{ $mailData['nama_kursus'] }}</td>
+        </tr>
+        <tr>
+            <td>Tarikh Kursus</td>
+            <td>: {{ $mailData['tarikh_mula'] }} hingga {{ $mailData['tarikh_tamat'] }}</td>
+        </tr>
+        <tr>
+            <td>Nama</td>
+            <td>: {{ $mailData['nama'] }}</td>
+        </tr>
+        <tr>
+            <td>Jawatan</td>
+            <td>: {{ $mailData['jawatan'] }} {{ $mailData['gred'] }}</td>
+        </tr>
+    </table>
+    <br>
 
-        <p><strong><u>Maklumat Pemohon</u></strong></p>
-        <ul>
-            <li><strong>Nama Kursus:</strong>{{ $mailData['nama_kursus'] }}</li>
-            <li><strong>Tarikh Kursus:</strong>{{ $mailData['tarikh_mula'] }} hingga {{ $mailData['tarikh_tamat'] }}
-            </li>
-            <li><strong>Nama Pemohon:</strong>{{ $mailData['nama'] }}</li>
-            <li><strong>Jawatan / Gred:</strong>{{ $mailData['jawatan'] }} {{ $mailData['gred'] }}</li>
-        </ul>
+    <p>Sekian, terima kasih.</p>
 
-        <p>Sila klik butang di bawah untuk mengesahkan permohonan ini:</p>
+    <p>Pentadbir Perkhidmatan E-mel dan ID Pengguna</p>
 
-        <a href="http://127.0.0.1:8000/pegawai-penyokong/{{ $mailData['encrypted_id'] }}" class="button">Sahkan
-            Permohonan</a>
+    <p><em>Nota : E-mel ini dijana secara automatik, sila jangan balas e-mel ini.</em></p>
 
-        <p class="footer">
-            Nota : E-mel ini dijana secara automatik, sila jangan balas e-mel ini.
-        </p>
-    </div>
+    <hr>
+
+    <p><strong>"MALAYSIA MADANI"</strong></p>
+    <p><strong>"BERKHIDMAT UNTUK NEGARA"</strong></p>
+    <p>Saya yang menjalankan amanah,</p>
+
 </body>
 
 </html>

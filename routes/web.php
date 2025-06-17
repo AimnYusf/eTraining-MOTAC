@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\PenyokongController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,3 +67,10 @@ Route::middleware('auth')->group(function () {
 
 // ========== Sementara ==========
 Route::put('/update-role', [PenggunaController::class, 'update']);
+Route::get('/test', function () {
+    return view('mail.verify-application');
+});
+
+
+// ========== Pegawai Penyokong ==========
+Route::resource('pengesahan', PenyokongController::class);

@@ -27,7 +27,7 @@ class PenyokongController extends Controller
         $pengguna = $permohonan->user->eproPengguna;
 
         // Return the view with data
-        return view('pages.pegawai-penyokong', compact('permohonan', 'pengguna'));
+        return view('pages.penyokong-kursus', compact('permohonan', 'pengguna'));
     }
 
     public function store(Request $request)
