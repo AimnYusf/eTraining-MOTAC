@@ -35,18 +35,18 @@ class EproPengguna extends Model
         return $this->belongsTo(User::class, 'pen_idusers');
     }
 
-    // public function eproKumpulan()
-    // {
-    //     return $this->belongsTo(EproKumpulan::class, 'pen_idkumpulan', 'kum_id');
-    // }
+    public function eproKumpulan()
+    {
+        return $this->belongsTo(EproKumpulan::class, 'pen_idkumpulan', 'kum_id');
+    }
 
-    // public function eproBahagian()
-    // {
-    //     return $this->belongsTo(EproBahagian::class, 'pen_idbahagian', 'bah_id');
-    // }
+    public function eproBahagian()
+    {
+        return $this->belongsTo(EproBahagian::class, 'pen_idbahagian', 'bah_id');
+    }
 
-    // public function eproJabatan()
-    // {
-    //     return $this->belongsTo(EproJabatan::class, 'pen_idjabatan', 'jab_id');
-    // }
+    public function eproJabatan()
+    {
+        return $this->belongsTo(EproJabatan::class, 'pen_idjabatan', 'jab_id');
+    }
 }
