@@ -80,13 +80,15 @@
       </div>
       <div class="modal-footer p-0">
         <div class="col-12 text-center">
-          @if (Auth::user()->role == 'user' || Auth::user()->role == 'supervisor')
-        <button type="reset" class="btn btn-label-secondary me-2" data-bs-dismiss="modal"
-        aria-label="Close">Batal</button>
-        <button type="button" class="btn btn-primary apply-record" aria-label="Close">Mohon</button>
-      @elseif (Auth::user()->role == 'admin')
-        <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">Tutup</button>
-      @endif
+          <div class="btn-apply-modal d-none">
+            <button type="reset" class="btn btn-label-secondary me-2" data-bs-dismiss="modal" aria-label="Close"
+              onclick="$('.btn-apply-modal').addClass('d-none')">Batal</button>
+            <button type="button" class="btn btn-primary apply-record" aria-label="Close">Mohon</button>
+          </div>
+          <div class="btn-close-modal d-none">
+            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close"
+              onclick="$('.btn-close-modal').addClass('d-none')">Tutup</button>
+          </div>
         </div>
       </div>
     </div>
