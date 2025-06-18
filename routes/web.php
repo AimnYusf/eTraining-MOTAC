@@ -5,6 +5,7 @@ use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenyokongController;
+use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\StatusController;
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +67,10 @@ Route::middleware('auth')->group(function () {
         // Urusetia Kursus
         Route::resource('/urusetia/kursus', KursusController::class)->names([
             'index' => 'urusetia-kursus'
+        ]);
+        // Urusetia Permohonan
+        Route::resource('/urusetia/permohonan', PermohonanController::class)->names([
+            'index' => 'urusetia-permohonan'
         ]);
     });
 });
