@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\TempatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,6 +58,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('/urusetia/kursus', KursusController::class)->names([
             'index' => 'urusetia-kursus'
         ]);
+        // Urusetia Tempat
+        Route::resource('/urusetia/tempat', TempatController::class)->names([
+            'index' => 'urusetia-tempat'
+        ]);
+
     });
 });
 

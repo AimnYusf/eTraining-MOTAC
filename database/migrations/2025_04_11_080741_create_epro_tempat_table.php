@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('epro_tempat', function (Blueprint $table) {
             $table->id('tem_id');
             $table->string('tem_keterangan', 200);
-            $table->text('tem_alamat');
-            $table->text('tem_gmapas');
+            $table->text('tem_alamat')->nullable();
+            $table->text('tem_gmaps')->nullable();
             $table->timestamps();
         });
     }

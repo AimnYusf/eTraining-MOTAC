@@ -11,7 +11,7 @@ class EproTempat extends Model
     protected $fillable = [
         'tem_keterangan',
         'tem_alamat',
-        'tem_gmapas'
+        'tem_gmaps'
     ];
 
     public function eproKursus()
