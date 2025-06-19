@@ -7,6 +7,7 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenyokongController;
 use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TempatController;
 use Illuminate\Support\Facades\Route;
 
 /*
