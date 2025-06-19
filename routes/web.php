@@ -73,6 +73,10 @@ Route::middleware('auth')->group(function () {
         Route::resource('/urusetia/permohonan', PermohonanController::class)->names([
             'index' => 'urusetia-permohonan'
         ]);
+        // Urusetia Tempat
+        Route::resource('/urusetia/tempat', TempatController::class)->names([
+            'index' => 'urusetia-tempat'
+        ]);
     });
 });
 
