@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\KursusController;
-use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\PenyokongController;
 use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\StatusController;
@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:guest,user,supervisor')->group(function () {
 
         // Profil
-        Route::resource('profil', PenggunaController::class)->names([
+        Route::resource('profil', ProfilController::class)->names([
             'index' => 'profil'
         ]);
         // Pengguna Kursus
@@ -81,7 +81,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // ========== Sementara ==========
-Route::put('/update-role', [PenggunaController::class, 'update']);
+Route::put('/update-role', [ProfilController::class, 'update']);
 Route::get('/test', function () {
     return view('mail.verify-application');
 });

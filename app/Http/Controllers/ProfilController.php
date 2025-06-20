@@ -10,7 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PenggunaController extends Controller
+class ProfilController extends Controller
 {
     public function index()
     {
