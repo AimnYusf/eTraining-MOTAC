@@ -46,7 +46,7 @@ $(function () {
           targets: 3,
           render: (data, type) =>
             type === 'display'
-              ? `<span class="badge bg-label-success" style="white-space: normal;">${formatDate(data)}</span>`
+              ? `<span class="badge bg-label-success my-1" style="white-space: normal;">${formatDate(data)}</span>`
               : data
         },
         {
