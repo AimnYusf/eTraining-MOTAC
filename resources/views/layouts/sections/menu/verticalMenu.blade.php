@@ -9,10 +9,11 @@ $configData = Helper::appClasses();
   <!-- ! Hide app brand if navbar-full -->
   @if(!isset($navbarFull))
   <div class="app-brand demo">
-    <a href="{{url('/')}}" class="app-brand-link">
-      <span class="app-brand-logo demo">@include('_partials.macros', ["height" => 20])</span>
-      <span class="app-brand-text demo menu-text fw-bold">{{config('variables.templateName')}}</span>
+    <a href="{{ url('/') }}" class="app-brand-link d-flex align-items-center">
+      <img src="{{ asset('images/logo-kementerian.png') }}" alt="Logo" class="app-brand-logo demo me-2" style="height: 30px;">
+      <span class="app-brand-text demo menu-text fw-bold">{{ config('variables.templateName') }}</span>
     </a>
+
 
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
       <i class="ti menu-toggle-icon d-none d-xl-block align-middle"></i>
@@ -20,6 +21,7 @@ $configData = Helper::appClasses();
     </a>
   </div>
   @endif
+
 
   <div class="menu-inner-shadow"></div>
 
