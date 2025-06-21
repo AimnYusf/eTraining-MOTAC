@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\KursusController;
+use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\PenyokongController;
 use App\Http\Controllers\PermohonanController;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 | Authentication Routes (Guest Only)
 |--------------------------------------------------------------------------
 */
+
 Route::controller(AuthController::class)
     ->middleware('guest')
     ->group(function () {
@@ -60,10 +62,10 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Routes for Roles: admin
+    | Routes for Roles: administrator
     |--------------------------------------------------------------------------
     */
-    Route::middleware('role:admin')->group(function () {
+    Route::middleware('role:administrator')->group(function () {
 
         // Urusetia Kursus
         Route::resource('/urusetia/kursus', KursusController::class)->names([
@@ -76,6 +78,10 @@ Route::middleware('auth')->group(function () {
         // Urusetia Tempat
         Route::resource('/urusetia/tempat', TempatController::class)->names([
             'index' => 'urusetia-tempat'
+        ]);
+        // Urusetia Pengguna
+        Route::resource('/urusetia/pengguna', PenggunaController::class)->names([
+            'index' => 'urusetia-pengguna'
         ]);
     });
 });

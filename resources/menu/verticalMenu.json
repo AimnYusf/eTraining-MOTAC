@@ -77,10 +77,10 @@
       "slug": "kehadiran"
     },
     {
-      "url": "/",
+      "url": "/urusetia/pengguna",
       "name": "Pengguna Sistem",
       "icon": "menu-icon tf-icons ti ti-users",
-      "slug": "pengguna"
+      "slug": "urusetia-pengguna"
     },
     {
       "url": "/profil",
