@@ -48,14 +48,9 @@
       "slug": "penyelia",
       "submenu": [
         {
-          "url": "/",
+          "url": "/kelulusan",
           "name": "Menunggu Kelulusan",
           "slug": "penyelia-kelulusan"
-        },
-        {
-          "url": "/",
-          "name": "Rekod Latihan",
-          "slug": "penyelia-latihan"
         },
         {
           "url": "/",

@@ -2,20 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EproBahagian;
 use App\Models\EproIsytihar;
 use App\Models\EproPengguna;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KelulusanController extends Controller
 {
     public function index(Request $request)
     {
-        $kelulusan = EproIsytihar::with('user.eproPengguna')
-            ->where('isy_status', 1)
-            ->whereHas('user.eproPengguna', function ($query) {
-                $query->where('pen_ppemel', \Auth::user()->email);
+        $bahagian = EproBahagian::with('EproPengguna')
+            ->whereHas('EproPengguna', function ($query) {
+                $query->where('pen_idusers', Auth::id());
             })
-            ->get();
+            ->first();
+
+        $kelulusan = collect();
+
+        if ($bahagian) {
+            $kelulusan = EproIsytihar::with('user.eproPengguna', 'eproStatus')
+                ->whereHas('user.eproPengguna', function ($query) use ($bahagian) {
+                    $query->where('pen_idbahagian', $bahagian->bah_id);
+                })
+                ->get();
+        }
 
         if ($request->ajax()) {
             return response()->json([
@@ -23,28 +34,26 @@ class KelulusanController extends Controller
             ]);
         }
 
-        return view('pages.menunggu-kelulusan');
+        return view('pages.penyelia-kelulusan');
     }
 
     public function show($id)
     {
         $isytihar = EproIsytihar::with('user.eproPengguna')
             ->where('isy_id', $id)->first();
-        $pengguna = EproPengguna::where('pen_idusers', $isytihar->isy_idusers)->first();
-        return response($pengguna);
+        $pengguna = EproPengguna::with('eproJabatan', 'eproBahagian')
+            ->where('pen_idusers', $isytihar->isy_idusers)->first();
+        return response()->json([
+            'isytihar' => $isytihar,
+            'pengguna' => $pengguna
+        ]);
     }
 
-
-    public function store($id)
-    {
-
-    }
-
-    public function update($id)
+    public function update(Request $request, $id)
     {
         $isytihar = EproIsytihar::findOrFail($id);
-        $isytihar->update([
-            'isy_status' => 2
-        ]);
+        if ($isytihar) {
+            $isytihar->update(['isy_status' => $request->isy_status]);
+        }
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\IsytiharController;
 use App\Http\Controllers\KatalogController;
+use App\Http\Controllers\KelulusanController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfilController;
@@ -63,6 +64,19 @@ Route::middleware('auth')->group(function () {
         // Pengguna Isytihar
         Route::resource('isytihar', IsytiharController::class)->names([
             'index' => 'isytihar'
+        ]);
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Routes for Roles: supervisor
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware('role:guest,user,supervisor')->group(function () {
+
+        // Pengguna Kursus
+        Route::resource('kelulusan', KelulusanController::class)->names([
+            'index' => 'penyelia-kelulusan'
         ]);
     });
 
