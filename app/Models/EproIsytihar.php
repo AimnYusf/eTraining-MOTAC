@@ -25,4 +25,9 @@ class EproIsytihar extends Model
     {
         return $this->belongsTo(User::class, 'isy_idusers');
     }
+
+    public function eproStatus()
+    {
+        return $this->belongsTo(EproStatus::class, 'isy_status', 'stp_id');
+    }
 }

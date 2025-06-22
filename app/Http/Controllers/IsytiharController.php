@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\EproIsytihar;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IsytiharController extends Controller
 {
     public function index(Request $request)
     {
-        $isytihar = EproIsytihar::with('user')
-            ->where('isy_idusers', \Auth::id())
+        $isytihar = EproIsytihar::with('user', 'eproStatus')
+            ->where('isy_idusers', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
         if ($request->ajax()) {
@@ -19,7 +21,7 @@ class IsytiharController extends Controller
             ]);
         }
 
-        return view('pages.isytihar-kursus');
+        return view('pages.pengguna-isytihar');
     }
 
     public function show($id)
@@ -30,11 +32,15 @@ class IsytiharController extends Controller
 
     public function store(Request $request)
     {
+        // format date
+        $isy_tkhmula = Carbon::createFromFormat('d/m/Y', $request->isy_tkhmula)->format('Y-m-d');
+        $isy_tkhtamat = Carbon::createFromFormat('d/m/Y', $request->isy_tkhtamat)->format('Y-m-d');
+
         EproIsytihar::create([
-            'isy_idusers' => \Auth::id(),
+            'isy_idusers' => Auth::id(),
             'isy_nama' => $request->isy_nama,
-            'isy_tkhmula' => $request->isy_tkhmula,
-            'isy_tkhtamat' => $request->isy_tkhtamat,
+            'isy_tkhmula' => $isy_tkhmula,
+            'isy_tkhtamat' => $isy_tkhtamat,
             'isy_jam' => $request->isy_jam,
             'isy_tempat' => $request->isy_tempat,
             'isy_anjuran' => $request->isy_anjuran,

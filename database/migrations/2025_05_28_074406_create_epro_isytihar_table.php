@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('isy_tempat');
             $table->string('isy_anjuran');
             $table->string('isy_kos');
-            $table->integer('isy_status');
+            $table->foreignId('isy_status')->constrained('epro_status', 'stp_id');
             $table->timestamps();
         });
     }

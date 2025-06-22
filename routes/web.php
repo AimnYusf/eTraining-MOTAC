@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\IsytiharController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\PenggunaController;
@@ -57,6 +58,10 @@ Route::middleware('auth')->group(function () {
         // Pengguna Permohonan
         Route::resource('permohonan', StatusController::class)->names([
             'index' => 'permohonan'
+        ]);
+        // Pengguna Isytihar
+        Route::resource('isytihar', IsytiharController::class)->names([
+            'index' => 'isytihar'
         ]);
     });
 

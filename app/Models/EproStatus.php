@@ -17,4 +17,9 @@ class EproStatus extends Model
     {
         return $this->hasMany(EproPermohonan::class, 'per_status', 'stp_id');
     }
+
+    public function eproIsytihar()
+    {
+        return $this->hasMany(EproIsytihar::class, 'isy_status', 'stp_id');
+    }
 }
