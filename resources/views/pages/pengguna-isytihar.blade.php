@@ -35,7 +35,7 @@
 <div class="card">
   <div class="card-header">
     <div class="d-flex justify-content-between">
-      <h5 class="card-title">Status Permohonan</h5>
+      <h5 class="card-title">Isytihar Kursus</h5>
     </div>
   </div>
   <div class="card-datatable table-responsive">
