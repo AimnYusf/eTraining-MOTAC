@@ -40,6 +40,11 @@ Route::middleware('auth')->group(function () {
     // Dashboard (All Authenticated Users)
     Route::get('/', [AuthController::class, 'dashboard'])->name('dashboard');
 
+    // Profil
+    Route::resource('profil', ProfilController::class)->names([
+        'index' => 'profil'
+    ]);
+
     /*
     |--------------------------------------------------------------------------
     | Routes for Roles: guest, user, supervisor
@@ -47,10 +52,6 @@ Route::middleware('auth')->group(function () {
     */
     Route::middleware('role:guest,user,supervisor')->group(function () {
 
-        // Profil
-        Route::resource('profil', ProfilController::class)->names([
-            'index' => 'profil'
-        ]);
         // Pengguna Kursus
         Route::resource('kursus', KatalogController::class)->names([
             'index' => 'kursus'
@@ -84,6 +85,15 @@ Route::middleware('auth')->group(function () {
         Route::resource('/urusetia/tempat', TempatController::class)->names([
             'index' => 'urusetia-tempat'
         ]);
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Routes for Roles: administrator & superadmin
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware('role:administrator,superadmin')->group(function () {
+
         // Urusetia Pengguna
         Route::resource('/urusetia/pengguna', PenggunaController::class)->names([
             'index' => 'urusetia-pengguna'
