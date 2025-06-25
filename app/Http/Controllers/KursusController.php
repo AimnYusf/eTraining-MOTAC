@@ -7,7 +7,9 @@ use App\Models\EproKumpulan;
 use App\Models\EproKursus;
 use App\Models\EproPenganjur;
 use App\Models\EproTempat;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class KursusController extends Controller
 {
@@ -79,6 +81,17 @@ class KursusController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->hasFile('kur_poster')) {
+            $image = $request->file('kur_poster');
+            $customName = 'poster_' . time() . '_' . Str::random(8) . '.' . $image->getClientOriginalExtension();
+
+            $image->move(public_path('poster'), $customName);
+
+            $imagePath = 'poster/' . $customName;
+        } else {
+            $imagePath = 'poster/default.jpg';
+        }
+
         EproKursus::updateOrCreate(
             ['kur_id' => $request->kur_id],
             [
@@ -87,16 +100,16 @@ class KursusController extends Controller
                 'kur_idkategori' => $request->kur_idkategori,
                 'kur_idpenganjur' => $request->kur_idpenganjur,
                 'kur_tkhmula' => $request->kur_tkhmula,
-                'kur_msamula' => $request->kur_msamula,
-                'kur_msatamat' => $request->kur_msatamat,
+                'kur_msamula' => Carbon::createFromFormat('g:ia', strtolower($request->kur_msamula))->format('H:i'),
+                'kur_msatamat' => Carbon::createFromFormat('g:ia', strtolower($request->kur_msatamat))->format('H:i'),
                 'kur_tkhtamat' => $request->kur_tkhtamat,
                 'kur_bilhari' => $request->kur_bilhari,
                 'kur_idtempat' => $request->kur_idtempat,
                 'kur_tkhbuka' => $request->kur_tkhbuka,
                 'kur_tkhtutup' => $request->kur_tkhtutup,
-                'kur_tkhmbalas' => $request->kur_tkhmbalas,
                 'kur_bilpeserta' => $request->kur_bilpeserta,
                 'kur_idkumpulan' => $request->kur_idkumpulan,
+                'kur_poster' => $imagePath,
                 'kur_status' => $request->kur_status,
             ]
         );

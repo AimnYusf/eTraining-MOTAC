@@ -21,9 +21,9 @@ class EproKursus extends Model
         'kur_idtempat',
         'kur_tkhbuka',
         'kur_tkhtutup',
-        'kur_tkhmbalas',
         'kur_bilpeserta',
         'kur_idkumpulan',
+        'kur_poster',
         'kur_status',
     ];
 

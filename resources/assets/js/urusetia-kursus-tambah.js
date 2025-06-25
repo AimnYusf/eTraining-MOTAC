@@ -1,29 +1,30 @@
-/**
- * App eCommerce Add Product Script
- */
 'use strict';
 
-//Javascript to handle the e-commerce product add page
-
 (function () {
-  // Flatpickr Setup
-  const flatpickrConfigs = {
-    date: { dateFormat: 'd/m/Y' },
-    time: { enableTime: true, noCalendar: true }
-  };
+  // Flatpickr date fields
+  const dateFields = ['#kur_tkhmula', '#kur_tkhtamat', '#kur_tkhbuka', '#kur_tkhtutup'];
 
-  const selectors = [
-    { el: '#kur_tkhmula', config: flatpickrConfigs.date },
-    { el: '#kur_tkhtamat', config: flatpickrConfigs.date },
-    { el: '#kur_msamula', config: flatpickrConfigs.time },
-    { el: '#kur_msatamat', config: flatpickrConfigs.time },
-    { el: '#kur_tkhbuka', config: flatpickrConfigs.date },
-    { el: '#kur_tkhtutup', config: flatpickrConfigs.date }
-  ];
+  dateFields.forEach(selector => {
+    const element = document.querySelector(selector);
+    if (element) {
+      flatpickr(element, {
+        dateFormat: 'd/m/Y'
+      });
+    }
+  });
 
-  selectors.forEach(({ el, config }) => {
-    const element = document.querySelector(el);
-    if (element) flatpickr(element, config);
+  // Timepicker fields
+  const timeFields = ['#kur_msamula', '#kur_msatamat'];
+
+  timeFields.forEach(selector => {
+    const $element = $(selector);
+    if ($element.length) {
+      $element.timepicker({
+        showMeridian: false, // Use 24-hour format
+        defaultTime: false, // Let user select time manually
+        orientation: typeof isRtl !== 'undefined' && isRtl ? 'r' : 'l'
+      });
+    }
   });
 })();
 
@@ -40,6 +41,41 @@ const quillObjektif = new Quill('#kur_objektif', {
 var oldValue = $('#kur_objektif_input').val();
 if (oldValue) {
   quillObjektif.root.innerHTML = oldValue;
+}
+
+// Initialize dropzone for poster
+const previewTemplate = `<div class="dz-preview dz-file-preview">
+<div class="dz-details">
+  <div class="dz-thumbnail">
+    <img data-dz-thumbnail>
+    <span class="dz-nopreview">No preview</span>
+    <div class="dz-success-mark"></div>
+    <div class="dz-error-mark"></div>
+    <div class="dz-error-message"><span data-dz-errormessage></span></div>
+    <div class="progress">
+      <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress></div>
+    </div>
+  </div>
+  <div class="dz-filename" data-dz-name></div>
+  <div class="dz-size" data-dz-size></div>
+</div>
+</div>`;
+
+// ? Start your code from here
+
+// Basic Dropzone
+
+const dropzoneBasic = document.querySelector('#dropzone-basic');
+let myDropzone;
+if (dropzoneBasic) {
+  myDropzone = new Dropzone(dropzoneBasic, {
+    previewTemplate: previewTemplate,
+    parallelUploads: 1,
+    maxFilesize: 5,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif',
+    addRemoveLinks: true,
+    maxFiles: 1
+  });
 }
 
 // Sync Quill content to hidden input
@@ -121,6 +157,16 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           }
         },
+        kur_poster: {
+          validators: {
+            callback: {
+              message: 'Sila masukkan poster',
+              callback: function () {
+                return myDropzone.getAcceptedFiles().length > 0;
+              }
+            }
+          }
+        },
         kur_bilhari: {
           validators: {
             notEmpty: {
@@ -196,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
         trigger: new FormValidation.plugins.Trigger(),
         bootstrap5: new FormValidation.plugins.Bootstrap5({
           eleValidClass: '',
-          rowSelector: '.mb-6'
+          rowSelector: '.mb-4'
         }),
         submitButton: new FormValidation.plugins.SubmitButton(),
         autoFocus: new FormValidation.plugins.AutoFocus()
@@ -228,10 +274,13 @@ document.addEventListener('DOMContentLoaded', function () {
           // Optional: also convert hidden Quill content if you're using a hidden input
           $('#kur_objektif_input').val(quillObjektif.root.innerHTML);
 
+          const formData = new FormData(formAuthentication);
           $.ajax({
-            data: $($(formAuthentication)).serialize(),
+            data: formData,
             url: 'kursus',
             type: 'POST',
+            processData: false,
+            contentType: false,
             success: function () {
               Swal.fire({
                 title: $('#kur_id').val() ? 'Berjaya dikemaskini!' : 'Berjaya ditambah!',
