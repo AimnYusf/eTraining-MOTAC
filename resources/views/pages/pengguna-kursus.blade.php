@@ -30,23 +30,18 @@
 @section('content')
   <!-- Course List Table -->
   <div class="card">
-    <div class="card-header">
-    <div class="d-flex justify-content-between">
-      <h5 class="card-title">Katalog Kursus</h5>
+    <div class="card-header d-flex flex-wrap justify-content-between gap-4">
+    <div class="card-title mb-0 me-1">
+      <h5 class="mb-0">Katalog Kursus</h5>
+      <p class="mb-0">Ilmu Baharu, Peluang Baharu!</p>
     </div>
     </div>
-    <div class="card-datatable table-responsive">
-    <table class="datatables table table-hover">
-      <thead class="border-top table-dark">
-      <tr>
-        <th>#</th>
-        <th>NAMA KURSUS</th>
-        <th>TARIKH</th>
-        <th style="width:15%">KATEGORI</th>
-        <th>TARIKH TUTUP</th>
-        <th>AKTIVITI</th>
-      </tr>
-      </thead>
+    <div class="card-body">
+
+    <table class="data-list table table-striped">
+      <tbody class="row row-cols-3">
+      <!-- DataTable rows will be populated here -->
+      </tbody>
     </table>
     </div>
   </div>
