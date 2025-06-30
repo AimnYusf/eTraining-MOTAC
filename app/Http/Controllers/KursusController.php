@@ -81,6 +81,7 @@ class KursusController extends Controller
 
     public function store(Request $request)
     {
+
         if ($request->hasFile('kur_poster')) {
             $image = $request->file('kur_poster');
             $customName = 'poster_' . time() . '_' . Str::random(8) . '.' . $image->getClientOriginalExtension();
@@ -89,7 +90,12 @@ class KursusController extends Controller
 
             $imagePath = 'poster/' . $customName;
         } else {
-            $imagePath = 'poster/default.jpg';
+            // If no new file uploaded and existing record has no image, use default
+            $existing = EproKursus::find($request->kur_id);
+
+            $imagePath = $existing && $existing->kur_poster
+                ? $existing->kur_poster
+                : 'poster/no-image.jpg';
         }
 
         EproKursus::updateOrCreate(
