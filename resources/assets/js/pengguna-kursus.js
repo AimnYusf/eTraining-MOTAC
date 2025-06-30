@@ -15,20 +15,18 @@ $(function () {
       {
         data: 'category',
         render: function (data, type, row) {
-          const imageUrl = "{{ asset('assets/img/pages/app-academy-tutor-1.png') }}";
-
           return `
       <div class="card p-2 h-100 shadow-none border">
       <div class="rounded-2 text-center mb-4"
         style="aspect-ratio: 1 / 1.414; width: 100%; max-width: 600px; margin: auto;">
         <a href="">
         <img class="img-fluid w-100 h-100 object-fit-cover"
-          src="/images/logo-motac.png" alt="tutor image 1" />
+          src="${row.kur_poster}" alt="tutor image 1" />
         </a>
       </div>
       <div class="card-body p-4 pt-2">
-        <a class="w-100 btn btn-label-primary d-flex align-items-center" href="">
-        <span class="me-2">Maklumat Lanjut</span><i class="ti ti-chevron-right ti-xs scaleX-n1-rtl"></i>
+        <a class="w-100 btn btn-label-primary d-flex align-items-center" href="/kursus?kid=${row.kur_id}">
+        <span class="me-2">Maklumat Lanjut ${row.kur_id}</span><i class="ti ti-chevron-right ti-xs scaleX-n1-rtl"></i>
         </a>
       </div>
       </div>

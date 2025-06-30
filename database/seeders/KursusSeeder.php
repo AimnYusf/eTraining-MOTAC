@@ -35,6 +35,7 @@ class KursusSeeder extends Seeder
                 'kur_tkhtutup' => $closeDate->format('Y-m-d'),
                 'kur_bilpeserta' => rand(10, 100),
                 'kur_idkumpulan' => rand(1, 9),
+                'kur_poster' => '/poster/no-image.jpg',
                 'kur_status' => rand(0, 1),
                 'created_at' => $startDate,
                 'updated_at' => $startDate,

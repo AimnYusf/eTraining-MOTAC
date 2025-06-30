@@ -16,42 +16,40 @@ class KatalogController extends Controller
 {
     public function index(Request $request)
     {
+        // Get authenticated user's group and their applied course IDs
         $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
         $permohonan = EproPermohonan::where('per_idusers', Auth::id())->pluck('per_idkursus');
 
-        $kursus = EproKursus::with('eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan')
+        // Retrieve available courses for the user that they haven't applied for
+        $kursus = EproKursus::with(['eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
             ->where('kur_status', 1)
             ->where(function ($query) use ($pengguna) {
                 $query->where('kur_idkumpulan', $pengguna->pen_idkumpulan)
                     ->orWhere('kur_idkumpulan', 4);
             })
             ->whereNotIn('kur_id', $permohonan)
-            ->orderBy('created_at', 'desc')
+            ->latest()
             ->get();
 
-        if ($request->ajax()) {
-            return response()->json([
-                'data' => $kursus
-            ]);
+        // If viewing a specific course
+        $kid = $request->query('kid');
+        if ($kid) {
+            if ($kursus->contains('kur_id', $kid)) {
+                $kursus = $kursus->firstWhere('kur_id', $kid);
+                // dd($kursus->toArray());
+                return view('pages.pengguna-kursus-mohon', compact('kursus'));
+            }
+            abort(404);
         }
 
+        // Return data for DataTables AJAX request
+        if ($request->ajax()) {
+            return response()->json(['data' => $kursus]);
+        }
+
+        // Return main view with course list
         return view('pages.pengguna-kursus', compact('kursus'));
     }
-
-    // public function show($id)
-    // {
-    //     $kursus = EproKursus::with(['eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
-    //         ->where('kur_id', $id)
-    //         ->first();
-
-    //     $pengguna = EproPengguna::with('eproBahagian')
-    //         ->where('pen_idusers', Auth::id())->first();
-
-    //     return view('pages.maklumat-kursus', [
-    //         'kursus' => $kursus,
-    //         'pengguna' => $pengguna
-    //     ]);
-    // }
 
     public function show($id)
     {
