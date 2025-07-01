@@ -1,46 +1,29 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\IsytiharController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\KelulusanController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\PenggunaController;
-use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\PenyokongController;
 use App\Http\Controllers\PermohonanController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TempatController;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Authentication Routes (Guest Only)
+| Web Routes
 |--------------------------------------------------------------------------
 */
 
-Route::controller(AuthController::class)
-    ->middleware('guest')
-    ->group(function () {
-        Route::get('/register', 'register')->name('register');
-        Route::post('/store', 'store')->name('store');
-        Route::get('/login', 'login')->name('login');
-        Route::post('/authenticate', 'authenticate')->name('authenticate');
-    });
+// Dashboard (All Authenticated Users)
+Route::get('/', function () {
+    return view('pages.dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-/*
-|--------------------------------------------------------------------------
-| Authenticated Routes
-|--------------------------------------------------------------------------
-*/
 Route::middleware('auth')->group(function () {
-
-    // Logout
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-    // Dashboard (All Authenticated Users)
-    Route::get('/', [AuthController::class, 'dashboard'])->name('dashboard');
-
     // Profil
     Route::resource('profil', ProfilController::class)->names([
         'index' => 'profil'
@@ -72,8 +55,7 @@ Route::middleware('auth')->group(function () {
     | Routes for Roles: supervisor
     |--------------------------------------------------------------------------
     */
-    Route::middleware('role:guest,user,supervisor')->group(function () {
-
+    Route::middleware('role:supervisor')->group(function () { // Consider changing this to 'role:supervisor' if that's the intent
         // Pengguna Kursus
         Route::resource('kelulusan', KelulusanController::class)->names([
             'index' => 'penyelia-kelulusan'
@@ -113,14 +95,13 @@ Route::middleware('auth')->group(function () {
             'index' => 'urusetia-pengguna'
         ]);
     });
+
+    // ========== Pegawai Penyokong ==========
+    Route::resource('pengesahan', PenyokongController::class);
+
+    // ========== Sementara ==========
+    Route::put('/update-role', [App\Http\Controllers\ProfilController::class, 'update']); // Use the full namespace if ProfilController isn't used elsewhere
 });
 
-// ========== Sementara ==========
-Route::put('/update-role', [ProfilController::class, 'update']);
-Route::get('/test', function () {
-    return view('mail.verify-application');
-});
-
-
-// ========== Pegawai Penyokong ==========
-Route::resource('pengesahan', PenyokongController::class);
+// Require the Breeze authentication routes
+require __DIR__ . '/auth.php';
