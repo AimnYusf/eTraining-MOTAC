@@ -66,10 +66,10 @@
       "slug": "laporan"
     },
     {
-      "url": "/",
+      "url": "/urusetia/kehadiran",
       "name": "Laporan Kehadiran",
       "icon": "menu-icon tf-icons ti ti-chart-infographic",
-      "slug": "kehadiran"
+      "slug": "urusetia-kehadiran"
     },
     {
       "url": "/urusetia/pengguna",

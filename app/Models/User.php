@@ -60,4 +60,9 @@ class User extends Authenticatable
   {
     return $this->hasMany(EproIsytihar::class, 'isy_idusers');
   }
+
+  public function eproKehadiran()
+  {
+    return $this->hasMany(EproKehadiran::class, 'keh_idusers');
+  }
 }

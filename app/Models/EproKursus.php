@@ -46,4 +46,13 @@ class EproKursus extends Model
         return $this->belongsTo(EproKumpulan::class, 'kur_idkumpulan', 'kum_id');
     }
 
+    public function eproPermohonan()
+    {
+        return $this->hasMany(EproPermohonan::class, 'per_idkursus', 'kur_id');
+    }
+
+    public function eproKehadiran()
+    {
+        return $this->hasMany(EproKehadiran::class, 'keh_idkursus', 'kur_id');
+    }
 }

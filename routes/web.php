@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\IsytiharController;
 use App\Http\Controllers\KatalogController;
+use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\KelulusanController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\PenggunaController;
@@ -80,6 +81,10 @@ Route::middleware('auth')->group(function () {
         // Urusetia Tempat
         Route::resource('/urusetia/tempat', TempatController::class)->names([
             'index' => 'urusetia-tempat'
+        ]);
+        // Urusetia Kehadiran
+        Route::resource('/urusetia/kehadiran', KehadiranController::class)->names([
+            'index' => 'urusetia-kehadiran'
         ]);
     });
 
