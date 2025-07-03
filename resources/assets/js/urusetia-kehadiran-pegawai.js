@@ -1,15 +1,46 @@
-/**
- * urusetia-kursus
- */
-
 'use strict';
 
 $(function () {
-  // Initialize DataTable
   const dtTable = $('.datatables');
   const kur_id = $('#kur_id').val();
+  let table;
 
-  // Generate date range columns
+  const kehTkhmasukElement = document.querySelector('#keh_tkhmasuk');
+  if (kehTkhmasukElement) {
+    flatpickr(kehTkhmasukElement, {
+      dateFormat: 'd/m/Y'
+    });
+  }
+
+  const resultElement = document.getElementById('result');
+  let isProcessingScan = false;
+
+  function onScanSuccess(decodedText) {
+    if (isProcessingScan) {
+      return;
+    }
+
+    isProcessingScan = true;
+
+    resultElement.innerText = decodedText;
+    $('#keh_idusers').selectpicker('val', decodedText);
+    recordAttendance();
+  }
+
+  const html5QrCode = new Html5Qrcode('reader');
+  html5QrCode
+    .start(
+      { facingMode: 'environment' },
+      {
+        fps: 10,
+        qrbox: 250
+      },
+      onScanSuccess
+    )
+    .catch(err => {
+      console.error('QR scanning error:', err);
+    });
+
   function generateDateColumns(start, end) {
     const dateColumns = [];
     const current = new Date(start);
@@ -17,7 +48,7 @@ $(function () {
 
     while (current <= last) {
       const isoDate = current.toISOString().split('T')[0];
-      const display = current.toLocaleDateString('ms-MY', { day: '2-digit', month: '2-digit', year: '2-digit' });
+      const display = current.toLocaleDateString('ms-MY', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
       dateColumns.push({
         title: display,
@@ -27,8 +58,8 @@ $(function () {
           const attendances = row.user.epro_kehadiran || [];
           const attended = attendances.some(item => item.keh_tkhmasuk === isoDate);
           return attended
-            ? '<span class="badge bg-label-success" style="white-space: normal;">1</span>'
-            : '<span class="badge bg-label-danger" style="white-space: normal;">1</span>';
+            ? '<span class="badge badge-center rounded-pill bg-success"><i class="ti ti-check"></i></span>'
+            : '<span class="badge badge-center rounded-pill bg-danger"><i class="ti ti-x"></i></span>';
         }
       });
 
@@ -43,7 +74,7 @@ $(function () {
   const dynamicDateColumns = generateDateColumns(kur_tkhmula, kur_tkhtamat);
 
   if (dtTable.length) {
-    const table = dtTable.DataTable({
+    table = dtTable.DataTable({
       ajax: {
         url: `/urusetia/kehadiran?kid=${kur_id}`,
         type: 'GET',
@@ -53,7 +84,6 @@ $(function () {
         })
       },
       columns: [{ data: 'per_id' }, { data: 'user.name' }, ...dynamicDateColumns],
-
       columnDefs: [
         {
           targets: 0,
@@ -91,77 +121,48 @@ $(function () {
       }
     });
 
-    // Adjust DataTables UI spacing
     $('.dataTables_length').addClass('mx-n2');
     $('.dt-buttons').addClass('d-flex flex-wrap mb-6 mb-sm-0');
 
-    // View Record handler
-    dtTable.on('click', '.view-record', function () {
-      const permohonanId = $(this).data('id');
-
-      $.get(`/urusetia/permohonan/${permohonanId}`, ({ kursus, pengguna, permohonan }) => {
-        $('#per_id').val(permohonan.per_id);
-        $('#kur_nama').text(kursus.kur_nama);
-        $('#kur_tarikh').text(`${kursus.kur_tkhmula} hingga ${kursus.kur_tkhtamat}`);
-        $('#kur_tempat').text(kursus.epro_tempat.tem_alamat);
-
-        $('#pen_nama').text(pengguna.pen_nama);
-        $('#pen_nokp').text(pengguna.pen_nokp);
-        $('#pen_jawatan').text(`${pengguna.pen_jawatan} ${pengguna.pen_gred}`);
-        $('#pen_agensi').text(pengguna.epro_jabatan.jab_ketpenu);
-        $('#pen_bahagian').text(pengguna.epro_bahagian.bah_ketpenu);
-        $('#pen_notel').text(pengguna.pen_notel);
-        $('#pen_nohp').text(pengguna.pen_nohp);
-        $('#pen_nofaks').text(pengguna.pen_nofaks);
-        $('#pen_emel').text(pengguna.pen_emel);
-        $('#per_tkhmohon').text(permohonan.per_tkhmohon);
-
-        $('#per_status').val(permohonan.per_status);
-        $('#viewRecord').modal('show');
-      });
-    });
-
-    // Update Record handler
-    dtTable.on('click', '.update-record', function () {
-      const perId = $(this).data('id');
-      const status = $(this).data('status');
-      updateRecord(perId, status);
-    });
-
-    $('#locationForm').on('submit', function (e) {
-      e.preventDefault();
-      const perId = $('#per_id').val();
-      const status = $('#per_status').val();
-      updateRecord(perId, status);
-    });
-
-    // Update record function
-    const updateRecord = (id, status) => {
-      $.ajax({
-        url: `/urusetia/permohonan/${id}`,
-        type: 'PUT',
-        data: { per_status: status },
-        success: () => {
-          Swal.fire({
-            title: 'Berjaya dikemaskini!',
-            icon: 'success',
-            customClass: {
-              title: 'm-0',
-              confirmButton: 'btn btn-primary waves-effect waves-light'
-            },
-            buttonsStyling: false
-          }).then(() => {
-            $('#viewRecord').modal('hide');
-            table.ajax.reload();
-          });
-        }
-      });
-    };
-
-    // Remove small class from DataTable form controls
     setTimeout(() => {
       $('.dataTables_filter .form-control').removeClass('form-control-sm');
       $('.dataTables_length .form-select').removeClass('form-select-sm');
     }, 300);
+  }
+
+  $('#submit-form').on('click', recordAttendance);
+
+  function recordAttendance() {
+    const formData = $('#kehadiranForm').serialize();
+
+    $.ajax({
+      url: 'kehadiran',
+      type: 'POST',
+      data: formData,
+      success: function () {
+        Swal.fire({
+          title: 'Berjaya !',
+          icon: 'success',
+          timer: 2500,
+          timerProgressBar: true,
+          customClass: {
+            title: 'm-0',
+            confirmButton: 'btn btn-primary waves-effect waves-light'
+          },
+          buttonsStyling: false
+        }).then(() => {
+          table.ajax.reload();
+          isProcessingScan = false;
+        });
+      },
+      error: function (xhr) {
+        Swal.fire({
+          title: 'Ralat!',
+          text: 'Gagal merekod kehadiran.',
+          icon: 'error'
+        });
+        console.error(xhr.responseText);
+      }
+    });
   }
 });

@@ -9,9 +9,12 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenyokongController;
 use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TempatController;
 use Illuminate\Support\Facades\Route;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,8 +108,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('pengesahan', PenyokongController::class);
 
     // ========== Sementara ==========
-    Route::put('/update-role', [App\Http\Controllers\ProfilController::class, 'update']); // Use the full namespace if ProfilController isn't used elsewhere
+    Route::put('/update-role', [App\Http\Controllers\ProfilController::class, 'update']);
+
 });
 
 // Require the Breeze authentication routes
 require __DIR__ . '/auth.php';
+
+Route::get('/scan', function () {
+    return view('pages.scan');
+});
+// Route to display the form
+Route::get('/qr', [QrCodeController::class, 'showForm'])->name('qr.form');
+
+// Route to handle form submission and QR code generation/emailing
+Route::post('/generate-qr', [QrCodeController::class, 'generateAndEmailQr'])->name('qr.generate');
