@@ -5,6 +5,7 @@ $(function () {
   const kur_id = $('#kur_id').val();
   let table;
 
+  // Initialize flatpickr for the attendance date input
   const kehTkhmasukElement = document.querySelector('#keh_tkhmasuk');
   if (kehTkhmasukElement) {
     flatpickr(kehTkhmasukElement, {
@@ -12,7 +13,7 @@ $(function () {
     });
   }
 
-  const resultElement = document.getElementById('result');
+  // Handles successful QR code scans
   let isProcessingScan = false;
 
   function onScanSuccess(decodedText) {
@@ -22,11 +23,11 @@ $(function () {
 
     isProcessingScan = true;
 
-    resultElement.innerText = decodedText;
     $('#keh_idusers').selectpicker('val', decodedText);
     recordAttendance();
   }
 
+  // Initialize Html5Qrcode for QR code scanning
   const html5QrCode = new Html5Qrcode('reader');
   html5QrCode
     .start(
@@ -40,7 +41,6 @@ $(function () {
     .catch(err => {
       console.error('QR scanning error:', err);
     });
-
   function generateDateColumns(start, end) {
     const dateColumns = [];
     const current = new Date(start);
@@ -69,10 +69,12 @@ $(function () {
     return dateColumns;
   }
 
+  // Get course start and end dates from hidden inputs
   const kur_tkhmula = $('#kur_tkhmula').val();
   const kur_tkhtamat = $('#kur_tkhtamat').val();
   const dynamicDateColumns = generateDateColumns(kur_tkhmula, kur_tkhtamat);
 
+  // Initialize DataTable if the element exists
   if (dtTable.length) {
     table = dtTable.DataTable({
       ajax: {
@@ -130,11 +132,12 @@ $(function () {
     }, 300);
   }
 
+  // request record attendance
   $('#submit-form').on('click', recordAttendance);
 
+  // function to send an AJAX request
   function recordAttendance() {
     const formData = $('#kehadiranForm').serialize();
-
     $.ajax({
       url: 'kehadiran',
       type: 'POST',

@@ -1,7 +1,3 @@
-/**
- * urusetia-kursus
- */
-
 'use strict';
 
 $(function () {
@@ -32,12 +28,6 @@ $(function () {
           searchable: false,
           render: (data, type, full, meta) => `<span>${meta.row + 1}</span>`
         },
-        {
-          targets: 1,
-          render: (data, type, full) =>
-            `<span class="view-record" style="cursor: pointer;" data-bs-toggle="tooltip" title="Lihat" data-id="${full.kur_id}">${data}</span>`
-        },
-
         {
           targets: 2,
           autoWidth: false,
@@ -74,7 +64,6 @@ $(function () {
         {
           // Actions
           targets: -1,
-          title: 'Actions',
           searchable: false,
           orderable: false,
           render: function (data, type, full, meta) {
