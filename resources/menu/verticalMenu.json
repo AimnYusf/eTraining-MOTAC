@@ -37,12 +37,6 @@
       "slug": "urusetia-permohonan"
     },
     {
-      "url": "/urusetia/tempat",
-      "name": "Senarai Tempat Kursus",
-      "icon": "menu-icon tf-icons ti ti-map-pin",
-      "slug": "urusetia-tempat"
-    },
-    {
       "name": "Pegawai Penyelia",
       "icon": "menu-icon tf-icons ti ti-user-check",
       "slug": "penyelia",
@@ -76,6 +70,23 @@
       "name": "Pengguna Sistem",
       "icon": "menu-icon tf-icons ti ti-users",
       "slug": "urusetia-pengguna"
+    },
+    {
+      "name": "Tetapan Sistem",
+      "icon": "menu-icon tf-icons ti ti-settings",
+      "slug": "tetapan",
+      "submenu": [
+        {
+          "url": "/urusetia/tempat",
+          "name": "Tempat",
+          "slug": "tetapan-tempat"
+        },
+        {
+          "url": "/",
+          "name": "Jabatan",
+          "slug": "tetapan-jabatan"
+        }
+      ]
     },
     {
       "url": "/profil",

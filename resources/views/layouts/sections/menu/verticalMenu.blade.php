@@ -36,7 +36,7 @@ $configData = Helper::appClasses();
     'guest' => in_array($menu->slug, ['dashboard', 'profil']),
     'user' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'laporan', 'profil']),
     'supervisor' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'penyelia', 'laporan', 'profil']),
-    'administrator' => in_array($menu->slug, ['dashboard', 'urusetia-kursus', 'urusetia-permohonan', 'urusetia-tempat', 'urusetia-kehadiran', 'urusetia-pengguna', 'profil']),
+    'administrator' => in_array($menu->slug, ['dashboard', 'urusetia-kursus', 'urusetia-permohonan', 'urusetia-kehadiran', 'urusetia-pengguna', 'tetapan', 'tetapan-tempat', 'profil']),
     'superadmin' => in_array($menu->slug, ['dashboard', 'urusetia-pengguna']),
 
     default => true
