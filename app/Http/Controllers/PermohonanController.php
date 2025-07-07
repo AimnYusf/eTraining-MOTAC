@@ -110,7 +110,7 @@ class PermohonanController extends Controller
 
             Storage::put($qrCodePathInStorage, $qrCodeImage);
 
-            Mail::to($recipientEmail)->send(new QrAttendance($fullQrCodePath));
+            Mail::to($recipientEmail)->queue(new QrAttendance($fullQrCodePath));
 
             return response()->json(['message' => 'QR code generated and email sent successfully.']);
         } catch (\Exception $e) {

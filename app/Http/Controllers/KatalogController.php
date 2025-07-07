@@ -62,31 +62,36 @@ class KatalogController extends Controller
 
     public function store(Request $request)
     {
-        // Create the application
-        $permohonan = EproPermohonan::create([
-            'per_idusers' => Auth::id(),
-            'per_idkursus' => $request->kur_id,
-            'per_tkhmohon' => now(),
-            'per_status' => 1,
-        ]);
+        try {
+            // Create the application
+            $permohonan = EproPermohonan::create([
+                'per_idusers' => Auth::id(),
+                'per_idkursus' => $request->kur_id,
+                'per_tkhmohon' => now(),
+                'per_status' => 1,
+            ]);
 
-        // Get user and course details
-        $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
-        $kursus = EproKursus::find($request->kur_id);
+            // Get user and course details
+            $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
+            $kursus = EproKursus::find($request->kur_id);
 
-        // Prepare data for email
-        $mailData = [
-            'encrypted_id' => Crypt::encrypt($permohonan->per_id),
-            'nama' => $pengguna->pen_nama ?? '-',
-            'jawatan' => $pengguna->pen_jawatan ?? '-',
-            'gred' => $pengguna->pen_gred ?? '-',
-            'nama_kursus' => $kursus->kur_nama ?? '-',
-            'tarikh_mula' => $kursus->kur_tkhmula ?? '-',
-            'tarikh_tamat' => $kursus->kur_tkhtamat ?? '-',
-        ];
+            // Prepare data for email
+            $mailData = [
+                'encrypted_id' => Crypt::encrypt($permohonan->per_id),
+                'nama' => $pengguna->pen_nama ?? '-',
+                'jawatan' => $pengguna->pen_jawatan ?? '-',
+                'gred' => $pengguna->pen_gred ?? '-',
+                'nama_kursus' => $kursus->kur_nama ?? '-',
+                'tarikh_mula' => $kursus->kur_tkhmula ?? '-',
+                'tarikh_tamat' => $kursus->kur_tkhtamat ?? '-',
+            ];
 
-        // Send email
-        Mail::to($pengguna->pen_ppemel)->send(new VerifyMail($mailData));
+            // Send email
+            Mail::to($pengguna->pen_ppemel)->queue(new VerifyMail($mailData));
+            return response()->json(['message' => 'Email sent successfully!'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Email failed: ' . $e->getMessage()], 500);
+        }
     }
 
     public function maklumatKursus($id)

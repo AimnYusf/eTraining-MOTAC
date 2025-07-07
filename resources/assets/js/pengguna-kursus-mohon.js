@@ -28,16 +28,27 @@ $(function () {
           },
           url: '/kursus',
           type: 'POST',
-          success: function () {
+          success: function (response) {
             Swal.fire({
               icon: 'success',
               title: 'Permohonan Berjaya!',
+              text: response.message,
               customClass: {
                 title: 'm-0',
                 confirmButton: 'btn btn-primary waves-effect waves-light'
               }
-            }).then(function (result) {
+            }).then(function () {
               window.location.href = '/kursus';
+            });
+          },
+          error: function (xhr) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Ralat',
+              text: xhr.responseJSON?.error || 'Permohonan gagal dihantar.',
+              customClass: {
+                confirmButton: 'btn btn-danger waves-effect waves-light'
+              }
             });
           }
         });
