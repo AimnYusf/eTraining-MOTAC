@@ -9,7 +9,18 @@ $(function () {
   var table = $('.data-list').DataTable({
     ajax: {
       url: '/kursus',
-      type: 'GET'
+      type: 'GET',
+      dataSrc: function (json) {
+        // Check if data is empty
+        if (!json.data || json.data.length === 0) {
+          $('#no-data-message').show();
+          $('.course-table').hide();
+        } else {
+          $('#no-data-message').hide();
+          $('.course-table').show();
+        }
+        return json.data;
+      }
     },
     columns: [
       {
@@ -26,7 +37,7 @@ $(function () {
       </div>
       <div class="card-body p-4 pt-2">
         <a class="w-100 btn btn-label-primary d-flex align-items-center" href="/kursus?kid=${row.kur_id}">
-        <span class="me-2">Maklumat Lanjut ${row.kur_id}</span><i class="ti ti-chevron-right ti-xs scaleX-n1-rtl"></i>
+        <span class="me-2">Maklumat Lanjut</span><i class="ti ti-chevron-right ti-xs scaleX-n1-rtl"></i>
         </a>
       </div>
       </div>

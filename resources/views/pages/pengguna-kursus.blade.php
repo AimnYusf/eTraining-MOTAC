@@ -30,6 +30,7 @@
 @section('content')
   <!-- Course List Table -->
   <div class="card">
+
     <div class="card-header d-flex flex-wrap justify-content-between gap-4">
     <div class="card-title mb-0 me-1">
       <h5 class="mb-0">Katalog Kursus</h5>
@@ -37,12 +38,19 @@
     </div>
     </div>
     <div class="card-body">
-
-    <table class="data-list table table-striped">
+    <div id="no-data-message" class="text-center my-5" style="display: none;">
+      <div class="alert alert-warning" role="alert">
+      Tiada kursus tersedia buat masa ini.
+      </div>
+    </div>
+    <div class="course-table">
+      <table class="data-list table table-striped">
       <tbody class="row row-cols-3">
-      <!-- DataTable rows will be populated here -->
+        <!-- DataTable rows will be populated here -->
       </tbody>
-    </table>
+      </table>
+    </div>
+
     </div>
   </div>
   <!--/ Course List Table -->

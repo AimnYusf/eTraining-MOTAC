@@ -32,7 +32,6 @@ $(function () {
             Swal.fire({
               icon: 'success',
               title: 'Permohonan Berjaya!',
-              text: response.message,
               customClass: {
                 title: 'm-0',
                 confirmButton: 'btn btn-primary waves-effect waves-light'
@@ -45,7 +44,7 @@ $(function () {
             Swal.fire({
               icon: 'error',
               title: 'Ralat',
-              text: xhr.responseJSON?.error || 'Permohonan gagal dihantar.',
+              text: 'Permohonan gagal dihantar.',
               customClass: {
                 confirmButton: 'btn btn-danger waves-effect waves-light'
               }

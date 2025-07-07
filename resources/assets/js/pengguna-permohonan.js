@@ -61,7 +61,6 @@ $(function () {
         {
           // Actions
           targets: -1,
-          title: 'Actions',
           searchable: false,
           orderable: false,
           render: function (data, type, full, meta) {
