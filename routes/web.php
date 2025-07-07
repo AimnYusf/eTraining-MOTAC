@@ -110,3 +110,7 @@ Route::middleware('auth')->group(function () {
 
 // Require the Breeze authentication routes
 require __DIR__ . '/auth.php';
+
+Route::get('/mail', function () {
+    return view('mail.verify-email');
+});
