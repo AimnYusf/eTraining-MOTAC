@@ -32,10 +32,10 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Routes for Roles: guest, user, supervisor
+    | Routes for Roles: user, supervisor
     |--------------------------------------------------------------------------
     */
-    Route::middleware('role:guest,user,supervisor')->group(function () {
+    Route::middleware('role:user,supervisor')->group(function () {
 
         // Pengguna Kursus
         Route::resource('kursus', KatalogController::class)->names([
@@ -110,7 +110,3 @@ Route::middleware('auth')->group(function () {
 
 // Require the Breeze authentication routes
 require __DIR__ . '/auth.php';
-
-Route::get('/scan', function () {
-    return view('pages.scan');
-});

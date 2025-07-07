@@ -30,27 +30,46 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // Define validation rules
         $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                'regex:/^[a-zA-Z0-9._%+-]+@motac\.gov\.my$/',
+                'unique:' . User::class,
+            ],
+            'password' => [
+                'required',
+                'confirmed',
+                'string',
+                'min:12',
+                'regex:/[a-z]/',      // at least one lowercase
+                'regex:/[A-Z]/',      // at least one uppercase
+                'regex:/[0-9]/',      // at least one number
+                'regex:/[\W_]/',      // at least one symbol
+            ],
         ];
 
-        // Define custom messages for validation
         $messages = [
             'name.required' => 'Ruangan Nama wajib diisi.',
             'name.string' => 'Nama mesti berupa teks.',
             'name.max' => 'Nama tidak boleh melebihi 255 aksara.',
+
             'email.required' => 'Ruangan Emel wajib diisi.',
             'email.string' => 'Emel mesti berupa teks.',
             'email.lowercase' => 'Emel mesti dalam huruf kecil.',
             'email.email' => 'Emel mesti alamat emel yang sah.',
             'email.max' => 'Emel tidak boleh melebihi 255 aksara.',
+            'email.regex' => 'Emel mesti merupakan emel rasmi MOTAC.',
             'email.unique' => 'Emel ini sudah wujud.',
+
             'password.required' => 'Ruangan Kata Laluan wajib diisi.',
             'password.confirmed' => 'Pengesahan Kata Laluan tidak sepadan.',
-            'password' => 'Pastikan kata laluan mengandungi sekurang-kurangnya 8 aksara.',
+            'password.min' => 'Kata Laluan mesti mengandungi sekurang-kurangnya 12 aksara.',
+            'password.regex' => 'Kata Laluan mesti mengandungi huruf besar, huruf kecil, nombor dan simbol.',
         ];
 
         try {
@@ -67,9 +86,9 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
     }
+
 }
