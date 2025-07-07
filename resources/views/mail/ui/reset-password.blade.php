@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <title>Sahkan Alamat Emel Anda - MOTAC Training & Management System</title>
+    <title>Set Semula Kata Laluan Anda - MOTAC Training & Management System</title>
     <style>
         body {
             font-family: 'Poppins', Arial, sans-serif;
@@ -53,7 +53,6 @@
             font-size: 28px;
             font-weight: 500;
             color: #333;
-            /* Ensure header text color is visible */
         }
 
         .btn-verify {
@@ -65,19 +64,14 @@
             width: 50%;
             margin-top: 25px;
             border-radius: 5px;
-            /* Added border-radius back for the button */
             font-weight: 600;
-            /* Adjusted font-weight for button */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease, transform 0.2s ease;
-            /* Added transition for hover effect */
         }
 
         .btn-verify:hover {
             background-color: #2671b3;
-            /* Darker shade on hover */
             transform: translateY(-2px);
-            /* Slight lift effect */
         }
 
         @media screen and (max-width: 600px) {
@@ -102,7 +96,6 @@
                 padding: 10px 20px;
                 font-size: 15px;
                 width: 70%;
-                /* Make button wider on small screens */
             }
         }
     </style>
@@ -114,22 +107,21 @@
             <!-- This header can be used for a logo or a small title if needed, currently empty -->
         </div>
         <div class="content">
-            <div class="header">Sahkan Alamat Emel Anda</div>
+            <div class="header">Set Semula Kata Laluan Anda</div>
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
 
-            <p>Terima kasih kerana mendaftar dengan MOTAC Training & Management System!</p>
+            <p>Kami menerima permintaan untuk menetapkan semula kata laluan anda untuk akaun <strong>MOTAC Training & Management System</strong> anda.</p>
 
-            <p>Untuk mengaktifkan akaun anda dan mula menggunakan semua kemudahan kami, sila sahkan alamat emel anda dengan menekan butang di bawah:</p>
+            <p>Untuk meneruskan penetapan semula kata laluan, sila klik butang di bawah:</p>
 
             <p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-                <a href="[PASTE_YOUR_VERIFICATION_LINK_HERE]" target="_blank" class="btn-verify">Sahkan Emel</a>
+                <a href="[PASTE_YOUR_RESET_PASSWORD_LINK_HERE]" target="_blank" class="btn-verify">Set Semula Kata Laluan</a>
             </p>
 
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
-            <p style="text-align: center; font-size: 14px; color: #777;"><em>Jika anda tidak mendaftar akaun ini, sila abaikan emel ini.</em></p>
+            <p style="text-align: center; font-size: 14px; color: #777;"><em>Jika anda tidak meminta penetapan semula kata laluan ini, sila abaikan emel ini.</em></p>
         </div>
-        <!-- The footer was removed as per the provided code's commented out section -->
     </div>
 </body>
 

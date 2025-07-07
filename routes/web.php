@@ -112,5 +112,5 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::get('/mail', function () {
-    return view('mail.verify-email');
+    return view('mail.ui.reset-password');
 });

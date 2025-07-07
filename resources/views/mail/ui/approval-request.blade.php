@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <title>Sahkan Alamat Emel Anda - MOTAC Training & Management System</title>
+    <title>Tindakan Diperlukan: Permohonan Kursus Baru - MOTAC Training & Management System</title>
     <style>
         body {
             font-family: 'Poppins', Arial, sans-serif;
@@ -53,10 +53,9 @@
             font-size: 28px;
             font-weight: 500;
             color: #333;
-            /* Ensure header text color is visible */
         }
 
-        .btn-verify {
+        .btn-action {
             display: inline-block;
             background-color: #2F8AD0;
             color: #ffffff;
@@ -73,11 +72,36 @@
             /* Added transition for hover effect */
         }
 
-        .btn-verify:hover {
+        .btn-action:hover {
             background-color: #2671b3;
-            /* Darker shade on hover */
-            transform: translateY(-2px);
-            /* Slight lift effect */
+            transform: translateY(-1px);
+        }
+
+        .info-table-wrapper {
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 90%;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .info-table td {
+            padding: 8px 0;
+            vertical-align: top;
+            font-size: 15px;
+            color: #555;
+        }
+
+        .info-table td:first-child {
+            width: 35%;
+            /* Adjusted width for labels */
+            font-weight: 600;
         }
 
         @media screen and (max-width: 600px) {
@@ -98,11 +122,26 @@
                 padding: 25px 20px;
             }
 
-            .btn-verify {
+            .info-table-wrapper {
+                padding: 15px;
+                margin: 15px auto;
+            }
+
+            .btn-action {
                 padding: 10px 20px;
                 font-size: 15px;
                 width: 70%;
-                /* Make button wider on small screens */
+            }
+
+            .info-table td {
+                display: block;
+                width: 100%;
+                padding: 5px 0;
+            }
+
+            .info-table td:first-child {
+                font-weight: bold;
+                width: 100%;
             }
         }
     </style>
@@ -114,22 +153,49 @@
             <!-- This header can be used for a logo or a small title if needed, currently empty -->
         </div>
         <div class="content">
-            <div class="header">Sahkan Alamat Emel Anda</div>
+            <div class="header">Tindakan Diperlukan: <br>Permohonan Kursus Baru</div>
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
 
-            <p>Terima kasih kerana mendaftar dengan MOTAC Training & Management System!</p>
+            <p>Assalamualaikum dan Salam Sejahtera,</p>
+            <p>Tuan/Puan,</p>
+            <p>Adalah dimaklumkan terdapat transaksi Permohonan Akaun E-mel Individu dan ID Pengguna untuk tindakan sokongan
+                tuan/puan.</p>
 
-            <p>Untuk mengaktifkan akaun anda dan mula menggunakan semua kemudahan kami, sila sahkan alamat emel anda dengan menekan butang di bawah:</p>
+            <p><strong><u>Maklumat Permohonan</u></strong></p>
+            <div class="info-table-wrapper">
+                <table class="info-table" cellpadding="4" cellspacing="0">
+                    <tr>
+                        <td>Nama Pemohon</td>
+                        <td>: Muhammad Aiman Yusuf</td>
+                    </tr>
+                    <tr>
+                        <td>Jawatan Pemohon</td>
+                        <td>: MySTEP</td>
+                    </tr>
+                    <tr>
+                        <td>Nama Kursus</td>
+                        <td>: Kursus Bina Insan : High Performance & Values Internalization</td>
+                    </tr>
+                    <tr>
+                        <td>Tarikh</td>
+                        <td>: 13 hingga 15 Mei 2025</td>
+                    </tr>
+                    <tr>
+                        <td>Lokasi</td>
+                        <td>: Hotel Sekitar Melaka</td>
+                    </tr>
+                </table>
+            </div>
 
             <p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-                <a href="[PASTE_YOUR_VERIFICATION_LINK_HERE]" target="_blank" class="btn-verify">Sahkan Emel</a>
+                <a href="[PASTE_YOUR_VERIFICATION_LINK_HERE]" target="_blank" class="btn-action">Klik Untuk Kelulusan</a>
             </p>
 
+            <p>Sekian, terima kasih.</p>
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
             <p style="text-align: center; font-size: 14px; color: #777;"><em>Jika anda tidak mendaftar akaun ini, sila abaikan emel ini.</em></p>
         </div>
-        <!-- The footer was removed as per the provided code's commented out section -->
     </div>
 </body>
 
