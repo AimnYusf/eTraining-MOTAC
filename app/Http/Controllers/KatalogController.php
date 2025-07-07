@@ -86,7 +86,7 @@ class KatalogController extends Controller
         ];
 
         // Send email
-        Mail::to($pengguna->pen_ppemel)->queue(new VerifyMail($mailData));
+        Mail::to($pengguna->pen_ppemel)->send(new VerifyMail($mailData));
     }
 
     public function maklumatKursus($id)
