@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class VerifyMail extends Mailable implements ShouldQueue
+class ApprovalRequestMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     public $mailData;
@@ -28,7 +28,7 @@ class VerifyMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Tindakan: Permohonan Baharu Untuk Sokongan',
+            subject: 'Tindakan Pegawai Penyokong: Permohonan Baharu Untuk Sokongan',
         );
     }
 
@@ -38,7 +38,7 @@ class VerifyMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'mail.verify-application'
+            view: 'mail.approval-request'
         );
     }
 

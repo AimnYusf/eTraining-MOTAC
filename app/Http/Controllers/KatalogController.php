@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\VerifyMail;
+use App\Mail\ApprovalRequestMail;
 use App\Models\EproKursus;
 use App\Models\EproPengguna;
 use App\Models\EproPermohonan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class KatalogController extends Controller
@@ -73,7 +72,8 @@ class KatalogController extends Controller
 
             // Get user and course details
             $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
-            $kursus = EproKursus::find($request->kur_id);
+            $kursus = EproKursus::with('eproTempat')
+                ->find($request->kur_id);
 
             // Prepare data for email
             $mailData = [
@@ -87,7 +87,7 @@ class KatalogController extends Controller
             ];
 
             // Send email
-            Mail::to($pengguna->pen_ppemel)->queue(new VerifyMail($mailData));
+            Mail::to($pengguna->pen_ppemel)->queue(new ApprovalRequestMail($mailData));
             return response()->json(['message' => 'Email sent successfully!'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Email failed: ' . $e->getMessage()], 500);

@@ -102,7 +102,9 @@ Route::middleware('auth')->group(function () {
     });
 
     // ========== Pegawai Penyokong ==========
-    Route::resource('pengesahan', PenyokongController::class);
+    // Route::resource('pengesahan', PenyokongController::class);
+    Route::get('/pengesahan/{id}', [PenyokongController::class, 'show'])->name('pengesahan.show');
+
 
     // ========== Sementara ==========
     Route::put('/update-role', [App\Http\Controllers\ProfilController::class, 'update']);
@@ -112,5 +114,5 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::get('/mail', function () {
-    return view('mail.ui.reset-password');
+    return view('mail.approval-request');
 });
