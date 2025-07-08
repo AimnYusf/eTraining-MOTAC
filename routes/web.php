@@ -104,7 +104,7 @@ Route::middleware('auth')->group(function () {
     // ========== Pegawai Penyokong ==========
     // Route::resource('pengesahan', PenyokongController::class);
     Route::get('/pengesahan/{id}', [PenyokongController::class, 'show'])->name('pengesahan.show');
-
+    Route::post('/pengesahan', [PenyokongController::class, 'store'])->name('pengesahan.store');
 
     // ========== Sementara ==========
     Route::put('/update-role', [App\Http\Controllers\ProfilController::class, 'update']);
