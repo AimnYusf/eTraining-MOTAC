@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApplicationStatusMail;
 use App\Mail\QrAttendance;
 use App\Models\EproKursus;
 use App\Models\EproPermohonan;
@@ -81,14 +82,22 @@ class PermohonanController extends Controller
 
         $permohonan->update(['per_status' => $request->per_status]);
 
+        // Prepare and send email notification regarding the application status
+        $recipientEmail = $permohonan->user->email;
+        $kursus = EproKursus::with('eproTempat')
+            ->where('kur_id', $permohonan->per_idkursus)->first();
+
         if ($request->per_status == 4) {
-            return $this->generateQR($permohonan);
+            return $this->generateQR($permohonan, $kursus);
+        }
+        if ($request->per_status == 5) {
+            Mail::to($recipientEmail)->queue(new ApplicationStatusMail($kursus));
         }
 
         return response()->json(['message' => 'Application updated successfully']);
     }
 
-    public function generateQR($permohonan)
+    public function generateQR($permohonan, $kursus)
     {
         $textContent = $permohonan->per_idusers;
         $recipientEmail = $permohonan->user->email;
@@ -110,9 +119,9 @@ class PermohonanController extends Controller
 
             Storage::put($qrCodePathInStorage, $qrCodeImage);
 
-            Mail::to($recipientEmail)->queue(new QrAttendance($fullQrCodePath));
-
+            Mail::to($recipientEmail)->queue(new QrAttendance($fullQrCodePath, $kursus));
             return response()->json(['message' => 'QR code generated and email sent successfully.']);
+
         } catch (\Exception $e) {
             Log::error("Failed to generate QR or queue email: " . $e->getMessage(), ['permohonan_id' => $permohonan->per_id, 'email' => $recipientEmail]);
             if (Storage::exists($qrCodePathInStorage)) {

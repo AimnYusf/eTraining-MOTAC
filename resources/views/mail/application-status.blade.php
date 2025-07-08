@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', Arial, sans-serif;
@@ -29,8 +31,7 @@
 
         .email-header-banner {
             text-align: center;
-            /* background: linear-gradient(to bottom, #1E5128 10px, #4E9F3D 10px); */
-            background-color: #04AA56;
+            background: linear-gradient(to bottom, #B53939 10px, #D64545 10px);
             color: white;
             padding-top: 30px;
             padding-bottom: 20px;
@@ -66,7 +67,7 @@
         }
 
         .info-table td {
-            padding: 8px 0;
+            padding: 5px 0;
             vertical-align: top;
             font-size: 15px;
             color: #555;
@@ -122,27 +123,32 @@
 <body>
     <div class="email-container">
         <div class="email-header-banner">
-            Permohonan Kursus Berjaya!
+            Permohonan Kursus Gagal
         </div>
         <div class="email-content">
             <p>Assalamualaikum dan Salam Sejahtera,</p>
             <p>Tuan/Puan,</p>
 
-            <p>Kami ingin memaklumkan bahawa permohonan kursus anda telah <strong>berjaya</strong>.</p>
+            <p>Kami ingin memaklumkan bahawa permohonan kursus anda adalah <strong>tidak berjaya</strong>.</p>
             <p><strong><u>Maklumat Permohonan</u></strong></p>
             <div class="info-table-wrapper">
                 <table class="info-table" cellpadding="4" cellspacing="0">
                     <tr>
-                        <td>Nama Kursus</td>
-                        <td>: Kursus Bina Insan : High Performance & Values Internalization</td>
+                        <td><strong>Nama Kursus</strong></td>
+                        <td>: {{ $kursus->kur_nama }}</td>
                     </tr>
                     <tr>
-                        <td>Tarikh</td>
-                        <td>: 13 hingga 15 Mei 2025</td>
+                        <td><strong>Tarikh Kursus</strong></td>
+                        @php
+                            \Carbon\Carbon::setLocale('ms');
+                            $mula = \Carbon\Carbon::parse($kursus->kur_tkhmula);
+                            $tamat = \Carbon\Carbon::parse($kursus->kur_tkhtamat);
+                        @endphp
+                        <td>: {{ $mula->translatedFormat('d') }} hingga {{ $tamat->translatedFormat('d F Y') }}</td>
                     </tr>
                     <tr>
-                        <td>Lokasi</td>
-                        <td>: Hotel Sekitar Melaka</td>
+                        <td><strong>Tempat</strong></td>
+                        <td>: {{ $kursus->eproTempat->tem_keterangan }}</td>
                     </tr>
                 </table>
             </div>

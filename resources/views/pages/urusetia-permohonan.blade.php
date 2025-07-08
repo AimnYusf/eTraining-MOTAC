@@ -42,7 +42,7 @@
       <tr>
         <th>#</th>
         <th>NAMA KURSUS</th>
-        <th>KATEGORI</th>
+        <th>TEMPAT</th>
         <th>TARIKH MULA</th>
         <th>TARIKH TAMAT</th>
       </tr>

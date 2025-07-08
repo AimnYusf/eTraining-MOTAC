@@ -17,15 +17,17 @@ class QrAttendance extends Mailable
     use Queueable, SerializesModels;
 
     public $qrCodeFilePath;
+    public $kursus;
 
     /**
      * Create a new message instance.
      *
      * @param string $qrCodeFilePath The full path to the generated QR code image file.
      */
-    public function __construct($qrCodeFilePath)
+    public function __construct($qrCodeFilePath, $kursus)
     {
         $this->qrCodeFilePath = $qrCodeFilePath;
+        $this->kursus = $kursus;
     }
 
     /**

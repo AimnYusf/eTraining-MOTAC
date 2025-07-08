@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header justify-content-center">
-        <h5 class="modal-title">TINDAKAN PERMOHONAN</h5>
+        <h5 class="modal-title">MAKLUMAT PERMOHONAN</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
@@ -77,7 +77,7 @@
 
           <section>
             <div class="divider text-start">
-              <h5 class="divider-text m-0">TINDAKAN URUSETIA</h5>
+              <h5 class="divider-text m-0">TINDAKAN PENTADBIR</h5>
             </div>
             <div class="row ps-2 mb-2">
               <div class="col-sm-3 d-flex justify-content-between align-items-center">Status<span>:</span></div>
@@ -86,7 +86,6 @@
                   <option value="2">Pengesahan</option>
                   <option value="4">Berjaya</option>
                   <option value="5">Tidak Berjaya</option>
-                  <option value="6">KIV</option>
                 </select>
               </div>
             </div>

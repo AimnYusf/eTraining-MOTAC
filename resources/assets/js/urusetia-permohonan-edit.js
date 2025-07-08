@@ -82,7 +82,6 @@ $(function () {
               <div class="dropdown-menu dropdown-menu-end m-0">
                 <button class="update-record dropdown-item" data-id="${full.per_id}" data-status="4">Berjaya</button>
                 <button class="update-record dropdown-item" data-id="${full.per_id}" data-status="5">Tidak Berjaya</button>
-                <button class="update-record dropdown-item" data-id="${full.per_id}" data-status="6">KIV</button>
               </div>
             </div>
           `
