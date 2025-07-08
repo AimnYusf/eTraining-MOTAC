@@ -31,28 +31,31 @@ class NewPasswordController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'token' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        $rules = [
+            'password' => [
+                'required',
+                'confirmed',
+                'string',
+                'min:12',
+                'regex:/[a-z]/',      // at least one lowercase
+                'regex:/[A-Z]/',      // at least one uppercase
+                'regex:/[0-9]/',      // at least one number
+                'regex:/[\W_]/',      // at least one symbol
+            ],
+        ];
 
-        // $rules = [
-        //     'token' => ['required'],
-        //     'email' => ['required', 'email'],
-        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        // ];
+        $messages = [
+            'password.required' => 'Ruangan Kata Laluan wajib diisi.',
+            'password.confirmed' => 'Pengesahan Kata Laluan tidak sepadan.',
+            'password.min' => 'Kata Laluan mesti mengandungi sekurang-kurangnya 12 aksara.',
+            'password.regex' => 'Kata Laluan mesti mengandungi huruf besar, huruf kecil, nombor dan simbol.',
+        ];
 
-        // $messages = [
-        //     'password.required' => 'Kata laluan wajib diisi.',
-        //     'password' => 'Pastikan kata laluan mengandungi sekurang-kurangnya 8 aksara.'
-        // ];
-
-        // try {
-        //     $request->validate($rules, $messages);
-        // } catch (ValidationException $e) {
-        //     return redirect()->back()->withErrors($e->errors())->withInput();
-        // }
+        try {
+            $request->validate($rules, $messages);
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        }
 
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the

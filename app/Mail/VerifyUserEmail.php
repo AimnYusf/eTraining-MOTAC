@@ -9,12 +9,11 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ResetPasswordMail extends Mailable
+class VerifyUserEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $url;
-
     /**
      * Create a new message instance.
      */
@@ -29,7 +28,7 @@ class ResetPasswordMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Pautan Tetapan Semula Kata Laluan',
+            subject: 'Pautan Pengesahan Alamat Emel',
         );
     }
 
@@ -39,7 +38,7 @@ class ResetPasswordMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.reset-password',
+            view: 'mail.verify-email',
         );
     }
 
