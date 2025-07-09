@@ -25,6 +25,45 @@
       "slug": "isytihar"
     },
     {
+      "url": "/",
+      "name": "Rekod Kursus",
+      "icon": "menu-icon tf-icons ti ti-report",
+      "slug": "rekod"
+    },
+    {
+      "url": "/profil",
+      "name": "Profil",
+      "icon": "menu-icon tf-icons ti ti-user-circle",
+      "slug": "profil"
+    },
+    
+    {
+      "menuHeader": "Pegawai Latihan Bahagian",
+      "slug": "plb"
+    },
+    {
+      "url": "/kelulusan",
+      "name": "Menunggu Kelulusan",
+      "icon": "menu-icon tf-icons ti ti-user-check",
+      "slug": "plb-kelulusan"
+    },
+    {
+      "url": "/",
+      "name": "Rekod Baru Latihan",
+      "icon": "menu-icon tf-icons ti ti-file-plus",
+      "slug": "plb-rekod-baru"
+    },
+    {
+      "url": "/",
+      "name": "Rekod Pegawai",
+      "icon": "menu-icon tf-icons ti ti-id-badge-2",
+      "slug": "plb-rekod-pegawai"
+    },
+    {
+      "menuHeader": "Pentadbir",
+      "slug": "pentadbir"
+    },
+    {
       "url": "/urusetia/kursus",
       "name": "Senarai Kursus",
       "icon": "menu-icon tf-icons ti ti-list",
@@ -36,28 +75,12 @@
       "icon": "menu-icon tf-icons ti ti-list-check",
       "slug": "urusetia-permohonan"
     },
+    
     {
-      "name": "Pegawai Penyelia",
-      "icon": "menu-icon tf-icons ti ti-user-check",
-      "slug": "penyelia",
-      "submenu": [
-        {
-          "url": "/kelulusan",
-          "name": "Menunggu Kelulusan",
-          "slug": "penyelia-kelulusan"
-        },
-        {
-          "url": "/",
-          "name": "Rekod Pegawai",
-          "slug": "penyelia-pegawai"
-        }
-      ]
-    },
-    {
-      "url": "/",
-      "name": "Laporan Keseluruhan",
-      "icon": "menu-icon tf-icons ti ti-chart-bar",
-      "slug": "laporan"
+      "url": "/urusetia/tempat",
+      "name": "Senarai Tempat",
+      "icon": "menu-icon tf-icons ti ti-map-pin",
+      "slug": "urusetia-tempat"
     },
     {
       "url": "/urusetia/kehadiran",
@@ -66,33 +89,37 @@
       "slug": "urusetia-kehadiran"
     },
     {
-      "url": "/urusetia/pengguna",
-      "name": "Pengguna Sistem",
-      "icon": "menu-icon tf-icons ti ti-users",
-      "slug": "urusetia-pengguna"
-    },
-    {
-      "name": "Tetapan Sistem",
-      "icon": "menu-icon tf-icons ti ti-settings",
-      "slug": "tetapan",
+      "name": "Laporan",
+      "icon": "menu-icon tf-icons ti ti-chart-bar",
+      "slug": "laporan",
       "submenu": [
         {
-          "url": "/urusetia/tempat",
-          "name": "Tempat",
-          "slug": "tetapan-tempat"
+          "url": "/",
+          "name": "Ringkasan Kumpulan",
+          "slug": "laporan-kumpulan"
         },
         {
           "url": "/",
-          "name": "Jabatan",
-          "slug": "tetapan-jabatan"
+          "name": "Ringkasan Bahagian",
+          "slug": "laporan-ringkasan"
+        },
+        {
+          "url": "/",
+          "name": "Rekod Keseluruhan",
+          "slug": "laporan-keseluruhan"
+        },
+        {
+          "url": "/",
+          "name": "Rekod Individu",
+          "slug": "laporan-individu"
         }
       ]
     },
     {
-      "url": "/profil",
-      "name": "Profil",
-      "icon": "menu-icon tf-icons ti ti-user-circle",
-      "slug": "profil"
+      "url": "/urusetia/pengguna",
+      "name": "Pengguna Sistem",
+      "icon": "menu-icon tf-icons ti ti-users",
+      "slug": "urusetia-pengguna"
     }
   ]
 }

@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+// Pegawai Penyokong
+Route::get('/pengesahan/{id}', [PenyokongController::class, 'show'])->name('pengesahan.show');
+Route::post('/pengesahan', [PenyokongController::class, 'store'])->name('pengesahan.store');
+
 // Dashboard (All Authenticated Users)
 Route::get('/', function () {
     return view('pages.dashboard');
@@ -32,10 +36,10 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Routes for Roles: user, supervisor
+    | Routes for Roles: user, supervisor, administrator
     |--------------------------------------------------------------------------
     */
-    Route::middleware('role:user,supervisor')->group(function () {
+    Route::middleware('role:user,supervisor,administrator')->group(function () {
 
         // Pengguna Kursus
         Route::resource('kursus', KatalogController::class)->names([
@@ -56,10 +60,10 @@ Route::middleware('auth')->group(function () {
     | Routes for Roles: supervisor
     |--------------------------------------------------------------------------
     */
-    Route::middleware('role:supervisor')->group(function () { // Consider changing this to 'role:supervisor' if that's the intent
+    Route::middleware('role:supervisor')->group(function () {
         // Pengguna Kursus
         Route::resource('kelulusan', KelulusanController::class)->names([
-            'index' => 'penyelia-kelulusan'
+            'index' => 'plb-kelulusan'
         ]);
     });
 
@@ -80,31 +84,17 @@ Route::middleware('auth')->group(function () {
         ]);
         // Urusetia Tempat
         Route::resource('/urusetia/tempat', TempatController::class)->names([
-            'index' => 'tetapan-tempat'
+            'index' => 'urusetia-tempat'
         ]);
         // Urusetia Kehadiran
         Route::resource('/urusetia/kehadiran', KehadiranController::class)->names([
             'index' => 'urusetia-kehadiran'
         ]);
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | Routes for Roles: administrator & superadmin
-    |--------------------------------------------------------------------------
-    */
-    Route::middleware('role:administrator,superadmin')->group(function () {
-
         // Urusetia Pengguna
         Route::resource('/urusetia/pengguna', PenggunaController::class)->names([
             'index' => 'urusetia-pengguna'
         ]);
     });
-
-    // ========== Pegawai Penyokong ==========
-    // Route::resource('pengesahan', PenyokongController::class);
-    Route::get('/pengesahan/{id}', [PenyokongController::class, 'show'])->name('pengesahan.show');
-    Route::post('/pengesahan', [PenyokongController::class, 'store'])->name('pengesahan.store');
 
     // ========== Sementara ==========
     Route::put('/update-role', [App\Http\Controllers\ProfilController::class, 'update']);

@@ -1,16 +1,17 @@
 @php
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-$configData = Helper::appClasses();
+  use Illuminate\Support\Facades\Route;
+  use Illuminate\Support\Facades\Auth;
+  $configData = Helper::appClasses();
 @endphp
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
   <!-- ! Hide app brand if navbar-full -->
   @if(!isset($navbarFull))
-  <div class="app-brand demo">
+    <div class="app-brand demo">
     <a href="{{ url('/') }}" class="app-brand-link d-flex align-items-center">
-      <img src="{{ asset('images/logo-kementerian.png') }}" alt="Logo" class="app-brand-logo demo me-2" style="height: 30px;">
+      <img src="{{ asset('images/logo-kementerian.png') }}" alt="Logo" class="app-brand-logo demo me-2"
+      style="height: 30px;">
       <span class="app-brand-text demo menu-text fw-bold">{{ config('variables.templateName') }}</span>
     </a>
 
@@ -19,7 +20,7 @@ $configData = Helper::appClasses();
       <i class="ti menu-toggle-icon d-none d-xl-block align-middle"></i>
       <i class="ti ti-x d-block d-xl-none ti-md align-middle"></i>
     </a>
-  </div>
+    </div>
   @endif
 
 
@@ -28,54 +29,53 @@ $configData = Helper::appClasses();
   <ul class="menu-inner py-1">
     @foreach ($menuData[0]->menu as $menu)
 
-    <!-- menu allowed -->
-    @php
-    $role = Auth::check() ? Auth::user()->role : 'guest';
+      <!-- menu allowed -->
+      @php
+        $role = Auth::check() ? Auth::user()->role : 'guest';
 
-    $allowed = match ($role) {
-    'guest' => in_array($menu->slug, ['dashboard', 'profil']),
-    'user' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'laporan', 'profil']),
-    'supervisor' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'penyelia', 'laporan', 'profil']),
-    'administrator' => in_array($menu->slug, ['dashboard', 'urusetia-kursus', 'urusetia-permohonan', 'urusetia-kehadiran', 'urusetia-pengguna', 'tetapan', 'tetapan-tempat', 'profil']),
-    'superadmin' => in_array($menu->slug, ['dashboard', 'urusetia-pengguna']),
+        $allowed = match ($role) {
+        'guest' => in_array($menu->slug, ['dashboard', 'profil']),
+        'user' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod', 'profil']),
+        'supervisor' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod', 'profil', 'plb', 'plb-kelulusan', 'plb-rekod-baru', 'plb-rekod-pegawai']),
+        'administrator' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod', 'profil', 'pentadbir', 'urusetia-kursus', 'urusetia-permohonan', 'urusetia-tempat', 'urusetia-kehadiran', 'laporan', 'laporan-kumpulan', 'laporan-ringkasan', 'laporan-keseluruhan', 'laporan-individu', 'urusetia-pengguna']),
 
-    default => true
-    };
-    @endphp
+        default => true
+        };
+      @endphp
 
-    @if ($allowed)
-    {{-- menu headers --}}
-    @if (isset($menu->menuHeader))
-    <li class="menu-header small">
-      <span class="menu-header-text">{{ __($menu->menuHeader) }}</span>
-    </li>
-    @else
+      @if ($allowed)
+        {{-- menu headers --}}
+        @if (isset($menu->menuHeader))
+        <li class="menu-header small">
+        <span class="menu-header-text">{{ __($menu->menuHeader) }}</span>
+        </li>
+        @else
 
-    {{-- active menu method --}}
-    @php
-    $activeClass = null;
-    $currentRouteName = Route::currentRouteName();
+        {{-- active menu method --}}
+        @php
+        $activeClass = null;
+        $currentRouteName = Route::currentRouteName();
 
-    if ($currentRouteName === $menu->slug) {
-    $activeClass = 'active';
-    } elseif (isset($menu->submenu)) {
-    if (gettype($menu->slug) === 'array') {
-    foreach ($menu->slug as $slug) {
-    if (str_contains($currentRouteName, $slug) and strpos($currentRouteName, $slug) === 0) {
-    $activeClass = 'active open';
-    }
-    }
-    } else {
-    if (str_contains($currentRouteName, $menu->slug) and strpos($currentRouteName, $menu->slug) === 0) {
-    $activeClass = 'active open';
-    }
-    }
-    }
-    @endphp
+        if ($currentRouteName === $menu->slug) {
+        $activeClass = 'active';
+        } elseif (isset($menu->submenu)) {
+        if (gettype($menu->slug) === 'array') {
+        foreach ($menu->slug as $slug) {
+        if (str_contains($currentRouteName, $slug) and strpos($currentRouteName, $slug) === 0) {
+          $activeClass = 'active open';
+        }
+        }
+        } else {
+        if (str_contains($currentRouteName, $menu->slug) and strpos($currentRouteName, $menu->slug) === 0) {
+        $activeClass = 'active open';
+        }
+        }
+        }
+        @endphp
 
-    {{-- main menu --}}
-    <li class="menu-item {{$activeClass}}">
-      <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0);' }}"
+        {{-- main menu --}}
+        <li class="menu-item {{$activeClass}}">
+        <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0);' }}"
         class="{{ isset($menu->submenu) ? 'menu-link menu-toggle' : 'menu-link' }}" @if (isset($menu->target) and !empty($menu->target)) target="_blank" @endif>
         @isset($menu->icon)
         <i class="{{ $menu->icon }}"></i>
@@ -84,16 +84,16 @@ $configData = Helper::appClasses();
         @isset($menu->badge)
         <div class="badge bg-{{ $menu->badge[0] }} rounded-pill ms-auto">{{ $menu->badge[1] }}</div>
         @endisset
-      </a>
+        </a>
 
-      {{-- submenu --}}
-      @isset($menu->submenu)
-      @include('layouts.sections.menu.submenu', ['menu' => $menu->submenu])
-      @endisset
-    </li>
-    @endif
-    @endif
-    @endforeach
+        {{-- submenu --}}
+        @isset($menu->submenu)
+        @include('layouts.sections.menu.submenu', ['menu' => $menu->submenu])
+        @endisset
+        </li>
+        @endif
+      @endif
+  @endforeach
   </ul>
 
 </aside>
