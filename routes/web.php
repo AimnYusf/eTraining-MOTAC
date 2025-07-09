@@ -28,6 +28,10 @@ Route::get('/', function () {
     return view('pages.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Pegawai Penyokong
+Route::get('/pengesahan/{id}', [PenyokongController::class, 'show'])->name('pengesahan.show');
+Route::post('/pengesahan', [PenyokongController::class, 'store'])->name('pengesahan.store');
+
 Route::middleware('auth')->group(function () {
     // Profil
     Route::resource('profil', ProfilController::class)->names([
