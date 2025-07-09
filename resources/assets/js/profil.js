@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
               regexp: {
                 regexp: /^[0-9]+$/,
                 message: 'Hanya nombor dibenarkan tanpa (-)'
+              },
+              stringLength: {
+                max: 12,
+                message: 'Nombor mestilah tidak lebih 12 aksara'
               }
             }
           },
@@ -54,6 +58,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
               regexp: {
                 regexp: /^[0-9]+$/,
                 message: 'Hanya nombor'
+              },
+              stringLength: {
+                max: 12,
+                message: 'Nombor mestilah tidak lebih 12 aksara'
               }
             }
           },
@@ -65,6 +73,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
               regexp: {
                 regexp: /^[0-9]+$/,
                 message: 'Hanya nombor'
+              },
+              stringLength: {
+                max: 12,
+                message: 'Nombor mestilah tidak lebih 12 aksara'
               }
             }
           },
@@ -135,6 +147,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
             validators: {
               notEmpty: {
                 message: 'Sila masukkan emel pegawai penyokong'
+              }
+            }
+          },
+          pen_ppgred: {
+            validators: {
+              notEmpty: {
+                message: 'Sila pilih gred pegawai penyokong'
               }
             }
           }

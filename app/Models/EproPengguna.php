@@ -13,21 +13,18 @@ class EproPengguna extends Model
         'pen_nama',
         'pen_nokp',
         'pen_jantina',
+        'pen_emel',
+        'pen_notel',
+        'pen_nohp',
         'pen_jawatan',
         'pen_gred',
         'pen_idkumpulan',
         'pen_idjabatan',
-        'pen_idbahagian',
         'pen_jabatanlain',
-        'pen_emel',
-        'pen_notel',
-        'pen_nofaks',
-        'pen_nohp',
-        'pen_kjnama',
-        'pen_kjgelaran',
-        'pen_kjemel',
+        'pen_idbahagian',
         'pen_ppnama',
-        'pen_ppemel'
+        'pen_ppemel',
+        'pen_ppgred'
     ];
 
     public function user()

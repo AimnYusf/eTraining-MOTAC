@@ -53,6 +53,7 @@ class ProfilController extends Controller
                 'pen_kjemel' => $request->pen_kjemel,
                 'pen_ppnama' => $request->pen_ppnama,
                 'pen_ppemel' => $request->pen_ppemel,
+                'pen_ppgred' => $request->pen_ppgred,
             ]
         );
     }
