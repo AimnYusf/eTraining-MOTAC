@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApplicationNotificationMail;
 use App\Mail\ApprovalRequestMail;
 use App\Models\EproKursus;
 use App\Models\EproPengguna;
@@ -101,6 +102,7 @@ class KatalogController extends Controller
 
             // Attempt to send email
             Mail::to($pengguna->pen_ppemel)->queue(new ApprovalRequestMail($mailData));
+            Mail::to($pengguna->pen_emel)->queue(new ApplicationNotificationMail($pengguna, $kursus));
 
             DB::commit();
 
