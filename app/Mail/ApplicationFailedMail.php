@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ApplicationStatusMail extends Mailable
+class ApplicationFailedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,7 +28,7 @@ class ApplicationStatusMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Application Status Mail',
+            subject: 'Makluman Permohonan Kursus Tidak Berjaya – ' . strtoupper($this->kursus['nama']),
         );
     }
 
@@ -38,7 +38,7 @@ class ApplicationStatusMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.application-status',
+            view: 'mail.application-failed',
         );
     }
 

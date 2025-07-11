@@ -20,7 +20,7 @@
         }
 
         .email-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 40px auto;
             background-color: #ffffff;
             border-radius: 5px;
@@ -120,40 +120,40 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: #f0f4f8; padding: 8px;">
     <div class="email-container">
         <div class="email-header-banner">
-            Permohonan Kursus Gagal
+            Makluman Permohonan Kursus Tidak Berjaya – {{ strtoupper($kursus->kur_nama ?? '[NAMA KURSUS]')}}
         </div>
         <div class="email-content">
-            <p>Assalamualaikum dan Salam Sejahtera,</p>
             <p>Tuan/Puan,</p>
 
-            <p>Kami ingin memaklumkan bahawa permohonan kursus anda adalah <strong>tidak berjaya</strong>.</p>
-            <p><strong><u>Maklumat Permohonan</u></strong></p>
-            <div class="info-table-wrapper">
-                <table class="info-table" cellpadding="4" cellspacing="0">
-                    <tr>
-                        <td><strong>Nama Kursus</strong></td>
-                        <td>: {{ $kursus->kur_nama }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tarikh Kursus</strong></td>
-                        @php
-                            \Carbon\Carbon::setLocale('ms');
-                            $mula = \Carbon\Carbon::parse($kursus->kur_tkhmula);
-                            $tamat = \Carbon\Carbon::parse($kursus->kur_tkhtamat);
-                        @endphp
-                        <td>: {{ $mula->translatedFormat('d') }} hingga {{ $tamat->translatedFormat('d F Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tempat</strong></td>
-                        <td>: {{ $kursus->eproTempat->tem_keterangan }}</td>
-                    </tr>
-                </table>
-            </div>
+            <p>Dimaklumkan bahawa permohonan Tuan/Puan untuk menghadiri
+                <strong>{{ $kursus->kur_nama ?? '[NAMA KURSUS]' }}</strong>
+                pada tarikh
+                <strong>
+                    {{ isset($kursus) && $kursus->kur_tkhmula
+    ? \Carbon\Carbon::parse($kursus->kur_tkhmula)->translatedFormat('d F Y')
+    : '[TARIKH KURSUS]' 
+    }}
+                </strong>
+                tidak berjaya atas
+                sebab-sebab berikut:
+            </p>
+            <ul>
+                <li>[Contoh sebab, jika ingin dinyatakan: Tempat telah penuh / Tidak memenuhi kriteria pemilihan /
+                    Kursus dibatalkan]</li>
+            </ul>
+
+            <p>Walau bagaimanapun, Tuan/Puan boleh membuat permohonan semula sekiranya kursus ini ditawarkan semula pada
+                masa akan datang atau memilih kursus lain yang bersesuaian melalui Sistem [NAMA SISTEM].</p>
+            <p>Sebarang pertanyaan lanjut boleh diajukan kepada penyelaras/ urus setia kursus di [alamat e-mel atau
+                nombor telefon].</p>
+            <p>Segala kerjasama dan perhatian Tuan/Puan amat dihargai.</p>
 
             <p>Sekian, terima kasih.</p>
+            <p style="margin: 0;"><strong>Penyelaras Kursus</strong></p>
+            <p style="margin: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
 
             <p style="font-size: 12px; color: #999; text-align: center; margin-top: 40px;">
                 <em>Nota : Emel ini dijana secara automatik, sila jangan balas e-mel ini.</em>

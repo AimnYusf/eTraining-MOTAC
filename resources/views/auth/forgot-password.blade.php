@@ -8,14 +8,13 @@
     <div class="container mt-5">
         <div class="card">
             <div class="card-body">
-                <div class="alert alert-secondary small">
-                    Terlupa kata laluan anda? Tiada masalah. Hanya beritahu kami alamat e-mel anda dan kami akan menghantar
-                    e-mel kepada anda pautan tetapan semula kata laluan yang membolehkan anda memilih yang baharu.
+                <div class="alert alert-secondary p-4">
+                    Sila masukkan e-mel rasmi yang telah didaftarkan untuk tetapan semula kata laluan.
                 </div>
 
                 <!-- Session Status -->
                 @if (session('status'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success small">
                         {{ session('status') }}
                     </div>
                 @endif

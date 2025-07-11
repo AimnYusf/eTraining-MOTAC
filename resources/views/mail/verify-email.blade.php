@@ -21,7 +21,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 40px auto;
             background-color: #ffffff;
             border-radius: 5px;
@@ -110,32 +110,60 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: #f0f4f8; padding: 8px;">
     <div class="container">
         <div class="container-header">
             <!-- This header can be used for a logo or a small title if needed, currently empty -->
         </div>
         <div class="content">
-            <div class="header">Sahkan Alamat Emel Anda</div>
+            <div class="header">Pengaktifan Akaun Sistem [Nama Sistem]</div>
+
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
 
-            <p>Terima kasih kerana mendaftar dengan MOTAC Training & Management System!</p>
+            <p>YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan,</p>
 
-            <p>Untuk mengaktifkan akaun anda dan mula menggunakan semua kemudahan kami, sila sahkan alamat emel anda
-                dengan menekan butang di bawah:</p>
+            <p>Terima kasih kerana mendaftar dengan <strong>Sistem [Nama Sistem]</strong>.</p>
+
+            <p>
+                Bagi melengkapkan proses pendaftaran dan mengaktifkan akaun YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan
+                / Puan, sila klik pautan pengesahan di bawah:
+            </p>
 
             <p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-                <a href="{{ $url ?? ''}}" target="_blank"
-                    style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
-                    class="btn-verify">Sahkan Emel</a>
+                @if (!empty($url))
+                    <a href="{{ $url }}" target="_blank"
+                        style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+                        class="btn-verify">Sahkan Emel</a>
+                @else
+                    <span style="color: red;"><em>Pautan pengesahan tidak tersedia.</em></span>
+                @endif
+            </p>
+
+            <p><strong>Nota:</strong> Pautan ini hanya sah dalam tempoh <strong>24 jam</strong> dari masa pendaftaran.
+            </p>
+
+            <p>
+                Sekiranya YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan tidak membuat permohonan ini atau
+                menghadapi sebarang masalah, sila abaikan emel ini atau hubungi pihak pentadbir sistem di
+                <strong>[emel sokongan / telefon]</strong>.
+            </p>
+
+            <p>Kerjasama dan perhatian YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan amat dihargai.</p>
+
+            <p>Sekian, terima kasih.</p>
+
+            <p>
+                Pentadbir Sistem<br>
+                Bahagian Pengurusan Maklumat<br>
+                Kementerian Pelancongan, Seni dan Budaya
             </p>
 
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
-            <p style="text-align: center; font-size: 14px; color: #777;"><em>Jika anda tidak mendaftar akaun ini, sila
-                    abaikan emel ini.</em></p>
+            <p style="text-align: center; font-size: 14px; color: #777;">
+                <em>Jika anda tidak mendaftar akaun ini, sila abaikan emel ini.</em>
+            </p>
         </div>
-        <!-- The footer was removed as per the provided code's commented out section -->
     </div>
 </body>
 

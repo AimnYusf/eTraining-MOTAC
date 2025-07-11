@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ApplicationStatusMail;
-use App\Mail\QrAttendance;
+use App\Mail\ApplicationApprovedMail;
+use App\Mail\ApplicationFailedMail;
 use App\Models\EproKursus;
 use App\Models\EproPermohonan;
 use chillerlan\QRCode\QRCode;
@@ -74,7 +74,7 @@ class PermohonanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $permohonan = EproPermohonan::with('user')->find($id);
+        $permohonan = EproPermohonan::with('user.eproPengguna')->find($id);
 
         if (!$permohonan) {
             return response()->json(['message' => 'Application not found'], 404);
@@ -82,16 +82,18 @@ class PermohonanController extends Controller
 
         $permohonan->update(['per_status' => $request->per_status]);
 
-        // Prepare and send email notification regarding the application status
-        $recipientEmail = $permohonan->user->email;
-        $kursus = EproKursus::with('eproTempat')
-            ->where('kur_id', $permohonan->per_idkursus)->first();
+        $kursus = EproKursus::with(['eproTempat', 'eproPenganjur'])
+            ->where('kur_id', $permohonan->per_idkursus)
+            ->first();
 
-        if ($request->per_status == 4) {
-            return $this->generateQR($permohonan, $kursus);
-        }
-        if ($request->per_status == 5) {
-            Mail::to($recipientEmail)->queue(new ApplicationStatusMail($kursus));
+        switch ($request->per_status) {
+            case 4:
+                return $this->generateQR($permohonan, $kursus);
+
+            case 5:
+                $userEmail = $permohonan->user->email;
+                Mail::to($userEmail)->queue(new ApplicationFailedMail($kursus));
+                break;
         }
 
         return response()->json(['message' => 'Application updated successfully']);
@@ -99,8 +101,10 @@ class PermohonanController extends Controller
 
     public function generateQR($permohonan, $kursus)
     {
-        $textContent = $permohonan->per_idusers;
-        $recipientEmail = $permohonan->user->email;
+        $pengguna = $permohonan->user->eproPengguna;
+        $userEmail = $permohonan->user->email;
+        $supervisorEmail = $pengguna->pen_ppemel;
+
         $qrCodeFileName = 'qrcode_' . uniqid() . '.png';
         $qrCodePathInStorage = 'public/qrcodes/' . $qrCodeFileName;
         $fullQrCodePath = Storage::path($qrCodePathInStorage);
@@ -115,19 +119,31 @@ class PermohonanController extends Controller
             ]);
 
             $qrcode = new QRCode($options);
-            $qrCodeImage = $qrcode->render($textContent);
+            $qrCodeImage = $qrcode->render($permohonan->per_idusers);
 
             Storage::put($qrCodePathInStorage, $qrCodeImage);
 
-            Mail::to($recipientEmail)->queue(new QrAttendance($fullQrCodePath, $kursus));
-            return response()->json(['message' => 'QR code generated and email sent successfully.']);
+            Mail::to($userEmail)
+                ->cc($supervisorEmail)
+                ->queue(new ApplicationApprovedMail($fullQrCodePath, $kursus, $pengguna));
 
+            return response()->json(['message' => 'QR code generated and email sent successfully.']);
         } catch (\Exception $e) {
-            Log::error("Failed to generate QR or queue email: " . $e->getMessage(), ['permohonan_id' => $permohonan->per_id, 'email' => $recipientEmail]);
+            Log::error('QR Code Generation or Email Failed', [
+                'error' => $e->getMessage(),
+                'permohonan_id' => $permohonan->per_id,
+                'user_email' => $userEmail,
+            ]);
+
             if (Storage::exists($qrCodePathInStorage)) {
                 Storage::delete($qrCodePathInStorage);
             }
-            return response()->json(['message' => 'Failed to generate QR code or queue email.', 'error' => $e->getMessage()], 500);
+
+            return response()->json([
+                'message' => 'Failed to generate QR code or send email.',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
+
 }

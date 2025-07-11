@@ -9,7 +9,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-    <title>Tindakan Diperlukan: Permohonan Kursus Baru - MOTAC Training & Management System</title>
     <style>
         body {
             font-family: 'Poppins', Arial, sans-serif;
@@ -21,7 +20,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 40px auto;
             background-color: #ffffff;
             border-radius: 5px;
@@ -149,59 +148,96 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: #f0f4f8; padding: 8px;">
     <div class="container">
         <div class="container-header">
-            <!-- This header can be used for a logo or a small title if needed, currently empty -->
         </div>
         <div class="content">
-            <div class="header">Tindakan Diperlukan: <br> Permohonan Baharu Untuk Sokongan</div>
+            <div class="header">
+                Tindakan: Permohonan Kursus
+                <span style="text-transform: uppercase;">
+                    {{ $mailData['nama'] ?? '' }}
+                </span> Untuk Sokongan
+            </div>
+
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
 
             <p>Assalamualaikum dan Salam Sejahtera,</p>
             <p>Tuan/Puan,</p>
-            <p>Adalah dimaklumkan terdapat transaksi Permohonan Akaun E-mel Individu dan ID Pengguna untuk tindakan
-                sokongan
-                tuan/puan.</p>
+            <p>Perkara di atas adalah dirujuk.</p>
+
+            <p>
+                Adalah dimaklumkan terdapat transaksi Permohonan
+                <span style="text-transform: uppercase;">
+                    <strong>{{ $mailData['nama_kursus'] ?? '' }}</strong>
+                </span>
+                untuk <strong>tindakan sokongan tuan/puan.</strong>
+            </p>
 
             <p><strong><u>Maklumat Permohonan</u></strong></p>
             <div class="info-table-wrapper">
                 <table class="info-table" cellpadding="4" cellspacing="0">
                     <tr>
-                        <td><strong>Nama Pemohon</strong></td>
-                        <td>: {{ $mailData['nama'] }}</td>
+                        <td>Nama Pemohon</td>
+                        <td>: <strong>{{ $mailData['nama'] ?? '' }}</strong></td>
                     </tr>
                     <tr>
-                        <td><strong>Jawatan Pemohon</strong></td>
-                        <td>: {{ $mailData['jawatan'] }} {{ $mailData['gred'] }}</td>
+                        <td>Jawatan Pemohon</td>
+                        <td>: <strong>{{ $mailData['jawatan'] ?? '' }} {{ $mailData['gred'] ?? '' }}</strong></td>
                     </tr>
                     <tr>
-                        <td><strong>Nama Kursus</strong></td>
-                        <td>: {{ $mailData['nama_kursus'] }}</td>
+                        <td>Nama Kursus</td>
+                        <td>: <strong>{{ $mailData['nama_kursus'] ?? '' }}</strong></td>
                     </tr>
                     <tr>
-                        <td><strong>Tarikh Kursus</strong></td>
+                        <td>Tarikh Kursus</td>
                         @php
                             \Carbon\Carbon::setLocale('ms');
-                            $mula = \Carbon\Carbon::parse($mailData['tarikh_mula']);
-                            $tamat = \Carbon\Carbon::parse($mailData['tarikh_tamat']);
+                            $mula = !empty($mailData['tarikh_mula']) ? \Carbon\Carbon::parse($mailData['tarikh_mula']) : null;
+                            $tamat = !empty($mailData['tarikh_tamat']) ? \Carbon\Carbon::parse($mailData['tarikh_tamat']) : null;
                         @endphp
-                        <td>: {{ $mula->translatedFormat('d') }} hingga {{ $tamat->translatedFormat('d F Y') }}</td>
+                        <td>:
+                            <strong>
+                                {{ $mula ? $mula->translatedFormat('d') : '' }} hingga
+                                {{ $tamat ? $tamat->translatedFormat('d F Y') : '' }}
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lokasi Kursus</td>
+                        <td>: <strong>{{ $mailData['tempat'] ?? '' }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>: <strong style="text-transform: uppercase;">{{ $mailData['status'] ?? '' }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Tarikh Permohonan</td>
+                        <td>:
+                            @php
+                                $tarikhMohon = !empty($mailData['tarikh_mohon']) ? \Carbon\Carbon::parse($mailData['tarikh_mohon']) : null;
+                            @endphp
+                            <strong>{{ $tarikhMohon ? $tarikhMohon->translatedFormat('d F Y') : '' }}</strong>
+                        </td>
                     </tr>
                 </table>
             </div>
 
             <p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-                <a href="{{ route('pengesahan.show', ['id' => $mailData['encrypted_id']]) }}" target="_blank"
-                    style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
-                    class="btn-action">Klik Untuk Kelulusan</a>
+                @if (!empty($mailData['url']))
+                    <a href="{{ $mailData['url'] }}" target="_blank"
+                        style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+                        class="btn-action">Klik Untuk Kelulusan</a>
+                @endif
             </p>
 
             <p>Sekian, terima kasih.</p>
+            <p><strong>Pentadbir Sistem [Nama Sistem]</strong></p>
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
-            <p style="text-align: center; font-size: 14px; color: #777;"><em>Jika anda tidak mendaftar akaun ini, sila
-                    abaikan emel ini.</em></p>
+            <p style="text-align: center; font-size: 14px; color: #777;">
+                <em>Jika anda tidak mendaftar akaun ini, sila abaikan emel ini.</em>
+            </p>
         </div>
     </div>
 </body>

@@ -28,7 +28,7 @@ class VerifyUserEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Pautan Pengesahan Alamat Emel',
+            subject: 'Pengaktifan Akaun Sistem [Nama Sistem]',
         );
     }
 

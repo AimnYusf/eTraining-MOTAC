@@ -20,7 +20,7 @@
         }
 
         .email-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 40px auto;
             background-color: #ffffff;
             border-radius: 5px;
@@ -31,8 +31,8 @@
 
         .email-header-banner {
             text-align: center;
-            /* background: linear-gradient(to bottom, #1E5128 10px, #4E9F3D 10px); */
-            background-color: #04AA56;
+            background: linear-gradient(to bottom, #03713B 10px, #04AA56 10px);
+            /* background-color: #04AA56; */
             color: white;
             padding-top: 30px;
             padding-bottom: 20px;
@@ -139,52 +139,99 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: #f0f4f8; padding: 8px;">
     <div class="email-container">
         <div class="email-header-banner">
-            Permohonan Kursus Berjaya!
+            Pengesahan Permohonan Kursus Berjaya –
+            <span style="text-transform: uppercase">{{ strtoupper($kursus->kur_nama ?? '') }}</span>
         </div>
-        <div class="email-content">
-            <p>Assalamualaikum dan Salam Sejahtera,</p>
-            <p>Tuan/Puan,</p>
 
-            <p>Kami ingin memaklumkan bahawa permohonan kursus anda telah <strong>berjaya</strong>.</p>
-            <p><strong><u>Maklumat Permohonan</u></strong></p>
+        <div class="email-content">
+            <p>YBhg. Datuk/ Dato’/ YBrs. Dr./Tuan/Puan,</p>
+
+            <p>{{ strtoupper($pengguna->pen_ppnama ?? '') }},</p>
+
+            <p>
+                Dimaklumkan bahawa pegawai di bawah seliaan YBhg. Datuk/ Dato’/ YBrs. Dr./Tuan/Puan
+                <strong>{{ strtoupper($pengguna->pen_nama ?? '') }}</strong> telah dipilih untuk mengikuti
+                kursus <strong>{{ strtoupper($kursus->kur_nama ?? '') }}</strong> seperti butiran berikut:
+            </p>
+
+            @php
+                \Carbon\Carbon::setLocale('ms');
+
+                $mula = isset($kursus->kur_tkhmula) && $kursus->kur_tkhmula
+                    ? \Carbon\Carbon::parse($kursus->kur_tkhmula)
+                    : null;
+
+                $tamat = isset($kursus->kur_tkhtamat) && $kursus->kur_tkhtamat
+                    ? \Carbon\Carbon::parse($kursus->kur_tkhtamat)
+                    : null;
+
+                if (!function_exists('formatMasa')) {
+                    function formatMasa($time)
+                    {
+                        if (!$time)
+                            return '';
+                        [$hour, $minute] = explode(':', $time);
+                        $hour = (int) $hour;
+                        $minute = str_pad($minute, 2, '0', STR_PAD_LEFT);
+                        $period = $hour < 12 ? 'pagi' : 'petang';
+                        $displayHour = $hour % 12 === 0 ? 12 : $hour % 12;
+                        return "{$displayHour}.{$minute} {$period}";
+                    }
+                }
+            @endphp
+
             <div class="info-table-wrapper">
                 <table class="info-table" cellpadding="4" cellspacing="0">
                     <tr>
-                        <td><strong>Nama Kursus</strong></td>
-                        <td>: {{ $kursus->kur_nama }}</td>
+                        <td><strong>Tarikh Kursus</strong></td>
+                        <td>
+                            : {{ $mula ? $mula->translatedFormat('d') : '' }} hingga
+                            {{ $tamat ? $tamat->translatedFormat('d F Y') : '' }}
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Tarikh Kursus</strong></td>
-                        @php
-                            \Carbon\Carbon::setLocale('ms');
-                            $mula = \Carbon\Carbon::parse($kursus->kur_tkhmula);
-                            $tamat = \Carbon\Carbon::parse($kursus->kur_tkhtamat);
-                        @endphp
-                        <td>: {{ $mula->translatedFormat('d') }} hingga {{ $tamat->translatedFormat('d F Y') }}</td>
+                        <td><strong>Masa</strong></td>
+                        <td>
+                            : {{ formatMasa($kursus->kur_msamula ?? '') }} -
+                            {{ formatMasa($kursus->kur_msatamat ?? '') }}
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>Tempat</strong></td>
-                        <td>: {{ $kursus->eproTempat->tem_keterangan }}</td>
+                        <td>: {{ $kursus->eproTempat->tem_keterangan ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Anjuran</strong></td>
+                        <td>: {{ $kursus->eproPenganjur->pjr_keterangan ?? '' }}</td>
                     </tr>
                 </table>
             </div>
 
+            <p>
+                Sila ambil maklum bahawa kehadiran ke kursus ini adalah <strong>diwajibkan</strong>.
+                Sebarang perubahan atau pembatalan penyertaan hendaklah dimaklumkan kepada urus setia
+                selewat-lewatnya <strong>14 hari sebelum</strong> tarikh kursus.
+            </p>
+
             <div class="qr-code-container">
                 <p>Sila imbas kod QR ini untuk kehadiran:</p>
-                @if (isset($qrCodeFilePath) && file_exists($qrCodeFilePath))
+                @if (!empty($qrCodeFilePath) && file_exists($qrCodeFilePath))
                     <img src="{{ $message->embed($qrCodeFilePath) }}" alt="Kod QR Kehadiran" class="qr-code-image">
                 @else
-                    <p>Kod QR tidak dapat dipaparkan. Sila hubungi urusetia kursus.</p>
+                    <p><em>Kod QR tidak dapat dipaparkan. Sila hubungi urusetia kursus.</em></p>
                 @endif
             </div>
 
             <p>Sekian, terima kasih.</p>
 
+            <p style="margin: 0;"><strong>Penyelaras Kursus</strong></p>
+            <p style="margin: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
+
             <p style="font-size: 12px; color: #999; text-align: center; margin-top: 40px;">
-                <em>Nota : Emel ini dijana secara automatik, sila jangan balas e-mel ini.</em>
+                <em>Nota: E-mel ini dijana secara automatik. Sila jangan balas.</em>
             </p>
         </div>
     </div>

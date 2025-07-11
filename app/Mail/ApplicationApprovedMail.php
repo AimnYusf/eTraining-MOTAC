@@ -12,22 +12,24 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 // No need for Illuminate\Mail\Mailables\Attachment here, as we're not using attachments()
 
-class QrAttendance extends Mailable
+class ApplicationApprovedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $qrCodeFilePath;
     public $kursus;
+    public $pengguna;
 
     /**
      * Create a new message instance.
      *
      * @param string $qrCodeFilePath The full path to the generated QR code image file.
      */
-    public function __construct($qrCodeFilePath, $kursus)
+    public function __construct($qrCodeFilePath, $kursus, $pengguna)
     {
         $this->qrCodeFilePath = $qrCodeFilePath;
         $this->kursus = $kursus;
+        $this->pengguna = $pengguna;
     }
 
     /**
@@ -38,7 +40,7 @@ class QrAttendance extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your Generated QR Code',
+            subject: 'Pengesahan Permohonan Kursus Berjaya – ' . strtoupper($this->kursus['kur_nama']),
         );
     }
 
@@ -50,7 +52,7 @@ class QrAttendance extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.qr-attendance', // Blade view for the email body
+            view: 'mail.application-approved',
             with: [
                 'qrCodeFilePath' => $this->qrCodeFilePath, // Pass the file path to the view
             ],
@@ -65,12 +67,6 @@ class QrAttendance extends Mailable
     public function afterSend(): void
     {
         // Ensure the file is deleted after the email has been sent.
-        // Convert full path back to storage path if needed, or just delete directly.
-        // Assuming $this->qrCodeFullPath is the absolute path, Storage::delete expects relative to storage disk.
-        // It's safer to delete by full path or pass the storage-relative path.
-        // Let's assume $qrCodePathInStorage (e.g., 'public/qrcodes/qrcode_xxxx.png') was passed instead of full path.
-        // Or, convert $this->qrCodeFullPath back to its Storage relative path.
-
         $relativePath = str_replace(Storage::path(''), '', $this->qrCodeFilePath);
         if (Storage::exists($relativePath)) {
             Storage::delete($relativePath);

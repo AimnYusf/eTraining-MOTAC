@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Pegawai Penyokong
-Route::get('/pengesahan/{id}', [PenyokongController::class, 'show'])->name('pengesahan.show');
+Route::get('/pengesahan/{id}', [PenyokongController::class, 'show'])
+    ->middleware('signed')
+    ->name('pengesahan.show');
 Route::post('/pengesahan', [PenyokongController::class, 'store'])->name('pengesahan.store');
 
 // Dashboard (All Authenticated Users)

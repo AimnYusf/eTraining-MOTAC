@@ -10,11 +10,8 @@ use Illuminate\Support\Facades\Log;
 
 class PenyokongController extends Controller
 {
-    public function show($encryptedId)
+    public function show($id)
     {
-        // Decrypt the permohonan ID
-        $id = Crypt::decrypt($encryptedId);
-
         // Fetch the permohonan with related kursus, tempat, pengguna, jabatan, bahagian & kumpulan
         $permohonan = EproPermohonan::with([
             'eproKursus.eproTempat',

@@ -21,7 +21,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 40px auto;
             background-color: #ffffff;
             border-radius: 5px;
@@ -98,30 +98,56 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: #f0f4f8; padding: 8px;">
     <div class="container">
         <div class="container-header">
             <!-- This header can be used for a logo or a small title if needed, currently empty -->
         </div>
         <div class="content">
-            <div class="header">Set Semula Kata Laluan Anda</div>
+            <div class="header">Tetapan Semula Kata Laluan Sistem [Nama Sistem]</div>
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
 
-            <p>Kami menerima permintaan untuk menetapkan semula kata laluan anda untuk akaun <strong>MOTAC Training &
-                    Management System</strong> anda.</p>
+            <p>YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan,</p>
 
-            <p>Untuk meneruskan penetapan semula kata laluan, sila klik butang di bawah:</p>
+            <p>
+                Untuk menetapkan semula kata laluan akaun YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan, sila klik
+                pautan di bawah:
+            </p>
 
             <p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-                <a href="{{ $url ?? ''}}" target="_blank"
-                    style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
-                    class="btn-verify">Set Semula Kata Laluan</a>
+                @if (!empty($url))
+                    <a href="{{ $url }}" target="_blank"
+                        style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+                        class="btn-verify">Set Semula Kata Laluan</a>
+                @else
+                    <span style="color: red;"><em>Pautan tidak tersedia.</em></span>
+                @endif
+            </p>
+
+            <p>
+                <strong>Nota:</strong> Pautan ini hanya sah dalam tempoh <strong>60 minit</strong> dari masa e-mel
+                ini dihantar.
+            </p>
+
+            <p>
+                Sekiranya YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan tidak membuat permintaan ini, sila abaikan
+                emel ini. Tiada sebarang tindakan akan diambil tanpa pengesahan daripada pihak YBhg. Datuk / Dato’ /
+                YBrs. Dr. / Ts. / Tuan / Puan.
+            </p>
+
+            <p>Sekian, terima kasih.</p>
+
+            <p>
+                Pentadbir Sistem<br>
+                Bahagian Pengurusan Maklumat<br>
+                Kementerian Pelancongan, Seni dan Budaya
             </p>
 
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
-            <p style="text-align: center; font-size: 14px; color: #777;"><em>Jika anda tidak meminta penetapan semula
-                    kata laluan ini, sila abaikan emel ini.</em></p>
+            <p style="text-align: center; font-size: 14px; color: #777;">
+                <em>Jika anda tidak membuat permintaan untuk menetapkan semula kata laluan, sila abaikan emel ini.</em>
+            </p>
         </div>
     </div>
 </body>

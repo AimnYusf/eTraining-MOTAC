@@ -8,11 +8,22 @@
     <div class="container mt-5">
         <div class="card">
             <div class="card-body">
-                <div class="alert alert-secondary small">
-                    Terima kasih kerana mendaftar! Sebelum anda mula, sila sahkan alamat emel anda dengan mengklik pautan
-                    yang telah kami hantar kepada anda. Jika anda tidak menerima emel tersebut, kami sedia menghantarnya
-                    semula.
+                <div class="alert alert-secondary p-4">
+                    <strong>Makluman: Pengaktifan E-mel Pendaftaran Sistem [Nama Sistem]</strong>
+                    <br><br>
+                    YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan,
+                    <br><br>
+                    Dimaklumkan bahawa bagi melengkapkan proses pendaftaran dalam sistem ini, YBhg. Datuk / Dato’ / YBrs.
+                    Dr. / Ts. / Tuan / Puan dikehendaki untuk mengaktifkan e-mel yang telah didaftarkan.
+                    <br><br>
+                    Satu e-mel pengaktifan telah dihantar secara automatik ke alamat e-mel tersebut. Kegagalan untuk
+                    mengaktifkan e-mel ini mungkin akan menjejaskan akses YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan /
+                    Puan ke sistem.
+                    <br><br>
+                    Segala kerjasama yang diberikan dalam perkara ini amat dihargai dan didahului dengan ucapan terima
+                    kasih.
                 </div>
+
 
                 @if (session('status') == 'verification-link-sent')
                     <div class="alert alert-success small">

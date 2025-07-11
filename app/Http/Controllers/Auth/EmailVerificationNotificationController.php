@@ -32,7 +32,7 @@ class EmailVerificationNotificationController extends Controller
         // Generate the verification URL
         $url = URL::temporarySignedRoute(
             'verification.verify',
-            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            now()->addDay(),
             [
                 'id' => $user->getKey(),
                 'hash' => sha1($user->getEmailForVerification()),

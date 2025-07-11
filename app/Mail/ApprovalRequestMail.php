@@ -28,7 +28,7 @@ class ApprovalRequestMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Tindakan Pegawai Penyokong: Permohonan Baharu Untuk Sokongan',
+            subject: 'Tindakan: Permohonan Kursus ' . strtoupper($this->mailData['nama']) . ' Untuk Sokongan',
         );
     }
 
