@@ -236,7 +236,7 @@
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
             <p style="text-align: center; font-size: 14px; color: #777;">
-                <em>Jika anda tidak mendaftar akaun ini, sila abaikan emel ini.</em>
+                <em>Nota : Emel ini dijana secara automatik, sila jangan balas e-mel ini.</em>
             </p>
         </div>
     </div>
