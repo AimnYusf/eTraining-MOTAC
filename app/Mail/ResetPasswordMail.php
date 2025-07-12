@@ -29,7 +29,7 @@ class ResetPasswordMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Tetapan Semula Kata Laluan Sistem [Nama Sistem]',
+            subject: 'Tetapan Semula Kata Laluan Sistem ' . config('app.name'),
         );
     }
 

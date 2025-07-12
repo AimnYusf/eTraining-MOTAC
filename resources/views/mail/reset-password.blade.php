@@ -104,7 +104,7 @@
             <!-- This header can be used for a logo or a small title if needed, currently empty -->
         </div>
         <div class="content">
-            <div class="header">Tetapan Semula Kata Laluan Sistem [Nama Sistem]</div>
+            <div class="header">Tetapan Semula Kata Laluan Sistem {{ config('app.name') }}</div>
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
 
             <p>YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan,</p>
@@ -116,11 +116,11 @@
 
             <p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
                 @if (!empty($url))
-                    <a href="{{ $url }}" target="_blank"
-                        style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
-                        class="btn-verify">Set Semula Kata Laluan</a>
+                <a href="{{ $url }}" target="_blank"
+                    style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+                    class="btn-verify">Set Semula Kata Laluan</a>
                 @else
-                    <span style="color: red;"><em>Pautan tidak tersedia.</em></span>
+                <span style="color: red;"><em>Pautan tidak tersedia.</em></span>
                 @endif
             </p>
 

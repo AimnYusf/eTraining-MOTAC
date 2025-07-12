@@ -146,7 +146,7 @@
             </ul>
 
             <p>Walau bagaimanapun, Tuan/Puan boleh membuat permohonan semula sekiranya kursus ini ditawarkan semula pada
-                masa akan datang atau memilih kursus lain yang bersesuaian melalui Sistem [NAMA SISTEM].</p>
+                masa akan datang atau memilih kursus lain yang bersesuaian melalui Sistem {{ config('app.name') }}.</p>
             <p>Sebarang pertanyaan lanjut boleh diajukan kepada penyelaras/ urus setia kursus di [alamat e-mel atau
                 nombor telefon].</p>
             <p>Segala kerjasama dan perhatian Tuan/Puan amat dihargai.</p>

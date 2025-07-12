@@ -40,7 +40,8 @@ use Illuminate\Support\Facades\Route;
                         <img src="{{ asset('images/logo-kementerian.png') }}" alt="Logo"
                             class="app-brand-logo demo mb-2"
                             style="max-height: 100px; height: auto; width: auto;">
-                        <h4 class="fw-bold">EPROGRAM</h4>
+                        <h4 class="fw-bold mb-0">{{ config('app.name') }}</h4>
+                        <p><em>Sistem Pengurusan Latihan MOTAC</em></p>
                     </div>
                     <!-- /Logo -->
 

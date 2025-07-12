@@ -180,9 +180,9 @@
                     <tr>
                         <td>Tarikh Kursus</td>
                         @php
-                            \Carbon\Carbon::setLocale('ms');
-                            $mula = !empty($kursus['kur_tkhmula']) ? \Carbon\Carbon::parse($kursus['kur_tkhmula']) : null;
-                            $tamat = !empty($kursus['kur_tkhtamat']) ? \Carbon\Carbon::parse($kursus['kur_tkhtamat']) : null;
+                        \Carbon\Carbon::setLocale('ms');
+                        $mula = !empty($kursus['kur_tkhmula']) ? \Carbon\Carbon::parse($kursus['kur_tkhmula']) : null;
+                        $tamat = !empty($kursus['kur_tkhtamat']) ? \Carbon\Carbon::parse($kursus['kur_tkhtamat']) : null;
                         @endphp
                         <td>:
                             <strong>
@@ -199,7 +199,7 @@
             </div>
 
             <p>Sekian, terima kasih.</p>
-            <p><strong>Pentadbir Sistem [Nama Sistem]</strong></p>
+            <p><strong>Pentadbir Sistem {{ config('app.name') }}</strong></p>
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
             <p style="text-align: center; font-size: 14px; color: #777;">

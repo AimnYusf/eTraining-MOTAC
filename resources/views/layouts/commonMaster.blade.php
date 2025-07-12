@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 @php
-  $menuFixed = ($configData['layout'] === 'vertical') ? ($menuFixed ?? '') : (($configData['layout'] === 'front') ? '' : $configData['headerType']);
-  $navbarType = ($configData['layout'] === 'vertical') ? ($configData['navbarType'] ?? '') : (($configData['layout'] === 'front') ? 'layout-navbar-fixed' : '');
-  $isFront = ($isFront ?? '') == true ? 'Front' : '';
-  $contentLayout = (isset($container) ? (($container === 'container-xxl') ? "layout-compact" : "layout-wide") : "");
+$menuFixed = ($configData['layout'] === 'vertical') ? ($menuFixed ?? '') : (($configData['layout'] === 'front') ? '' : $configData['headerType']);
+$navbarType = ($configData['layout'] === 'vertical') ? ($configData['navbarType'] ?? '') : (($configData['layout'] === 'front') ? 'layout-navbar-fixed' : '');
+$isFront = ($isFront ?? '') == true ? 'Front' : '';
+$contentLayout = (isset($container) ? (($container === 'container-xxl') ? "layout-compact" : "layout-wide") : "");
 @endphp
 
 <html lang="{{ session()->get('locale') ?? app()->getLocale() }}"
@@ -19,7 +19,7 @@
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
   <title>@yield('title')
-    {{ config('variables.templateName') ? config('variables.templateName') : 'eProgram' }} - MOTAC
+    {{ config('app.name') }} - MOTAC
   </title>
   <meta name="description"
     content="{{ config('variables.templateDescription') ? config('variables.templateDescription') : '' }}" />

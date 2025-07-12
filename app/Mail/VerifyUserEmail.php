@@ -28,7 +28,7 @@ class VerifyUserEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Pengaktifan Akaun Sistem [Nama Sistem]',
+            subject: 'Pengaktifan Akaun Sistem ' . config('app.name'),
         );
     }
 

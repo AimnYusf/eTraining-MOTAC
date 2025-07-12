@@ -116,13 +116,13 @@
             <!-- This header can be used for a logo or a small title if needed, currently empty -->
         </div>
         <div class="content">
-            <div class="header">Pengaktifan Akaun Sistem [Nama Sistem]</div>
+            <div class="header">Pengaktifan Akaun Sistem {{ config('app.name') }}</div>
 
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
 
             <p>YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan,</p>
 
-            <p>Terima kasih kerana mendaftar dengan <strong>Sistem [Nama Sistem]</strong>.</p>
+            <p>Terima kasih kerana mendaftar dengan <strong>Sistem {{ config('app.name') }}</strong>.</p>
 
             <p>
                 Bagi melengkapkan proses pendaftaran dan mengaktifkan akaun YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan
@@ -131,11 +131,11 @@
 
             <p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
                 @if (!empty($url))
-                    <a href="{{ $url }}" target="_blank"
-                        style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
-                        class="btn-verify">Sahkan Emel</a>
+                <a href="{{ $url }}" target="_blank"
+                    style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+                    class="btn-verify">Sahkan Emel</a>
                 @else
-                    <span style="color: red;"><em>Pautan pengesahan tidak tersedia.</em></span>
+                <span style="color: red;"><em>Pautan pengesahan tidak tersedia.</em></span>
                 @endif
             </p>
 
