@@ -30,7 +30,9 @@ class PenyokongController extends Controller
     public function store(Request $request)
     {
         EproPermohonan::where('per_id', $request->per_id)
-            ->update(['per_status' => $request->per_status]);
+            ->update([
+                'per_status' => $request->per_status,
+                'per_tkhtindakan' => now()->toDateTimeString()
+            ]);
     }
-
 }

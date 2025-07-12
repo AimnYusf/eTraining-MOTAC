@@ -14,6 +14,7 @@ class EproPermohonan extends Model
         'per_idusers',
         'per_idkursus',
         'per_tkhmohon',
+        'per_tkhtindakan',
         'per_pengangkutan',
         'per_makanan',
         'per_status',

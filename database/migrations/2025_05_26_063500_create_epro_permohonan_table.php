@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('per_idusers')->constrained('users')->onDelete('cascade');
             $table->foreignId('per_idkursus')->constrained('epro_kursus', 'kur_id')->onDelete('cascade');
             $table->date('per_tkhmohon')->nullable();
+            $table->date('per_tkhtindakan')->nullable();
             $table->string('per_pengangkutan')->nullable();
             $table->string('per_makanan')->nullable();
             $table->foreignId('per_status')->constrained('epro_status', 'stp_id');
