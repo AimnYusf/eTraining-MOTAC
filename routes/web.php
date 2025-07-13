@@ -5,6 +5,7 @@ use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\KelulusanController;
 use App\Http\Controllers\KursusController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenyokongController;
 use App\Http\Controllers\PermohonanController;
@@ -99,6 +100,10 @@ Route::middleware('auth')->group(function () {
         // Urusetia Pengguna
         Route::resource('/urusetia/pengguna', PenggunaController::class)->names([
             'index' => 'urusetia-pengguna'
+        ]);
+        // Laporan Individu
+        Route::resource('/laporan/individu', LaporanController::class)->names([
+            'index' => 'laporan-individu'
         ]);
     });
 

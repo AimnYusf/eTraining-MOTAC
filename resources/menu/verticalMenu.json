@@ -36,7 +36,7 @@
       "icon": "menu-icon tf-icons ti ti-user-circle",
       "slug": "profil"
     },
-    
+
     {
       "menuHeader": "Pegawai Latihan Bahagian",
       "slug": "plb"
@@ -75,7 +75,7 @@
       "icon": "menu-icon tf-icons ti ti-list-check",
       "slug": "urusetia-permohonan"
     },
-    
+
     {
       "url": "/urusetia/tempat",
       "name": "Senarai Tempat",
@@ -109,7 +109,7 @@
           "slug": "laporan-keseluruhan"
         },
         {
-          "url": "/",
+          "url": "/laporan/individu",
           "name": "Rekod Individu",
           "slug": "laporan-individu"
         }
