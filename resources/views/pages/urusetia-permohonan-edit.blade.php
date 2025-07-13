@@ -1,57 +1,58 @@
 @extends('layouts/layoutMaster')
 
 @section('vendor-style')
-  @vite([
-    'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
-    'resources/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.scss',
-    'resources/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.scss',
-    'resources/assets/vendor/libs/flatpickr/flatpickr.scss',
-    'resources/assets/vendor/libs/bootstrap-select/bootstrap-select.scss',
-    'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss'
-  ])
+@vite([
+'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
+'resources/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.scss',
+'resources/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.scss',
+'resources/assets/vendor/libs/flatpickr/flatpickr.scss',
+'resources/assets/vendor/libs/bootstrap-select/bootstrap-select.scss',
+'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss'
+])
 @endsection
 
 @section('vendor-script')
-  @vite([
-    'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js',
-    'resources/assets/vendor/libs/flatpickr/flatpickr.js',
-    'resources/assets/vendor/libs/bootstrap-select/bootstrap-select.js',
-    'resources/assets/vendor/libs/sweetalert2/sweetalert2.js'
-  ])
+@vite([
+'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js',
+'resources/assets/vendor/libs/flatpickr/flatpickr.js',
+'resources/assets/vendor/libs/bootstrap-select/bootstrap-select.js',
+'resources/assets/vendor/libs/sweetalert2/sweetalert2.js'
+])
 @endsection
 
 @section('page-script')
-  @vite([
-    'resources/assets/js/urusetia-permohonan-edit.js'
-  ])
+@vite([
+'resources/assets/js/urusetia-permohonan-edit.js'
+])
 @endsection
 
 @section('content')
-  <!-- Course List Table -->
-  <div class="card">
-    <div class="card-header">
-    <div class="d-flex justify-content-between">
-      <h5 class="card-title">Senarai Kursus</h5>
+<!-- Course List Table -->
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex align-items-center">
+      <a href="/urusetia/permohonan" class="btn btn-label-primary me-4" data-bs-toggle="tooltip" title="Kembali"><i class="ti ti-arrow-back-up"></i></a>
+      <h5 class="card-title mb-0">{{ $kursus->kur_nama }}</h5>
       <input type="hidden" id="kur_id" value="{{ $kursus->kur_id }}">
     </div>
-    </div>
-    <div class="card-datatable table-responsive">
+  </div>
+  <div class="card-datatable table-responsive">
     <table class="datatables table table-hover">
       <thead class="border-top table-dark">
-      <tr>
-        <th>#</th>
-        <th>NAMA PEMOHON</th>
-        <th>AGENSI</th>
-        <th>TARIKH PERMOHONAN</th>
-        <th>STATUS</th>
-        <th>KELULUSAN</th>
-      </tr>
+        <tr>
+          <th>#</th>
+          <th>NAMA PEMOHON</th>
+          <th>AGENSI</th>
+          <th>TARIKH PERMOHONAN</th>
+          <th>STATUS</th>
+          <th>KELULUSAN</th>
+        </tr>
       </thead>
     </table>
-    </div>
   </div>
-  <!--/ Course List Table -->
+</div>
+<!--/ Course List Table -->
 
-  @include('_partials/_modals/modal-application')
+@include('_partials/_modals/modal-application')
 
 @endsection

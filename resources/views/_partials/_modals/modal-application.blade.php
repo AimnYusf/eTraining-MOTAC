@@ -3,7 +3,6 @@
     <div class="modal-content">
       <div class="modal-header justify-content-center">
         <h5 class="modal-title">MAKLUMAT PERMOHONAN</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <form id="locationForm">
@@ -75,7 +74,7 @@
             </div>
           </section>
 
-          <section>
+          <!-- <section>
             <div class="divider text-start">
               <h5 class="divider-text m-0">TINDAKAN PENTADBIR</h5>
             </div>
@@ -89,14 +88,14 @@
                 </select>
               </div>
             </div>
-          </section>
+          </section> -->
         </div>
 
         <div class="modal-footer justify-content-center">
           <button type="reset" class="btn btn-label-secondary me-2" data-bs-dismiss="modal"
             aria-label="Close">Batal</button>
-          <button type="submit" class="btn btn-primary" aria-label="Close"><i
-              class="ti ti-device-floppy me-2"></i>Kemaskini</button>
+          <!-- <button type="submit" class="btn btn-primary" aria-label="Close"><i
+              class="ti ti-device-floppy me-2"></i>Kemaskini</button> -->
         </div>
       </form>
     </div>

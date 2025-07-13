@@ -50,7 +50,7 @@ $(function () {
         {
           targets: 1,
           render: (data, type, full) => `
-            <span class="view-record text-uppercase" style="cursor: pointer;" data-bs-toggle="tooltip" title="Lihat" data-id="${full.per_id}">
+            <span class="view-record text-uppercase">
               ${data}
             </span>
           `
@@ -76,6 +76,7 @@ $(function () {
           className: 'text-center',
           render: (data, type, full) => `
             <div class="d-inline-block">
+              <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.per_id} data-bs-toggle="tooltip" title="Papar Perincian Pengguna"><i class="ti ti-eye ti-md"></i></button>
               <a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                 <i class="ti ti-dots-vertical ti-md"></i>
               </a>
@@ -127,7 +128,7 @@ $(function () {
       $.get(`/urusetia/permohonan/${permohonanId}`, ({ kursus, pengguna, permohonan }) => {
         $('#per_id').val(permohonan.per_id);
         $('#kur_nama').text(kursus.kur_nama);
-        $('#kur_tarikh').text(`${kursus.kur_tkhmula} hingga ${kursus.kur_tkhtamat}`);
+        $('#kur_tarikh').text(`${formatDate(kursus.kur_tkhmula)} hingga ${formatDate(kursus.kur_tkhtamat)}`);
         $('#kur_tempat').text(kursus.epro_tempat.tem_alamat);
 
         $('#pen_nama').text(pengguna.pen_nama);
@@ -139,7 +140,7 @@ $(function () {
         $('#pen_nohp').text(pengguna.pen_nohp);
         $('#pen_nofaks').text(pengguna.pen_nofaks);
         $('#pen_emel').text(pengguna.pen_emel);
-        $('#per_tkhmohon').text(permohonan.per_tkhmohon);
+        $('#per_tkhmohon').text(formatDate(permohonan.per_tkhmohon));
 
         $('#per_status').val(permohonan.per_status);
         $('#viewRecord').modal('show');
