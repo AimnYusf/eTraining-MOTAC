@@ -46,4 +46,19 @@ class EproPengguna extends Model
     {
         return $this->belongsTo(EproJabatan::class, 'pen_idjabatan', 'jab_id');
     }
+
+    public function eproPermohonan()
+    {
+        return $this->hasMany(EproPermohonan::class, 'per_idusers', 'pen_idusers');
+    }
+
+    public function eproKehadiran()
+    {
+        return $this->hasMany(EproKehadiran::class, 'keh_idusers', 'pen_idusers');
+    }
+
+    public function eproIsytihar()
+    {
+        return $this->hasMany(EproIsytihar::class, 'isy_idusers', 'pen_idusers');
+    }
 }

@@ -17,13 +17,12 @@ class EproIsytihar extends Model
         'isy_jam',
         'isy_tempat',
         'isy_anjuran',
-        'isy_kos',
         'isy_status',
     ];
 
-    public function user()
+    public function eproPengguna()
     {
-        return $this->belongsTo(User::class, 'isy_idusers');
+        return $this->belongsTo(EproPengguna::class, 'isy_idusers', 'pen_idusers');
     }
 
     public function eproStatus()

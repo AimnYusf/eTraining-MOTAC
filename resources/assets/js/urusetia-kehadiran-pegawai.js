@@ -55,7 +55,7 @@ $(function () {
         data: null,
         className: 'text-center',
         render: function (data, type, row) {
-          const attendances = row.user.epro_kehadiran || [];
+          const attendances = row.epro_pengguna.epro_kehadiran || [];
           const attended = attendances.some(item => item.keh_tkhmasuk === isoDate);
           return attended
             ? '<span class="badge badge-center rounded-pill bg-success"><i class="ti ti-check"></i></span>'
@@ -85,7 +85,7 @@ $(function () {
           filter: $('#filter').val()
         })
       },
-      columns: [{ data: 'per_id' }, { data: 'user.name' }, ...dynamicDateColumns],
+      columns: [{ data: 'per_id' }, { data: 'epro_pengguna.pen_nama' }, ...dynamicDateColumns],
       columnDefs: [
         {
           targets: 0,

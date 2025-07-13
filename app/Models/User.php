@@ -69,19 +69,4 @@ class User extends Authenticatable implements MustVerifyEmail
   {
     return $this->hasOne(EproPengguna::class, 'pen_idusers');
   }
-
-  public function eproPermohonan()
-  {
-    return $this->hasMany(EproPermohonan::class, 'per_idusers');
-  }
-
-  public function eproIsytihar()
-  {
-    return $this->hasMany(EproIsytihar::class, 'isy_idusers');
-  }
-
-  public function eproKehadiran()
-  {
-    return $this->hasMany(EproKehadiran::class, 'keh_idusers');
-  }
 }

@@ -34,8 +34,8 @@ $(function () {
       },
       columns: [
         { data: 'per_id' },
-        { data: 'user.name' },
-        { data: 'user.epro_pengguna.epro_jabatan.jab_ketring' },
+        { data: 'epro_pengguna.pen_nama' },
+        { data: 'epro_pengguna.epro_jabatan.jab_ketring' },
         { data: 'per_tkhmohon' },
         { data: 'per_status' },
         { data: '' }

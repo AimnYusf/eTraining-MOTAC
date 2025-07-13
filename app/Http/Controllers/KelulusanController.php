@@ -21,8 +21,8 @@ class KelulusanController extends Controller
         $kelulusan = collect();
 
         if ($bahagian) {
-            $kelulusan = EproIsytihar::with('user.eproPengguna', 'eproStatus')
-                ->whereHas('user.eproPengguna', function ($query) use ($bahagian) {
+            $kelulusan = EproIsytihar::with('eproPengguna', 'eproStatus')
+                ->whereHas('eproPengguna', function ($query) use ($bahagian) {
                     $query->where('pen_idbahagian', $bahagian->bah_id);
                 })
                 ->get();
@@ -39,7 +39,7 @@ class KelulusanController extends Controller
 
     public function show($id)
     {
-        $isytihar = EproIsytihar::with('user.eproPengguna')
+        $isytihar = EproIsytihar::with('eproPengguna')
             ->where('isy_id', $id)->first();
         $pengguna = EproPengguna::with('eproJabatan', 'eproBahagian')
             ->where('pen_idusers', $isytihar->isy_idusers)->first();

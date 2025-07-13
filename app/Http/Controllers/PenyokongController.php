@@ -15,13 +15,13 @@ class PenyokongController extends Controller
         // Fetch the permohonan with related kursus, tempat, pengguna, jabatan, bahagian & kumpulan
         $permohonan = EproPermohonan::with([
             'eproKursus.eproTempat',
-            'user.eproPengguna.eproKumpulan',
-            'user.eproPengguna.eproJabatan',
-            'user.eproPengguna.eproBahagian',
+            'eproPengguna.eproKumpulan',
+            'eproPengguna.eproJabatan',
+            'eproPengguna.eproBahagian',
         ])->findOrFail($id);
 
         // Get pengguna from the permohonan's user
-        $pengguna = $permohonan->user->eproPengguna;
+        $pengguna = $permohonan->eproPengguna;
 
         // Return the view with data
         return view('pages.penyokong-kursus', compact('permohonan', 'pengguna'));

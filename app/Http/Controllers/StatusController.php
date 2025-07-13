@@ -11,7 +11,7 @@ class StatusController extends Controller
 {
     public function index(Request $request)
     {
-        $permohonan = EproPermohonan::with(['user', 'eproKursus', 'eproStatus'])
+        $permohonan = EproPermohonan::with(['eproKursus', 'eproStatus'])
             ->where('per_idusers', Auth::id())
             ->orderBy('per_tkhmohon', 'desc')
             ->get();

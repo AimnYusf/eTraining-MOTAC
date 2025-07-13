@@ -14,13 +14,13 @@ class EproKehadiran extends Model
         'keh_tkhmasuk',
     ];
 
-    public function user()
+    public function eproPengguna()
     {
-        return $this->belongsTo(User::class, 'keh_idusers');
+        return $this->belongsTo(EproPengguna::class, 'keh_idusers', 'pen_idusers');
     }
 
     public function eproKursus()
     {
-        return $this->belongsTo(EproKursus::class, 'keh_id', 'kur_id');
+        return $this->belongsTo(EproKursus::class, 'keh_idkursus', 'kur_id');
     }
 }

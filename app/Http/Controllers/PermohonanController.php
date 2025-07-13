@@ -20,7 +20,7 @@ class PermohonanController extends Controller
         $kid = $request->query('kid');
 
         if ($kid !== null) {
-            $permohonan = EproPermohonan::with('user.eproPengguna.eproJabatan', 'eproStatus')
+            $permohonan = EproPermohonan::with('eproPengguna.eproJabatan', 'eproStatus')
                 ->where('per_idkursus', $kid)
                 ->whereNotIn('per_status', [1, 3])
                 ->get();
@@ -48,9 +48,9 @@ class PermohonanController extends Controller
     public function show(Request $request, $id)
     {
         $permohonan = EproPermohonan::with([
-            'user.eproPengguna.eproKumpulan',
-            'user.eproPengguna.eproBahagian',
-            'user.eproPengguna.eproJabatan',
+            'eproPengguna.eproKumpulan',
+            'eproPengguna.eproBahagian',
+            'eproPengguna.eproJabatan',
             'eproKursus.eproTempat',
             'eproStatus'
         ])
@@ -62,7 +62,7 @@ class PermohonanController extends Controller
             return response()->json(['message' => 'Application not found'], 404);
         }
 
-        $pengguna = $permohonan->user?->eproPengguna;
+        $pengguna = $permohonan->eproPengguna;
         $kursus = $permohonan->eproKursus;
 
         return response()->json([
@@ -74,7 +74,7 @@ class PermohonanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $permohonan = EproPermohonan::with('user.eproPengguna')->find($id);
+        $permohonan = EproPermohonan::with('eproPengguna')->find($id);
 
         if (!$permohonan) {
             return response()->json(['message' => 'Application not found'], 404);
@@ -91,8 +91,8 @@ class PermohonanController extends Controller
                 return $this->generateQR($permohonan, $kursus);
 
             case 5:
-                $userEmail = $permohonan->user->email;
-                Mail::to($userEmail)->queue(new ApplicationFailedMail($kursus));
+                $userEmail = $permohonan->eproPengguna->pen_emel;
+                Mail::to($userEmail)->queue(mailable: new ApplicationFailedMail($kursus));
                 break;
         }
 
@@ -101,8 +101,8 @@ class PermohonanController extends Controller
 
     public function generateQR($permohonan, $kursus)
     {
-        $pengguna = $permohonan->user->eproPengguna;
-        $userEmail = $permohonan->user->email;
+        $pengguna = $permohonan->eproPengguna;
+        $userEmail = $permohonan->eproPengguna->pen_emel;
         $supervisorEmail = $pengguna->pen_ppemel;
 
         $qrCodeFileName = 'qrcode_' . uniqid() . '.png';
@@ -145,5 +145,4 @@ class PermohonanController extends Controller
             ], 500);
         }
     }
-
 }

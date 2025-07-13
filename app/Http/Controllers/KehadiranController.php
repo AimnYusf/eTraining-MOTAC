@@ -18,10 +18,10 @@ class KehadiranController extends Controller
         if ($kid != null) {
             $kursus = EproKursus::where('kur_id', $kid)->first();
             $permohonan = EproPermohonan::with([
-                'user.eproPengguna.eproJabatan',
+                'eproPengguna.eproJabatan',
                 'eproStatus',
                 'eproKursus',
-                'user.eproKehadiran' => function ($query) use ($kid) {
+                'eproPengguna.eproKehadiran' => function ($query) use ($kid) {
                     $query->where('keh_idkursus', $kid);
                 }
             ])
@@ -35,7 +35,7 @@ class KehadiranController extends Controller
                     'data' => $permohonan
                 ]);
             }
-            return view('pages.urusetia-kehadiran-pegawai', compact('kursus', 'permohonan', ));
+            return view('pages.urusetia-kehadiran-pegawai', compact('kursus', 'permohonan',));
         }
 
         return view('pages.urusetia-kehadiran');

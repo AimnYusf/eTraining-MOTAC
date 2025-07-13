@@ -48,7 +48,7 @@
             <select id="keh_idusers" name="keh_idusers" class="form-select selectpicker w-100"
               data-style="btn-default" data-live-search="true" title="Pilih nama pegawai">
               @foreach ($permohonan as $item)
-              <option value="{{ $item->per_idusers }}">{{ $item->user->name }}</option>
+              <option value="{{ $item->per_idusers }}">{{ $item->eproPengguna->pen_nama }}</option>
               @endforeach
             </select>
           </div>
