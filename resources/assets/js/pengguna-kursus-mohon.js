@@ -31,7 +31,8 @@ $(function () {
           success: function (response) {
             Swal.fire({
               icon: 'success',
-              title: 'Permohonan Berjaya!',
+              title: 'Permohonan Diterima!',
+              text: 'Menunggu tindakan sokongan daripada Pegawai Penyokong.',
               customClass: {
                 title: 'm-0',
                 confirmButton: 'btn btn-primary waves-effect waves-light'
