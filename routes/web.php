@@ -102,9 +102,7 @@ Route::middleware('auth')->group(function () {
             'index' => 'urusetia-pengguna'
         ]);
         // Laporan Individu
-        Route::resource('/laporan/individu', LaporanController::class)->names([
-            'index' => 'laporan-individu'
-        ]);
+        Route::get('/laporan/individu', [LaporanController::class, 'rekodIndividu'])->name('laporan-individu');
     });
 
     // ========== Sementara ==========
