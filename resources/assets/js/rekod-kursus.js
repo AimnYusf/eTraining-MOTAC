@@ -107,8 +107,8 @@
       },
       yaxis: {
         min: 0, // Set it to 0 to ensure a proper baseline
-        max: Math.ceil(Math.max(...arrayData) / 10) * 1.5, // or adjust accordingly
-        tickAmount: 6,
+        max: Math.max(...arrayData) % 2 === 0 ? Math.max(...arrayData) : Math.max(...arrayData) + 1,
+        tickAmount: 5,
         labels: {
           offsetX: -15,
           formatter: function (val) {
@@ -165,13 +165,16 @@
     return earningReportBarChartOpt;
   }
 
-  // Init Chart
+  // Init Statistik Kursus
   // --------------------------------------------------------------------
 
-  const data = window.data;
+  const jumlahKursus = window.jumlahKursus;
 
   const earningReportsTabsOrdersEl = document.querySelector('#earningReportsTabsOrders'),
-    earningReportsTabsOrdersConfig = EarningReportsBarChart(data, data.indexOf(Math.max(...data)));
+    earningReportsTabsOrdersConfig = EarningReportsBarChart(
+      jumlahKursus,
+      jumlahKursus.indexOf(Math.max(...jumlahKursus))
+    );
 
   if (typeof earningReportsTabsOrdersEl !== undefined && earningReportsTabsOrdersEl !== null) {
     const earningReportsTabsOrders = new ApexCharts(earningReportsTabsOrdersEl, earningReportsTabsOrdersConfig);

@@ -59,7 +59,7 @@
   <!--/ Record List -->
 
   <!-- Dinamic Table -->
-  @foreach($allRecord as $userId => $attendances)
+  @foreach($rekodKeseluruhan as $userId => $attendances)
     <div class="card mb-8">
 
     <!-- User Information -->
@@ -104,10 +104,9 @@
       @php
 
       // Ensure 'hari' and 'jam' are treated as numbers
-      $hari = (float) ($row['hari'] ?? 0);
-      $jam = (float) ($row['jam'] ?? 0);
-      $increment = $hari + $jam;
-      $jumlah += $increment;
+      $bilangan_hari = (float) ($row['bilangan_hari'] ?? 0);
+      $bilangan_jam = (float) ($row['bilangan_jam'] ?? 0);
+      $jumlah += $bilangan_hari + $bilangan_jam;
 
       // Apply rounding logic
       $decimal = $jumlah - floor($jumlah);
@@ -116,14 +115,14 @@
       }
       @endphp
       <tr>
-      <td class="align-top py-4">{{ $row['kursus'] }}</td>
-      <td class="text-center align-top">{{ Carbon::parse($row['tkh_mula'])->format('d/m/Y') }}</td>
-      <td class="text-center align-top">{{ Carbon::parse($row['tkh_tamat'])->format('d/m/Y') }}</td>
-      <td class="align-top">{{ $row['tempat'] }}</td>
-      <td class="align-top">{{ $row['penganjur'] }}</td>
-      <td class="text-center align-top">{{ $row['hari'] ?? '-' }}</td>
-      <td class="text-center align-top">{{ $row['jam'] ?? '-' }}</td>
-      <td class="text-center align-top">{{ number_format($jumlah, 1) }}</td>
+        <td class="align-top py-4">{{ $row['nama_kursus'] }}</td>
+        <td class="text-center align-top">{{ Carbon::parse($row['tarikh_mula'])->format('d/m/Y') }}</td>
+        <td class="text-center align-top">{{ Carbon::parse($row['tarikh_tamat'])->format('d/m/Y') }}</td>
+        <td class="align-top">{{ $row['tempat'] }}</td>
+        <td class="align-top">{{ $row['penganjur'] }}</td>
+        <td class="text-center align-top">{{ $row['bilangan_hari'] ?? '-' }}</td>
+        <td class="text-center align-top">{{ $row['bilangan_jam'] ?? '-' }}</td>
+        <td class="text-center align-top">{{ number_format($jumlah, 1) }}</td>
       </tr>
     @endforeach
       </tbody>
