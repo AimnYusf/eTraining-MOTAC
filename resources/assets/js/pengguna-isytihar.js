@@ -162,7 +162,7 @@ $(function () {
         if (instance) instance.destroy();
       });
 
-      ['isy_nama', 'isy_tkhmula', 'isy_tkhtamat', 'isy_jam', 'isy_tempat', 'isy_anjuran', 'isy_kos'].forEach(field => {
+      ['isy_nama', 'isy_tkhmula', 'isy_tkhtamat', 'isy_jam', 'isy_tempat', 'isy_anjuran'].forEach(field => {
         const value = ['isy_tkhmula', 'isy_tkhtamat'].includes(field) ? formatDate(data[field]) : data[field];
         $(`#${field}`).val(value).prop('readonly', true);
       });

@@ -34,7 +34,7 @@ $(function () {
       },
       columns: [
         { data: 'isy_id' },
-        { data: 'user.name' },
+        { data: 'epro_pengguna.pen_nama' },
         { data: 'isy_nama' },
         { data: 'isy_tkhmula' },
         { data: 'isy_tkhtamat' },
@@ -157,7 +157,6 @@ $(function () {
         $('#isy_tarikh').text(`${formatDate(isytihar.isy_tkhmula)} hingga ${formatDate(isytihar.isy_tkhtamat)}`);
         $('#isy_tempat').text(isytihar.isy_tempat);
         $('#isy_anjuran').text(isytihar.isy_anjuran);
-        $('#isy_kos').text(`RM ${isytihar.isy_kos}.00`);
 
         $('#pen_nama').text(pengguna.pen_nama);
         $('#pen_nokp').text(pengguna.pen_nokp);
