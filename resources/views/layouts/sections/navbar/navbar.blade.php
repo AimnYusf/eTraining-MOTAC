@@ -31,10 +31,10 @@ $navbarDetached = ($navbarDetached ?? '');
         <div class="navbar-nav align-items-center">
           <div class="nav-item d-flex align-items-center">
             <select id="role_filter" class="form-select">
-              <option value="guest" {{ Auth::user()->role == 'guest' ? 'selected' : '' }}>Guest</option>
-              <option value="user" {{ Auth::user()->role == 'user' ? 'selected' : '' }}>User</option>
-              <option value="supervisor" {{ Auth::user()->role == 'supervisor' ? 'selected' : '' }}>Supervisor</option>
-              <option value="administrator" {{ Auth::user()->role == 'administrator' ? 'selected' : '' }}>Admin</option>
+              <option value="guest" {{ Auth::user()->role == 'guest' ? 'selected' : '' }}>Pengguna Baru</option>
+              <option value="user" {{ Auth::user()->role == 'user' ? 'selected' : '' }}>Pengguna</option>
+              <option value="supervisor" {{ Auth::user()->role == 'supervisor' ? 'selected' : '' }}>Pegawai Penyelia</option>
+              <option value="administrator" {{ Auth::user()->role == 'administrator' ? 'selected' : '' }}>Pentadbir</option>
             </select>
           </div>
         </div>
