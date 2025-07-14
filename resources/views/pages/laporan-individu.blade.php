@@ -33,7 +33,6 @@
 
       {{-- Select Tahun --}}
       <select name="tahun" class="selectpicker w-25" data-style="btn-default" onchange="this.form.submit()">
-        <option value="">Semua Tahun</option>
         @foreach(range(2025, now()->year) as $year)
       <option value="{{ $year }}" {{ request('tahun', now()->year) == $year ? 'selected' : '' }}>
       {{ $year }}
@@ -44,9 +43,8 @@
       {{-- Select Bahagian --}}
       <select class="selectpicker w-75 ms-3 me-3" name="bahagian" data-style="btn-default"
         onchange="this.form.submit()">
-        <option value="">Semua Bahagian</option>
         @foreach ($bahagian as $item)
-      <option value="{{ $item->bah_id }}" {{ request('bahagian') == $item->bah_id ? 'selected' : '' }}>
+      <option value="{{ $item->bah_id }}" {{ request('bahagian', $dataPengguna->pen_idbahagian) == $item->bah_id ? 'selected' : '' }}>
       {{ $item->bah_ketpenu }}
       </option>
       @endforeach
@@ -59,7 +57,7 @@
   <!--/ Record List -->
 
   <!-- Dinamic Table -->
-  @foreach($rekodKeseluruhan as $userId => $attendances)
+  @foreach($rekodIndividu as $userId => $attendances)
     <div class="card mb-8">
 
     <!-- User Information -->

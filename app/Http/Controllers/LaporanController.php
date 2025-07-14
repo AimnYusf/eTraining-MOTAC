@@ -100,8 +100,9 @@ class LaporanController extends Controller
         // Combine and standardize the data structure
         $rekodKeseluruhan = collect();
 
-        $rekodKehadiran->map(function ($item) use ($rekodKeseluruhan) {
-            $rekodKeseluruhan->push([
+        // Use a helper function for consistent mapping
+        $mapRecord = function ($item) {
+            return [
                 'id_pengguna' => $item->id_pengguna,
                 'nama' => $item->nama,
                 'jawatan' => $item->jawatan,
@@ -115,53 +116,39 @@ class LaporanController extends Controller
                 'penganjur' => $item->penganjur,
                 'bilangan_jam' => (float) $item->bilangan_jam,
                 'bilangan_hari' => (float) $item->bilangan_hari,
-            ]);
-        });
+            ];
+        };
 
-        $rekodIsytihar->map(function ($item) use ($rekodKeseluruhan) {
-            $rekodKeseluruhan->push([
-                'id_pengguna' => $item->id_pengguna,
-                'nama' => $item->nama,
-                'jawatan' => $item->jawatan,
-                'gred' => $item->gred,
-                'kumpulan' => $item->kumpulan,
-                'id_bahagian' => $item->id_bahagian,
-                'nama_kursus' => $item->nama_kursus,
-                'tarikh_mula' => $item->tarikh_mula,
-                'tarikh_tamat' => $item->tarikh_tamat,
-                'tempat' => $item->tempat,
-                'penganjur' => $item->penganjur,
-                'bilangan_jam' => (float) $item->bilangan_jam,
-                'bilangan_hari' => (float) $item->bilangan_hari,
-            ]);
-        });
+        $rekodKehadiran->each(fn($item) => $rekodKeseluruhan->push($mapRecord($item)));
+        $rekodIsytihar->each(fn($item) => $rekodKeseluruhan->push($mapRecord($item)));
 
-        return $rekodKeseluruhan->groupBy('id_pengguna');
+        return $rekodKeseluruhan;
     }
 
     /**
      * Calculates the total number of applications and their statuses for the authenticated user.
      *
+     * @param int|null $tahunCarian
      * @return object
      */
-    private function getAllApplication($tahunCarian)
+    private function getAllApplication(?int $tahunCarian = null)
     {
         $idPengguna = Auth::id();
         $tahun = $tahunCarian ?? Carbon::now()->year;
 
-        $permohonanUnion = EproPermohonan::query()
+        $permohonanQuery = EproPermohonan::query()
             ->select('per_status as status')
             ->where('per_idusers', $idPengguna)
             ->whereYear('per_tkhmohon', $tahun);
 
-        $isytiharUnion = EproIsytihar::query()
+        $isytiharQuery = EproIsytihar::query()
             ->select('isy_status as status')
             ->where('isy_idusers', $idPengguna)
             ->whereYear('isy_tkhmula', $tahun);
 
         // Combine both queries using unionAll and then perform aggregations
         $jumlahPermohonan = DB::query()
-            ->fromSub($permohonanUnion->unionAll($isytiharUnion), 'gabungan')
+            ->fromSub($permohonanQuery->unionAll($isytiharQuery), 'gabungan')
             ->selectRaw('COUNT(*) as jumlah')
             ->selectRaw('SUM(CASE WHEN status IN (1, 2) THEN 1 ELSE 0 END) as dalam_proses')
             ->selectRaw('SUM(CASE WHEN status = 4 THEN 1 ELSE 0 END) as berjaya')
@@ -180,27 +167,31 @@ class LaporanController extends Controller
     public function rekodKursus(Request $request)
     {
         $idPengguna = Auth::id();
-        $tahunCarian = $request->input('tahun') ?? Carbon::now()->year; // Default to current year
+        $tahunCarian = $request->input('tahun') ?? Carbon::now()->year;
 
-        // Flatten the collection and filter by user ID and year
+        // Filter by user ID and year
         $rekodKeseluruhan = $this->getAllRecord()
-            ->flatMap(fn($records) => $records) // Flatten the grouped collection
-            ->filter(fn($rekod) => $rekod['id_pengguna'] == $idPengguna && Carbon::parse($rekod['tarikh_mula'])->year == $tahunCarian);
+            ->filter(
+                fn($rekod) =>
+                $rekod['id_pengguna'] == $idPengguna &&
+                    Carbon::parse($rekod['tarikh_mula'])->year == $tahunCarian
+            );
 
         // Calculate monthly totals for statistics
         $jumlahKursus = array_fill(0, 12, 0);
         foreach ($rekodKeseluruhan as $item) {
-            $indeksBulan = Carbon::parse($item['tarikh_mula'])->month - 1; // Month is 1-indexed, array is 0-indexed
+            $indeksBulan = Carbon::parse($item['tarikh_mula'])->month - 1;
             $hari = (float) ($item['bilangan_hari'] ?? 0);
             $jam = (float) ($item['bilangan_jam'] ?? 0);
 
-            $jumlahKursus[$indeksBulan] += $hari + $jam;
+            $calculatedValue = $hari + $jam;
+            $decimal = $calculatedValue - floor($calculatedValue);
 
             // Adjust for decimal if it's 0.6 or more, effectively rounding up for display if needed
-            $perpuluhan = $jumlahKursus[$indeksBulan] - floor($jumlahKursus[$indeksBulan]);
-            if ($perpuluhan >= 0.6) {
-                $jumlahKursus[$indeksBulan] += 0.4;
+            if ($decimal >= 0.6) {
+                $calculatedValue += 0.4;
             }
+            $jumlahKursus[$indeksBulan] += $calculatedValue;
         }
 
         $jumlahPermohonan = $this->getAllApplication($tahunCarian);
@@ -214,26 +205,70 @@ class LaporanController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
      */
-    public function rekodIndividu(Request $request)
+    public function rekodKeseluruhan(Request $request)
     {
-        $idBahagianCarian = $request->input('bahagian');
-        $tahunCarian = $request->input('tahun') ?? Carbon::now()->year; // Default to current year
-
         $dataPengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
-        $bahagian = EproBahagian::all(); // Use all() to get all records
+        $bahagian = EproBahagian::all();
+
+        $idBahagianCarian = $request->input('bahagian') ?? $dataPengguna->pen_idbahagian;
+        $tahunCarian = $request->input('tahun') ?? Carbon::now()->year;
 
         $rekodKeseluruhan = $this->getAllRecord()
-            ->flatMap(fn($records) => $records) // Flatten the grouped collection
-            ->filter(fn($item) => Carbon::parse($item['tarikh_mula'])->year == $tahunCarian); // Filter by year first
+            ->filter(
+                fn($item) =>
+                Carbon::parse($item['tarikh_mula'])->year == $tahunCarian &&
+                    $item['id_bahagian'] == $idBahagianCarian
+            )
+            ->groupBy('id_pengguna')
+            ->map(function ($userData) {
+                $jumlah_hari = 0;
+                foreach ($userData as $record) {
+                    $bilangan_hari = (float) ($record['bilangan_hari'] ?? 0);
+                    $bilangan_jam = (float) ($record['bilangan_jam'] ?? 0);
+                    $calculatedValue = $bilangan_hari + $bilangan_jam;
 
-        // Filter by division if a division is selected
-        if ($idBahagianCarian) {
-            $rekodKeseluruhan = $rekodKeseluruhan->filter(fn($item) => $item['id_bahagian'] == $idBahagianCarian);
-        }
+                    $decimal = $calculatedValue - floor($calculatedValue);
+                    if ($decimal >= 0.6) {
+                        $calculatedValue += 0.4;
+                    }
+                    $jumlah_hari += $calculatedValue;
+                }
+                return [
+                    'nama' => $userData->first()['nama'],
+                    'jawatan' => $userData->first()['jawatan'],
+                    'gred' => $userData->first()['gred'],
+                    'kumpulan' => $userData->first()['kumpulan'],
+                    'jumlah_hari' => $jumlah_hari
+                ];
+            })
+            ->values()
+            ->all();
 
-        // Re-group by user_id after filtering for display if needed
-        $rekodKeseluruhan = $rekodKeseluruhan->groupBy('id_pengguna');
+        return view('pages.laporan-keseluruhan', compact('bahagian', 'rekodKeseluruhan', 'dataPengguna'));
+    }
 
-        return view('pages.laporan-individu', compact('rekodKeseluruhan', 'bahagian', 'dataPengguna'));
+    /**
+     * Displays individual records, filterable by division and year.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+     */
+    public function rekodIndividu(Request $request)
+    {
+        $dataPengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
+        $bahagian = EproBahagian::all();
+
+        $idBahagianCarian = $request->input('bahagian') ?? $dataPengguna->pen_idbahagian;
+        $tahunCarian = $request->input('tahun') ?? Carbon::now()->year;
+
+        $rekodIndividu = $this->getAllRecord()
+            ->filter(
+                fn($item) =>
+                Carbon::parse($item['tarikh_mula'])->year == $tahunCarian &&
+                    $item['id_bahagian'] == $idBahagianCarian
+            )
+            ->groupBy('id_pengguna');
+
+        return view('pages.laporan-individu', compact('rekodIndividu', 'bahagian', 'dataPengguna'));
     }
 }

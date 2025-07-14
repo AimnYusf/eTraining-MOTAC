@@ -104,7 +104,7 @@
           "slug": "laporan-ringkasan"
         },
         {
-          "url": "/",
+          "url": "/laporan/keseluruhan",
           "name": "Rekod Keseluruhan",
           "slug": "laporan-keseluruhan"
         },
