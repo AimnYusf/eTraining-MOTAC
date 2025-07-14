@@ -6,6 +6,9 @@ $(function () {
     const [year, month, day] = dateStr.split('-');
     return `${day}/${month}/${year}`;
   }
+  function getPageLengthByResolution() {
+    return window.innerWidth <= 1440 ? 3 : 4;
+  }
 
   var table = $('.data-list').DataTable({
     ajax: {
@@ -28,13 +31,13 @@ $(function () {
         data: 'category',
         render: function (data, type, row) {
           return `
-          <div class="card p-2 h-100 shadow-none border">
+          <div class="card p-2 h-100 shadow-none border d-flex flex-column">
             <div class="rounded-2 text-center mb-4" style="aspect-ratio: 1 / 1.414; width: 100%; max-width: 600px; margin: auto;">
               <a href="">
                 <img class="img-fluid w-100 h-100 object-fit-cover" src="${row.kur_poster}" alt="tutor image 1" />
               </a>
             </div>
-            <div class="card-body p-4 pt-2">
+            <div class="card-body p-4 pt-2 d-flex flex-column flex-grow-1">
               <h5>${row.kur_nama}</h5>
               <hr>
               <h6 class="mb-1 fw-bold">
@@ -44,8 +47,8 @@ $(function () {
               <h6 class="mb-1 fw-bold">
                 <i class="ti ti-user-cog me-2 align-top"></i> Anjuran
               </h6>
-              <p>${row.epro_penganjur.pjr_keterangan}</p>
-              <a class="w-100 btn btn-label-primary d-flex align-items-center" href="/kursus?kid=${row.kur_id}">
+              <p class="mb-4">${row.epro_penganjur.pjr_keterangan}</p>
+              <a class="w-100 btn btn-label-primary d-flex align-items-center mt-auto" href="/kursus?kid=${row.kur_id}">
                 <span class="me-2">Maklumat Lanjut</span>
                 <i class="ti ti-chevron-right ti-xs scaleX-n1-rtl"></i>
               </a>
@@ -64,7 +67,7 @@ $(function () {
       '<"col-sm-12 col-md-6"i>' +
       '<"col-sm-12 col-md-6"p>' +
       '>',
-    pageLength: 4,
+    pageLength: getPageLengthByResolution(),
     language: {
       sLengthMenu: '_MENU_',
       search: '',
