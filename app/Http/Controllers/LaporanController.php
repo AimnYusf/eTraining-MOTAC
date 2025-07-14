@@ -162,6 +162,44 @@ class LaporanController extends Controller
         return $allRecord;
     }
 
+    public function rekodKursus(Request $request)
+    {
+        $userId = Auth::id();
+        $cariTahun = $request->input('tahun') ?? now()->year; // Default to current year
+
+        $myRecord = $this->getRecord()->flatMap(function ($records) {
+            return $records;
+        });
+
+        // Show only data of current user
+        $myRecord = $myRecord->filter(function ($records) use ($userId) {
+            return $records['user_id'] == $userId;
+        });
+
+        // Filter by year
+        $myRecord = $myRecord->filter(function ($records) use ($cariTahun) {
+            return \Carbon\Carbon::parse($records['tkh_mula'])->format('Y') == $cariTahun;
+        });
+
+        // Get statistic data
+        $monthlyTotals = array_fill(0, 12, 0);
+        foreach ($myRecord as $item) {
+            $monthIndex = \Carbon\Carbon::parse($item['tkh_mula'])->month - 1;
+            $hari = (float) ($item['hari'] ?? 0);
+            $jam = (float) ($item['jam'] ?? 0);
+
+            $monthlyTotals[$monthIndex - 1] += $hari + $jam;
+            $decimal = $monthlyTotals[$monthIndex - 1] - floor($monthlyTotals[$monthIndex - 1]);
+            if ($decimal >= 0.6) {
+                $monthlyTotals[$monthIndex - 1] += 0.4;
+            }
+        }
+
+        Log::info($myRecord->toArray());
+        return view('pages.rekod-kursus', compact('myRecord', 'monthlyTotals'));
+    }
+
+
     public function rekodIndividu(Request $request)
     {
         $cariBahagian = $request->input('bahagian');
@@ -174,7 +212,7 @@ class LaporanController extends Controller
             return $records;
         });
 
-        // Always filter by year (default is current year)
+        // Filter by year (default is current year)
         $allRecord = $allRecord->filter(function ($item) use ($cariTahun) {
             return \Carbon\Carbon::parse($item['tkh_mula'])->format('Y') == $cariTahun;
         });
@@ -188,7 +226,6 @@ class LaporanController extends Controller
 
         // Group by user_id if needed
         $allRecord = $allRecord->groupBy('user_id');
-        Log::info($allRecord->toArray());
 
         return view('pages.laporan-individu', compact('allRecord', 'bahagian', 'pengguna'));
     }

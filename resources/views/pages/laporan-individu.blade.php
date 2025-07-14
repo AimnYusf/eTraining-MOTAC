@@ -14,12 +14,6 @@
   ])
 @endsection
 
-@section('page-script')
-  @vite([
-    'resources/assets/js/pengguna-kursus.js'
-  ])
-@endsection
-
 @php
   use Carbon\Carbon;
 @endphp

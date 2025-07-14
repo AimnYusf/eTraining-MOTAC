@@ -35,9 +35,9 @@
 
         $allowed = match ($role) {
         'guest' => in_array($menu->slug, ['dashboard', 'profil']),
-        'user' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod', 'profil']),
-        'supervisor' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod', 'profil', 'plb', 'plb-kelulusan', 'plb-rekod-baru', 'plb-rekod-pegawai']),
-        'administrator' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod', 'profil', 'pentadbir', 'urusetia-kursus', 'urusetia-permohonan', 'urusetia-tempat', 'urusetia-kehadiran', 'laporan', 'laporan-kumpulan', 'laporan-ringkasan', 'laporan-keseluruhan', 'laporan-individu', 'urusetia-pengguna']),
+        'user' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod-kursus', 'profil']),
+        'supervisor' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod-kursus', 'profil', 'plb', 'plb-kelulusan', 'plb-rekod-baru', 'plb-rekod-pegawai']),
+        'administrator' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod-kursus', 'profil', 'pentadbir', 'urusetia-kursus', 'urusetia-permohonan', 'urusetia-tempat', 'urusetia-kehadiran', 'laporan', 'laporan-kumpulan', 'laporan-ringkasan', 'laporan-keseluruhan', 'laporan-individu', 'urusetia-pengguna']),
 
         default => true
         };

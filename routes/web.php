@@ -101,6 +101,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/urusetia/pengguna', PenggunaController::class)->names([
             'index' => 'urusetia-pengguna'
         ]);
+        // Rekod Kursus
+        Route::get('/rekod/kursus', [LaporanController::class, 'rekodKursus'])->name('rekod-kursus');
         // Laporan Individu
         Route::get('/laporan/individu', [LaporanController::class, 'rekodIndividu'])->name('laporan-individu');
     });

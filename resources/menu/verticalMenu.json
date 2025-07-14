@@ -25,10 +25,10 @@
       "slug": "isytihar"
     },
     {
-      "url": "/",
+      "url": "/rekod/kursus",
       "name": "Rekod Kursus",
       "icon": "menu-icon tf-icons ti ti-report",
-      "slug": "rekod"
+      "slug": "rekod-kursus"
     },
     {
       "url": "/profil",
