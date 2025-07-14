@@ -33,10 +33,6 @@
             <label class="form-label" for="isy_anjuran">Anjuran</label>
             <input type="text" id="isy_anjuran" class="form-control" name="isy_anjuran" placeholder="Anjuran" />
           </div>
-          <div class="col-12 validate">
-            <label class="form-label" for="isy_kos">Kos (RM)</label>
-            <input type="number" id="isy_kos" class="form-control" name="isy_kos" placeholder="Kos (RM)" />
-          </div>
           <div class="col-12 text-center validate">
             <button type="reset" class="close-btn btn btn-label-secondary me-3" data-bs-dismiss="modal"
               aria-label="Close">Batal</button>

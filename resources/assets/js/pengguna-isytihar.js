@@ -202,11 +202,6 @@ $(function () {
           validators: {
             notEmpty: { message: 'Sila masukkan penganjur kursus' }
           }
-        },
-        isy_kos: {
-          validators: {
-            notEmpty: { message: 'Sila masukkan kos kursus' }
-          }
         }
       },
       plugins: {
