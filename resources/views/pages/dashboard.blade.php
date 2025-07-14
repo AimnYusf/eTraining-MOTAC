@@ -130,8 +130,7 @@ use Illuminate\Support\Facades\Auth;
                 </h5>
 
                 <p class="small">
-                    Sistem ini dibangunkan untuk memudahkan penjawat awam membuat permohonan kursus dan menyemak status
-                    permohonan dengan lebih efisien.
+                    Sistem eTraining merupakan sebuah platform digital yang dibangunkan bagi menyelaras, merekod dan memantau pelaksanaan program latihan dan kursus secara lebih sistematik, cekap dan telus.
                 </p>
 
                 @if(Auth::user()->role === 'guest')

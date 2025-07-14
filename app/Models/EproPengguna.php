@@ -16,6 +16,7 @@ class EproPengguna extends Model
         'pen_emel',
         'pen_notel',
         'pen_nohp',
+        'pen_nofaks',
         'pen_jawatan',
         'pen_gred',
         'pen_idkumpulan',

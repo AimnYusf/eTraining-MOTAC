@@ -95,6 +95,13 @@
         </div>
         </div>
         <div class="row mb-5">
+        <label for="pen_nofaks" class="col-md-3 col-form-label">No. Faksimili</label>
+        <div class="col-md-9">
+          <input type="text" id="pen_nofaks" class="form-control" name="pen_nofaks"
+          value="{{ $pengguna->pen_nofaks ?? ''}}" placeholder="No. Faksimili" />
+        </div>
+        </div>
+        <div class="row mb-5">
         <label for="pen_idbahagian" class="col-md-3 col-form-label">Bahagian <span
           class="text-danger">*</span></label>
         <div class="col-md-9">

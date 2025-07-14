@@ -115,20 +115,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
               }
             }
           },
-          pen_kjnama: {
-            validators: {
-              notEmpty: {
-                message: 'Sila masukkan nama ketua jabatan'
-              }
-            }
-          },
-          pen_kjgelaran: {
-            validators: {
-              notEmpty: {
-                message: 'Sila masukkan gelaran ketua jabatan'
-              }
-            }
-          },
           pen_kjemel: {
             validators: {
               notEmpty: {
