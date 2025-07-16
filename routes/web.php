@@ -103,6 +103,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/urusetia/pengguna', PenggunaController::class)->names([
             'index' => 'urusetia-pengguna'
         ]);
+        // Laporan Bahagian
+        Route::get('/laporan/bahagian', [LaporanController::class, 'rekodBahagian'])->name('laporan-bahagian');
         // Laporan Keseluruhan
         Route::get('/laporan/keseluruhan', [LaporanController::class, 'rekodKeseluruhan'])->name('laporan-keseluruhan');
         // Laporan Individu

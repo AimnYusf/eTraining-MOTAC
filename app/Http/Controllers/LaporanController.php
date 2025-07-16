@@ -29,12 +29,14 @@ class LaporanController extends Controller
             ->join('epro_tempat', 'epro_kursus.kur_idtempat', '=', 'epro_tempat.tem_id')
             ->join('epro_penganjur', 'epro_kursus.kur_idpenganjur', '=', 'epro_penganjur.pjr_id')
             ->join('epro_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'epro_kumpulan.kum_id')
+            ->join('epro_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'epro_bahagian.bah_id')
             ->select(
                 'epro_kehadiran.keh_idusers as id_pengguna',
                 'epro_pengguna.pen_nama as nama',
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
                 'epro_kumpulan.kum_keterangan as kumpulan',
+                'epro_bahagian.bah_ketring as bahagian',
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 'epro_kursus.kur_nama as nama_kursus',
                 'epro_kursus.kur_tkhmula as tarikh_mula',
@@ -50,6 +52,7 @@ class LaporanController extends Controller
                 'epro_pengguna.pen_jawatan',
                 'epro_pengguna.pen_gred',
                 'epro_kumpulan.kum_keterangan',
+                'epro_bahagian.bah_ketring',
                 'epro_pengguna.pen_idbahagian',
                 'epro_kursus.kur_nama',
                 'epro_kursus.kur_tkhmula',
@@ -64,12 +67,14 @@ class LaporanController extends Controller
         $isytiharQuery = EproIsytihar::query()
             ->join('epro_pengguna', 'epro_isytihar.isy_idusers', '=', 'epro_pengguna.pen_idusers')
             ->join('epro_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'epro_kumpulan.kum_id')
+            ->join('epro_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'epro_bahagian.bah_id')
             ->select(
                 'epro_isytihar.isy_idusers as id_pengguna',
                 'epro_pengguna.pen_nama as nama',
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
                 'epro_kumpulan.kum_keterangan as kumpulan',
+                'epro_pengguna.pen_idbahagian as id_bahagian',
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 'epro_isytihar.isy_nama as nama_kursus',
                 'epro_isytihar.isy_tkhmula as tarikh_mula',
@@ -85,6 +90,7 @@ class LaporanController extends Controller
                 'epro_pengguna.pen_jawatan',
                 'epro_pengguna.pen_gred',
                 'epro_kumpulan.kum_keterangan',
+                'epro_bahagian.bah_ketring',
                 'epro_pengguna.pen_idbahagian',
                 'epro_isytihar.isy_nama',
                 'epro_isytihar.isy_tkhmula',
@@ -108,6 +114,7 @@ class LaporanController extends Controller
                 'jawatan' => $item->jawatan,
                 'gred' => $item->gred,
                 'kumpulan' => $item->kumpulan,
+                'bahagian' => $item->bahagian,
                 'id_bahagian' => $item->id_bahagian,
                 'nama_kursus' => $item->nama_kursus,
                 'tarikh_mula' => $item->tarikh_mula,
@@ -127,12 +134,14 @@ class LaporanController extends Controller
 
         // Check for missing users who typically don't attend any courses.
         $pengguna = EproPengguna::join('epro_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'epro_kumpulan.kum_id')
+            ->join('epro_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'epro_bahagian.bah_id')
             ->select(
                 'epro_pengguna.pen_idusers as id_pengguna',
                 'epro_pengguna.pen_nama as nama',
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
                 'epro_kumpulan.kum_keterangan as kumpulan',
+                'epro_bahagian.bah_ketring',
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 DB::raw('NULL as nama_kursus'),
                 DB::raw('NULL as tarikh_mula'),
@@ -148,6 +157,7 @@ class LaporanController extends Controller
                 'epro_pengguna.pen_jawatan',
                 'epro_pengguna.pen_gred',
                 'epro_kumpulan.kum_keterangan',
+                'epro_bahagian.bah_ketring',
                 'epro_pengguna.pen_idbahagian'
             )->get();
 
@@ -165,32 +175,12 @@ class LaporanController extends Controller
      * @param int|null $tahunCarian
      * @return object
      */
-    private function getAllApplication(?int $tahunCarian = null)
-    {
-        $idPengguna = Auth::id();
-        $tahun = $tahunCarian ?? Carbon::now()->year;
+    // private function getAllApplication(?int $tahunCarian = null)
+    // {
 
-        $permohonanQuery = EproPermohonan::query()
-            ->select('per_status as status')
-            ->where('per_idusers', $idPengguna)
-            ->whereYear('per_tkhmohon', $tahun);
 
-        $isytiharQuery = EproIsytihar::query()
-            ->select('isy_status as status')
-            ->where('isy_idusers', $idPengguna)
-            ->whereYear('isy_tkhmula', $tahun);
-
-        // Combine both queries using unionAll and then perform aggregations
-        $jumlahPermohonan = DB::query()
-            ->fromSub($permohonanQuery->unionAll($isytiharQuery), 'gabungan')
-            ->selectRaw('COUNT(*) as jumlah')
-            ->selectRaw('SUM(CASE WHEN status IN (1, 2) THEN 1 ELSE 0 END) as dalam_proses')
-            ->selectRaw('SUM(CASE WHEN status = 4 THEN 1 ELSE 0 END) as berjaya')
-            ->selectRaw('SUM(CASE WHEN status IN (3, 5) THEN 1 ELSE 0 END) as tidak_berjaya')
-            ->first();
-
-        return $jumlahPermohonan;
-    }
+    //     return $jumlahPermohonan;
+    // }
 
     /**
      * Displays the course records for the current user, filtered by year.
@@ -228,13 +218,115 @@ class LaporanController extends Controller
             $jumlahKursus[$indeksBulan] += $calculatedValue;
         }
 
-        $jumlahPermohonan = $this->getAllApplication($tahunCarian);
+        $idPengguna = Auth::id();
+        $tahun = $tahunCarian ?? Carbon::now()->year;
+
+        $permohonanQuery = EproPermohonan::query()
+            ->select('per_status as status')
+            ->where('per_idusers', $idPengguna)
+            ->whereYear('per_tkhmohon', $tahun);
+
+        $isytiharQuery = EproIsytihar::query()
+            ->select('isy_status as status')
+            ->where('isy_idusers', $idPengguna)
+            ->whereYear('isy_tkhmula', $tahun);
+
+        // Combine both queries using unionAll and then perform aggregations
+        $jumlahPermohonan = DB::query()
+            ->fromSub($permohonanQuery->unionAll($isytiharQuery), 'gabungan')
+            ->selectRaw('COUNT(*) as jumlah')
+            ->selectRaw('SUM(CASE WHEN status IN (1, 2) THEN 1 ELSE 0 END) as dalam_proses')
+            ->selectRaw('SUM(CASE WHEN status = 4 THEN 1 ELSE 0 END) as berjaya')
+            ->selectRaw('SUM(CASE WHEN status IN (3, 5) THEN 1 ELSE 0 END) as tidak_berjaya')
+            ->first();
 
         return view('pages.rekod-kursus', compact('rekodKeseluruhan', 'jumlahKursus', 'jumlahPermohonan'));
     }
 
     /**
-     * Displays individual records, filterable by division and year.
+     * Displays overall records, filterable by division and year.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+     */
+    public function rekodBahagian(Request $request)
+    {
+        $tahunCarian = $request->input('tahun') ?? Carbon::now()->year;
+        $bahagian = EproBahagian::get();
+
+        $rekodKeseluruhan = $this->getAllRecord()
+            ->filter(fn($item) => Carbon::parse($item['tarikh_mula'])->year == $tahunCarian)
+            ->groupBy('id_pengguna')
+            ->map(function ($userData) {
+                $jumlah_hari = 0;
+                foreach ($userData as $record) {
+                    $bilangan_hari = (float) ($record['bilangan_hari'] ?? 0);
+                    $bilangan_jam = (float) ($record['bilangan_jam'] ?? 0);
+                    $calculatedValue = $bilangan_hari + $bilangan_jam;
+
+                    $decimal = $calculatedValue - floor($calculatedValue);
+                    if ($decimal >= 0.6) {
+                        $calculatedValue += 0.4;
+                    }
+
+                    $jumlah_hari += $calculatedValue;
+                }
+
+                return [
+                    'id_pengguna' => $userData->first()['id_pengguna'],
+                    'id_bahagian' => $userData->first()['id_bahagian'],
+                    'jumlah_hari' => $jumlah_hari,
+                ];
+            })
+            ->groupBy('id_bahagian')
+            ->map(function ($userTotal) {
+                $bins = [
+                    'hari_1' => 0,
+                    'hari_2' => 0,
+                    'hari_3' => 0,
+                    'hari_4' => 0,
+                    'hari_5' => 0,
+                    'hari_6' => 0,
+                    'hari_7' => 0,
+                    'hari_8_keatas' => 0,
+                ];
+
+                foreach ($userTotal as $item) {
+                    $jumlah = $item['jumlah_hari'];
+
+                    if ($jumlah < 2) {
+                        $bins['hari_1']++;
+                    } elseif ($jumlah < 3) {
+                        $bins['hari_2']++;
+                    } elseif ($jumlah < 4) {
+                        $bins['hari_3']++;
+                    } elseif ($jumlah < 5) {
+                        $bins['hari_4']++;
+                    } elseif ($jumlah < 6) {
+                        $bins['hari_5']++;
+                    } elseif ($jumlah < 7) {
+                        $bins['hari_6']++;
+                    } elseif ($jumlah < 8) {
+                        $bins['hari_7']++;
+                    } else {
+                        $bins['hari_8_keatas']++;
+                    }
+                }
+
+                return array_merge([
+                    'id_bahagian' => $userTotal->first()['id_bahagian'],
+                ], $bins);
+            })
+            ->values()
+            ->all();
+
+        Log::info($rekodKeseluruhan);
+
+        return view('pages.laporan-bahagian', compact('rekodKeseluruhan', 'bahagian'));
+    }
+
+    /**
+     * Displays overall records, filterable by division and year.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View

@@ -99,9 +99,9 @@
           "slug": "laporan-kumpulan"
         },
         {
-          "url": "/",
+          "url": "/laporan/bahagian",
           "name": "Ringkasan Bahagian",
-          "slug": "laporan-ringkasan"
+          "slug": "laporan-bahagian"
         },
         {
           "url": "/laporan/keseluruhan",
