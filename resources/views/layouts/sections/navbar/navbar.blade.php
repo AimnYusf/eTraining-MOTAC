@@ -1,40 +1,42 @@
 @php
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-$containerNav = $containerNav ?? 'container-fluid';
-$navbarDetached = ($navbarDetached ?? '');
+  use Illuminate\Support\Facades\Auth;
+  use Illuminate\Support\Facades\Route;
+  $containerNav = $containerNav ?? 'container-fluid';
+  $navbarDetached = ($navbarDetached ?? '');
 @endphp
 
 <!-- Navbar -->
 @if(isset($navbarDetached) && $navbarDetached == 'navbar-detached')
-<nav
-  class="layout-navbar {{$containerNav}} navbar navbar-expand-xl {{$navbarDetached}} align-items-center bg-navbar-theme"
-  id="layout-navbar">
+  <nav
+    class="layout-navbar {{$containerNav}} navbar navbar-expand-xl {{$navbarDetached}} align-items-center bg-navbar-theme"
+    id="layout-navbar">
   @endif
   @if(isset($navbarDetached) && $navbarDetached == '')
-  <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+    <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
     <div class="{{$containerNav}}">
-      @endif
+  @endif
 
       <!-- ! Not required for layout-without-menu -->
       @if(!isset($navbarHideToggle))
       <div
-        class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0{{ isset($menuHorizontal) ? ' d-xl-none ' : '' }} {{ isset($contentNavbar) ? ' d-xl-none ' : '' }}">
-        <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
-          <i class="ti ti-menu-2 bx-md"></i>
-        </a>
+      class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0{{ isset($menuHorizontal) ? ' d-xl-none ' : '' }} {{ isset($contentNavbar) ? ' d-xl-none ' : '' }}">
+      <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+        <i class="ti ti-menu-2 bx-md"></i>
+      </a>
       </div>
-      @endif
+    @endif
 
       <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
         <!-- Filter -->
         <div class="navbar-nav align-items-center">
           <div class="nav-item d-flex align-items-center">
             <select id="role_filter" class="form-select">
-              <option value="guest" {{ Auth::user()->role == 'guest' ? 'selected' : '' }}>Guest</option>
-              <option value="user" {{ Auth::user()->role == 'user' ? 'selected' : '' }}>User</option>
-              <option value="supervisor" {{ Auth::user()->role == 'supervisor' ? 'selected' : '' }}>Supervisor</option>
-              <option value="administrator" {{ Auth::user()->role == 'administrator' ? 'selected' : '' }}>Admin</option>
+              <option value="guest" {{ Auth::user()->role == 'guest' ? 'selected' : '' }}>Pengguna Baru</option>
+              <option value="user" {{ Auth::user()->role == 'user' ? 'selected' : '' }}>Pengguna</option>
+              <option value="supervisor" {{ Auth::user()->role == 'supervisor' ? 'selected' : '' }}>Pegawai Latihan
+                Bahagian</option>
+              <option value="administrator" {{ Auth::user()->role == 'administrator' ? 'selected' : '' }}>Urusetia
+              </option>
             </select>
           </div>
         </div>
@@ -47,7 +49,7 @@ $navbarDetached = ($navbarDetached ?? '');
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="/profil">
                   <i class="ti ti-user me-3 ti-md"></i><span class="align-middle">Profil</span>
                 </a>
               </li>
@@ -71,13 +73,13 @@ $navbarDetached = ($navbarDetached ?? '');
 
       @if(!isset($navbarDetached))
     </div>
-    @endif
+  @endif
   </nav>
   <!-- / Navbar -->
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    $('#role_filter').on('change', function() {
+    $('#role_filter').on('change', function () {
       let filter = $(this).val();
 
       $.ajax({
@@ -87,10 +89,10 @@ $navbarDetached = ($navbarDetached ?? '');
           role: filter,
           _token: '{{ csrf_token() }}'
         },
-        success: function(response) {
+        success: function (response) {
           window.location.href = '/';
         },
-        error: function(xhr) {
+        error: function (xhr) {
           alert('Failed to update role.');
         }
       });
