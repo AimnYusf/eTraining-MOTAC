@@ -34,7 +34,7 @@
       {{-- Select Tahun --}}
       <select name="tahun" class="selectpicker w-25" data-style="btn-default" onchange="this.form.submit()">
         <option value="">Semua Tahun</option>
-        @foreach(range(2020, now()->year) as $year)
+        @foreach(range(2024, now()->year) as $year)
       <option value="{{ $year }}" {{ request('tahun', now()->year) == $year ? 'selected' : '' }}>
       {{ $year }}
       </option>
@@ -56,36 +56,36 @@
 
     <hr>
 
-  <!-- Dinamic Table -->
-        <table class="table table-bordered mb-4">
+    <!-- Dinamic Table -->
+    <table class="table table-bordered mb-4">
       <thead class="table-dark">
       <tr>
-      <th class="text-center">#</th>
-      <th class="text-center">Nama</th>
-      <th class="text-center">Jawatan</th>
-      <th class="text-center">Gred</th>
-      <th class="text-center">Kumpulan</th>
-      <th class="text-center">Jumlah Hari</th>
+        <th class="text-center">#</th>
+        <th class="text-center">Nama</th>
+        <th class="text-center">Jawatan</th>
+        <th class="text-center">Gred</th>
+        <th class="text-center">Kumpulan</th>
+        <th class="text-center">Jumlah Hari</th>
       </tr>
       </thead>
       <tbody>
-        @php $number = 1; @endphp
-        @foreach ($rekodKeseluruhan as $rekod)
-          <tr>
-            <td class="align-top text-center ">{{ $number }}</td>
-            <td class="align-top text-uppercase ">{{ $rekod['nama'] }}</td>
-            <td class="align-top text-center ">{{ $rekod['jawatan'] }}</td>
-            <td class="align-top text-center ">{{ $rekod['gred'] }}</td>
-            <td class="align-top text-center ">
-              {{
-                $rekod['kumpulan'] === 'Pelaksana' ? 'P' :
-                ($rekod['kumpulan'] === 'Pengurusan & Profesional' ? 'P&P' : $rekod['kumpulan'])
-              }}
-            </td>            
-            <td class="align-top text-center ">{{ $rekod['jumlah_hari'] ?? '-' }}</td> {{-- Use ?? '-' to handle null --}}
-          </tr>
-          @php $number++; @endphp
-        @endforeach
+      @php $number = 1; @endphp
+      @foreach ($rekodKeseluruhan as $rekod)
+      <tr>
+        <td class="align-top text-center ">{{ $number }}</td>
+        <td class="align-top text-uppercase ">{{ $rekod['nama'] }}</td>
+        <td class="align-top text-center ">{{ $rekod['jawatan'] }}</td>
+        <td class="align-top text-center ">{{ $rekod['gred'] }}</td>
+        <td class="align-top text-center ">
+        {{
+      $rekod['kumpulan'] === 'Pelaksana' ? 'P' :
+      ($rekod['kumpulan'] === 'Pengurusan & Profesional' ? 'P&P' : $rekod['kumpulan'])
+        }}
+        </td>
+        <td class="align-top text-center ">{{ $rekod['jumlah_hari'] ?? '-' }}</td> {{-- Use ?? '-' to handle null --}}
+      </tr>
+      @php $number++; @endphp
+    @endforeach
       </tbody>
     </table>
     </div>

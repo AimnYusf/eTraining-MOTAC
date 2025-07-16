@@ -122,6 +122,40 @@ class LaporanController extends Controller
         $rekodKehadiran->each(fn($item) => $rekodKeseluruhan->push($mapRecord($item)));
         $rekodIsytihar->each(fn($item) => $rekodKeseluruhan->push($mapRecord($item)));
 
+        // Get all user IDs that are present in either kehadiran or isytihar records
+        $presentUserIds = $rekodKeseluruhan->pluck('id_pengguna')->unique()->toArray();
+
+        // Check for missing users who typically don't attend any courses.
+        $pengguna = EproPengguna::join('epro_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'epro_kumpulan.kum_id')
+            ->select(
+                'epro_pengguna.pen_idusers as id_pengguna',
+                'epro_pengguna.pen_nama as nama',
+                'epro_pengguna.pen_jawatan as jawatan',
+                'epro_pengguna.pen_gred as gred',
+                'epro_kumpulan.kum_keterangan as kumpulan',
+                'epro_pengguna.pen_idbahagian as id_bahagian',
+                DB::raw('NULL as nama_kursus'),
+                DB::raw('NULL as tarikh_mula'),
+                DB::raw('NULL as tarikh_tamat'),
+                DB::raw('NULL as tempat'),
+                DB::raw('NULL as penganjur'),
+                DB::raw('NULL as bilangan_jam'),
+                DB::raw('NULL as bilangan_hari')
+            )
+            ->groupBy(
+                'epro_pengguna.pen_idusers',
+                'epro_pengguna.pen_nama',
+                'epro_pengguna.pen_jawatan',
+                'epro_pengguna.pen_gred',
+                'epro_kumpulan.kum_keterangan',
+                'epro_pengguna.pen_idbahagian'
+            )->get();
+
+        $missingUsers = $pengguna->filter(function ($user) use ($presentUserIds) {
+            return !in_array($user->id_pengguna, $presentUserIds);
+        });
+        $missingUsers->each(fn($item) => $rekodKeseluruhan->push($mapRecord($item)));
+
         return $rekodKeseluruhan;
     }
 
@@ -174,7 +208,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($rekod) =>
                 $rekod['id_pengguna'] == $idPengguna &&
-                    Carbon::parse($rekod['tarikh_mula'])->year == $tahunCarian
+                Carbon::parse($rekod['tarikh_mula'])->year == $tahunCarian
             );
 
         // Calculate monthly totals for statistics
@@ -217,7 +251,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($item) =>
                 Carbon::parse($item['tarikh_mula'])->year == $tahunCarian &&
-                    $item['id_bahagian'] == $idBahagianCarian
+                $item['id_bahagian'] == $idBahagianCarian
             )
             ->groupBy('id_pengguna')
             ->map(function ($userData) {
@@ -265,7 +299,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($item) =>
                 Carbon::parse($item['tarikh_mula'])->year == $tahunCarian &&
-                    $item['id_bahagian'] == $idBahagianCarian
+                $item['id_bahagian'] == $idBahagianCarian
             )
             ->groupBy('id_pengguna');
 

@@ -33,7 +33,7 @@
 
       {{-- Select Tahun --}}
       <select name="tahun" class="selectpicker w-25" data-style="btn-default" onchange="this.form.submit()">
-        @foreach(range(2025, now()->year) as $year)
+        @foreach(range(2024, now()->year) as $year)
       <option value="{{ $year }}" {{ request('tahun', now()->year) == $year ? 'selected' : '' }}>
       {{ $year }}
       </option>
@@ -112,16 +112,18 @@
       $jumlah = $jumlah + 0.4;
       }
       @endphp
+      @if ($row['nama_kursus'] != null)
       <tr>
-        <td class="align-top py-4">{{ $row['nama_kursus'] }}</td>
-        <td class="text-center align-top">{{ Carbon::parse($row['tarikh_mula'])->format('d/m/Y') }}</td>
-        <td class="text-center align-top">{{ Carbon::parse($row['tarikh_tamat'])->format('d/m/Y') }}</td>
-        <td class="align-top">{{ $row['tempat'] }}</td>
-        <td class="align-top">{{ $row['penganjur'] }}</td>
-        <td class="text-center align-top">{{ $row['bilangan_hari'] ?? '-' }}</td>
-        <td class="text-center align-top">{{ $row['bilangan_jam'] ?? '-' }}</td>
-        <td class="text-center align-top">{{ number_format($jumlah, 1) }}</td>
+      <td class="align-top py-4">{{ $row['nama_kursus'] }}</td>
+      <td class="text-center align-top">{{ Carbon::parse($row['tarikh_mula'])->format('d/m/Y') }}</td>
+      <td class="text-center align-top">{{ Carbon::parse($row['tarikh_tamat'])->format('d/m/Y') }}</td>
+      <td class="align-top">{{ $row['tempat'] }}</td>
+      <td class="align-top">{{ $row['penganjur'] }}</td>
+      <td class="text-center align-top">{{ $row['bilangan_hari'] ?? '-' }}</td>
+      <td class="text-center align-top">{{ $row['bilangan_jam'] ?? '-' }}</td>
+      <td class="text-center align-top">{{ number_format($jumlah, 1) }}</td>
       </tr>
+      @endif
     @endforeach
       </tbody>
       <tfoot>
