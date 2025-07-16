@@ -155,10 +155,10 @@ $(function () {
       $('#kur_kumpulan').html(': ' + data.epro_kumpulan.kum_keterangan);
       $('#kur_penganjur').html(': ' + data.epro_penganjur.pjr_keterangan);
       $('#kur_objektif').html(data.kur_objektif);
-    });
 
-    $('.btn-close-modal').removeClass('d-none');
-    $('#viewRecord').modal('show');
+      $('.btn-close-modal').removeClass('d-none');
+      $('#viewRecord').modal('show');
+    });
   });
 
   // Format date to DD/MM/YYYY
