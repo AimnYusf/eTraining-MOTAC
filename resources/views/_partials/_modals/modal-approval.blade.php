@@ -30,10 +30,6 @@
               <div class="col-sm-3 d-flex justify-content-between">Anjuran<span>:</span></div>
               <div id="isy_anjuran" class="col-sm-9"></div>
             </div>
-            <div class="row ps-2 mb-2">
-              <div class="col-sm-3 d-flex justify-content-between">Kos (RM)<span>:</span></div>
-              <div id="isy_kos" class="col-sm-9"></div>
-            </div>
           </section>
 
           <section class="mb-8">
@@ -80,7 +76,7 @@
 
           <section>
             <div class="divider text-start">
-              <h5 class="divider-text m-0">TINDAKAN</h5>
+              <h5 class="divider-text m-0">TINDAKAN PENYELIA</h5>
             </div>
             <div class="row ps-2 mb-2">
               <div class="col-sm-3 d-flex justify-content-between align-items-center">Status<span>:</span></div>
