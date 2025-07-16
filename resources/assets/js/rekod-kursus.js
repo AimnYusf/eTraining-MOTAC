@@ -107,7 +107,7 @@
       },
       yaxis: {
         min: 0, // Set it to 0 to ensure a proper baseline
-        max: Math.max(...arrayData) % 2 === 0 ? Math.max(...arrayData) : Math.max(...arrayData) + 1,
+        max: Math.max(...arrayData) + 0.5,
         tickAmount: 5,
         labels: {
           offsetX: -15,

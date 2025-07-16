@@ -66,31 +66,20 @@
       <tbody>
       @foreach ($bahagian as $index => $data) {{-- Use $index for row numbering --}}
       @php
-      $matched = collect($rekodKeseluruhan)->firstWhere('id_bahagian', $data->bah_id);
+      $matched = collect($rekodKeseluruhan)->firstWhere('bahagian', $data->bah_ketpenu);
       @endphp
       <tr>
         <td class="text-center">{{ $index + 1 }}</td> {{-- Increment index for display --}}
         <td>{{ $data->bah_ketpenu }}</td>
-        <td class="text-center">{{ $index + 1 }}</td> {{-- Increment index for display --}}
-        @if ($matched)
-      <td class="text-center">{{ $matched['hari_1'] }}</td>
-      <td class="text-center">{{ $matched['hari_2'] }}</td>
-      <td class="text-center">{{ $matched['hari_3'] }}</td>
-      <td class="text-center">{{ $matched['hari_4'] }}</td>
-      <td class="text-center">{{ $matched['hari_5'] }}</td>
-      <td class="text-center">{{ $matched['hari_6'] }}</td>
-      <td class="text-center">{{ $matched['hari_7'] }}</td>
-      <td class="text-center">{{ $matched['hari_8_keatas'] }}</td>
-      @else
-      <td class="text-center">0</td>
-      <td class="text-center">0</td>
-      <td class="text-center">0</td>
-      <td class="text-center">0</td>
-      <td class="text-center">0</td>
-      <td class="text-center">0</td>
-      <td class="text-center">0</td>
-      <td class="text-center">0</td>
-      @endif
+        <td class="text-center">{{ $matched['pengisian'] ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_1']  ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_2']  ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_3']  ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_4']  ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_5']  ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_6']  ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_7']  ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_8_keatas'] ?? 0}}</td>
       </tr>
     @endforeach
       </tbody>

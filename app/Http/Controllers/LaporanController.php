@@ -17,11 +17,29 @@ use Carbon\Carbon;
 class LaporanController extends Controller
 {
     /**
+     * Helper function to calculate 'bilangan_hari' or 'bilangan_jam' and apply rounding.
+     *
+     * @param float|null $bilanganHari
+     * @param float|null $bilanganJam
+     * @return float
+     */
+    private function calculateDuration(?float $bilanganHari, ?float $bilanganJam): float
+    {
+        $calculatedValue = ($bilanganHari ?? 0) + ($bilanganJam ?? 0);
+        $decimal = $calculatedValue - floor($calculatedValue);
+
+        if ($decimal >= 0.6) {
+            $calculatedValue += 0.4;
+        }
+        return $calculatedValue;
+    }
+
+    /**
      * Retrieves all course records from both 'kehadiran' and 'isytihar' tables.
      *
      * @return \Illuminate\Support\Collection
      */
-    private function getAllRecord()
+    private function getAllRecord(): \Illuminate\Support\Collection
     {
         $kehadiranQuery = EproKehadiran::query()
             ->join('epro_pengguna', 'epro_kehadiran.keh_idusers', '=', 'epro_pengguna.pen_idusers')
@@ -36,7 +54,7 @@ class LaporanController extends Controller
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
                 'epro_kumpulan.kum_keterangan as kumpulan',
-                'epro_bahagian.bah_ketring as bahagian',
+                'epro_bahagian.bah_ketpenu as bahagian',
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 'epro_kursus.kur_nama as nama_kursus',
                 'epro_kursus.kur_tkhmula as tarikh_mula',
@@ -52,7 +70,7 @@ class LaporanController extends Controller
                 'epro_pengguna.pen_jawatan',
                 'epro_pengguna.pen_gred',
                 'epro_kumpulan.kum_keterangan',
-                'epro_bahagian.bah_ketring',
+                'epro_bahagian.bah_ketpenu',
                 'epro_pengguna.pen_idbahagian',
                 'epro_kursus.kur_nama',
                 'epro_kursus.kur_tkhmula',
@@ -74,7 +92,7 @@ class LaporanController extends Controller
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
                 'epro_kumpulan.kum_keterangan as kumpulan',
-                'epro_pengguna.pen_idbahagian as id_bahagian',
+                'epro_bahagian.bah_ketpenu as bahagian', // Added for consistency with kehadiranQuery
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 'epro_isytihar.isy_nama as nama_kursus',
                 'epro_isytihar.isy_tkhmula as tarikh_mula',
@@ -90,7 +108,7 @@ class LaporanController extends Controller
                 'epro_pengguna.pen_jawatan',
                 'epro_pengguna.pen_gred',
                 'epro_kumpulan.kum_keterangan',
-                'epro_bahagian.bah_ketring',
+                'epro_bahagian.bah_ketpenu',
                 'epro_pengguna.pen_idbahagian',
                 'epro_isytihar.isy_nama',
                 'epro_isytihar.isy_tkhmula',
@@ -103,7 +121,6 @@ class LaporanController extends Controller
         $rekodKehadiran = $kehadiranQuery->get();
         $rekodIsytihar = $isytiharQuery->get();
 
-        // Combine and standardize the data structure
         $rekodKeseluruhan = collect();
 
         // Use a helper function for consistent mapping
@@ -129,19 +146,19 @@ class LaporanController extends Controller
         $rekodKehadiran->each(fn($item) => $rekodKeseluruhan->push($mapRecord($item)));
         $rekodIsytihar->each(fn($item) => $rekodKeseluruhan->push($mapRecord($item)));
 
-        // Get all user IDs that are present in either kehadiran or isytihar records
         $presentUserIds = $rekodKeseluruhan->pluck('id_pengguna')->unique()->toArray();
 
-        // Check for missing users who typically don't attend any courses.
-        $pengguna = EproPengguna::join('epro_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'epro_kumpulan.kum_id')
+        // Add users who have no course records
+        $missingUsers = EproPengguna::join('epro_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'epro_kumpulan.kum_id')
             ->join('epro_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'epro_bahagian.bah_id')
+            ->whereNotIn('epro_pengguna.pen_idusers', $presentUserIds)
             ->select(
                 'epro_pengguna.pen_idusers as id_pengguna',
                 'epro_pengguna.pen_nama as nama',
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
                 'epro_kumpulan.kum_keterangan as kumpulan',
-                'epro_bahagian.bah_ketring',
+                'epro_bahagian.bah_ketpenu as bahagian',
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 DB::raw('NULL as nama_kursus'),
                 DB::raw('NULL as tarikh_mula'),
@@ -151,19 +168,8 @@ class LaporanController extends Controller
                 DB::raw('NULL as bilangan_jam'),
                 DB::raw('NULL as bilangan_hari')
             )
-            ->groupBy(
-                'epro_pengguna.pen_idusers',
-                'epro_pengguna.pen_nama',
-                'epro_pengguna.pen_jawatan',
-                'epro_pengguna.pen_gred',
-                'epro_kumpulan.kum_keterangan',
-                'epro_bahagian.bah_ketring',
-                'epro_pengguna.pen_idbahagian'
-            )->get();
+            ->get();
 
-        $missingUsers = $pengguna->filter(function ($user) use ($presentUserIds) {
-            return !in_array($user->id_pengguna, $presentUserIds);
-        });
         $missingUsers->each(fn($item) => $rekodKeseluruhan->push($mapRecord($item)));
 
         return $rekodKeseluruhan;
@@ -198,7 +204,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($rekod) =>
                 $rekod['id_pengguna'] == $idPengguna &&
-                Carbon::parse($rekod['tarikh_mula'])->year == $tahunCarian
+                    Carbon::parse($rekod['tarikh_mula'])->year == $tahunCarian
             );
 
         // Calculate monthly totals for statistics
@@ -208,14 +214,7 @@ class LaporanController extends Controller
             $hari = (float) ($item['bilangan_hari'] ?? 0);
             $jam = (float) ($item['bilangan_jam'] ?? 0);
 
-            $calculatedValue = $hari + $jam;
-            $decimal = $calculatedValue - floor($calculatedValue);
-
-            // Adjust for decimal if it's 0.6 or more, effectively rounding up for display if needed
-            if ($decimal >= 0.6) {
-                $calculatedValue += 0.4;
-            }
-            $jumlahKursus[$indeksBulan] += $calculatedValue;
+            $jumlahKursus[$indeksBulan] += $this->calculateDuration($hari, $jam);
         }
 
         $idPengguna = Auth::id();
@@ -262,25 +261,19 @@ class LaporanController extends Controller
                 foreach ($userData as $record) {
                     $bilangan_hari = (float) ($record['bilangan_hari'] ?? 0);
                     $bilangan_jam = (float) ($record['bilangan_jam'] ?? 0);
-                    $calculatedValue = $bilangan_hari + $bilangan_jam;
-
-                    $decimal = $calculatedValue - floor($calculatedValue);
-                    if ($decimal >= 0.6) {
-                        $calculatedValue += 0.4;
-                    }
-
-                    $jumlah_hari += $calculatedValue;
+                    $jumlah_hari += $this->calculateDuration($bilangan_hari, $bilangan_jam);
                 }
 
                 return [
                     'id_pengguna' => $userData->first()['id_pengguna'],
-                    'id_bahagian' => $userData->first()['id_bahagian'],
+                    'bahagian' => $userData->first()['bahagian'],
                     'jumlah_hari' => $jumlah_hari,
                 ];
             })
-            ->groupBy('id_bahagian')
-            ->map(function ($userTotal) {
+            ->groupBy('bahagian')
+            ->map(function ($userData) {
                 $bins = [
+                    'pengisian' => 0,
                     'hari_1' => 0,
                     'hari_2' => 0,
                     'hari_3' => 0,
@@ -291,8 +284,9 @@ class LaporanController extends Controller
                     'hari_8_keatas' => 0,
                 ];
 
-                foreach ($userTotal as $item) {
+                foreach ($userData as $item) {
                     $jumlah = $item['jumlah_hari'];
+                    $bins['pengisian']++;
 
                     if ($jumlah < 2) {
                         $bins['hari_1']++;
@@ -314,7 +308,7 @@ class LaporanController extends Controller
                 }
 
                 return array_merge([
-                    'id_bahagian' => $userTotal->first()['id_bahagian'],
+                    'bahagian' => $userData->first()['bahagian'],
                 ], $bins);
             })
             ->values()
@@ -343,7 +337,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($item) =>
                 Carbon::parse($item['tarikh_mula'])->year == $tahunCarian &&
-                $item['id_bahagian'] == $idBahagianCarian
+                    $item['id_bahagian'] == $idBahagianCarian
             )
             ->groupBy('id_pengguna')
             ->map(function ($userData) {
@@ -351,13 +345,7 @@ class LaporanController extends Controller
                 foreach ($userData as $record) {
                     $bilangan_hari = (float) ($record['bilangan_hari'] ?? 0);
                     $bilangan_jam = (float) ($record['bilangan_jam'] ?? 0);
-                    $calculatedValue = $bilangan_hari + $bilangan_jam;
-
-                    $decimal = $calculatedValue - floor($calculatedValue);
-                    if ($decimal >= 0.6) {
-                        $calculatedValue += 0.4;
-                    }
-                    $jumlah_hari += $calculatedValue;
+                    $jumlah_hari += $this->calculateDuration($bilangan_hari, $bilangan_jam);
                 }
                 return [
                     'nama' => $userData->first()['nama'],
@@ -391,7 +379,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($item) =>
                 Carbon::parse($item['tarikh_mula'])->year == $tahunCarian &&
-                $item['id_bahagian'] == $idBahagianCarian
+                    $item['id_bahagian'] == $idBahagianCarian
             )
             ->groupBy('id_pengguna');
 

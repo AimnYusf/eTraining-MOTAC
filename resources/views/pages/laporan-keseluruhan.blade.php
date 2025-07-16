@@ -44,7 +44,6 @@
       {{-- Select Bahagian --}}
       <select class="selectpicker w-75 ms-3 me-3" name="bahagian" data-style="btn-default"
         onchange="this.form.submit()">
-        <option value="">Semua Bahagian</option>
         @foreach ($bahagian as $item)
       <option value="{{ $item->bah_id }}" {{ request('bahagian', $dataPengguna->pen_idbahagian) == $item->bah_id ? 'selected' : '' }}>
       {{ $item->bah_ketpenu }}
