@@ -256,13 +256,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         instance.on('core.form.valid', function () {
           // Convert dates from DD/MM/YYYY to YYYY-MM-DD
-          function formatDate(input) {
-            if (!input) return '';
-            const parts = input.split('/');
-            if (parts.length === 3) {
-              return `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD
-            }
-            return input; // fallback
+          function formatDate(dateStr) {
+            const [day, month, year] = dateStr.split('/');
+            return `${year}-${month}-${day}`;
           }
 
           // Set converted date values back into the form fields
@@ -275,6 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
           $('#kur_objektif_input').val(quillObjektif.root.innerHTML);
 
           const formData = new FormData(formAuthentication);
+
           $.ajax({
             data: formData,
             url: 'kursus',

@@ -31,7 +31,7 @@ $(function () {
         { data: 'kur_nama' },
         { data: 'epro_kategori.kat_keterangan' },
         { data: 'kur_tkhmula' },
-        { data: 'kur_tkhtutup' },
+        { data: 'kur_tkhtamat' },
         { data: 'kur_status' },
         { data: '' }
       ],

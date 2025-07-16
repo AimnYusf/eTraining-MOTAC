@@ -125,7 +125,7 @@
           <div class="row g-2">
           <div class="col mb-4">
             <input type="text" id="kur_tkhmula" class="form-control" name="kur_tkhmula"
-            value="{{ $kursus->kur_tkhmula ?? '' }}" placeholder="DD/MM/YYYY" />
+            value="{{ \Carbon\Carbon::parse($kursus->kur_tkhmula ?? '')->format('d/m/Y') }}" placeholder="DD/MM/YYYY" />
           </div>
           <div class="col mb-4">
             <input type="text" id="kur_msamula" class="form-control" name="kur_msamula" placeholder="HH:MMam"
@@ -141,7 +141,7 @@
           <div class="row g-2">
           <div class="col mb-4">
             <input type="text" id="kur_tkhtamat" class="form-control" name="kur_tkhtamat" placeholder="DD/MM/YYYY"
-            value="{{ $kursus->kur_tkhtamat ?? '' }}" />
+            value="{{ \Carbon\Carbon::parse($kursus->kur_tkhtamat ?? '')->format('d/m/Y') }}" />
           </div>
           <div class="col mb-4">
             <input type="text" id="kur_msatamat" class="form-control" name="kur_msatamat" placeholder="HH:MMam"
