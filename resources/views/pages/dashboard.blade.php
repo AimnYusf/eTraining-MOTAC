@@ -18,7 +18,12 @@
 @endsection
 
 @section('page-script')
-    @vite(['resources/assets/js/dashboards.js'])
+    @vite(['resources/assets/js/statistik.js'])
+
+    <script>
+        window.jumlahKehadiran = @json($jumlahKehadiran);
+    </script>
+
 @endsection
 
 @php
@@ -44,13 +49,13 @@
             </div>
         </div>
 
-         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
                 var errorModalEl = document.getElementById('errorModal');
                 var errorModal = new bootstrap.Modal(errorModalEl);
                 errorModal.show();
 
-                errorModalEl.addEventListener('hidden.bs.modal', function() {
+                errorModalEl.addEventListener('hidden.bs.modal', function () {
                     window.location.href = "{{ route('profil') }}";
                 });
             });
@@ -67,7 +72,7 @@
                                 <span class="avatar-initial rounded bg-label-primary"><i
                                         class='ti ti-clipboard-list ti-28px'></i></span>
                             </div>
-                            <h4 class="mb-0">42</h4>
+                            <h4 class="mb-0">{{ $jumlahPermohonan->jumlah }}</h4>
                         </div>
                         <p class="mb-1">Jumlah Permohonan</p>
                     </div>
@@ -81,7 +86,7 @@
                                 <span class="avatar-initial rounded bg-label-info"><i
                                         class='ti ti-file-plus ti-28px'></i></span>
                             </div>
-                            <h4 class="mb-0">13</h4>
+                            <h4 class="mb-0">{{ $jumlahPermohonan->baru }}</h4>
                         </div>
                         <p class="mb-1">Permohonan Baru</p>
                     </div>
@@ -95,7 +100,7 @@
                                 <span class="avatar-initial rounded bg-label-success"><i
                                         class='ti ti-circle-check ti-28px'></i></span>
                             </div>
-                            <h4 class="mb-0">8</h4>
+                            <h4 class="mb-0">{{ $jumlahPermohonan->berjaya }}</h4>
                         </div>
                         <p class="mb-1">Permohonan Berjaya</p>
                     </div>
@@ -109,7 +114,7 @@
                                 <span class="avatar-initial rounded bg-label-danger"><i
                                         class='ti ti-alert-circle ti-28px'></i></span>
                             </div>
-                            <h4 class="mb-0">27</h4>
+                            <h4 class="mb-0">{{ $jumlahPermohonan->tidak_berjaya }}</h4>
                         </div>
                         <p class="mb-1">Permohonan Gagal</p>
                     </div>
@@ -117,47 +122,43 @@
             </div>
             <!--/ Card Border -->
 
-            <!-- Upcoming Webinar -->
+            <!-- Welcome -->
             <div class="col-lg-4 col-md-12">
                 <div class="card h-100">
                     <div class="card-body text-center">
-                        <div class="bg-label-primary rounded">
-                            <img src="{{ asset('images/logo-motac.png') }}" alt="Logo MOTAC" class="img-fluid w-50 py-2" />
+                        <div class="bg-label-primary rounded p-3 mb-3">
+                            <img src="{{ asset('images/logo-motac.png') }}" alt="Logo MOTAC" class="img-fluid w-50" />
                         </div>
 
-                        <h5 class="my-2">
-                            Selamat Datang ke <span class="h4">{{ config('app.name') }} 👋🏻</span>
+                        <h5 class="mb-0">
+                            Selamat Datang ke <span class="h4 fw-bold">{{ config('app.name') }}</span>
                         </h5>
-
-
-                                           <p class="small">
-                            Sistem eTraining merupakan sebuah platform digital yang dibangunkan bagi menyelaras, merekod dan memantau pelaksanaan program latihan dan kursus secara lebih sistematik, cekap dan telus.
+                        <p class="text-muted mb-3 fst-italic">Sistem Pengurusan Latihan MOTAC</p>
+                        <hr class="my-3">
+                        <p class="card-text mb-4">
+                            Sistem eTraining merupakan sebuah platform digital yang dibangunkan bagi menyelaras, merekod dan
+                            memantau pelaksanaan program latihan dan kursus secara lebih sistematik,
+                            cekap dan telus.
                         </p>
-
-                        @if(Auth::user()->role === 'guest')
-                            <a href="/profil" class="btn btn-primary w-100 mt-4">Lengkapkan Profil</a>
-                        @elseif(Auth::user()->role === 'user')
-                            <a href="#" class="btn btn-primary w-100 mt-4">Lihat Kursus</a>
-                        @endif
                     </div>
                 </div>
             </div>
-            <!--/ Upcoming Webinar -->
+            <!--/ Welcome -->
 
             <!-- Course Reports Tabs -->
             <div class="col-lg-8 col-md-12">
-                <div class="card">
+                <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <div class="card-title mb-0">
-                            <h5 class="mb-1">Statistik Kursus 2025</h5>
-                            <p class="card-subtitle">Jumlah kursus yang dihadiri 23.8k</p>
+                            <h5 class="mb-1">Statistik Kursus {{ now()->year }}</h5>
+                            <p class="card-subtitle">Jumlah kursus yang dihadiri</p>
                         </div>
-                        <a href="#" class="btn btn-primary">Laporan Lengkap</a>
+                        <a href="/rekod/kursus" class="btn btn-primary">Laporan Lengkap</a>
                     </div>
-                    <div class="card-body">
-                        <div class="tab-content p-0 ms-0 ms-sm-2">
+                    <div class="card-body d-flex flex-column">
+                        <div class="tab-content p-0 ms-0 ms-sm-2 mt-auto">
                             <div class="tab-pane fade show active" id="navs-orders-id" role="tabpanel">
-                                <div id="earningReportsTabsOrders"></div>
+                                <div id="statistikKursus"></div>
                             </div>
                         </div>
                     </div>

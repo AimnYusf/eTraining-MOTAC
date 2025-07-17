@@ -16,20 +16,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // $jumlahPermohonan = EproPermohonan::where('per_idusers', Auth::id())
-        //     ->select([
-        //         DB::raw('COUNT(*) as jumlah'),
-        //         DB::raw('SUM(CASE WHEN per_status IN (1,2) THEN 1 ELSE 0 END) as proses'),
-        //         DB::raw('SUM(CASE WHEN per_status = 4 THEN 1 ELSE 0 END) as berjaya'),
-        //         DB::raw('SUM(CASE WHEN per_status IN (3,5) THEN 1 ELSE 0 END) as tidak_berjaya'),
-        //     ])
-        //     ->first();
         $userId = Auth::id();
 
         $jumlahPermohonan = $this->getUserApplication($userId);
         $jumlahKehadiran = $this->getUserAttendance($userId);
 
-        return view('pages.dashboard');
+        return view('pages.dashboard', compact('jumlahPermohonan', 'jumlahKehadiran'));
     }
 
     private function getUserApplication($userId)
@@ -38,7 +30,7 @@ class DashboardController extends Controller
         $permohonanSubquery = DB::table('epro_permohonan')
             ->selectRaw("
                 COUNT(*) AS jumlah,
-                SUM(CASE WHEN per_status IN (1, 2) THEN 1 ELSE 0 END) AS proses,
+                SUM(CASE WHEN per_status IN (1, 2) THEN 1 ELSE 0 END) AS baru,
                 SUM(CASE WHEN per_status = 4 THEN 1 ELSE 0 END) AS berjaya,
                 SUM(CASE WHEN per_status IN (3, 5) THEN 1 ELSE 0 END) AS tidak_berjaya
             ")
@@ -48,7 +40,7 @@ class DashboardController extends Controller
         $isytiharSubquery = DB::table('epro_isytihar')
             ->selectRaw("
                 COUNT(*) AS jumlah,
-                SUM(CASE WHEN isy_status IN (1, 2) THEN 1 ELSE 0 END) AS proses,
+                SUM(CASE WHEN isy_status IN (1, 2) THEN 1 ELSE 0 END) AS baru,
                 SUM(CASE WHEN isy_status = 4 THEN 1 ELSE 0 END) AS berjaya,
                 SUM(CASE WHEN isy_status IN (3, 5) THEN 1 ELSE 0 END) AS tidak_berjaya
             ")
@@ -58,14 +50,12 @@ class DashboardController extends Controller
         $combined = DB::query()
             ->selectRaw('
                 SUM(jumlah) AS jumlah,
-                SUM(proses) AS proses,
+                SUM(baru) AS baru,
                 SUM(berjaya) AS berjaya,
                 SUM(tidak_berjaya) AS tidak_berjaya
             ')
             ->fromSub($permohonanSubquery->unionAll($isytiharSubquery), 'combined_table')
             ->first();
-
-        Log::info('Combined application summary:', (array) $combined);
 
         return $combined;
     }
@@ -79,7 +69,7 @@ class DashboardController extends Controller
                 epro_kursus.kur_tkhmula as tarikh,
                 CASE
                     WHEN epro_kursus.kur_bilhari > 1
-                    THEN COUNT(epro_kehadiran.keh_tkhmasuk)
+                    THEN epro_kursus.kur_bilhari
                     ELSE NULL
                 END as bilangan_hari,
                 CASE
@@ -97,18 +87,19 @@ class DashboardController extends Controller
 
         // Query for declaration data ($isytihar)
         $isytihar = DB::table('epro_isytihar')
+            ->where('isy_status', '4')
             ->selectRaw("
                 epro_isytihar.isy_tkhmula as tarikh,
-                CASE
-                    WHEN epro_isytihar.isy_tkhmula = epro_isytihar.isy_tkhtamat
-                    THEN epro_isytihar.isy_jam / 10
-                    ELSE NULL
-                END as bilangan_jam,
                 CASE
                     WHEN epro_isytihar.isy_tkhmula != epro_isytihar.isy_tkhtamat
                     THEN TIMESTAMPDIFF(DAY, epro_isytihar.isy_tkhmula, epro_isytihar.isy_tkhtamat) + 1
                     ELSE NULL
-                END as bilangan_hari
+                END as bilangan_hari,
+                CASE
+                    WHEN epro_isytihar.isy_tkhmula = epro_isytihar.isy_tkhtamat
+                    THEN epro_isytihar.isy_jam / 10
+                    ELSE NULL
+                END as bilangan_jam
             ")
             ->groupBy(
                 'epro_isytihar.isy_tkhmula',
@@ -116,10 +107,14 @@ class DashboardController extends Controller
                 'epro_isytihar.isy_jam'
             );
 
-        $jumlahKehadiran = $kehadiran->unionAll($isytihar)->get();
+        $kehadiran = $kehadiran->unionAll($isytihar)
+            ->get()
+            ->filter(fn($item) => Carbon::parse($item->tarikh)->year == Carbon::now()->year);
 
-        $jumlahKursus = array_fill(0, 12, 0);
-        foreach ($jumlahKehadiran as $item) {
+        Log::info(json_encode($kehadiran));
+
+        $jumlahKehadiran = array_fill(0, 12, 0);
+        foreach ($kehadiran as $item) {
             $indeksBulan = Carbon::parse($item->tarikh)->month - 1;
             $bilanganHari = (float) ($item->bilangan_hari ?? 0);
             $bilanganJam = (float) ($item->bilangan_jam ?? 0);
@@ -131,12 +126,9 @@ class DashboardController extends Controller
                 $calculatedValue += 0.4;
             }
 
-            $jumlahKursus[$indeksBulan] += $calculatedValue;
+            $jumlahKehadiran[$indeksBulan] += $calculatedValue;
         }
 
-        Log::info(json_encode($jumlahKursus));
-
-        return '';
+        return $jumlahKehadiran;
     }
-
 }

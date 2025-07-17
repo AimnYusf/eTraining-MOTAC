@@ -22,17 +22,16 @@
   // Init Statistik Kursus
   // --------------------------------------------------------------------
 
-  const jumlahKursus = window.jumlahKursus;
+  const jumlahKehadiran = window.jumlahKehadiran;
 
-  const earningReportsTabsOrdersEl = document.querySelector('#earningReportsTabsOrders'),
-    earningReportsTabsOrdersConfig = EarningReportsBarChart(
-      jumlahKursus,
-      jumlahKursus.indexOf(Math.max(...jumlahKursus))
+  const statistikKursusEl = document.querySelector('#statistikKursus'),
+    statistikKursusConfig = EarningReportsBarChart(
+      jumlahKehadiran,
+      jumlahKehadiran.indexOf(Math.max(...jumlahKehadiran))
     );
-
-  if (typeof earningReportsTabsOrdersEl !== undefined && earningReportsTabsOrdersEl !== null) {
-    const earningReportsTabsOrders = new ApexCharts(earningReportsTabsOrdersEl, earningReportsTabsOrdersConfig);
-    earningReportsTabsOrders.render();
+  if (typeof statistikKursusEl !== undefined && statistikKursusEl !== null) {
+    const statistikKursus = new ApexCharts(statistikKursusEl, statistikKursusConfig);
+    statistikKursus.render();
   }
 
   // Earning Reports Tabs Function
@@ -51,7 +50,7 @@
 
     const earningReportBarChartOpt = {
       chart: {
-        height: 231,
+        height: 280,
         parentHeightOffset: 0,
         type: 'bar',
         toolbar: {
