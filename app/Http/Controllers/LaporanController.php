@@ -62,7 +62,7 @@ class LaporanController extends Controller
                 'epro_kursus.kur_tkhtamat as tarikh_tamat',
                 'epro_tempat.tem_keterangan as tempat',
                 'epro_penganjur.pjr_keterangan as penganjur',
-                DB::raw('CASE WHEN epro_kursus.kur_bilhari > 1 THEN COUNT(epro_kehadiran.keh_tkhmasuk) ELSE NULL END as bilangan_hari'),
+                DB::raw('CASE WHEN epro_kursus.kur_bilhari > 1 THEN epro_kursus.kur_bilhari ELSE NULL END as bilangan_hari'),
                 DB::raw('CASE WHEN epro_kursus.kur_bilhari = 1 THEN (epro_kursus.kur_msatamat - epro_kursus.kur_msamula) / 10 ELSE NULL END as bilangan_jam')
             )
             ->groupBy(
@@ -84,6 +84,7 @@ class LaporanController extends Controller
             );
 
         $isytiharQuery = EproIsytihar::query()
+            ->where('isy_status', '4')
             ->join('epro_pengguna', 'epro_isytihar.isy_idusers', '=', 'epro_pengguna.pen_idusers')
             ->join('epro_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'epro_kumpulan.kum_id')
             ->join('epro_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'epro_bahagian.bah_id')
@@ -100,8 +101,8 @@ class LaporanController extends Controller
                 'epro_isytihar.isy_tkhtamat as tarikh_tamat',
                 'epro_isytihar.isy_tempat as tempat',
                 'epro_isytihar.isy_anjuran as penganjur',
-                DB::raw('CASE WHEN epro_isytihar.isy_tkhmula = epro_isytihar.isy_tkhtamat THEN epro_isytihar.isy_jam / 10 ELSE NULL END as bilangan_jam'),
-                DB::raw('CASE WHEN epro_isytihar.isy_tkhmula != epro_isytihar.isy_tkhtamat THEN TIMESTAMPDIFF(DAY, epro_isytihar.isy_tkhmula, epro_isytihar.isy_tkhtamat) + 1 ELSE NULL END as bilangan_hari')
+                DB::raw('CASE WHEN epro_isytihar.isy_tkhmula != epro_isytihar.isy_tkhtamat THEN TIMESTAMPDIFF(DAY, epro_isytihar.isy_tkhmula, epro_isytihar.isy_tkhtamat) + 1 ELSE NULL END as bilangan_hari'),
+                DB::raw('CASE WHEN epro_isytihar.isy_tkhmula = epro_isytihar.isy_tkhtamat THEN epro_isytihar.isy_jam / 10 ELSE NULL END as bilangan_jam')
             )
             ->groupBy(
                 'epro_isytihar.isy_idusers',
@@ -205,7 +206,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($rekod) =>
                 $rekod['id_pengguna'] == $idPengguna &&
-                Carbon::parse($rekod['tarikh_mula'])->year == $tahunCarian
+                    Carbon::parse($rekod['tarikh_mula'])->year == $tahunCarian
             );
 
         // Calculate monthly totals for statistics
@@ -421,7 +422,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($item) =>
                 Carbon::parse($item['tarikh_mula'])->year == $tahunCarian &&
-                $item['id_bahagian'] == $idBahagianCarian
+                    $item['id_bahagian'] == $idBahagianCarian
             )
             ->groupBy('id_pengguna')
             ->map(function ($userData) {
@@ -463,7 +464,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($item) =>
                 Carbon::parse($item['tarikh_mula'])->year == $tahunCarian &&
-                $item['id_bahagian'] == $idBahagianCarian
+                    $item['id_bahagian'] == $idBahagianCarian
             )
             ->groupBy('id_pengguna');
 
