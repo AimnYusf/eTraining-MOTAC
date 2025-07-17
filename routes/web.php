@@ -7,6 +7,7 @@ use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\KelulusanController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PegawaiLatihanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenyokongController;
 use App\Http\Controllers\PermohonanController;
@@ -73,6 +74,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('kelulusan', KelulusanController::class)->names([
             'index' => 'plb-kelulusan'
         ]);
+        Route::any('/rekod-baru', [PegawaiLatihanController::class, 'rekodBaru'])->name('plb-rekod-baru');
     });
 
     /*
