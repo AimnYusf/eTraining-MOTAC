@@ -204,7 +204,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($rekod) =>
                 $rekod['id_pengguna'] == $idPengguna &&
-                    Carbon::parse($rekod['tarikh_mula'])->year == $tahunCarian
+                Carbon::parse($rekod['tarikh_mula'])->year == $tahunCarian
             );
 
         // Calculate monthly totals for statistics
@@ -274,6 +274,7 @@ class LaporanController extends Controller
             ->map(function ($userData) {
                 $bins = [
                     'pengisian' => 0,
+                    'hari_0' => 0,
                     'hari_1' => 0,
                     'hari_2' => 0,
                     'hari_3' => 0,
@@ -288,7 +289,9 @@ class LaporanController extends Controller
                     $jumlah = $item['jumlah_hari'];
                     $bins['pengisian']++;
 
-                    if ($jumlah < 2) {
+                    if ($jumlah < 1) {
+                        $bins['hari_0']++;
+                    } elseif ($jumlah < 2) {
                         $bins['hari_1']++;
                     } elseif ($jumlah < 3) {
                         $bins['hari_2']++;
@@ -337,7 +340,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($item) =>
                 Carbon::parse($item['tarikh_mula'])->year == $tahunCarian &&
-                    $item['id_bahagian'] == $idBahagianCarian
+                $item['id_bahagian'] == $idBahagianCarian
             )
             ->groupBy('id_pengguna')
             ->map(function ($userData) {
@@ -379,7 +382,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($item) =>
                 Carbon::parse($item['tarikh_mula'])->year == $tahunCarian &&
-                    $item['id_bahagian'] == $idBahagianCarian
+                $item['id_bahagian'] == $idBahagianCarian
             )
             ->groupBy('id_pengguna');
 

@@ -50,9 +50,10 @@
         <th class="text-center align-middle" rowspan="2" style="white-space: nowrap; width: 1%;">#</th>
         <th class="align-middle" rowspan="2">Kumpulan Perkhidmatan</th>
         <th class="text-center align-middle" rowspan="2">Pengisian</th>
-        <th class="text-center" colspan="8">Hari</th>
+        <th class="text-center" colspan="9">Hari</th>
       </tr>
       <tr>
+        <th class="text-center px-4 py-3">0</th>
         <th class="text-center px-4 py-3">1</th>
         <th class="text-center px-4 py-3">2</th>
         <th class="text-center px-4 py-3">3</th>
@@ -72,13 +73,14 @@
         <td class="text-center">{{ $index + 1 }}</td> {{-- Increment index for display --}}
         <td>{{ $data->bah_ketpenu }}</td>
         <td class="text-center">{{ $matched['pengisian'] ?? 0}}</td>
-        <td class="text-center">{{ $matched['hari_1']  ?? 0}}</td>
-        <td class="text-center">{{ $matched['hari_2']  ?? 0}}</td>
-        <td class="text-center">{{ $matched['hari_3']  ?? 0}}</td>
-        <td class="text-center">{{ $matched['hari_4']  ?? 0}}</td>
-        <td class="text-center">{{ $matched['hari_5']  ?? 0}}</td>
-        <td class="text-center">{{ $matched['hari_6']  ?? 0}}</td>
-        <td class="text-center">{{ $matched['hari_7']  ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_0'] ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_1'] ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_2'] ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_3'] ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_4'] ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_5'] ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_6'] ?? 0}}</td>
+        <td class="text-center">{{ $matched['hari_7'] ?? 0}}</td>
         <td class="text-center">{{ $matched['hari_8_keatas'] ?? 0}}</td>
       </tr>
     @endforeach
