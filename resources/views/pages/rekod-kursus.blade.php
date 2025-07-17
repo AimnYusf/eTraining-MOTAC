@@ -38,11 +38,11 @@ use Carbon\Carbon;
       <h5 class="card-title mb-0">Status Permohonan</h5>
 
       {{-- Select Tahun --}}
-      <form method="GET" class="w-25">
-        <select name="tahun" class="selectpicker w-100" data-style="btn-default" onchange="this.form.submit()">
+      <form method="GET" class="w-50 d-flex justify-content-end">
+        <select name="tahun" class="selectpicker w-25" data-style="btn-default" onchange="this.form.submit()">
           @foreach(range(2024, now()->year) as $year)
           <option value="{{ $year }}" {{ request('tahun', now()->year) == $year ? 'selected' : '' }}>
-            Tahun {{ $year }}
+            {{ $year }}
           </option>
           @endforeach
         </select>
@@ -126,89 +126,89 @@ use Carbon\Carbon;
   <!-- Statistik Permohonan -->
   <div class="col-lg-6 col-md-12 mb-6">
     <div class="card h-100">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <div class="card-title mb-0">
-                <h5 class="m-0 me-2">Statistik Permohonan</h5>
-                <p class="card-subtitle">Jumlah keseluruhan permohonan adalah <strong>{{ $jumlahPermohonan->jumlah }}</strong>.</p>
-            </div>
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="card-title mb-0">
+          <h5 class="m-0 me-2">Statistik Permohonan</h5>
+          <p class="card-subtitle">Jumlah keseluruhan permohonan adalah <strong>{{ $jumlahPermohonan->jumlah }}</strong>.</p>
         </div>
-        @php
-            if (empty($jumlahPermohonan->jumlah)) {
-                $peratusDalamProses = 0;
-                $peratusBerjaya = 0;
-                $peratusTidakBerjaya = 0;
-            } else {
-                $peratusDalamProses = ($jumlahPermohonan->dalam_proses / $jumlahPermohonan->jumlah) * 100;
-                $peratusBerjaya = ($jumlahPermohonan->berjaya / $jumlahPermohonan->jumlah) * 100;
-                $peratusTidakBerjaya = ($jumlahPermohonan->tidak_berjaya / $jumlahPermohonan->jumlah) * 100;
-            }
-        @endphp
-        <div class="card-body">
-            <div class="d-none d-lg-flex vehicles-progress-labels mb-4">
-                @if($peratusDalamProses > 0)
-                    <div class="vehicles-progress-label on-the-way-text" style="width: {{ $peratusDalamProses }}%;">Dalam Proses</div>
-                @endif
-                @if($peratusBerjaya > 0)
-                    <div class="vehicles-progress-label berjaya-text" style="width: {{ $peratusBerjaya }}%;">Berjaya</div>
-                @endif
-                @if($peratusTidakBerjaya > 0)
-                    <div class="vehicles-progress-label tidak_berjaya-text text-nowrap" style="width: {{ $peratusTidakBerjaya }}%;">Tidak Berjaya</div>
-                @endif
-            </div>
-
-            <div class="vehicles-overview-progress progress rounded-3 mb-4" style="height: 46px;">
-                @if($peratusDalamProses > 0)
-                    <div class="progress-bar fw-medium text-start bg-lighter text-dark px-4 rounded-0" role="progressbar"
-                         style="width: {{ $peratusDalamProses }}%;" aria-valuenow="{{ $peratusDalamProses }}" aria-valuemin="0" aria-valuemax="100">{{ round($peratusDalamProses) }}%</div>
-                @endif
-                @if($peratusBerjaya > 0)
-                    <div class="progress-bar fw-medium text-start text-bg-success px-2 px-sm-4 rounded-0" role="progressbar"
-                         style="width: {{ $peratusBerjaya }}%;" aria-valuenow="{{ $peratusBerjaya }}" aria-valuemin="0" aria-valuemax="100">{{ round($peratusBerjaya) }}%</div>
-                @endif
-                @if($peratusTidakBerjaya > 0)
-                    <div class="progress-bar fw-medium text-start text-bg-danger text-paper px-1 px-sm-3 rounded-0 px-lg-4"
-                         role="progressbar" style="width: {{ $peratusTidakBerjaya }}%;" aria-valuenow="{{ $peratusTidakBerjaya }}" aria-valuemin="0" aria-valuemax="100">{{ round($peratusTidakBerjaya) }}%</div>
-                @endif
-            </div>
-
-            <div class="table-responsive">
-                <table class="table card-table">
-                    <tbody class="table-border-bottom-0">
-                        <tr>
-                            <td class="w-50">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <div class="me-2"><i class='ti ti-clock ti-lg text-heading'></i></div>
-                                    <h6 class="mb-0 fw-normal">Dalam Proses</h6>
-                                </div>
-                            </td>
-                            <td class="text-end"><span>{{ round($peratusDalamProses) }}%</span></td>
-                        </tr>
-                        <tr class="bg-label-success">
-                            <td class="w-50">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <div class="me-2"><i class='ti ti-circle-check ti-lg text-heading'></i></div>
-                                    <h6 class="mb-0 fw-normal">Permohonan Berjaya</h6>
-                                </div>
-                            </td>
-                            <td class="text-end"><span>{{ round($peratusBerjaya) }}%</span></td>
-                        </tr>
-                        <tr class="bg-label-danger">
-                            <td class="w-50">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <div class="me-2"><i class='ti ti-alert-circle ti-lg text-heading'></i></div>
-                                    <h6 class="mb-0 fw-normal">Permohonan Tidak Berjaya</h6>
-                                </div>
-                            </td>
-                            <td class="text-end"><span>{{ round($peratusTidakBerjaya) }}%</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+      </div>
+      @php
+      if (empty($jumlahPermohonan->jumlah)) {
+      $peratusDalamProses = 0;
+      $peratusBerjaya = 0;
+      $peratusTidakBerjaya = 0;
+      } else {
+      $peratusDalamProses = ($jumlahPermohonan->dalam_proses / $jumlahPermohonan->jumlah) * 100;
+      $peratusBerjaya = ($jumlahPermohonan->berjaya / $jumlahPermohonan->jumlah) * 100;
+      $peratusTidakBerjaya = ($jumlahPermohonan->tidak_berjaya / $jumlahPermohonan->jumlah) * 100;
+      }
+      @endphp
+      <div class="card-body">
+        <div class="d-none d-lg-flex vehicles-progress-labels mb-4">
+          @if($peratusDalamProses > 0)
+          <div class="vehicles-progress-label on-the-way-text" style="width: {{ $peratusDalamProses }}%;">Dalam Proses</div>
+          @endif
+          @if($peratusBerjaya > 0)
+          <div class="vehicles-progress-label berjaya-text" style="width: {{ $peratusBerjaya }}%;">Berjaya</div>
+          @endif
+          @if($peratusTidakBerjaya > 0)
+          <div class="vehicles-progress-label tidak_berjaya-text text-nowrap" style="width: {{ $peratusTidakBerjaya }}%;">Tidak Berjaya</div>
+          @endif
         </div>
+
+        <div class="vehicles-overview-progress progress rounded-3 mb-4" style="height: 46px;">
+          @if($peratusDalamProses > 0)
+          <div class="progress-bar fw-medium text-start bg-lighter text-dark px-4 rounded-0" role="progressbar"
+            style="width: {{ $peratusDalamProses }}%;" aria-valuenow="{{ $peratusDalamProses }}" aria-valuemin="0" aria-valuemax="100">{{ round($peratusDalamProses) }}%</div>
+          @endif
+          @if($peratusBerjaya > 0)
+          <div class="progress-bar fw-medium text-start text-bg-success px-2 px-sm-4 rounded-0" role="progressbar"
+            style="width: {{ $peratusBerjaya }}%;" aria-valuenow="{{ $peratusBerjaya }}" aria-valuemin="0" aria-valuemax="100">{{ round($peratusBerjaya) }}%</div>
+          @endif
+          @if($peratusTidakBerjaya > 0)
+          <div class="progress-bar fw-medium text-start text-bg-danger text-paper px-1 px-sm-3 rounded-0 px-lg-4"
+            role="progressbar" style="width: {{ $peratusTidakBerjaya }}%;" aria-valuenow="{{ $peratusTidakBerjaya }}" aria-valuemin="0" aria-valuemax="100">{{ round($peratusTidakBerjaya) }}%</div>
+          @endif
+        </div>
+
+        <div class="table-responsive">
+          <table class="table card-table">
+            <tbody class="table-border-bottom-0">
+              <tr>
+                <td class="w-50">
+                  <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-2"><i class='ti ti-clock ti-lg text-heading'></i></div>
+                    <h6 class="mb-0 fw-normal">Dalam Proses</h6>
+                  </div>
+                </td>
+                <td class="text-end"><span>{{ round($peratusDalamProses) }}%</span></td>
+              </tr>
+              <tr class="bg-label-success">
+                <td class="w-50">
+                  <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-2"><i class='ti ti-circle-check ti-lg text-heading'></i></div>
+                    <h6 class="mb-0 fw-normal">Permohonan Berjaya</h6>
+                  </div>
+                </td>
+                <td class="text-end"><span>{{ round($peratusBerjaya) }}%</span></td>
+              </tr>
+              <tr class="bg-label-danger">
+                <td class="w-50">
+                  <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-2"><i class='ti ti-alert-circle ti-lg text-heading'></i></div>
+                    <h6 class="mb-0 fw-normal">Permohonan Tidak Berjaya</h6>
+                  </div>
+                </td>
+                <td class="text-end"><span>{{ round($peratusTidakBerjaya) }}%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-</div>
   </div>
-  <!-- /Statistik Permohonan -->
-  
+</div>
+<!-- /Statistik Permohonan -->
+
 </div>
 @endsection
