@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IsytiharController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\KehadiranController;
@@ -27,9 +28,7 @@ Route::get('/pengesahan/{id}', [PenyokongController::class, 'show'])
 Route::post('/pengesahan', [PenyokongController::class, 'store'])->name('pengesahan.store');
 
 // Dashboard (All Authenticated Users)
-Route::get('/', function () {
-    return view('pages.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 // Pegawai Penyokong
 Route::get('/pengesahan/{id}', [PenyokongController::class, 'show'])->name('pengesahan.show');
