@@ -94,7 +94,7 @@
       "slug": "laporan",
       "submenu": [
         {
-          "url": "/",
+          "url": "/laporan/kumpulan",
           "name": "Ringkasan Kumpulan",
           "slug": "laporan-kumpulan"
         },

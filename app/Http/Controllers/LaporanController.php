@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EproBahagian;
 use App\Models\EproIsytihar;
 use App\Models\EproKehadiran;
+use App\Models\EproKumpulan;
 use App\Models\EproKursus;
 use App\Models\EproPengguna;
 use App\Models\EproPermohonan;
@@ -243,7 +244,87 @@ class LaporanController extends Controller
     }
 
     /**
-     * Displays overall records, filterable by division and year.
+     * Displays group records, filterable by division and year.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+     */
+    public function rekodKumpulan(Request $request)
+    {
+        $tahunCarian = $request->input('tahun') ?? Carbon::now()->year;
+        $kumpulan = EproKumpulan::get();
+
+        $rekodKeseluruhan = $this->getAllRecord()
+            ->filter(fn($item) => Carbon::parse($item['tarikh_mula'])->year == $tahunCarian)
+            ->groupBy('id_pengguna')
+            ->map(function ($userData) {
+                $jumlah_hari = 0;
+                foreach ($userData as $record) {
+                    $bilangan_hari = (float) ($record['bilangan_hari'] ?? 0);
+                    $bilangan_jam = (float) ($record['bilangan_jam'] ?? 0);
+                    $jumlah_hari += $this->calculateDuration($bilangan_hari, $bilangan_jam);
+                }
+
+                return [
+                    'id_pengguna' => $userData->first()['id_pengguna'],
+                    'kumpulan' => $userData->first()['kumpulan'],
+                    'jumlah_hari' => $jumlah_hari,
+                ];
+            })
+            ->groupBy('kumpulan')
+            ->map(function ($userData) {
+                $bins = [
+                    'pengisian' => 0,
+                    'hari_0' => 0,
+                    'hari_1' => 0,
+                    'hari_2' => 0,
+                    'hari_3' => 0,
+                    'hari_4' => 0,
+                    'hari_5' => 0,
+                    'hari_6' => 0,
+                    'hari_7' => 0,
+                    'hari_8_keatas' => 0,
+                ];
+
+                foreach ($userData as $item) {
+                    $jumlah = $item['jumlah_hari'];
+                    $bins['pengisian']++;
+
+                    if ($jumlah < 1) {
+                        $bins['hari_0']++;
+                    } elseif ($jumlah < 2) {
+                        $bins['hari_1']++;
+                    } elseif ($jumlah < 3) {
+                        $bins['hari_2']++;
+                    } elseif ($jumlah < 4) {
+                        $bins['hari_3']++;
+                    } elseif ($jumlah < 5) {
+                        $bins['hari_4']++;
+                    } elseif ($jumlah < 6) {
+                        $bins['hari_5']++;
+                    } elseif ($jumlah < 7) {
+                        $bins['hari_6']++;
+                    } elseif ($jumlah < 8) {
+                        $bins['hari_7']++;
+                    } else {
+                        $bins['hari_8_keatas']++;
+                    }
+                }
+
+                return array_merge([
+                    'kumpulan' => $userData->first()['kumpulan'],
+                ], $bins);
+            })
+            ->values()
+            ->all();
+
+        Log::info($rekodKeseluruhan);
+
+        return view('pages.laporan-kumpulan', compact('kumpulan', 'rekodKeseluruhan'));
+    }
+
+    /**
+     * Displays department records, filterable by division and year.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
