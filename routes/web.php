@@ -75,6 +75,7 @@ Route::middleware('auth')->group(function () {
             'index' => 'plb-kelulusan'
         ]);
         Route::any('/rekod-baru', [PegawaiLatihanController::class, 'rekodBaru'])->name('plb-rekod-baru');
+        Route::get('/rekod-pegawai', [PegawaiLatihanController::class, 'rekodPegawai'])->name('plb-rekod-pegawai');
     });
 
     /*

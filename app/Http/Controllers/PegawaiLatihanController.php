@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Calculations;
 use App\Models\EproBahagian;
 use App\Models\EproIsytihar;
 use App\Models\EproPengguna;
@@ -38,8 +39,20 @@ class PegawaiLatihanController extends Controller
                 ->first();
         })->get();
 
-        Log::info($pengguna->toArray());
-
         return view('pages.pegawai-latihan-tambah', compact('pengguna'));
+    }
+
+    public function rekodPegawai(Request $request)
+    {
+        $carianBahagian = EproPengguna::where('pen_idusers', Auth::id())->first();
+
+        $jumlahRekodPengguna = Calculations::jumlahRekodPengguna(now()->year, $carianBahagian['pen_idbahagian']);
+        if ($request->ajax()) {
+            return response()->json([
+                'data' => $jumlahRekodPengguna
+            ]);
+        }
+
+        return view('pages.pegawai-latihan-rekod');
     }
 }

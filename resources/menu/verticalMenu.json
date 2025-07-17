@@ -54,7 +54,7 @@
       "slug": "plb-rekod-baru"
     },
     {
-      "url": "/",
+      "url": "/rekod-pegawai",
       "name": "Rekod Pegawai",
       "icon": "menu-icon tf-icons ti ti-id-badge-2",
       "slug": "plb-rekod-pegawai"
