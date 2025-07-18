@@ -22,7 +22,7 @@ class KursusController extends Controller
             $sharedData = [
                 'kategori' => EproKategori::all(),
                 'penganjur' => EproPenganjur::all(),
-                'tempat' => EproTempat::all(),
+                'tempat' => EproTempat::orderBy('tem_keterangan', 'asc')->get(),
                 'kumpulan' => EproKumpulan::all()
             ];
 
