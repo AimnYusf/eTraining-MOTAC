@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Mail\ApplicationNotificationMail;
 use App\Mail\ApprovalRequestMail;
+use App\Models\EproKumpulan;
 use App\Models\EproKursus;
 use App\Models\EproPengguna;
 use App\Models\EproPermohonan;
+use App\Models\EtraUrusetia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,12 +23,12 @@ class KatalogController extends Controller
         // Get authenticated user's group and their applied course IDs
         $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
         $permohonan = EproPermohonan::where('per_idusers', Auth::id())->pluck('per_idkursus');
+        $urusetia = EtraUrusetia::get();
 
         // Retrieve available courses for the user that they haven't applied for
         $kursus = EproKursus::with(['eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
             ->get();
 
-        Log::info($kursus->toArray());
 
         // If viewing a specific course
         $kid = $request->query('kid');
@@ -34,7 +36,7 @@ class KatalogController extends Controller
             if ($kursus->contains('kur_id', $kid)) {
                 $kursus = $kursus->firstWhere('kur_id', $kid);
                 // dd($kursus->toArray());
-                return view('pages.pengguna-kursus-mohon', compact('kursus'));
+                return view('pages.pengguna-kursus-mohon', compact('kursus', 'urusetia'));
             }
             abort(404);
         }

@@ -86,16 +86,35 @@ use Carbon\Carbon;
               <span class="text-dark">{{ $kursus->eproKumpulan->kum_ketpenu }}</span>
             </div>
           </li>
-          <li class="d-flex align-items-center">
-            <div class="badge bg-label-secondary text-body p-3 me-4 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
+          <li class="mb-5 d-flex align-items-center">
+            <div class="badge bg-label-secondary text-body p-3 me-4 rounded-circle d-flex align-items-start justify-content-center flex-shrink-0">
               <i class="ti ti-user-cog ti-md"></i>
             </div>
             <div class="flex-grow-1">
-              <h5 class="mb-1 text-primary">Anjuran</h5>
+              <h5 class="mb-1 text-primary">Penganjur</h5>
               <span class="text-dark">{{ $kursus->eproPenganjur->pjr_keterangan }}</span>
             </div>
           </li>
         </ul>
+
+        @if (!is_null($kursus->kur_urusetia))
+        <hr class="my-6 border-top border-light">
+        <h5 class="mb-3 text-primary">Urusetia Program</h5>
+        <div class="text-muted">
+          @php
+          $selectedIds = (array) $kursus->kur_urusetia;
+          $urusetia = $urusetia->whereIn('urus_id', $selectedIds);
+          @endphp
+
+          @foreach ($urusetia as $data)
+          <div class="mb-5">
+            <p class="mb-1 text-dark text-uppercase fw-bold"><i class="ti ti-user me-2 text-primary"></i>{{ $data->urus_nama }}</p>
+            <p class="mb-1 text-dark"><i class="ti ti-phone-call me-2 text-success"></i>{{ $data->urus_notel }}</p>
+            <p class="mb-0 text-dark"><i class="ti ti-mail me-2 text-info"></i><span class="text-lowercase">{{ $data->urus_emel ?? 'Tiada emel' }}</span></p>
+          </div>
+          @endforeach
+        </div>
+        @endif
 
         <hr class="my-6 border-top border-light">
 

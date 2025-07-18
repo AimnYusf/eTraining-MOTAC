@@ -50,7 +50,7 @@
           </div>
 
           <div class="row mb-4">
-            <label for="kur_nama" class="col-md-3 col-form-label">Nama Kursus</label>
+            <label for="kur_nama" class="col-md-3 col-form-label">Nama Kursus <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" id="kur_nama" class="form-control" name="kur_nama"
                 value="{{ $kursus->kur_nama ?? '' }}" placeholder="Nama Kursus">
@@ -58,7 +58,7 @@
           </div>
 
           <div class="row mb-4">
-            <label class="col-md-3 col-form-label">Objektif Kursus</label>
+            <label class="col-md-3 col-form-label">Objektif Kursus <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <div id="objektifError" class="alert alert-danger mb-2 m-0 d-none" role="alert">
                 Sila masukkan objektif kursus.
@@ -83,14 +83,14 @@
           </div>
 
           <div class="row mb-4">
-            <label for="kur_poster" class="col-md-3 col-form-label">Poster Kursus</label>
+            <label for="kur_poster" class="col-md-3 col-form-label">Poster Kursus <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="file" id="kur_poster" class="form-control" name="kur_poster" accept="image/png, image/jpeg">
             </div>
           </div>
 
           <div class="row mb-4">
-            <label for="kur_idkategori" class="col-md-3 col-form-label">Kategori Kursus</label>
+            <label for="kur_idkategori" class="col-md-3 col-form-label">Kategori Kursus <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <select id="kur_idkategori" class="selectpicker w-100" name="kur_idkategori" data-style="btn-default"
                 title="Sila Pilih">
@@ -104,28 +104,13 @@
             </div>
           </div>
 
-          <div class="row mb-4">
-            <label for="kur_idpenganjur" class="col-md-3 col-form-label">Penganjur</label>
-            <div class="col-md-9">
-              <select id="kur_idpenganjur" name="kur_idpenganjur" class="selectpicker w-100" data-style="btn-default"
-                title="Sila Pilih">
-                @foreach ($penganjur as $data)
-                <option value="{{ $data->pjr_id }}" {{ isset($kursus) && $data->pjr_id == $kursus->kur_idpenganjur ?
-        'selected' : '' }}>
-                  {{ $data->pjr_keterangan }}
-                </option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-
           <div class="row">
-            <label class="col-md-3 col-form-label">Tarikh / Masa Mula</label>
+            <label class="col-md-3 col-form-label">Tarikh / Masa Mula <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <div class="row g-2">
                 <div class="col mb-4">
                   <input type="text" id="kur_tkhmula" class="form-control" name="kur_tkhmula"
-                    value="{{ \Carbon\Carbon::parse($kursus->kur_tkhmula ?? '')->format('d/m/Y') }}" placeholder="DD/MM/YYYY" />
+                    value="{{ isset($kursus->kur_tkhmula) ? \Carbon\Carbon::parse($kursus->kur_tkhmula)->format('d/m/Y') : '' }}" placeholder="DD/MM/YYYY" />
                 </div>
                 <div class="col mb-4">
                   <input type="text" id="kur_msamula" class="form-control" name="kur_msamula" placeholder="HH:MMam"
@@ -136,12 +121,12 @@
           </div>
 
           <div class="row">
-            <label class="col-md-3 col-form-label">Tarikh / Masa Tamat</label>
+            <label class="col-md-3 col-form-label">Tarikh / Masa Tamat <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <div class="row g-2">
                 <div class="col mb-4">
                   <input type="text" id="kur_tkhtamat" class="form-control" name="kur_tkhtamat" placeholder="DD/MM/YYYY"
-                    value="{{ \Carbon\Carbon::parse($kursus->kur_tkhtamat ?? '')->format('d/m/Y') }}" />
+                    value="{{ isset($kursus->kur_tkhtamat) ? \Carbon\Carbon::parse($kursus->kur_tkhtamat)->format('d/m/Y') : '' }}" />
                 </div>
                 <div class="col mb-4">
                   <input type="text" id="kur_msatamat" class="form-control" name="kur_msatamat" placeholder="HH:MMam"
@@ -152,7 +137,7 @@
           </div>
 
           <div class="row mb-4">
-            <label for="pen_nama" class="col-md-3 col-form-label">Bilangan hari</label>
+            <label for="pen_nama" class="col-md-3 col-form-label">Bilangan hari <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="number" id="kur_bilhari" class="form-control" name="kur_bilhari"
                 value="{{ $kursus->kur_bilhari ?? '' }}" placeholder="Bilangan Hari">
@@ -160,7 +145,7 @@
           </div>
 
           <div class="row mb-4">
-            <label for="pen_nama" class="col-md-3 col-form-label">Tempat</label>
+            <label for="pen_nama" class="col-md-3 col-form-label">Tempat <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <select id="kur_idtempat" class="selectpicker w-100" name="kur_idtempat" data-style="btn-default"
                 title="Sila Pilih">
@@ -175,23 +160,23 @@
           </div>
 
           <div class="row mb-4">
-            <label for="pen_nama_1" class="col-md-3 col-form-label">Tarikh Buka Permohonan</label>
+            <label for="pen_nama_1" class="col-md-3 col-form-label">Tarikh Buka Permohonan <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" id="kur_tkhbuka" class="form-control" name="kur_tkhbuka"
-                value="{{ $kursus->kur_tkhbuka ?? '' }}" placeholder="DD/MM/YYYY" />
+                value="{{ isset($kursus->kur_tkhbuka) ? \Carbon\Carbon::parse($kursus->kur_tkhbuka)->format('d/m/Y') : '' }}" placeholder="DD/MM/YYYY" />
             </div>
           </div>
 
           <div class="row mb-4">
-            <label for="pen_nama" class="col-md-3 col-form-label">Tarikh Tutup Permohonan</label>
+            <label for="pen_nama" class="col-md-3 col-form-label">Tarikh Tutup Permohonan <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" id="kur_tkhtutup" class="form-control" name="kur_tkhtutup"
-                value="{{ $kursus->kur_tkhtutup ?? '' }}" placeholder="DD/MM/YYYY" />
+                value="{{ isset($kursus->kur_tkhtutup) ? \Carbon\Carbon::parse($kursus->kur_tkhtutup)->format('d/m/Y') : '' }}" placeholder="DD/MM/YYYY" />
             </div>
           </div>
 
           <div class="row mb-4">
-            <label for="pen_nama" class="col-md-3 col-form-label">Bilangan Peserta</label>
+            <label for="pen_nama" class="col-md-3 col-form-label">Bilangan Peserta <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="number" id="kur_bilpeserta" class="form-control" name="kur_bilpeserta"
                 value="{{ $kursus->kur_bilpeserta ?? '' }}" placeholder="Bilangan Peserta">
@@ -199,7 +184,7 @@
           </div>
 
           <div class="row mb-4">
-            <label for="pen_nama" class="col-md-3 col-form-label">Kumpulan Pegawai</label>
+            <label for="pen_nama" class="col-md-3 col-form-label">Kumpulan Sasaran <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <select id="kur_idkumpulan" name="kur_idkumpulan" class="selectpicker w-100" data-style="btn-default"
                 title="Sila Pilih">
@@ -214,7 +199,39 @@
           </div>
 
           <div class="row mb-4">
-            <label for="pen_nama" class="col-md-3 col-form-label">Status</label>
+            <label for="kur_idpenganjur" class="col-md-3 col-form-label">Penganjur <span class="text-danger">*</span></select></label>
+            <div class="col-md-9">
+              <select id="kur_idpenganjur" name="kur_idpenganjur" class="selectpicker w-100" data-style="btn-default"
+                title="Sila Pilih">
+                @foreach ($penganjur as $data)
+                <option value="{{ $data->pjr_id }}" {{ isset($kursus) && $data->pjr_id == $kursus->kur_idpenganjur ?
+        'selected' : '' }}>
+                  {{ $data->pjr_keterangan }}
+                </option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+
+          @php
+          $selectedIds = $kursus->kur_urusetia ?? []; // Ensure it's an array
+          @endphp
+
+          <div class="row mb-4">
+            <label for="kur_urusetia" class="col-md-3 col-form-label">Urusetia</label>
+            <div class="col-md-9">
+              <select id="kur_urusetia" class="selectpicker w-100" name="kur_urusetia[]" data-style="btn-default" multiple data-icon-base="ti" data-tick-icon="ti-check text-white" title="Sila Pilih">
+                @foreach ($urusetia as $data)
+                <option value="{{ $data->urus_id }}" {{ in_array((string) $data->urus_id, array_map('strval', $selectedIds)) ? 'selected' : '' }}>
+                  {{ $data->urus_nama }}
+                </option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <label for="pen_nama" class="col-md-3 col-form-label">Status <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <select id="kur_status" name="kur_status" class="selectpicker w-100" data-style="btn-default"
                 title="Sila Pilih">

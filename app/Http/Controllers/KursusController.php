@@ -7,6 +7,7 @@ use App\Models\EproKumpulan;
 use App\Models\EproKursus;
 use App\Models\EproPenganjur;
 use App\Models\EproTempat;
+use App\Models\EtraUrusetia;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -23,7 +24,8 @@ class KursusController extends Controller
                 'kategori' => EproKategori::all(),
                 'penganjur' => EproPenganjur::all(),
                 'tempat' => EproTempat::orderBy('tem_keterangan', 'asc')->get(),
-                'kumpulan' => EproKumpulan::all()
+                'kumpulan' => EproKumpulan::orderBy('kum_order', 'asc')->get(),
+                'urusetia' => EtraUrusetia::get()
             ];
 
             // Add new
@@ -104,7 +106,6 @@ class KursusController extends Controller
                 'kur_nama' => $request->kur_nama,
                 'kur_objektif' => $request->kur_objektif,
                 'kur_idkategori' => $request->kur_idkategori,
-                'kur_idpenganjur' => $request->kur_idpenganjur,
                 'kur_tkhmula' => $request->kur_tkhmula,
                 'kur_msamula' => Carbon::createFromFormat('g:ia', strtolower($request->kur_msamula))->format('H:i'),
                 'kur_msatamat' => Carbon::createFromFormat('g:ia', strtolower($request->kur_msatamat))->format('H:i'),
@@ -115,6 +116,8 @@ class KursusController extends Controller
                 'kur_tkhtutup' => $request->kur_tkhtutup,
                 'kur_bilpeserta' => $request->kur_bilpeserta,
                 'kur_idkumpulan' => $request->kur_idkumpulan,
+                'kur_idpenganjur' => $request->kur_idpenganjur,
+                'kur_urusetia' => $request->kur_urusetia,
                 'kur_poster' => $imagePath,
                 'kur_status' => $request->kur_status,
             ]

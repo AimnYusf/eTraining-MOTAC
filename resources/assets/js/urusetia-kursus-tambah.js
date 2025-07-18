@@ -167,6 +167,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           }
         },
+        kur_idkategori: {
+          validators: {
+            notEmpty: {
+              message: 'Sila pilih kategori kursus'
+            }
+          }
+        },
         kur_bilhari: {
           validators: {
             notEmpty: {
@@ -184,27 +191,6 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             integer: {
               message: 'Hanya nombor dibenarkan'
-            }
-          }
-        },
-        kur_idkategori: {
-          validators: {
-            notEmpty: {
-              message: 'Sila pilih kategori kursus'
-            }
-          }
-        },
-        kur_idpenganjur: {
-          validators: {
-            notEmpty: {
-              message: 'Sila pilih penganjur'
-            }
-          }
-        },
-        kur_idkumpulan: {
-          validators: {
-            notEmpty: {
-              message: 'Sila pilih kumpulan pegawai'
             }
           }
         },
@@ -227,6 +213,20 @@ document.addEventListener('DOMContentLoaded', function () {
             date: {
               format: 'DD/MM/YYYY',
               message: 'Tarikh tidak sah'
+            }
+          }
+        },
+        kur_idkumpulan: {
+          validators: {
+            notEmpty: {
+              message: 'Sila pilih kumpulan sasaran'
+            }
+          }
+        },
+        kur_idpenganjur: {
+          validators: {
+            notEmpty: {
+              message: 'Sila pilih penganjur'
             }
           }
         },

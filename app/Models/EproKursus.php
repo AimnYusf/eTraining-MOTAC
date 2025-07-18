@@ -8,11 +8,14 @@ class EproKursus extends Model
 {
     protected $table = 'epro_kursus';
     protected $primaryKey = 'kur_id';
+
+    protected $casts = [
+        'kur_urusetia' => 'array',
+    ];
     protected $fillable = [
         'kur_nama',
         'kur_objektif',
         'kur_idkategori',
-        'kur_idpenganjur',
         'kur_tkhmula',
         'kur_msamula',
         'kur_tkhtamat',
@@ -23,6 +26,8 @@ class EproKursus extends Model
         'kur_tkhtutup',
         'kur_bilpeserta',
         'kur_idkumpulan',
+        'kur_idpenganjur',
+        'kur_urusetia',
         'kur_poster',
         'kur_status',
     ];
