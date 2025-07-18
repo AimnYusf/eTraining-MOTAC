@@ -18,7 +18,7 @@ class ProfilController extends Controller
             'pengguna' => EproPengguna::where('pen_idusers', Auth::id())->first(),
             'bahagian' => EproBahagian::all(),
             'jabatan' => EproJabatan::all(),
-            'kumpulan' => EproKumpulan::all(),
+            'kumpulan' => EproKumpulan::whereNotNull('kum_ketring')->get(),
         ]);
     }
 

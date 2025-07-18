@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('epro_kumpulan', function (Blueprint $table) {
             $table->id('kum_id');
-            $table->string('kum_keterangan', 100);
+            $table->string('kum_ketring')->nullable();
+            $table->string('kum_ketpenu');
             $table->integer('kum_order');
             $table->timestamps();
         });

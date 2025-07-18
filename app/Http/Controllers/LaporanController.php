@@ -9,6 +9,7 @@ use App\Models\EproPengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class LaporanController extends Controller
 {
@@ -21,11 +22,13 @@ class LaporanController extends Controller
             ->filter(
                 fn($item) =>
                 $item['id_pengguna'] == $carianId &&
-                Carbon::parse($item['tarikh_mula'])->year == $carianTahun
+                    Carbon::parse($item['tarikh_mula'])->year == $carianTahun
             );
 
         $rekodBulananPengguna = Records::rekodBulananPengguna($carianId, $carianTahun);
         $jumlahPermohonanPengguna = Records::jumlahPermohonanPengguna($carianId, $carianTahun);
+
+        Log::info($rekodPengguna->toArray());
 
         return view('pages.rekod-kursus', compact(
             'rekodPengguna',
@@ -76,12 +79,11 @@ class LaporanController extends Controller
 
         $rekodIndividu = Records::rekodPengguna()
             ->filter(
-                fn($item) =>
-                (
+                fn($item) => (
                     $item['tarikh_mula'] === null ||
                     Carbon::parse($item['tarikh_mula'])->year == $carianTahun
                 ) &&
-                $item['id_bahagian'] == $carianBahagian
+                    $item['id_bahagian'] == $carianBahagian
             )
             ->groupBy('id_pengguna');
 

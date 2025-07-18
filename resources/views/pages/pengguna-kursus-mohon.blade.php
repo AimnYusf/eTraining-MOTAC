@@ -83,7 +83,7 @@ use Carbon\Carbon;
             </div>
             <div class="flex-grow-1">
               <h5 class="mb-1 text-primary">Kumpulan Sasaran</h5>
-              <span class="text-dark">{{ $kursus->eproKumpulan->kum_keterangan }}</span>
+              <span class="text-dark">{{ $kursus->eproKumpulan->kum_ketpenu }}</span>
             </div>
           </li>
           <li class="d-flex align-items-center">
@@ -108,8 +108,8 @@ use Carbon\Carbon;
         <div class="col-12 text-center">
           <div class="btn-apply-modal">
             <a href="/kursus" class="btn btn-label-secondary me-2">Kembali</a>
-              @if (now() >= $kursus->kur_tkhbuka && now() <= $kursus->kur_tkhtutup)
-                  <button type="button" class="btn btn-primary apply-record" data-id="{{ $kursus->kur_id }}">Mohon</button>
+            @if (now() >= $kursus->kur_tkhbuka && now() <= $kursus->kur_tkhtutup)
+              <button type="button" class="btn btn-primary apply-record" data-id="{{ $kursus->kur_id }}">Mohon</button>
               @endif
           </div>
         </div>

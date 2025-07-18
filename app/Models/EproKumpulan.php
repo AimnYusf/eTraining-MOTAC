@@ -9,7 +9,8 @@ class EproKumpulan extends Model
     protected $table = 'epro_kumpulan';
     protected $primaryKey = 'kum_id';
     protected $fillable = [
-        'kum_keterangan',
+        'kum_ketring',
+        'kum_ketpenu',
         'kum_order'
     ];
 

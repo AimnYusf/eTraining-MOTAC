@@ -40,7 +40,7 @@ class Records
                 'epro_pengguna.pen_nama as nama',
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
-                'epro_kumpulan.kum_keterangan as kumpulan',
+                'epro_kumpulan.kum_ketpenu as kumpulan',
                 'epro_bahagian.bah_ketpenu as bahagian',
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 'epro_kursus.kur_nama as nama_kursus',
@@ -56,7 +56,7 @@ class Records
                 'epro_pengguna.pen_nama',
                 'epro_pengguna.pen_jawatan',
                 'epro_pengguna.pen_gred',
-                'epro_kumpulan.kum_keterangan',
+                'epro_kumpulan.kum_ketpenu',
                 'epro_bahagian.bah_ketpenu',
                 'epro_pengguna.pen_idbahagian',
                 'epro_kursus.kur_nama',
@@ -79,7 +79,7 @@ class Records
                 'epro_pengguna.pen_nama as nama',
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
-                'epro_kumpulan.kum_keterangan as kumpulan',
+                'epro_kumpulan.kum_ketpenu as kumpulan',
                 'epro_bahagian.bah_ketpenu as bahagian', // Added for consistency with kehadiranQuery
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 'epro_isytihar.isy_nama as nama_kursus',
@@ -95,7 +95,7 @@ class Records
                 'epro_pengguna.pen_nama',
                 'epro_pengguna.pen_jawatan',
                 'epro_pengguna.pen_gred',
-                'epro_kumpulan.kum_keterangan',
+                'epro_kumpulan.kum_ketpenu',
                 'epro_bahagian.bah_ketpenu',
                 'epro_pengguna.pen_idbahagian',
                 'epro_isytihar.isy_nama',
@@ -144,7 +144,7 @@ class Records
                 'epro_pengguna.pen_nama as nama',
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
-                'epro_kumpulan.kum_keterangan as kumpulan',
+                'epro_kumpulan.kum_ketpenu as kumpulan',
                 'epro_bahagian.bah_ketpenu as bahagian',
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 DB::raw('NULL as nama_kursus'),
@@ -199,7 +199,7 @@ class Records
             ->filter(
                 fn($rekod) =>
                 $rekod['id_pengguna'] == $carianId &&
-                Carbon::parse($rekod['tarikh_mula'])->year == $carianTahun
+                    Carbon::parse($rekod['tarikh_mula'])->year == $carianTahun
             );
 
         // Calculate monthly totals for statistics
