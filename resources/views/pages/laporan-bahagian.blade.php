@@ -61,7 +61,7 @@ use Carbon\Carbon;
       <tbody>
         @foreach ($bahagian as $index => $data) {{-- Use $index for row numbering --}}
         @php
-        $matched = collect($rekodKeseluruhan)->firstWhere('bahagian', $data->bah_ketpenu);
+        $matched = collect($rekodBahagian)->firstWhere('bahagian', $data->bah_ketpenu);
         @endphp
         <tr>
           <td class="text-center">{{ $index + 1 }}</td> {{-- Increment index for display --}}

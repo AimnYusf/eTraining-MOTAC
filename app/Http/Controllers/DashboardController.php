@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Records;
 use App\Http\Controllers\Controller;
 use App\Models\EproIsytihar;
 use App\Models\EproKehadiran;
@@ -16,12 +17,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
+        $carianId = Auth::id();
 
-        $jumlahPermohonan = $this->getUserApplication($userId);
-        $jumlahKehadiran = $this->getUserAttendance($userId);
+        $jumlahPermohonanPengguna = Records::jumlahPermohonanPengguna($carianId, now()->year);
+        $rekodBulananPengguna = Records::rekodBulananPengguna($carianId, now()->year);
 
-        return view('pages.dashboard', compact('jumlahPermohonan', 'jumlahKehadiran'));
+        return view('pages.dashboard', compact('jumlahPermohonanPengguna', 'rekodBulananPengguna'));
     }
 
     private function getUserApplication($userId)

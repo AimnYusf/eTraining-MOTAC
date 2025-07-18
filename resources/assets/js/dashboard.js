@@ -1,7 +1,3 @@
-/**
- * Dashboard CRM
- */
-
 'use strict';
 (function () {
   let cardColor, labelColor, headingColor, shadeColor, legendColor, borderColor, barBgColor;
@@ -23,6 +19,21 @@
     shadeColor = '';
   }
 
+  // Init Statistik Kursus
+  // --------------------------------------------------------------------
+
+  const rekodBulananPengguna = window.rekodBulananPengguna;
+
+  const statistikKursusEl = document.querySelector('#statistikKursus'),
+    statistikKursusConfig = EarningReportsBarChart(
+      rekodBulananPengguna,
+      rekodBulananPengguna.indexOf(Math.max(...rekodBulananPengguna))
+    );
+  if (typeof statistikKursusEl !== undefined && statistikKursusEl !== null) {
+    const statistikKursus = new ApexCharts(statistikKursusEl, statistikKursusConfig);
+    statistikKursus.render();
+  }
+
   // Earning Reports Tabs Function
   function EarningReportsBarChart(arrayData, highlightData) {
     const basicColor = config.colors_label.primary,
@@ -39,7 +50,7 @@
 
     const earningReportBarChartOpt = {
       chart: {
-        height: 231,
+        height: 280,
         parentHeightOffset: 0,
         type: 'bar',
         toolbar: {
@@ -106,19 +117,19 @@
         }
       },
       yaxis: {
+        min: 0, // Set it to 0 to ensure a proper baseline
+        max: Math.max(...arrayData) + 0.5,
+        tickAmount: 5,
         labels: {
           offsetX: -15,
           formatter: function (val) {
-            return parseInt(val / 1);
+            return val.toFixed(1); // optionally format to 1 decimal
           },
           style: {
             fontSize: '13px',
             colors: labelColor,
             fontFamily: 'Public Sans'
-          },
-          min: 0,
-          max: 60000,
-          tickAmount: 6
+          }
         }
       },
       responsive: [
@@ -163,34 +174,5 @@
       ]
     };
     return earningReportBarChartOpt;
-  }
-
-  // Init Chart
-  // --------------------------------------------------------------------
-  // const data = [60, 50, 20, 45, 50, 30, 70, 50, 60, 80, 100, 20];
-
-  const data = [
-    // Year 1
-    [3, 7, 6, 4, 5, 8, 10, 0, 6, 4, 3, 0],
-    // Year 2
-    [2, 4, 5, 6, 7, 9, 8, 10, 6, 5, 4, 7],
-    // Year 3
-    [1, 3, 4, 5, 7, 8, 9, 10, 6, 4, 2, 5],
-    // Year 4
-    [5, 6, 7, 8, 6, 5, 4, 7, 8, 9, 10, 6],
-    // Year 5
-    [6, 7, 5, 8, 7, 6, 10, 9, 8, 7, 6, 5],
-    // Year 6
-    [3, 4, 6, 7, 8, 10, 9, 7, 6, 5, 4, 3],
-    // Year 7
-    [2, 3, 4, 5, 6, 7, 8, 9, 10, 8, 6, 4]
-  ];
-
-  const earningReportsTabsOrdersEl = document.querySelector('#earningReportsTabsOrders'),
-    earningReportsTabsOrdersConfig = EarningReportsBarChart(data[0], data[0].indexOf(Math.max(...data[0])));
-
-  if (typeof earningReportsTabsOrdersEl !== undefined && earningReportsTabsOrdersEl !== null) {
-    const earningReportsTabsOrders = new ApexCharts(earningReportsTabsOrdersEl, earningReportsTabsOrdersConfig);
-    earningReportsTabsOrders.render();
   }
 })();

@@ -18,10 +18,10 @@
 @endsection
 
 @section('page-script')
-    @vite(['resources/assets/js/statistik.js'])
+    @vite(['resources/assets/js/dashboard.js'])
 
     <script>
-        window.jumlahKehadiran = @json($jumlahKehadiran);
+        window.rekodBulananPengguna = @json($rekodBulananPengguna);
     </script>
 
 @endsection
@@ -72,7 +72,7 @@
                                 <span class="avatar-initial rounded bg-label-primary"><i
                                         class='ti ti-clipboard-list ti-28px'></i></span>
                             </div>
-                            <h4 class="mb-0">{{ $jumlahPermohonan->jumlah }}</h4>
+                            <h4 class="mb-0">{{ $jumlahPermohonanPengguna->jumlah }}</h4>
                         </div>
                         <p class="mb-1">Jumlah Permohonan</p>
                     </div>
@@ -86,7 +86,7 @@
                                 <span class="avatar-initial rounded bg-label-info"><i
                                         class='ti ti-file-plus ti-28px'></i></span>
                             </div>
-                            <h4 class="mb-0">{{ $jumlahPermohonan->baru }}</h4>
+                            <h4 class="mb-0">{{ $jumlahPermohonanPengguna->dalam_proses }}</h4>
                         </div>
                         <p class="mb-1">Permohonan Baru</p>
                     </div>
@@ -100,7 +100,7 @@
                                 <span class="avatar-initial rounded bg-label-success"><i
                                         class='ti ti-circle-check ti-28px'></i></span>
                             </div>
-                            <h4 class="mb-0">{{ $jumlahPermohonan->berjaya }}</h4>
+                            <h4 class="mb-0">{{ $jumlahPermohonanPengguna->berjaya }}</h4>
                         </div>
                         <p class="mb-1">Permohonan Berjaya</p>
                     </div>
@@ -114,7 +114,7 @@
                                 <span class="avatar-initial rounded bg-label-danger"><i
                                         class='ti ti-alert-circle ti-28px'></i></span>
                             </div>
-                            <h4 class="mb-0">{{ $jumlahPermohonan->tidak_berjaya }}</h4>
+                            <h4 class="mb-0">{{ $jumlahPermohonanPengguna->tidak_berjaya }}</h4>
                         </div>
                         <p class="mb-1">Permohonan Gagal</p>
                     </div>

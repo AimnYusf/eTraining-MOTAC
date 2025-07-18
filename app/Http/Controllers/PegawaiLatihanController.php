@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Calculations;
+use App\Helpers\Records;
 use App\Models\EproBahagian;
 use App\Models\EproIsytihar;
 use App\Models\EproPengguna;
@@ -13,7 +13,9 @@ use Post;
 
 class PegawaiLatihanController extends Controller
 {
-    public function index(Request $request) {}
+    public function index(Request $request)
+    {
+    }
 
     public function rekodBaru(Request $request)
     {
@@ -46,7 +48,7 @@ class PegawaiLatihanController extends Controller
     {
         $carianBahagian = EproPengguna::where('pen_idusers', Auth::id())->first();
 
-        $jumlahRekodPengguna = Calculations::jumlahRekodPengguna(now()->year, $carianBahagian['pen_idbahagian']);
+        $jumlahRekodPengguna = Records::jumlahRekodPengguna(now()->year, $carianBahagian['pen_idbahagian']);
         if ($request->ajax()) {
             return response()->json([
                 'data' => $jumlahRekodPengguna

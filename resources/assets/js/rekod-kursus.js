@@ -168,12 +168,12 @@
   // Init Statistik Kursus
   // --------------------------------------------------------------------
 
-  const jumlahKursus = window.jumlahKursus;
+  const rekodBulananPengguna = window.rekodBulananPengguna;
 
   const earningReportsTabsOrdersEl = document.querySelector('#earningReportsTabsOrders'),
     earningReportsTabsOrdersConfig = EarningReportsBarChart(
-      jumlahKursus,
-      jumlahKursus.indexOf(Math.max(...jumlahKursus))
+      rekodBulananPengguna,
+      rekodBulananPengguna.indexOf(Math.max(...rekodBulananPengguna))
     );
 
   if (typeof earningReportsTabsOrdersEl !== undefined && earningReportsTabsOrdersEl !== null) {

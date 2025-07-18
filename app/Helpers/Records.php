@@ -5,13 +5,15 @@ namespace App\Helpers;
 use App\Models\EproIsytihar;
 use App\Models\EproKehadiran;
 use App\Models\EproPengguna;
+use App\Models\EproPermohonan;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-class Calculations
+class Records
 {
     public static function kiraJumlah($bilangan_hari, $bilangan_jam)
     {
@@ -46,8 +48,8 @@ class Calculations
                 'epro_kursus.kur_tkhtamat as tarikh_tamat',
                 'epro_tempat.tem_keterangan as tempat',
                 'epro_penganjur.pjr_keterangan as penganjur',
-                DB::raw('CASE WHEN epro_kursus.kur_bilhari > 1 THEN COUNT(epro_kehadiran.keh_idusers) ELSE NULL END as bilangan_hari'),
-                DB::raw('CASE WHEN epro_kursus.kur_bilhari = 1 THEN (epro_kursus.kur_msatamat - epro_kursus.kur_msamula) / 10 ELSE NULL END as bilangan_jam')
+                DB::raw('CASE WHEN epro_kursus.kur_tkhmula !=  epro_kursus.kur_tkhtamat THEN COUNT(epro_kehadiran.keh_idusers) ELSE NULL END as bilangan_hari'),
+                DB::raw('CASE WHEN epro_kursus.kur_tkhmula =  epro_kursus.kur_tkhtamat THEN (epro_kursus.kur_msatamat - epro_kursus.kur_msamula) / 10 ELSE NULL END as bilangan_jam')
             )
             ->groupBy(
                 'epro_kehadiran.keh_idusers',
@@ -160,6 +162,59 @@ class Calculations
         return $rekodPengguna;
     }
 
+    public static function jumlahPermohonanPengguna($carianId, $carianTahun)
+    {
+        $carianId = $carianId ?? Auth::id();
+        $carianTahun = $carianTahun ?? Carbon::now()->year;
+
+        $permohonanQuery = EproPermohonan::query()
+            ->select('per_status as status')
+            ->where('per_idusers', $carianId)
+            ->whereYear('per_tkhmohon', $carianTahun);
+
+        $isytiharQuery = EproIsytihar::query()
+            ->select('isy_status as status')
+            ->where('isy_idusers', $carianId)
+            ->whereYear('isy_tkhmula', $carianTahun);
+
+        // Combine both queries using unionAll and then perform aggregations
+        $jumlahPermohonanPengguna = DB::query()
+            ->fromSub($permohonanQuery->unionAll($isytiharQuery), 'gabungan')
+            ->selectRaw('COUNT(*) as jumlah')
+            ->selectRaw('SUM(CASE WHEN status IN (1, 2) THEN 1 ELSE 0 END) as dalam_proses')
+            ->selectRaw('SUM(CASE WHEN status = 4 THEN 1 ELSE 0 END) as berjaya')
+            ->selectRaw('SUM(CASE WHEN status IN (3, 5) THEN 1 ELSE 0 END) as tidak_berjaya')
+            ->first();
+
+        return $jumlahPermohonanPengguna;
+    }
+
+    public static function rekodBulananPengguna($carianId, $carianTahun)
+    {
+        $carianId = $carianId ?? Auth::id();
+        $carianTahun = $carianTahun ?? Carbon::now()->year;
+
+        // Filter by user ID and year
+        $rekodKeseluruhan = static::rekodPengguna()
+            ->filter(
+                fn($rekod) =>
+                $rekod['id_pengguna'] == $carianId &&
+                Carbon::parse($rekod['tarikh_mula'])->year == $carianTahun
+            );
+
+        // Calculate monthly totals for statistics
+        $rekodBulananPengguna = array_fill(0, 12, 0);
+        foreach ($rekodKeseluruhan as $item) {
+            $indeksBulan = Carbon::parse($item['tarikh_mula'])->month - 1;
+            $bilangan_hari = (float) ($item['bilangan_hari'] ?? 0);
+            $bilangan_jam = (float) ($item['bilangan_jam'] ?? 0);
+
+            $rekodBulananPengguna[$indeksBulan] += static::kiraJumlah($bilangan_hari, $bilangan_jam);
+        }
+
+        return $rekodBulananPengguna;
+    }
+
     public static function jumlahRekodPengguna($carianTahun, $carianBahagian)
     {
         $jumlahRekodPengguna = static::rekodPengguna()
@@ -167,11 +222,14 @@ class Calculations
                 $pass = true;
 
                 if (!is_null($carianTahun)) {
-                    $pass = $pass && (Carbon::parse($item['tarikh_mula'])->year == $carianTahun);
+                    $pass = $pass && (
+                        $item['tarikh_mula'] === null ||
+                        Carbon::parse($item['tarikh_mula'])->year == $carianTahun
+                    );
                 }
 
                 if (!is_null($carianBahagian)) {
-                    $pass = $pass && ($item['id_bahagian'] ==  $carianBahagian);
+                    $pass = $pass && ($item['id_bahagian'] == $carianBahagian);
                 }
 
                 return $pass;
@@ -196,5 +254,83 @@ class Calculations
             ->all();
 
         return $jumlahRekodPengguna;
+    }
+
+    public static function rekodBahagian($carianTahun)
+    {
+        return static::prosesRekod($carianTahun, 'bahagian');
+    }
+
+    public static function rekodKumpulan($carianTahun)
+    {
+        return static::prosesRekod($carianTahun, 'kumpulan');
+    }
+
+    private static function prosesRekod($carianTahun, $carianLajur)
+    {
+        return static::rekodPengguna()
+            ->filter(fn($item) => Carbon::parse($item['tarikh_mula'])->year == $carianTahun)
+            ->groupBy('id_pengguna')
+            ->map(function ($userData) {
+                $jumlah_hari = 0;
+                foreach ($userData as $record) {
+                    $bilangan_hari = (float) ($record['bilangan_hari'] ?? 0);
+                    $bilangan_jam = (float) ($record['bilangan_jam'] ?? 0);
+                    $jumlah_hari += static::kiraJumlah($bilangan_hari, $bilangan_jam);
+                }
+
+                return [
+                    'id_pengguna' => $userData->first()['id_pengguna'],
+                    'bahagian' => $userData->first()['bahagian'] ?? null,
+                    'kumpulan' => $userData->first()['kumpulan'] ?? null,
+                    'jumlah_hari' => $jumlah_hari,
+                ];
+            })
+            ->groupBy($carianLajur)
+            ->map(function ($userData) use ($carianLajur) {
+                $bins = [
+                    'pengisian' => 0,
+                    'hari_0' => 0,
+                    'hari_1' => 0,
+                    'hari_2' => 0,
+                    'hari_3' => 0,
+                    'hari_4' => 0,
+                    'hari_5' => 0,
+                    'hari_6' => 0,
+                    'hari_7' => 0,
+                    'hari_8_keatas' => 0,
+                ];
+
+                foreach ($userData as $item) {
+                    $jumlah = $item['jumlah_hari'];
+                    $bins['pengisian']++;
+
+                    if ($jumlah < 1) {
+                        $bins['hari_0']++;
+                    } elseif ($jumlah < 2) {
+                        $bins['hari_1']++;
+                    } elseif ($jumlah < 3) {
+                        $bins['hari_2']++;
+                    } elseif ($jumlah < 4) {
+                        $bins['hari_3']++;
+                    } elseif ($jumlah < 5) {
+                        $bins['hari_4']++;
+                    } elseif ($jumlah < 6) {
+                        $bins['hari_5']++;
+                    } elseif ($jumlah < 7) {
+                        $bins['hari_6']++;
+                    } elseif ($jumlah < 8) {
+                        $bins['hari_7']++;
+                    } else {
+                        $bins['hari_8_keatas']++;
+                    }
+                }
+
+                return array_merge([
+                    $carianLajur => $userData->first()[$carianLajur],
+                ], $bins);
+            })
+            ->values()
+            ->all();
     }
 }
