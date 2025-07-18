@@ -29,6 +29,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
+            'captcha' => ['required', 'captcha'],
         ];
     }
 
@@ -45,6 +46,8 @@ class LoginRequest extends FormRequest
             'email.email' => 'Emel mesti alamat emel yang sah.',
             'password.required' => 'Ruangan Kata Laluan wajib diisi.',
             'password.string' => 'Kata Laluan mesti berupa teks.',
+            'captcha.required' => 'Sila sahkan bahawa anda bukan robot.',
+            'captcha.captcha' => 'Kod captcha tidak sah.',
         ];
     }
 
@@ -57,7 +60,7 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -76,7 +79,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 

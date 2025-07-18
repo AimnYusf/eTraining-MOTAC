@@ -12,6 +12,7 @@
     "chillerlan/php-qrcode": "^5.0",
     "laravel/framework": "^11.0",
     "laravel/tinker": "^2.9",
+    "mews/captcha": "^3.4",
     "simplesoftwareio/simple-qrcode": "~4"
   },
   "require-dev": {
