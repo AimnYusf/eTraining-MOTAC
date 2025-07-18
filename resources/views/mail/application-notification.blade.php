@@ -180,9 +180,9 @@
                     <tr>
                         <td>Tarikh Kursus</td>
                         @php
-                        \Carbon\Carbon::setLocale('ms');
-                        $mula = !empty($kursus['kur_tkhmula']) ? \Carbon\Carbon::parse($kursus['kur_tkhmula']) : null;
-                        $tamat = !empty($kursus['kur_tkhtamat']) ? \Carbon\Carbon::parse($kursus['kur_tkhtamat']) : null;
+                            \Carbon\Carbon::setLocale('ms');
+                            $mula = !empty($kursus['kur_tkhmula']) ? \Carbon\Carbon::parse($kursus['kur_tkhmula']) : null;
+                            $tamat = !empty($kursus['kur_tkhtamat']) ? \Carbon\Carbon::parse($kursus['kur_tkhtamat']) : null;
                         @endphp
                         <td>:
                             <strong>
@@ -197,6 +197,9 @@
                     </tr>
                 </table>
             </div>
+            <p style="text-align: center; color: red;">
+                Pemilihan peserta tertakluk kepada urusetia dan kekosongan kuota.
+            </p>
 
             <p>Sekian, terima kasih.</p>
             <p><strong>Pentadbir Sistem {{ config('app.name') }}</strong></p>

@@ -192,9 +192,9 @@
                     <tr>
                         <td>Tarikh Kursus</td>
                         @php
-                        \Carbon\Carbon::setLocale('ms');
-                        $mula = !empty($mailData['tarikh_mula']) ? \Carbon\Carbon::parse($mailData['tarikh_mula']) : null;
-                        $tamat = !empty($mailData['tarikh_tamat']) ? \Carbon\Carbon::parse($mailData['tarikh_tamat']) : null;
+                            \Carbon\Carbon::setLocale('ms');
+                            $mula = !empty($mailData['tarikh_mula']) ? \Carbon\Carbon::parse($mailData['tarikh_mula']) : null;
+                            $tamat = !empty($mailData['tarikh_tamat']) ? \Carbon\Carbon::parse($mailData['tarikh_tamat']) : null;
                         @endphp
                         <td>:
                             <strong>
@@ -215,7 +215,7 @@
                         <td>Tarikh Permohonan</td>
                         <td>:
                             @php
-                            $tarikhMohon = !empty($mailData['tarikh_mohon']) ? \Carbon\Carbon::parse($mailData['tarikh_mohon']) : null;
+                                $tarikhMohon = !empty($mailData['tarikh_mohon']) ? \Carbon\Carbon::parse($mailData['tarikh_mohon']) : null;
                             @endphp
                             <strong>{{ $tarikhMohon ? $tarikhMohon->translatedFormat('d F Y') : '' }}</strong>
                         </td>
@@ -223,11 +223,15 @@
                 </table>
             </div>
 
+            <p style="text-align: center; color: red;">
+                Pemilihan peserta tertakluk kepada urusetia dan kekosongan kuota.
+            </p>
+
             <p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
                 @if (!empty($mailData['url']))
-                <a href="{{ $mailData['url'] }}" target="_blank"
-                    style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
-                    class="btn-action">Klik Untuk Kelulusan</a>
+                    <a href="{{ $mailData['url'] }}" target="_blank"
+                        style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+                        class="btn-action">Klik Untuk Sokongan</a>
                 @endif
             </p>
 
