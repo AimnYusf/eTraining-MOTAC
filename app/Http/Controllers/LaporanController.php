@@ -22,6 +22,7 @@ class LaporanController extends Controller
             ->filter(
                 fn($item) =>
                 $item['id_pengguna'] == $carianId &&
+                    !empty($item['tarikh_mula']) &&
                     Carbon::parse($item['tarikh_mula'])->year == $carianTahun
             );
 

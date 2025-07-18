@@ -269,7 +269,7 @@ class Records
     private static function prosesRekod($carianTahun, $carianLajur)
     {
         return static::rekodPengguna()
-            ->filter(fn($item) => Carbon::parse($item['tarikh_mula'])->year == $carianTahun)
+            ->filter(fn($item) => !empty($item['tarikh_mula']) && Carbon::parse($item['tarikh_mula'])->year == $carianTahun)
             ->groupBy('id_pengguna')
             ->map(function ($userData) {
                 $jumlah_hari = 0;
