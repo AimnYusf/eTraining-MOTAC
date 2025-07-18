@@ -26,36 +26,100 @@ $(function () {
         return json.data;
       }
     },
+    order: [[1, 'desc']],
     columns: [
       {
         data: 'category',
         render: function (data, type, row) {
+          const today = new Date();
+          const releaseDate = new Date(row.kur_tkhbuka);
+          const closeDate = new Date(row.kur_tkhtutup);
+
+          const isActive = today >= releaseDate && today <= closeDate;
+          const statusClass = isActive ? 'active-status bg-success' : 'inactive-status bg-danger';
+          const statusText = isActive ? 'Dibuka' : 'Belum Dibuka';
+
           return `
-          <div class="card p-2 h-100 shadow-none border d-flex flex-column">
-            <div class="rounded-2 text-center mb-4" style="aspect-ratio: 1 / 1.414; width: 100%; max-width: 600px; margin: auto;">
-              <a href="">
-                <img class="img-fluid w-100 h-100 object-fit-cover" src="${row.kur_poster}" alt="tutor image 1" />
+          <style>
+            .badge-status {
+              font-size: 0.9rem;
+              padding: 0.5em 1em;
+              border-radius: 1rem;
+              transition: all 0.3s ease-in-out;
+              display: inline-block;
+              position: relative;
+            }
+
+            .active-status {
+              color: white;
+              animation: pulse 1.5s infinite;
+            }
+
+            .inactive-status {
+              color: white;
+              opacity: 0.7;
+              animation: fadein 0.5s;
+            }
+
+            @keyframes pulse {
+              0% {
+                transform: scale(1);
+              }
+              70% {
+                transform: scale(1.1);
+              }
+              100% {
+                transform: scale(1);
+              }
+            }
+
+            @keyframes fadein {
+              from {
+                opacity: 0;
+              }
+              to {
+                opacity: 0.7;
+              }
+            }
+          </style>
+
+          <div class="card shadow-lg border-0 h-100 d-flex flex-column p-0">
+            <div class="position-relative rounded-top overflow-hidden" style="aspect-ratio: 1 / 1.414; width: 100%; max-width: 600px; margin: auto;">
+              <a href="/kursus?kid=${row.kur_id}">
+                <img src="${row.kur_poster}" alt="${row.kur_nama}" class="img-fluid w-100 h-100 object-fit-cover transition" style="transform: scale(1); transition: transform 0.3s ease-in-out;">
               </a>
+              <span class="badge badge-status ${statusClass} position-absolute top-0 start-0 m-2 px-3 py-2 shadow-sm fs-6">${statusText}</span>
             </div>
-            <div class="card-body p-4 pt-2 d-flex flex-column flex-grow-1">
-              <h5>${row.kur_nama}</h5>
-              <hr>
-              <h6 class="mb-1 fw-bold">
-                <i class="ti ti-calendar-event me-2 align-top"></i> Tarikh
-              </h6>
-              <p>${formatDate(row.kur_tkhmula)} - ${formatDate(row.kur_tkhtamat)}</p>
-              <h6 class="mb-1 fw-bold">
-                <i class="ti ti-user-cog me-2 align-top"></i> Anjuran
-              </h6>
-              <p class="mb-4">${row.epro_penganjur.pjr_keterangan}</p>
-              <a class="w-100 btn btn-label-primary d-flex align-items-center mt-auto" href="/kursus?kid=${row.kur_id}">
-                <span class="me-2">Maklumat Lanjut</span>
-                <i class="ti ti-chevron-right ti-xs scaleX-n1-rtl"></i>
-              </a>
+
+            <div class="card-body d-flex flex-column p-4">
+              <h6 class="fw-bold text-primary text-uppercase mb-0">${row.kur_nama}</h6>
+              <hr class="my-3">
+              
+              <div class="mb-3">
+                <h6 class="mb-1 text-muted"><i class="ti ti-calendar-event me-2 text-primary"></i>Tarikh</h6>
+                <p class="mb-0 fw-bold">${formatDate(row.kur_tkhmula)} - ${formatDate(row.kur_tkhtamat)}</p>
+              </div>
+
+              <div class="mb-3">
+                <h6 class="mb-1 text-muted"><i class="ti ti-user-cog me-2 text-primary"></i>Anjuran</h6>
+                <p class="mb-0 fw-bold">${row.epro_penganjur.pjr_keterangan}</p>
+              </div>
+
+              <div class="mt-auto">
+                <a class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2" href="/kursus?kid=${row.kur_id}">
+                  <span>Maklumat Lanjut</span>
+                  <i class="ti ti-chevron-right"></i>
+                </a>
+              </div>
             </div>
           </div>
           `;
         }
+      },
+      {
+        data: 'kur_tkhmula',
+        visible: false,
+        searchable: false
       }
     ],
     dom:

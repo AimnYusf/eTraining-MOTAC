@@ -24,14 +24,9 @@ class KatalogController extends Controller
 
         // Retrieve available courses for the user that they haven't applied for
         $kursus = EproKursus::with(['eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
-            ->where('kur_status', 1)
-            ->where(function ($query) use ($pengguna) {
-                $query->where('kur_idkumpulan', $pengguna->pen_idkumpulan)
-                    ->orWhere('kur_idkumpulan', 4);
-            })
-            ->whereNotIn('kur_id', $permohonan)
-            ->latest()
             ->get();
+
+        Log::info($kursus->toArray());
 
         // If viewing a specific course
         $kid = $request->query('kid');

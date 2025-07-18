@@ -56,7 +56,13 @@
 
   <script>
     function getPageLengthByResolution() {
-    return window.innerWidth <= 1440 ? 'row-cols-3' : 'row-cols-4';
+    if (window.innerWidth <= 768) {
+      return 'row-cols-1'; // Phone
+    } else if (window.innerWidth <= 1440) {
+      return 'row-cols-3'; // Medium screens (e.g. laptop)
+    } else {
+      return 'row-cols-4'; // Large screens (desktop)
+    }
     }
 
     function applyResponsiveRowCols() {

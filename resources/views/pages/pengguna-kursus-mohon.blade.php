@@ -34,48 +34,6 @@ use Carbon\Carbon;
       </div>
     </div>
   </div>
-  <!-- <div class="col-lg-6">
-    <div class="card">
-      <div class="card-body">
-        <div class="card-body pt-4">
-          <div class="mb-6">
-            <h5 class="mb-2"><i class="ti ti-calendar-event me-2"></i>Tarikh</h5>
-            <span>{{ Carbon::parse($kursus->kur_tkhmula)->format('d/m/Y') }} <strong>hingga</strong> {{ Carbon::parse($kursus->kur_tkhtamat)->format('d/m/Y') }}</span>
-          </div>
-          <div class="mb-6">
-            <h5 class="mb-2"><i class="ti ti-map-pin me-2"></i>Tempat</h5>
-            <span>{{ $kursus->eproTempat->tem_keterangan }}</span>
-          </div>
-          <div class="mb-6">
-            <h5 class="mb-2"><i class="ti ti-calendar-event me-2"></i>Tarikh Buka Permohonan</h5>
-            <span>{{ Carbon::parse($kursus->kur_tkhbuka)->format('d/m/Y') }}</span>
-          </div>
-          <div class="mb-6">
-            <h5 class="mb-2"><i class="ti ti-calendar-event me-2"></i>Tarikh Tutup Permohonan</h5>
-            <span>{{ Carbon::parse($kursus->kur_tkhtutup)->format('d/m/Y') }}</span>
-          </div>
-          <div class="mb-6">
-            <h5 class="mb-2"><i class="ti ti-user-check me-2"></i>Kumpulan Sasaran</h5>
-            <span>{{ $kursus->eproKumpulan->kum_keterangan }}</span>
-          </div>
-          <div class="mb-6">
-            <h5 class="mb-2"><i class="ti ti-user-cog me-2"></i>Anjuran</h5>
-            <span>{{ $kursus->eproPenganjur->pjr_keterangan }}</span>
-          </div>
-          <hr class="my-6">
-          <h5>Objektif</h5>
-          {!! $kursus->kur_objektif !!}
-          <hr class="my-6">
-          <div class="col-12 text-center">
-            <div class="btn-apply-modal">
-              <a href="/kursus" class="btn btn-label-secondary me-2">Kembali</a>
-              <button type="button" class="btn btn-primary apply-record" data-id="{{ $kursus->kur_id }}">Mohon</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
   <div class="col-lg-6">
     <div class="card h-100 shadow-lg border-0 rounded-3">
       <div class="card-header bg-gradient-primary text-white text-uppercase py-3 px-4">
@@ -150,7 +108,9 @@ use Carbon\Carbon;
         <div class="col-12 text-center">
           <div class="btn-apply-modal">
             <a href="/kursus" class="btn btn-label-secondary me-2">Kembali</a>
-            <button type="button" class="btn btn-primary apply-record" data-id="{{ $kursus->kur_id }}">Mohon</button>
+              @if (now() >= $kursus->kur_tkhbuka && now() <= $kursus->kur_tkhtutup)
+                  <button type="button" class="btn btn-primary apply-record" data-id="{{ $kursus->kur_id }}">Mohon</button>
+              @endif
           </div>
         </div>
       </div>
