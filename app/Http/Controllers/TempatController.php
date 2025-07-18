@@ -9,7 +9,7 @@ class TempatController extends Controller
 {
     public function index(Request $request)
     {
-        $tempat = EproTempat::get();
+        $tempat = EproTempat::orderBy('tem_keterangan', 'asc')->get();
 
         if ($request->ajax()) {
             return response()->json([
