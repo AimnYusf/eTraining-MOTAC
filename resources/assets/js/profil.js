@@ -133,6 +133,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
             validators: {
               notEmpty: {
                 message: 'Sila masukkan emel pegawai penyokong'
+              },
+              regexp: {
+                regexp: /^[a-zA-Z0-9._%+-]+@motac\.gov\.my$/,
+                message: 'Emel mesti merupakan emel rasmi MOTAC.'
               }
             }
           },
