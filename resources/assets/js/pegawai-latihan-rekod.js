@@ -114,7 +114,7 @@ $(function () {
   $(document).on('click', '.edit-record', function () {
     const tem_id = $(this).data('id');
 
-    $.get(`/urusetia/tempat/${tem_id}`, function (data) {
+    $.get(`/tetapan/tempat/${tem_id}`, function (data) {
       $('#tem_tajuk').html('Edit Tempat Kursus');
       $('#tem_id').val(data.tem_id);
       $('#tem_keterangan').val(data.tem_keterangan);

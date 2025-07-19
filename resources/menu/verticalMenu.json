@@ -75,13 +75,6 @@
       "icon": "menu-icon tf-icons ti ti-list-check",
       "slug": "urusetia-permohonan"
     },
-
-    {
-      "url": "/urusetia/tempat",
-      "name": "Senarai Tempat",
-      "icon": "menu-icon tf-icons ti ti-map-pin",
-      "slug": "urusetia-tempat"
-    },
     {
       "url": "/urusetia/kehadiran",
       "name": "Senarai Kehadiran",
@@ -112,6 +105,19 @@
           "url": "/laporan/individu",
           "name": "Rekod Individu",
           "slug": "laporan-individu"
+        }
+      ]
+    },
+
+    {
+      "name": "Tetapan",
+      "icon": "menu-icon tf-icons ti ti-settings",
+      "slug": "tetapan",
+      "submenu": [
+        {
+          "url": "/tetapan/tempat",
+          "name": "Senarai Tempat",
+          "slug": "tetapan-tempat"
         }
       ]
     },

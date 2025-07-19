@@ -94,9 +94,9 @@ Route::middleware('auth')->group(function () {
             'index' => 'urusetia-permohonan'
         ]);
         // Urusetia Tempat
-        Route::resource('/urusetia/tempat', TempatController::class)->names([
-            'index' => 'urusetia-tempat'
-        ]);
+        // Route::resource('/tetapan/tempat', TempatController::class)->names([
+        //     'index' => 'tetapan-tempat'
+        // ]);
         // Urusetia Kehadiran
         Route::resource('/urusetia/kehadiran', KehadiranController::class)->names([
             'index' => 'urusetia-kehadiran'
@@ -105,6 +105,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/urusetia/pengguna', PenggunaController::class)->names([
             'index' => 'urusetia-pengguna'
         ]);
+
+        // ========== Laporan ==========
         // Laporan Kumpulan
         Route::get('/laporan/kumpulan', [LaporanController::class, 'rekodKumpulan'])->name('laporan-kumpulan');
         // Laporan Bahagian
@@ -113,6 +115,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/laporan/keseluruhan', [LaporanController::class, 'rekodKeseluruhan'])->name('laporan-keseluruhan');
         // Laporan Individu
         Route::get('/laporan/individu', [LaporanController::class, 'rekodIndividu'])->name('laporan-individu');
+
+        // ========== Tetapan ==========
+        Route::resource('/tetapan/tempat', TempatController::class)->names([
+            'index' => 'tetapan-tempat'
+        ]);
     });
 
     // ========== Sementara ==========

@@ -8,19 +8,11 @@ $(function () {
   const dt_table = $('.datatables');
   let table;
 
-  // Clear input fields
-  function clearFormInputs() {
-    $('#tem_id').val('');
-    $('#tem_keterangan').val('');
-    $('#tem_alamat').val('');
-    $('#tem_gmaps').val('');
-  }
-
   // Initialize DataTable
   if (dt_table.length) {
     table = dt_table.DataTable({
       ajax: {
-        url: '/urusetia/tempat',
+        url: '/tetapan/tempat',
         type: 'GET'
       },
       columns: [{ data: 'tem_id' }, { data: 'tem_keterangan' }, { data: '' }],
@@ -32,18 +24,7 @@ $(function () {
           render: (data, type, full, meta) => `<span>${meta.row + 1}</span>`
         },
         {
-          targets: 1,
-          render: (data, type, full) => `
-            <span class="edit-record text-uppercase" 
-              style="cursor: pointer;" 
-              data-bs-toggle="tooltip" 
-              title="Lihat" 
-              data-id="${full.tem_id}">
-              ${data}
-            </span>`
-        },
-        {
-          targets: 2,
+          targets: -1,
           searchable: false,
           orderable: false,
           className: 'text-center',
@@ -54,6 +35,12 @@ $(function () {
                 data-bs-toggle="tooltip" 
                 title="Edit">
                 <i class="ti ti-edit ti-md"></i>
+              </button>
+              <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light delete-record" 
+                data-id="${full.tem_id}" 
+                data-bs-toggle="tooltip" 
+                title="Padam">
+                <i class="ti ti-trash ti-md"></i>
               </button>
             </div>`
         }
@@ -84,11 +71,11 @@ $(function () {
       buttons: [
         {
           text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Rekod Baru</span>',
-          className: 'add-record btn btn-primary ms-2 ms-sm-0 waves-effect waves-light',
+          className: 'btn btn-primary ms-2 ms-sm-0 waves-effect waves-light',
           action: () => {
-            clearFormInputs();
+            $('#crudForm')[0].reset();
             $('#tem_tajuk').html('Tambah Tempat Kursus');
-            $('#manageRecord').modal('show');
+            $('#crudModal').modal('show');
           }
         }
       ],
@@ -109,25 +96,11 @@ $(function () {
     $('.dataTables_length .form-select').removeClass('form-select-sm');
   }, 300);
 
-  // Edit Record
-  $(document).on('click', '.edit-record', function () {
-    const tem_id = $(this).data('id');
-
-    $.get(`/urusetia/tempat/${tem_id}`, function (data) {
-      $('#tem_tajuk').html('Edit Tempat Kursus');
-      $('#tem_id').val(data.tem_id);
-      $('#tem_keterangan').val(data.tem_keterangan);
-      $('#tem_alamat').val(data.tem_alamat);
-      $('#tem_gmaps').val(data.tem_gmaps);
-      $('#manageRecord').modal('show');
-    });
-  });
-
   // Form Validation and Submission
-  const courseLocationForm = document.querySelector('#courseLocationForm');
+  const crudForm = document.querySelector('#crudForm');
 
-  if (courseLocationForm) {
-    FormValidation.formValidation(courseLocationForm, {
+  if (crudForm) {
+    FormValidation.formValidation(crudForm, {
       fields: {
         tem_keterangan: {
           validators: {
@@ -155,8 +128,8 @@ $(function () {
 
         instance.on('core.form.valid', function () {
           $.ajax({
-            data: $('#courseLocationForm').serialize(),
-            url: '/urusetia/tempat',
+            data: $('#crudForm').serialize(),
+            url: '/tetapan/tempat',
             type: 'POST',
             success: () => {
               Swal.fire({
@@ -167,7 +140,7 @@ $(function () {
                   confirmButton: 'btn btn-primary waves-effect waves-light'
                 }
               }).then(() => {
-                $('#manageRecord').modal('hide');
+                $('#crudModal').modal('hide');
                 table.ajax.reload();
               });
             }
@@ -176,4 +149,59 @@ $(function () {
       }
     });
   }
+
+  // Edit Record
+  $(document).on('click', '.edit-record', function () {
+    const tem_id = $(this).data('id');
+
+    $.get(`/tetapan/tempat/${tem_id}`, function (data) {
+      $('#tem_tajuk').html('Edit Tempat Kursus');
+      $('#tem_id').val(data.tem_id);
+      $('#tem_keterangan').val(data.tem_keterangan);
+      $('#tem_alamat').val(data.tem_alamat);
+      $('#tem_gmaps').val(data.tem_gmaps);
+      $('#crudModal').modal('show');
+    });
+  });
+
+  // Delete Record
+  $(document).on('click', '.delete-record', function () {
+    const tem_id = $(this).data('id');
+
+    Swal.fire({
+      icon: 'question',
+      title: 'Teruskan permohonan?',
+      showCancelButton: true,
+      confirmButtonText: 'Ya',
+      cancelButtonText: 'Batal',
+      customClass: {
+        title: 'm-0',
+        confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+        cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+      },
+      buttonsStyling: false
+    }).then(function (result) {
+      if (result.value) {
+        $.post(
+          `/tetapan/tempat/${tem_id}`,
+          {
+            _method: 'DELETE',
+            _token: $('meta[name="csrf-token"]').attr('content')
+          },
+          () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Berjaya dipadam!',
+              customClass: {
+                title: 'm-0',
+                confirmButton: 'btn btn-primary waves-effect'
+              }
+            }).then(() => {
+              table.ajax.reload();
+            });
+          }
+        );
+      }
+    });
+  });
 });
