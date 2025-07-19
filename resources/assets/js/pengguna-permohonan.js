@@ -7,8 +7,14 @@
 // Datatable (jquery)
 $(function () {
   // Variable declaration
-  var dt_table = $('.datatables'),
-    statusObj = ['Menunggu Sokongan', 'Menunggu Kelulusan', 'Tidak Disokong', 'Berjaya', 'Tidak Berjaya'];
+  var dt_table = $('.datatables');
+  const statusObj = [
+    'Menunggu Sokongan Pegawai Penyelia',
+    'Menunggu Kelulusan Urusetia',
+    'Tidak Disokong Pegawai Penyelia',
+    'Berjaya',
+    'Tidak Berjaya'
+  ];
 
   // Status Permohonan datatable
   if (dt_table.length) {
@@ -53,7 +59,7 @@ $(function () {
         },
         {
           targets: 3,
-          autoWidth: false,
+          width: '20%',
           render: function (data, type, full, meta) {
             return `<span class="badge bg-label-${full.epro_status.stp_class}" style="white-space: normal;">${full.epro_status.stp_ketring}</span>`;
           }

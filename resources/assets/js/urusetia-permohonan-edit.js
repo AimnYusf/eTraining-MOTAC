@@ -14,6 +14,13 @@ $(function () {
 
   const dtTable = $('.datatables');
   const kursusId = $('#kur_id').val();
+  const statusObj = [
+    'Menunggu Sokongan Pegawai Penyelia',
+    'Menunggu Kelulusan Urusetia',
+    'Tidak Disokong Pegawai Penyelia',
+    'Berjaya',
+    'Tidak Berjaya'
+  ];
 
   // Format date from YYYY-MM-DD to DD/MM/YYYY
   const formatDate = dateStr => {
@@ -35,7 +42,10 @@ $(function () {
       columns: [
         { data: 'per_id' },
         { data: 'epro_pengguna.pen_nama' },
+        { data: 'epro_pengguna.pen_jawatan', visible: false },
         { data: 'epro_pengguna.epro_jabatan.jab_ketring' },
+        { data: 'epro_pengguna.pen_nokp', visible: false },
+        { data: 'epro_pengguna.pen_emel', visible: false },
         { data: 'per_tkhmohon' },
         { data: 'per_status' },
         { data: '' }
@@ -50,29 +60,42 @@ $(function () {
         {
           targets: 1,
           render: (data, type, full) => `
-            <span class="view-record text-uppercase">
+            <span class="text-uppercase">
               ${data}
             </span>
           `
         },
         {
+          targets: 2,
+          render: (data, type, full) => `${full.epro_pengguna.pen_jawatan} / ${full.epro_pengguna.pen_gred}`
+        },
+        {
           targets: 3,
+          className: 'text-center',
+          render: (data, type, full) => {
+            if (data === 'MOTAC') {
+              return `${full.epro_pengguna.epro_bahagian.bah_ketpenu}`;
+            }
+            return data;
+          }
+        },
+        {
+          targets: -3,
           className: 'text-center',
           render: (data, type) => {
             return formatDate(data);
           }
         },
         {
-          targets: 4,
+          targets: -2,
           className: 'text-center',
-          render: (data, type, full) => `
-            <span class="badge bg-label-${full.epro_status.stp_class}" style="white-space: normal;">
-              ${full.epro_status.stp_ketring}
-            </span>
-          `
+          width: '20%',
+          render: function (data, type, full, meta) {
+            return `<span class="badge bg-label-${full.epro_status.stp_class}" style="white-space: normal;">${full.epro_status.stp_ketring}</span>`;
+          }
         },
         {
-          targets: 5,
+          targets: -1,
           className: 'text-center',
           render: (data, type, full) => `
             <div class="d-inline-block">
@@ -92,7 +115,7 @@ $(function () {
         <"card-header d-flex border-top rounded-0 flex-wrap py-0 flex-column flex-md-row align-items-start"
           <"me-5 ms-n4 pe-5 mb-n6 mb-md-0"f>
           <"d-flex justify-content-start justify-content-md-end align-items-baseline"
-            <"dt-action-buttons d-flex flex-column align-items-start align-items-sm-center justify-content-sm-center pt-0 gap-sm-4 gap-sm-0 flex-sm-row"l>
+            <"dt-action-buttons d-flex flex-column align-items-start align-items-sm-center justify-content-sm-center pt-0 gap-sm-4 gap-sm-0 flex-sm-row"lB>
           >
         >t
         <"row"
@@ -110,6 +133,42 @@ $(function () {
           next: '<i class="ti ti-chevron-right ti-sm"></i>',
           previous: '<i class="ti ti-chevron-left ti-sm"></i>'
         }
+      },
+      buttons: [
+        {
+          extend: 'excel',
+          className: 'btn btn-label-primary waves-effect waves-light border-none',
+          text: '<i class="ti ti-file-spreadsheet ti-xs me-sm-1"></i> <span class="d-none d-sm-inline-block">Excel</span>',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5, 7]
+          }
+        }
+      ],
+      initComplete: function () {
+        this.api()
+          .columns(-2)
+          .every(function () {
+            var column = this;
+            var select = $(
+              '<select id="filterStatus" class="selectpicker" data-style="btn-default" title="Status"></select>'
+            )
+              .appendTo('.dt-action-buttons')
+              .on('change', function () {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                column.search(val ? '^' + val + '$' : '', true, false).draw();
+              });
+
+            column
+              .data()
+              .unique()
+              .sort()
+              .each(function (d, j) {
+                select.append('<option value="' + statusObj[d - 1] + '">' + statusObj[d - 1] + '</option>');
+              });
+          });
+
+        // Bootstrap Select
+        $('.selectpicker').selectpicker();
       },
       drawCallback: () => {
         const tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
