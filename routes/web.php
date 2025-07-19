@@ -13,7 +13,7 @@ use App\Http\Controllers\PenyokongController;
 use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\StatusController;
-use App\Http\Controllers\TempatController;
+use App\Http\Controllers\Settings\TempatController;
 use Illuminate\Support\Facades\Route;
 
 /*

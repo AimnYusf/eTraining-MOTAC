@@ -128,9 +128,9 @@ $(function () {
 
         instance.on('core.form.valid', function () {
           $.ajax({
-            data: $('#crudForm').serialize(),
             url: '/tetapan/tempat',
             type: 'POST',
+            data: $('#crudForm').serialize(),
             success: () => {
               Swal.fire({
                 icon: 'success',
@@ -154,13 +154,17 @@ $(function () {
   $(document).on('click', '.edit-record', function () {
     const tem_id = $(this).data('id');
 
-    $.get(`/tetapan/tempat/${tem_id}`, function (data) {
-      $('#tem_tajuk').html('Edit Tempat Kursus');
-      $('#tem_id').val(data.tem_id);
-      $('#tem_keterangan').val(data.tem_keterangan);
-      $('#tem_alamat').val(data.tem_alamat);
-      $('#tem_gmaps').val(data.tem_gmaps);
-      $('#crudModal').modal('show');
+    $.ajax({
+      url: `/tetapan/tempat/${tem_id}`,
+      type: 'GET',
+      success: function (data) {
+        $('#tem_tajuk').html('Edit Tempat Kursus');
+        $('#tem_id').val(data.tem_id);
+        $('#tem_keterangan').val(data.tem_keterangan);
+        $('#tem_alamat').val(data.tem_alamat);
+        $('#tem_gmaps').val(data.tem_gmaps);
+        $('#crudModal').modal('show');
+      }
     });
   });
 
@@ -182,13 +186,14 @@ $(function () {
       buttonsStyling: false
     }).then(function (result) {
       if (result.value) {
-        $.post(
-          `/tetapan/tempat/${tem_id}`,
-          {
+        $.ajax({
+          url: `/tetapan/tempat/${tem_id}`,
+          type: 'POST',
+          data: {
             _method: 'DELETE',
             _token: $('meta[name="csrf-token"]').attr('content')
           },
-          () => {
+          success: function () {
             Swal.fire({
               icon: 'success',
               title: 'Berjaya dipadam!',
@@ -200,7 +205,7 @@ $(function () {
               table.ajax.reload();
             });
           }
-        );
+        });
       }
     });
   });

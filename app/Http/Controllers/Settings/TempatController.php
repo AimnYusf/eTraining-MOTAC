@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Settings;
 
+use App\Http\Controllers\Controller;
 use App\Models\EproTempat;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -22,7 +23,7 @@ class TempatController extends Controller
             ]);
         }
 
-        return view('pages.tetapan-tempat');
+        return view('settings.tetapan-tempat');
     }
 
     /**
