@@ -93,10 +93,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/urusetia/permohonan', PermohonanController::class)->names([
             'index' => 'urusetia-permohonan'
         ]);
-        // Urusetia Tempat
-        // Route::resource('/tetapan/tempat', TempatController::class)->names([
-        //     'index' => 'tetapan-tempat'
-        // ]);
+        Route::post('/urusetia/permohonan/batch-update', [PermohonanController::class, 'batchUpdate']);
+
         // Urusetia Kehadiran
         Route::resource('/urusetia/kehadiran', KehadiranController::class)->names([
             'index' => 'urusetia-kehadiran'

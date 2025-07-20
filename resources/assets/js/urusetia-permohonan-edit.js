@@ -14,6 +14,12 @@ $(function () {
 
   const dtTable = $('.datatables');
   const kursusId = $('#kur_id').val();
+  // Get the div containing the buttons
+  const batchActionButtonsContainer = $('.batchUpdateButton');
+
+  // Initially hide the buttons container using d-none class
+  batchActionButtonsContainer.addClass('d-none');
+
   const statusObj = [
     'Menunggu Sokongan Pegawai Penyelia',
     'Menunggu Kelulusan Urusetia',
@@ -26,6 +32,16 @@ $(function () {
   const formatDate = dateStr => {
     const [year, month, day] = dateStr.split('-');
     return `${day}/${month}/${year}`;
+  };
+
+  // Function to toggle button container visibility based on selected checkboxes
+  const toggleBatchActionButtons = () => {
+    const checkedCount = $('.dt-checkboxes:checked').length;
+    if (checkedCount > 0) {
+      batchActionButtonsContainer.removeClass('d-none'); // Show container
+    } else {
+      batchActionButtonsContainer.addClass('d-none'); // Hide container
+    }
   };
 
   // Initialize DataTable
@@ -60,6 +76,7 @@ $(function () {
           responsivePriority: 2,
           targets: 0, // This targets the first column (checkbox)
           render: function (data, type, full, meta) {
+            // Ensure the checkbox is rendered with data-id for easy retrieval
             return '<input type="checkbox" class="dt-checkboxes form-check-input" data-id="' + full.per_id + '">';
           }
         },
@@ -184,12 +201,10 @@ $(function () {
 
         // Handle "Select All" checkbox
         $('#selectAllCheckboxes').on('click', function () {
-          // Get the state of the "Select All" checkbox
           var isChecked = this.checked;
-
           // Set the state of all individual checkboxes on the current page
-          // Use table.rows({ page: 'current' }).nodes() to only affect visible rows
           table.rows({ page: 'current' }).nodes().to$().find('.dt-checkboxes').prop('checked', isChecked);
+          toggleBatchActionButtons(); // Update button visibility
         });
 
         // Handle individual checkbox clicks to uncheck "Select All" if any is unchecked
@@ -202,14 +217,20 @@ $(function () {
               table.rows({ page: 'current' }).nodes().to$().find('.dt-checkboxes:not(:checked)').length === 0;
             $('#selectAllCheckboxes').prop('checked', allCheckedOnPage);
           }
+          toggleBatchActionButtons(); // Update button visibility
         });
       },
       rowCallback: function (row, data, displayNum, displayIndex, dataIndex) {
         // Attach click event to all table cells except the first (checkbox) and last (action dropdown)
+        // This makes the entire row clickable to toggle the checkbox
         $(row)
           .find('td:not(:first-child):not(:last-child)')
-          .off('click')
-          .on('click', function () {
+          .off('click') // Remove previous handlers to prevent multiple bindings
+          .on('click', function (e) {
+            // Prevent event propagation if clicking on a dropdown or button inside the cell
+            if ($(e.target).is('button, a')) {
+              return;
+            }
             const checkbox = $(row).find('.dt-checkboxes');
             checkbox.prop('checked', !checkbox.prop('checked'));
             checkbox.trigger('change'); // Trigger change to update select all checkbox
@@ -218,6 +239,7 @@ $(function () {
       drawCallback: () => {
         // Reset "Select All" checkbox when the table is redrawn (e.g., pagination, search)
         $('#selectAllCheckboxes').prop('checked', false);
+        toggleBatchActionButtons(); // Ensure buttons are hidden when table is redrawn and no selection
 
         const tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
         tooltipElements.forEach(el => new bootstrap.Tooltip(el));
@@ -279,13 +301,23 @@ $(function () {
             title: 'Berjaya dikemaskini!',
             icon: 'success',
             customClass: {
-              title: 'm-0',
               confirmButton: 'btn btn-primary waves-effect waves-light'
             },
             buttonsStyling: false
           }).then(() => {
             $('#viewRecord').modal('hide');
             table.ajax.reload();
+          });
+        },
+        error: xhr => {
+          Swal.fire({
+            title: 'Ralat!',
+            text: xhr.responseJSON.message || 'Gagal mengemaskini permohonan.',
+            icon: 'error',
+            customClass: {
+              confirmButton: 'btn btn-primary waves-effect waves-light'
+            },
+            buttonsStyling: false
           });
         }
       });
@@ -294,18 +326,55 @@ $(function () {
     // Function to handle batch updates
     const updateBatchRecords = status => {
       const selectedIds = [];
-      // Get data-id from all checked checkboxes, including those not currently visible
-      // using table.rows().data() to get all data, then filter
-      table.rows().every(function () {
-        const rowData = this.data();
-        const rowNode = this.node();
-        const checkbox = $(rowNode).find('.dt-checkboxes');
-        if (checkbox.prop('checked')) {
-          selectedIds.push(rowData.per_id);
-        }
+      // Iterate over all checked checkboxes, regardless of current page
+      $('.dt-checkboxes:checked').each(function () {
+        selectedIds.push($(this).data('id'));
       });
 
-      console.log('Selected Data IDs for Batch Update:', selectedIds);
+      if (selectedIds.length === 0) {
+        Swal.fire({
+          title: 'Tiada Pilihan!',
+          text: 'Sila pilih sekurang-kurangnya satu permohonan untuk dikemaskini.',
+          icon: 'warning',
+          customClass: {
+            confirmButton: 'btn btn-primary waves-effect waves-light'
+          },
+          buttonsStyling: false
+        });
+        return;
+      }
+
+      $.ajax({
+        url: '/urusetia/permohonan/batch-update',
+        type: 'POST', // Use POST for batch updates as per your route
+        data: {
+          ids: selectedIds,
+          per_status: status
+        },
+        success: () => {
+          Swal.fire({
+            title: 'Berjaya dikemaskini!',
+            icon: 'success',
+            customClass: {
+              confirmButton: 'btn btn-primary waves-effect waves-light'
+            },
+            buttonsStyling: false
+          }).then(() => {
+            table.ajax.reload();
+          });
+        },
+        error: xhr => {
+          Swal.fire({
+            title: 'Ralat!',
+            text: xhr.responseJSON.message || 'Gagal mengemaskini permohonan secara berkelompok.',
+            icon: 'error',
+            customClass: {
+              confirmButton: 'btn btn-primary waves-effect waves-light'
+            },
+            buttonsStyling: false
+          });
+        }
+      });
     };
 
     // Handler for "Approve Selected" button

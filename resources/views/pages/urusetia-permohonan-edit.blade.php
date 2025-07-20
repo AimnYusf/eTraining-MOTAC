@@ -31,14 +31,25 @@
   <div class="card">
 
     <div class="card-header">
-    <div class="d-flex align-items-center">
-      <a href="/urusetia/permohonan" class="btn btn-label-primary me-4" data-bs-toggle="tooltip" title="Kembali"><i
-        class="ti ti-arrow-back-up"></i></a>
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- Left section: Back button and title -->
+      <div class="d-flex align-items-center">
+      <a href="/urusetia/permohonan" class="btn btn-label-primary me-3" data-bs-toggle="tooltip" title="Kembali">
+        <i class="ti ti-arrow-back-up"></i>
+      </a>
       <h5 class="card-title mb-0">{{ $kursus->kur_nama }}</h5>
-      <input type="hidden" id="kur_id" value="{{ $kursus->kur_id }}">
+      </div>
+
+      <!-- Right section: Approve/Reject buttons -->
+      <div class="batchUpdateButton">
+      <button id="approveSelected" class="btn btn-success me-2">Berjaya</button>
+      <button id="rejectSelected" class="btn btn-danger">Tidak Berjaya</button>
+      </div>
     </div>
+
     </div>
     <div class="card-datatable table-responsive">
+    <input type="hidden" id="kur_id" value="{{ $kursus->kur_id }}">
     <table class="datatables table table-hover">
       <thead class="border-top table-dark">
       <tr>
@@ -55,11 +66,6 @@
       </tr>
       </thead>
     </table>
-    </div>
-    {{-- Add buttons to process selected items --}}
-    <div class="card-footer d-flex justify-content-end gap-2">
-    <button id="approveSelected" class="btn btn-success">Approve Selected</button>
-    <button id="rejectSelected" class="btn btn-danger">Reject Selected</button>
     </div>
   </div>
   <!--/ Course List Table -->

@@ -99,6 +99,45 @@ class PermohonanController extends Controller
         return response()->json(['message' => 'Application updated successfully']);
     }
 
+    public function batchUpdate(Request $request)
+    {
+        $ids = $request->ids;
+        $status = $request->per_status;
+
+        foreach ($ids as $id) {
+            $permohonan = EproPermohonan::with('eproPengguna')->find($id);
+
+            if (!$permohonan) {
+                // Optionally skip or create a new one based on your logic
+                continue;
+            }
+
+            // Use updateOrCreate (based on per_id)
+            EproPermohonan::updateOrCreate(
+                ['per_id' => $id], // condition
+                ['per_status' => $status] // values to update
+            );
+
+            $kursus = EproKursus::with(['eproTempat', 'eproPenganjur'])
+                ->where('kur_id', $permohonan->per_idkursus)
+                ->first();
+
+            switch ($status) {
+                case 4:
+                    $this->generateQR($permohonan, $kursus);
+                    break;
+
+                case 5:
+                    Mail::to($permohonan->eproPengguna->pen_emel)
+                        ->queue(new ApplicationFailedMail($kursus));
+                    break;
+            }
+        }
+
+        return response()->json(['message' => 'Batch updated successfully']);
+    }
+
+
     public function generateQR($permohonan, $kursus)
     {
         $pengguna = $permohonan->eproPengguna;
