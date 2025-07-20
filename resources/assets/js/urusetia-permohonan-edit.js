@@ -40,6 +40,7 @@ $(function () {
         })
       },
       columns: [
+        { data: null }, // New column for checkbox
         { data: 'per_id' },
         { data: 'epro_pengguna.pen_nama' },
         { data: 'epro_pengguna.pen_jawatan', visible: false },
@@ -52,13 +53,24 @@ $(function () {
       ],
       columnDefs: [
         {
-          targets: 0,
+          // For Responsive and Checkbox
+          className: 'control',
+          orderable: false,
+          searchable: false,
+          responsivePriority: 2,
+          targets: 0, // This targets the first column (checkbox)
+          render: function (data, type, full, meta) {
+            return '<input type="checkbox" class="dt-checkboxes form-check-input" data-id="' + full.per_id + '">';
+          }
+        },
+        {
+          targets: 1,
           searchable: false,
           className: 'text-center',
           render: (data, type, full, meta) => `<span>${meta.row + 1}</span>`
         },
         {
-          targets: 1,
+          targets: 2,
           render: (data, type, full) => `
             <span class="text-uppercase">
               ${data}
@@ -66,11 +78,11 @@ $(function () {
           `
         },
         {
-          targets: 2,
+          targets: 3,
           render: (data, type, full) => `${full.epro_pengguna.pen_jawatan} / ${full.epro_pengguna.pen_gred}`
         },
         {
-          targets: 3,
+          targets: 4,
           className: 'text-center',
           render: (data, type, full) => {
             if (data === 'MOTAC') {
@@ -140,7 +152,7 @@ $(function () {
           className: 'btn btn-label-primary waves-effect waves-light border-none',
           text: '<i class="ti ti-file-spreadsheet ti-xs me-sm-1"></i> <span class="d-none d-sm-inline-block">Excel</span>',
           exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5, 7]
+            columns: [2, 3, 4, 5, 6, 7, 9]
           }
         }
       ],
@@ -169,8 +181,44 @@ $(function () {
 
         // Bootstrap Select
         $('.selectpicker').selectpicker();
+
+        // Handle "Select All" checkbox
+        $('#selectAllCheckboxes').on('click', function () {
+          // Get the state of the "Select All" checkbox
+          var isChecked = this.checked;
+
+          // Set the state of all individual checkboxes on the current page
+          // Use table.rows({ page: 'current' }).nodes() to only affect visible rows
+          table.rows({ page: 'current' }).nodes().to$().find('.dt-checkboxes').prop('checked', isChecked);
+        });
+
+        // Handle individual checkbox clicks to uncheck "Select All" if any is unchecked
+        dtTable.on('change', '.dt-checkboxes', function () {
+          if (!this.checked) {
+            $('#selectAllCheckboxes').prop('checked', false);
+          } else {
+            // Check if all visible individual checkboxes are checked
+            const allCheckedOnPage =
+              table.rows({ page: 'current' }).nodes().to$().find('.dt-checkboxes:not(:checked)').length === 0;
+            $('#selectAllCheckboxes').prop('checked', allCheckedOnPage);
+          }
+        });
+      },
+      rowCallback: function (row, data, displayNum, displayIndex, dataIndex) {
+        // Attach click event to all table cells except the first (checkbox) and last (action dropdown)
+        $(row)
+          .find('td:not(:first-child):not(:last-child)')
+          .off('click')
+          .on('click', function () {
+            const checkbox = $(row).find('.dt-checkboxes');
+            checkbox.prop('checked', !checkbox.prop('checked'));
+            checkbox.trigger('change'); // Trigger change to update select all checkbox
+          });
       },
       drawCallback: () => {
+        // Reset "Select All" checkbox when the table is redrawn (e.g., pagination, search)
+        $('#selectAllCheckboxes').prop('checked', false);
+
         const tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
         tooltipElements.forEach(el => new bootstrap.Tooltip(el));
       }
@@ -206,22 +254,22 @@ $(function () {
       });
     });
 
-    // Update Record handler
+    // Update Record handler (for single record via dropdown)
     dtTable.on('click', '.update-record', function () {
       const perId = $(this).data('id');
       const status = $(this).data('status');
-      updateRecord(perId, status);
+      updateSingleRecord(perId, status);
     });
 
     $('#locationForm').on('submit', function (e) {
       e.preventDefault();
       const perId = $('#per_id').val();
       const status = $('#per_status').val();
-      updateRecord(perId, status);
+      updateSingleRecord(perId, status);
     });
 
-    // Update record function
-    const updateRecord = (id, status) => {
+    // Function to update a single record
+    const updateSingleRecord = (id, status) => {
       $.ajax({
         url: `/urusetia/permohonan/${id}`,
         type: 'PUT',
@@ -242,6 +290,33 @@ $(function () {
         }
       });
     };
+
+    // Function to handle batch updates
+    const updateBatchRecords = status => {
+      const selectedIds = [];
+      // Get data-id from all checked checkboxes, including those not currently visible
+      // using table.rows().data() to get all data, then filter
+      table.rows().every(function () {
+        const rowData = this.data();
+        const rowNode = this.node();
+        const checkbox = $(rowNode).find('.dt-checkboxes');
+        if (checkbox.prop('checked')) {
+          selectedIds.push(rowData.per_id);
+        }
+      });
+
+      console.log('Selected Data IDs for Batch Update:', selectedIds);
+    };
+
+    // Handler for "Approve Selected" button
+    $('#approveSelected').on('click', function () {
+      updateBatchRecords(4); // Status 4 for 'Berjaya'
+    });
+
+    // Handler for "Reject Selected" button
+    $('#rejectSelected').on('click', function () {
+      updateBatchRecords(5); // Status 5 for 'Tidak Berjaya'
+    });
 
     // Remove small class from DataTable form controls
     setTimeout(() => {

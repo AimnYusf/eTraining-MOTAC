@@ -42,6 +42,7 @@
     <table class="datatables table table-hover">
       <thead class="border-top table-dark">
       <tr>
+        <th><input type="checkbox" id="selectAllCheckboxes" class="form-check-input"></th>
         <th>#</th>
         <th>NAMA PEMOHON</th>
         <th>JAWATAN</th>
@@ -54,6 +55,11 @@
       </tr>
       </thead>
     </table>
+    </div>
+    {{-- Add buttons to process selected items --}}
+    <div class="card-footer d-flex justify-content-end gap-2">
+    <button id="approveSelected" class="btn btn-success">Approve Selected</button>
+    <button id="rejectSelected" class="btn btn-danger">Reject Selected</button>
     </div>
   </div>
   <!--/ Course List Table -->
