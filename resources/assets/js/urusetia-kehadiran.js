@@ -70,7 +70,6 @@ $(function () {
             return (
               '<div class="d-inline-block text-nowrap">' +
               `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.kur_id} data-bs-toggle="tooltip" title="Lihat"><i class="ti ti-eye ti-md"></i></button>` +
-              `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light" data-id=${full.kur_id} data-bs-toggle="tooltip" title="Cetak"><i class="ti ti-printer ti-md"></i></button>` +
               '</div>'
             );
           }

@@ -71,7 +71,6 @@ $(function () {
           render: (data, type, full) => `
             <div class="d-inline-block text-nowrap">
             <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light edit-record" data-id=${full.pen_id} data-bs-toggle="tooltip" title="Edit"><i class="ti ti-edit ti-md"></i></button>
-            <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light delete-record" data-id=${full.pen_id} data-bs-toggle="tooltip" title="Buang"><i class="ti ti-trash ti-md"></i></button>
             </div>
           `
         }

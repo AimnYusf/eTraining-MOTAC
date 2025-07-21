@@ -36,12 +36,6 @@ $(function () {
                 title="Edit">
                 <i class="ti ti-edit ti-md"></i>
               </button>
-              <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light delete-record" 
-                data-id="${full.tem_id}" 
-                data-bs-toggle="tooltip" 
-                title="Padam">
-                <i class="ti ti-trash ti-md"></i>
-              </button>
             </div>`
         }
       ],
