@@ -31,20 +31,17 @@
   <div class="card">
 
     <div class="card-header">
-    <div class="d-flex justify-content-between align-items-center">
-      <!-- Left section: Back button and title -->
-      <div class="d-flex align-items-center">
+    <div class="d-flex align-items-start">
       <a href="/urusetia/permohonan" class="btn btn-label-primary me-3" data-bs-toggle="tooltip" title="Kembali">
-        <i class="ti ti-arrow-back-up"></i>
+      <i class="ti ti-arrow-back-up"></i>
       </a>
       <h5 class="card-title mb-0">{{ $kursus->kur_nama }}</h5>
-      </div>
+    </div>
 
-      <!-- Right section: Approve/Reject buttons -->
-      <div class="batchUpdateButton">
+    <!-- Right section: Approve/Reject buttons -->
+    <div class="batchUpdateButton d-flex justify-content-end">
       <button id="approveSelected" class="btn btn-success me-2">Berjaya</button>
       <button id="rejectSelected" class="btn btn-danger">Tidak Berjaya</button>
-      </div>
     </div>
 
     </div>

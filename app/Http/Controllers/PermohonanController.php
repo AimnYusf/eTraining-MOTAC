@@ -35,7 +35,7 @@ class PermohonanController extends Controller
         }
 
         $kursus = EproKursus::with('eproKategori', 'eproTempat')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('kur_tkhmula', 'desc')
             ->get();
 
         if ($request->ajax()) {

@@ -169,7 +169,7 @@ $(function () {
           className: 'btn btn-label-primary waves-effect waves-light border-none',
           text: '<i class="ti ti-file-spreadsheet ti-xs me-sm-1"></i> <span class="d-none d-sm-inline-block">Excel</span>',
           exportOptions: {
-            columns: [2, 3, 4, 5, 6, 7, 9]
+            columns: [2, 3, 4, 5, 6, 8]
           }
         }
       ],
