@@ -22,8 +22,8 @@ class LaporanController extends Controller
             ->filter(
                 fn($item) =>
                 $item['id_pengguna'] == $carianId &&
-                    !empty($item['tarikh_mula']) &&
-                    Carbon::parse($item['tarikh_mula'])->year == $carianTahun
+                !empty($item['tarikh_mula']) &&
+                Carbon::parse($item['tarikh_mula'])->year == $carianTahun
             );
 
         $rekodBulananPengguna = Records::rekodBulananPengguna($carianId, $carianTahun);
@@ -41,7 +41,7 @@ class LaporanController extends Controller
     public function rekodKumpulan(Request $request)
     {
         $carianTahun = $request->input('tahun') ?? Carbon::now()->year;
-        $kumpulan = EproKumpulan::get();
+        $kumpulan = EproKumpulan::whereNotNull('kum_ketring')->get();
         $rekodKumpulan = Records::rekodKumpulan($carianTahun);
 
         return view('pages.laporan-kumpulan', compact('rekodKumpulan', 'kumpulan'));
@@ -84,7 +84,7 @@ class LaporanController extends Controller
                     $item['tarikh_mula'] === null ||
                     Carbon::parse($item['tarikh_mula'])->year == $carianTahun
                 ) &&
-                    $item['id_bahagian'] == $carianBahagian
+                $item['id_bahagian'] == $carianBahagian
             )
             ->groupBy('id_pengguna');
 
