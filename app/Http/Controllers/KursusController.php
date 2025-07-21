@@ -47,7 +47,7 @@ class KursusController extends Controller
 
         // Main list page
         $kursus = EproKursus::with('eproKategori')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('kur_tkhmula', 'desc')
             ->get();
 
         if ($request->ajax()) {
