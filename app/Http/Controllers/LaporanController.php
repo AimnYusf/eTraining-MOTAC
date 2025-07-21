@@ -29,8 +29,6 @@ class LaporanController extends Controller
         $rekodBulananPengguna = Records::rekodBulananPengguna($carianId, $carianTahun);
         $jumlahPermohonanPengguna = Records::jumlahPermohonanPengguna($carianId, $carianTahun);
 
-        Log::info($rekodPengguna->toArray());
-
         return view('pages.rekod-kursus', compact(
             'rekodPengguna',
             'rekodBulananPengguna',

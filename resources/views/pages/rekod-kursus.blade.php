@@ -35,7 +35,7 @@
   <div class="card">
     <div class="card-header">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h5 class="card-title mb-0">Status Permohonan</h5>
+      <h5 class="card-title mb-0">Rekod Kursus</h5>
 
       {{-- Select Tahun --}}
       <form method="GET" class="w-50 d-flex justify-content-end">

@@ -112,8 +112,6 @@ class DashboardController extends Controller
             ->get()
             ->filter(fn($item) => Carbon::parse($item->tarikh)->year == Carbon::now()->year);
 
-        Log::info(json_encode($kehadiran));
-
         $jumlahKehadiran = array_fill(0, 12, 0);
         foreach ($kehadiran as $item) {
             $indeksBulan = Carbon::parse($item->tarikh)->month - 1;
