@@ -199,7 +199,7 @@ class Records
             ->filter(
                 fn($rekod) =>
                 $rekod['id_pengguna'] == $carianId &&
-                    Carbon::parse($rekod['tarikh_mula'])->year == $carianTahun
+                Carbon::parse($rekod['tarikh_mula'])->year == $carianTahun
             );
 
         // Calculate monthly totals for statistics
@@ -235,7 +235,7 @@ class Records
                 return $pass;
             })
             ->groupBy('id_pengguna')
-            ->map(function ($userData) {
+            ->map(function ($userData, $id_pengguna) {
                 $jumlah_hari = 0;
                 foreach ($userData as $record) {
                     $bilangan_hari = (float) ($record['bilangan_hari'] ?? 0);
@@ -243,6 +243,7 @@ class Records
                     $jumlah_hari += static::kiraJumlah($bilangan_hari, $bilangan_jam);
                 }
                 return [
+                    'id' => $id_pengguna,
                     'nama' => $userData->first()['nama'],
                     'jawatan' => $userData->first()['jawatan'],
                     'gred' => $userData->first()['gred'],
@@ -255,6 +256,7 @@ class Records
 
         return $jumlahRekodPengguna;
     }
+
 
     public static function rekodBahagian($carianTahun)
     {

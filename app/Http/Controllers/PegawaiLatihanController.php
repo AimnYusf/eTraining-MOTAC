@@ -6,6 +6,7 @@ use App\Helpers\Records;
 use App\Models\EproBahagian;
 use App\Models\EproIsytihar;
 use App\Models\EproPengguna;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -46,6 +47,7 @@ class PegawaiLatihanController extends Controller
 
     public function rekodPegawai(Request $request)
     {
+        $carianTahun = $request->input('tahun') ?? Carbon::now()->year;
         $carianBahagian = EproPengguna::where('pen_idusers', Auth::id())->first();
 
         $jumlahRekodPengguna = Records::jumlahRekodPengguna(now()->year, $carianBahagian['pen_idbahagian']);
@@ -53,6 +55,33 @@ class PegawaiLatihanController extends Controller
             return response()->json([
                 'data' => $jumlahRekodPengguna
             ]);
+        }
+
+        // If viewing a specific course
+        $pid = $request->query('pid');
+
+        if ($pid) {
+            $carianTahun = $request->input('tahun') ?? Carbon::now()->year;
+
+            $rekodPengguna = Records::rekodPengguna()
+                ->filter(
+                    fn($item) =>
+                    $item['id_pengguna'] == $pid &&
+                    !empty($item['tarikh_mula']) &&
+                    Carbon::parse($item['tarikh_mula'])->year == $carianTahun
+                );
+
+            $rekodBulananPengguna = Records::rekodBulananPengguna($pid, $carianTahun);
+            $jumlahPermohonanPengguna = Records::jumlahPermohonanPengguna($pid, $carianTahun);
+            $pengguna = EproPengguna::with('eproKumpulan')
+                ->where('pen_idusers', $pid)->first();
+
+            return view('pages.pegawai-latihan-maklumat', compact(
+                'rekodPengguna',
+                'rekodBulananPengguna',
+                'jumlahPermohonanPengguna',
+                'pengguna'
+            ));
         }
 
         return view('pages.pegawai-latihan-rekod');

@@ -32,7 +32,8 @@ $(function () {
         },
         {
           targets: 1,
-          render: (data, type, full) => `<span class="text-uppercase" >${data}</span>`
+          render: (data, type, full) =>
+            `<span class="text-uppercase view-record" style="cursor: pointer"  data-id="${full.id}" data-bs-toggle="tooltip" title="Lihat">${data}</span>`
         },
         {
           targets: [2, 3],
@@ -62,7 +63,7 @@ $(function () {
             var $color = $peratus < 40 ? 'danger' : $peratus > 80 ? 'success' : 'warning';
             return `
               <div class="d-flex align-items-center">
-                <div class="progress w-100" style="height: 10px; cursor: pointer" data-bs-toggle="tooltip" title="${data}" >
+                <div class="progress w-100 view-record" style="height: 10px; cursor: pointer" data-bs-toggle="tooltip" title="${data}" data-id="${full.id}">
                   <div class="progress-bar progress-bar-striped progress-bar-animated bg-${$color}" role="progressbar" style="width: ${$peratus}%;"></div>
                 </div>
               </div>
@@ -82,7 +83,7 @@ $(function () {
           <"col-sm-12 col-md-6"i>
           <"col-sm-12 col-md-6"p>
         >`,
-      lengthMenu: [10, 25, 50, 100],
+      paging: false,
       language: {
         sLengthMenu: '_MENU_',
         search: '',
@@ -110,17 +111,15 @@ $(function () {
     $('.dataTables_length .form-select').removeClass('form-select-sm');
   }, 300);
 
-  // Edit Record
-  $(document).on('click', '.edit-record', function () {
-    const tem_id = $(this).data('id');
+  // View Record
+  $(document).on('click', '.view-record', function () {
+    const pen_id = $(this).data('id');
+    console.log(pen_id);
 
-    $.get(`/tetapan/tempat/${tem_id}`, function (data) {
-      $('#tem_tajuk').html('Edit Tempat Kursus');
-      $('#tem_id').val(data.tem_id);
-      $('#tem_keterangan').val(data.tem_keterangan);
-      $('#tem_alamat').val(data.tem_alamat);
-      $('#tem_gmaps').val(data.tem_gmaps);
-      $('#manageRecord').modal('show');
-    });
+    // Use URLSearchParams for clean and safe URL parameter handling
+    const url = new URL('/rekod-pegawai', window.location.origin);
+    url.searchParams.set('pid', pen_id);
+
+    window.location.href = url.toString();
   });
 });
