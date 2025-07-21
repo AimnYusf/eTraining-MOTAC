@@ -127,8 +127,8 @@ use Carbon\Carbon;
         <div class="col-12 text-center">
           <div class="btn-apply-modal">
             <a href="/kursus" class="btn btn-label-secondary me-2">Kembali</a>
-            @if (now() >= $kursus->kur_tkhbuka && now() <= $kursus->kur_tkhtutup)
-              <button type="button" class="btn btn-primary apply-record" data-id="{{ $kursus->kur_id }}">Mohon</button>
+              @if (now()->between($kursus->kur_tkhbuka, $kursus->kur_tkhtutup) && !isset($permohonan))
+                  <button type="button" class="btn btn-primary apply-record" data-id="{{ $kursus->kur_id }}">Mohon</button>
               @endif
           </div>
         </div>

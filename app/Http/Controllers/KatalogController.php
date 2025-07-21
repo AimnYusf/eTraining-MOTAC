@@ -22,7 +22,6 @@ class KatalogController extends Controller
     {
         // Get authenticated user's group and their applied course IDs
         $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
-        $permohonan = EproPermohonan::where('per_idusers', Auth::id())->pluck('per_idkursus');
         $urusetia = EtraUrusetia::get();
 
         // Retrieve available courses for the user that they haven't applied for
@@ -32,14 +31,25 @@ class KatalogController extends Controller
 
         // If viewing a specific course
         $kid = $request->query('kid');
+
         if ($kid) {
-            if ($kursus->contains('kur_id', $kid)) {
-                $kursus = $kursus->firstWhere('kur_id', $kid);
-                // dd($kursus->toArray());
-                return view('pages.pengguna-kursus-mohon', compact('kursus', 'urusetia'));
+            $permohonan = EproPermohonan::where('per_idusers', Auth::id())
+                ->where('per_idkursus', $kid)
+                ->first();
+
+            $selectedKursus = $kursus->firstWhere('kur_id', $kid);
+
+            if ($selectedKursus) {
+                return view('pages.pengguna-kursus-mohon', [
+                    'kursus' => $selectedKursus,
+                    'urusetia' => $urusetia,
+                    'permohonan' => $permohonan
+                ]);
             }
+
             abort(404);
         }
+
 
         // Return data for DataTables AJAX request
         if ($request->ajax()) {

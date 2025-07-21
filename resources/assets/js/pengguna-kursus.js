@@ -35,9 +35,19 @@ $(function () {
           const releaseDate = new Date(row.kur_tkhbuka);
           const closeDate = new Date(row.kur_tkhtutup);
 
-          const isActive = today >= releaseDate && today <= closeDate;
-          const statusClass = isActive ? 'active-status bg-success' : 'inactive-status bg-danger';
-          const statusText = isActive ? 'Dibuka' : 'Belum Dibuka';
+          let statusText = '';
+          let statusClass = '';
+
+          if (today > closeDate) {
+            statusText = 'Permohonan Tamat';
+            statusClass = 'bg-danger';
+          } else if (today < releaseDate) {
+            statusText = 'Belum Dibuka';
+            statusClass = 'inactive-status bg-danger';
+          } else {
+            statusText = 'Dibuka';
+            statusClass = 'active-status bg-success';
+          }
 
           return `
           <style>
