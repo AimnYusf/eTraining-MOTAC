@@ -34,7 +34,7 @@ class KelulusanController extends Controller
             ]);
         }
 
-        return view('pages.penyelia-kelulusan');
+        return view('pages.pegawai-latihan-kelulusan');
     }
 
     public function show($id)
