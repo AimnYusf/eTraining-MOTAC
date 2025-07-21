@@ -10,6 +10,63 @@
 
 @section('page-style')
     @vite(['resources/assets/vendor/scss/pages/page-auth.scss'])
+    <style>
+        body {
+            /* Background Image with Overlay */
+            background-image: url("{{ asset('images/background.png') }}");
+            /* Make sure this image exists */
+            background-size: cover;
+            /* Covers the entire viewport */
+            background-position: center center;
+            /* Centers the image */
+            background-repeat: no-repeat;
+            /* Prevents image from repeating */
+            background-attachment: fixed;
+            /* Keeps image fixed when scrolling */
+            /* Add a semi-transparent dark overlay for better text contrast */
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Darker overlay color */
+            background-blend-mode: overlay;
+            /* Blends the color with the image */
+        }
+
+        /* Adjust card background for better contrast and a modern feel */
+        .authentication-inner .card {
+            background-color: rgba(255, 255, 255, 0.92);
+            /* Slightly transparent white for a subtle effect */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            /* More pronounced shadow for depth */
+            border-radius: 12px;
+            /* Slightly rounded corners */
+        }
+
+        /* Adjust logo container for better spacing and centering */
+        .app-brand {
+            padding-top: 1.5rem;
+            /* Add some padding at the top */
+            padding-bottom: 1rem;
+            /* Add some padding at the bottom */
+        }
+
+        .app-brand-logo.demo {
+            max-height: 120px;
+            /* Slightly larger logo */
+        }
+
+        .app-brand h4 {
+            font-size: 1.8rem;
+            /* Larger title */
+            margin-bottom: 0.25rem !important;
+            /* Adjust spacing */
+        }
+
+        .app-brand p {
+            font-size: 1rem;
+            /* Slightly larger slogan */
+            color: #6c757d;
+            /* Muted color for the slogan */
+        }
+    </style>
 @endsection
 
 @section('vendor-script')
