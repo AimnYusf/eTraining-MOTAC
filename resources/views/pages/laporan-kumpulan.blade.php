@@ -14,10 +14,6 @@
 ])
 @endsection
 
-@section('page-script')
-@vite('resources/assets/js/statistik.js')
-@endsection
-
 @php
 use Carbon\Carbon;
 @endphp

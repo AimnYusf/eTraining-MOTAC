@@ -28,7 +28,7 @@
 
       <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
         <!-- Filter -->
-        <div class="navbar-nav align-items-center">
+        <!-- <div class="navbar-nav align-items-center">
           <div class="nav-item d-flex align-items-center">
             <select id="role_filter" class="form-select">
               <option value="guest" {{ Auth::user()->role == 'guest' ? 'selected' : '' }}>Pengguna Baru</option>
@@ -39,7 +39,7 @@
               </option>
             </select>
           </div>
-        </div>
+        </div> -->
         <!-- /Filter -->
         <ul class="navbar-nav flex-row align-items-center ms-auto">
           <!-- User -->
