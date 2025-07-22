@@ -14,9 +14,9 @@ $(function () {
 
   const dtTable = $('.datatables');
   const roleObj = {
-    user: { badge: 'bg-label-success' },
-    supervisor: { badge: 'bg-label-info' },
-    administrator: { badge: 'bg-label-primary' }
+    user: { badge: 'bg-label-success', text: 'Pengguna' },
+    supervisor: { badge: 'bg-label-info', text: 'Pegawai Latihan Bahagian' },
+    administrator: { badge: 'bg-label-primary', text: 'Urusetia' }
   };
 
   // Initialize DataTable
@@ -62,7 +62,8 @@ $(function () {
           className: 'text-center',
           render: (data, type, full) => {
             const badgeClass = roleObj[data].badge;
-            return `<span class="badge ${badgeClass} mt-2 mb-2 table-badges">${data}</span>`;
+            const roleText = roleObj[data].text;
+            return `<span class="badge ${badgeClass} mt-2 mb-2 table-badges">${roleText}</span>`;
           }
         },
         {
