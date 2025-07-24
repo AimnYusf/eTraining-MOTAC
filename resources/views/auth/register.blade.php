@@ -95,7 +95,7 @@ $customizerHidden = 'customizer-hide';
                             class="app-brand-logo demo mb-2"
                             style="max-height: 100px; height: auto; width: auto;">
                         <h4 class="fw-bold mb-0">{{ config('app.name') }}</h4>
-                        <p><em>Sistem Pengurusan Latihan MOTAC</em></p>
+                        <p><em>Sistem Pengurusan Latihan <br> Kementerian Pelancongan, Seni dan Budaya</em></p>
                     </div>
                     <!-- /Logo -->
 
@@ -127,22 +127,33 @@ $customizerHidden = 'customizer-hide';
                         </div>
 
                         <!-- Password -->
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Kata Laluan</label>
-                            <input id="password" type="password" name="password" autocomplete="new-password"
-                                class="form-control @error('password') is-invalid @enderror">
-                            @error('password')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+                        <div class="mb-3 form-password-toggle">
+                            <label for="password" class="form-label">
+                                Kata Laluan
+                                @if (!$errors->has('password'))
+                                    <br><small class="text-muted">Melebihi 12 aksara dan mengandungi huruf besar, huruf kecil, nombor serta simbol.</small>
+                                @endif
+                            </label>
+                            <div class="input-group input-group-merge">
+                                <input id="password" type="password" name="password" autocomplete="new-password"
+                                    class="form-control @error('password') is-invalid @enderror">
+                                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
                             </div>
+                            @error('password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
                         <!-- Confirm Password -->
-                        <div class="mb-4">
+                        <div class="mb-4 form-password-toggle">
                             <label for="password_confirmation" class="form-label">Sahkan Kata Laluan</label>
-                            <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password"
+                            <div class="input-group input-group-merge">
+                                <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password"
                                 class="form-control @error('password_confirmation') is-invalid @enderror">
+                                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
+                            </div>
                             @error('password_confirmation')
                             <div class="invalid-feedback">
                                 {{ $message }}

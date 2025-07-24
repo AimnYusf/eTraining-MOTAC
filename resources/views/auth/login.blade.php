@@ -97,7 +97,7 @@
                             <img src="{{ asset('images/logo-kementerian.png') }}" alt="Logo"
                                 class="app-brand-logo demo mb-2" style="max-height: 100px; height: auto; width: auto;">
                             <h4 class="fw-bold mb-0">{{ config('app.name') }}</h4>
-                            <p><em>Sistem Pengurusan Latihan MOTAC</em></p>
+                            <p><em>Sistem Pengurusan Latihan <br> Kementerian Pelancongan, Seni dan Budaya</em></p>
                         </div>
                         <!-- /Logo -->
 
@@ -118,11 +118,14 @@
                             </div>
 
                             <!-- Password -->
-                            <div class="mb-4">
-                                <label for="password" class="form-label">Kata Laluan</label>
-                                <input type="password" name="password" id="password"
-                                    class="form-control @error('password') is-invalid @enderror"
-                                    autocomplete="current-password">
+                            <div class="mb-4 form-password-toggle">
+                                <label class="form-label" for="password">Kata Laluan</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="password"
+                                        class="form-control @error('password') is-invalid @enderror" name="password"
+                                        autocomplete="current-password" />
+                                    <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
+                                </div>
                                 @error('password')
                                     <div class="invalid-feedback">
                                         {{ $message }}
