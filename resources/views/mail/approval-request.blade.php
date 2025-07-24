@@ -169,9 +169,9 @@
             <p>
                 Adalah dimaklumkan terdapat transaksi Permohonan
                 <span style="text-transform: uppercase;">
-                    <strong>{{ $mailData['nama_kursus'] ?? '' }}</strong>
+                    <strong>{{ $mailData['nama_kursus'] ?? '[NAMA KURSUS]' }}</strong>
                 </span>
-                untuk <strong>tindakan sokongan tuan/puan.</strong>
+                untuk <strong>tindakan sokongan</strong> tuan/puan sebagai pegawai penyokong.
             </p>
 
             <p><strong><u>Maklumat Permohonan</u></strong></p>
@@ -179,37 +179,40 @@
                 <table class="info-table" cellpadding="4" cellspacing="0">
                     <tr>
                         <td>Nama Pemohon</td>
-                        <td>: <strong>{{ $mailData['nama'] ?? '' }}</strong></td>
+                        <td>: <strong>{{ $mailData['nama'] ?? '[NAMA PEMOHON]' }}</strong></td>
                     </tr>
                     <tr>
                         <td>Jawatan Pemohon</td>
-                        <td>: <strong>{{ $mailData['jawatan'] ?? '' }} {{ $mailData['gred'] ?? '' }}</strong></td>
+                        <td>: <strong>{{ $mailData['jawatan'] ?? '[JAWATAN]' }}
+                                {{ $mailData['gred'] ?? '[GRED]' }}</strong></td>
                     </tr>
                     <tr>
                         <td>Nama Kursus</td>
-                        <td>: <strong>{{ $mailData['nama_kursus'] ?? '' }}</strong></td>
+                        <td>: <strong>{{ $mailData['nama_kursus'] ?? '[NAMA KURSUS]' }}</strong></td>
                     </tr>
                     <tr>
                         <td>Tarikh Kursus</td>
                         @php
                             \Carbon\Carbon::setLocale('ms');
-                            $mula = !empty($mailData['tarikh_mula']) ? \Carbon\Carbon::parse($mailData['tarikh_mula']) : null;
-                            $tamat = !empty($mailData['tarikh_tamat']) ? \Carbon\Carbon::parse($mailData['tarikh_tamat']) : null;
+                            $mula = !empty($mailData['tarikh_mula']) ?? \Carbon\Carbon::parse($mailData['tarikh_mula']);
+                            $tamat = !empty($mailData['tarikh_tamat']) ?? \Carbon\Carbon::parse($mailData['tarikh_tamat']);
                         @endphp
                         <td>:
                             <strong>
-                                {{ $mula ? $mula->translatedFormat('d') : '' }} hingga
-                                {{ $tamat ? $tamat->translatedFormat('d F Y') : '' }}
+                                {{ $mula ? $mula->translatedFormat('d') : '[MASA MULA]' }} hingga
+                                {{ $tamat ? $tamat->translatedFormat('d F Y') : '[MASA TAMAT]' }}
                             </strong>
                         </td>
                     </tr>
                     <tr>
                         <td>Lokasi Kursus</td>
-                        <td>: <strong>{{ $mailData['tempat'] ?? '' }}</strong></td>
+                        <td>: <strong>{{ $mailData['tempat'] ?? '[TEMPAT KURSUS]' }}</strong></td>
                     </tr>
                     <tr>
                         <td>Status</td>
-                        <td>: <strong style="text-transform: uppercase;">{{ $mailData['status'] ?? '' }}</strong></td>
+                        <td>: <strong
+                                style="text-transform: uppercase;">{{ $mailData['status'] ?? '[STATUS PERMOHONAN]' }}</strong>
+                        </td>
                     </tr>
                     <tr>
                         <td>Tarikh Permohonan</td>
@@ -217,7 +220,7 @@
                             @php
                                 $tarikhMohon = !empty($mailData['tarikh_mohon']) ? \Carbon\Carbon::parse($mailData['tarikh_mohon']) : null;
                             @endphp
-                            <strong>{{ $tarikhMohon ? $tarikhMohon->translatedFormat('d F Y') : '' }}</strong>
+                            <strong>{{ $tarikhMohon ? $tarikhMohon->translatedFormat('d F Y') : '[TARIKH MOHON]' }}</strong>
                         </td>
                     </tr>
                 </table>
@@ -228,19 +231,18 @@
             </p>
 
             <p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-                @if (!empty($mailData['url']))
-                    <a href="{{ $mailData['url'] }}" target="_blank"
-                        style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
-                        class="btn-action">Klik Untuk Sokongan</a>
-                @endif
+                <a href="{{ $mailData['url'] ?? '#'}}" target="_blank"
+                    style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+                    class="btn-action">Klik Untuk Sokongan</a>
             </p>
 
             <p>Sekian, terima kasih.</p>
-            <p><strong>Pentadbir Sistem {{ config('app.name') }}</strong></p>
+            <p style="margin: 0;"><strong>Urusetia {{ config('app.name') }}</strong></p>
+            <p style="margin-top: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
             <p style="text-align: center; font-size: 14px; color: #777;">
-                <em>Nota : Emel ini dijana secara automatik, sila jangan balas e-mel ini.</em>
+                <em>Nota : Emel ini dijana secara automatik.</em>
             </p>
         </div>
     </div>

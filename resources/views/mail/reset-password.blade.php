@@ -110,18 +110,13 @@
             <p>YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan,</p>
 
             <p>
-                Untuk menetapkan semula kata laluan akaun YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan, sila klik
-                pautan di bawah:
+                Sila klik pautan di bawah untuk membuat penetapan semula kata laluan :-
             </p>
 
             <p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-                @if (!empty($url))
-                <a href="{{ $url }}" target="_blank"
+                <a href="{{ !empty($url) ? $url : '#' }}" target="_blank"
                     style="display: inline-block; background-color: #2F8AD0; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
                     class="btn-verify">Set Semula Kata Laluan</a>
-                @else
-                <span style="color: red;"><em>Pautan tidak tersedia.</em></span>
-                @endif
             </p>
 
             <p>
@@ -130,23 +125,16 @@
             </p>
 
             <p>
-                Sekiranya YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan tidak membuat permintaan ini, sila abaikan
-                emel ini. Tiada sebarang tindakan akan diambil tanpa pengesahan daripada pihak YBhg. Datuk / Dato’ /
-                YBrs. Dr. / Ts. / Tuan / Puan.
+                Sekiranya tidak membuat sebarang permintaan penetapan semula kata laluan, sila abaikan emel ini.
             </p>
 
             <p>Sekian, terima kasih.</p>
-
-            <p>
-                Pentadbir Sistem<br>
-                Bahagian Pengurusan Maklumat<br>
-                Kementerian Pelancongan, Seni dan Budaya
-            </p>
-
+            <p style="margin: 0;"><strong>Urusetia {{ config('app.name') }}</strong></p>
+            <p style="margin-top: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
             <p style="text-align: center; font-size: 14px; color: #777;">
-                <em>Jika anda tidak membuat permintaan untuk menetapkan semula kata laluan, sila abaikan emel ini.</em>
+                <em>Nota : Emel ini dijana secara automatik.</em>
             </p>
         </div>
     </div>

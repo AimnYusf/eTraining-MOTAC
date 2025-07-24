@@ -123,35 +123,32 @@
 <body style="background-color: #f0f4f8; padding: 8px;">
     <div class="email-container">
         <div class="email-header-banner">
-            Makluman Permohonan Kursus Tidak Berjaya – {{ strtoupper($kursus->kur_nama ?? '[NAMA KURSUS]')}}
+            Permohonan Kursus Tidak Berjaya – {{ strtoupper($kursus->kur_nama ?? '[NAMA KURSUS]')}}
         </div>
         <div class="email-content">
-            <p>Tuan/Puan,</p>
+            <p>YBhg. Datuk/ Dato’/ YBrs. Dr./Tuan/Puan,</p>
 
-            <p>Dimaklumkan bahawa permohonan Tuan/Puan untuk menghadiri
+            <p>Dimaklumkan bahawa permohonan YBhg. Datuk/ Dato’/ YBrs. Dr./Tuan/Puan untuk menghadiri
                 <strong>{{ $kursus->kur_nama ?? '[NAMA KURSUS]' }}</strong>
                 pada tarikh
                 <strong>
                     {{ isset($kursus) && $kursus->kur_tkhmula
     ? \Carbon\Carbon::parse($kursus->kur_tkhmula)->translatedFormat('d F Y')
     : '[TARIKH KURSUS]' 
-    }}
+    }} tidak berjaya
                 </strong>.
             </p>
 
-            <p>Walau bagaimanapun, Tuan/Puan boleh membuat permohonan semula sekiranya kursus ini ditawarkan semula pada
-                masa akan datang atau memilih kursus lain yang bersesuaian melalui Sistem {{ config('app.name') }}.</p>
-            <p style="text-align: center; color: red;">
-                Pemilihan peserta tertakluk kepada urusetia dan kekosongan kuota.
-            </p>
-            <p>Segala kerjasama dan perhatian Tuan/Puan amat dihargai.</p>
+            <p>Makluman dan perhatian Tuan/Puan amat dihargai.</p>
 
             <p>Sekian, terima kasih.</p>
-            <p style="margin: 0;"><strong>Penyelaras Kursus</strong></p>
-            <p style="margin: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
+            <p style="margin: 0;"><strong>Urusetia {{ config('app.name') }}</strong></p>
+            <p style="margin-top: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
+
+            <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
             <p style="font-size: 12px; color: #999; text-align: center; margin-top: 40px;">
-                <em>Nota : Emel ini dijana secara automatik, sila jangan balas e-mel ini.</em>
+                <em>Nota : Emel ini dijana secara automatik.Tiada sebarang tindakan.</em>
             </p>
         </div>
     </div>

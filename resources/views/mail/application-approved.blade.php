@@ -142,19 +142,19 @@
 <body style="background-color: #f0f4f8; padding: 8px;">
     <div class="email-container">
         <div class="email-header-banner">
-            Pengesahan Permohonan Kursus Berjaya –
+            Permohonan Kursus Berjaya –
             <span style="text-transform: uppercase">{{ strtoupper($kursus->kur_nama ?? '') }}</span>
         </div>
 
         <div class="email-content">
             <p>YBhg. Datuk/ Dato’/ YBrs. Dr./Tuan/Puan,</p>
 
-            <p>{{ strtoupper($pengguna->pen_ppnama ?? '') }},</p>
+            <p>{{ strtoupper($pengguna->pen_ppnama ?? '[NAMA PEMOHON]') }},</p>
 
             <p>
-                Dimaklumkan bahawa pegawai di bawah seliaan YBhg. Datuk/ Dato’/ YBrs. Dr./Tuan/Puan
-                <strong>{{ strtoupper($pengguna->pen_nama ?? '') }}</strong> telah dipilih untuk mengikuti
-                kursus <strong>{{ strtoupper($kursus->kur_nama ?? '') }}</strong> seperti butiran berikut:
+                Dimaklumkan bahawa YBhg. Datuk/ Dato’/ YBrs. Dr./Tuan/Puan
+                <strong>{{ strtoupper($pengguna->pen_nama ?? '[NAMA PEMOHON]') }}</strong> telah dipilih untuk mengikuti
+                <strong>{{ strtoupper($kursus->kur_nama ?? '[NAMA KURSUS]') }}</strong> seperti butiran berikut :-
             </p>
 
             @php
@@ -188,24 +188,24 @@
                     <tr>
                         <td><strong>Tarikh Kursus</strong></td>
                         <td>
-                            : {{ $mula ? $mula->translatedFormat('d') : '' }} hingga
-                            {{ $tamat ? $tamat->translatedFormat('d F Y') : '' }}
+                            : {{ $mula ? $mula->translatedFormat('d') : '[TARIKH MULA]' }} hingga
+                            {{ $tamat ? $tamat->translatedFormat('d F Y') : '[TARIKH TAMAT]' }}
                         </td>
                     </tr>
                     <tr>
                         <td><strong>Masa</strong></td>
                         <td>
-                            : {{ formatMasa($kursus->kur_msamula ?? '') }} -
-                            {{ formatMasa($kursus->kur_msatamat ?? '') }}
+                            : {{ empty($kursus->kur_msamula) ? '[MASA MULA]' : formatMasa($kursus->kur_msamula) }} -
+                            {{ empty($kursus->kur_msatamat) ? '[MASA TAMAT]' : formatMasa($kursus->kur_msatamat) }}
                         </td>
                     </tr>
                     <tr>
                         <td><strong>Tempat</strong></td>
-                        <td>: {{ $kursus->eproTempat->tem_keterangan ?? '' }}</td>
+                        <td>: {{ $kursus->eproTempat->tem_keterangan ?? '[TEMPAT KURSUS]' }}</td>
                     </tr>
                     <tr>
                         <td><strong>Anjuran</strong></td>
-                        <td>: {{ $kursus->eproPenganjur->pjr_keterangan ?? '' }}</td>
+                        <td>: {{ $kursus->eproPenganjur->pjr_keterangan ?? '[PENGANJUR KURSUS]' }}</td>
                     </tr>
                 </table>
             </div>
@@ -218,20 +218,23 @@
 
             <div class="qr-code-container">
                 <p>Sila imbas kod QR ini untuk kehadiran:</p>
+
                 @if (!empty($qrCodeFilePath) && file_exists($qrCodeFilePath))
                     <img src="{{ $message->embed($qrCodeFilePath) }}" alt="Kod QR Kehadiran" class="qr-code-image">
                 @else
-                    <p><em>Kod QR tidak dapat dipaparkan. Sila hubungi urusetia kursus.</em></p>
+                    <div style="background-color: black; width: 150px; height: 150px; margin: 30px auto;"></div>
                 @endif
             </div>
 
             <p>Sekian, terima kasih.</p>
 
-            <p style="margin: 0;"><strong>Penyelaras Kursus</strong></p>
-            <p style="margin: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
+            <p style="margin: 0;"><strong>Urusetia {{ config('app.name') }}</strong></p>
+            <p style="margin-top: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
+
+            <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
             <p style="font-size: 12px; color: #999; text-align: center; margin-top: 40px;">
-                <em>Nota: E-mel ini dijana secara automatik. Sila jangan balas.</em>
+                <em>Nota: E-mel ini dijana secara automatik. Tiada sebarang tindakan.</em>
             </p>
         </div>
     </div>

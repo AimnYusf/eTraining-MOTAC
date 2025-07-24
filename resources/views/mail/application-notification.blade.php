@@ -156,26 +156,26 @@
             <div class="header">
                 Notifikasi: Permohonan Kursus
                 <span style="text-transform: uppercase;">
-                    {{ $kursus['kur_nama'] ?? '' }}
+                    {{ $kursus['kur_nama'] ?? '[NAMA KURSUS]' }}
                 </span> Telah Dihantar
             </div>
 
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
 
             <p>Assalamualaikum dan Salam Sejahtera,</p>
-            <p>{{ $pengguna['pen_nama'] ?? '' }},</p>
-            <p>Permohonan <strong>{{ strtoupper($kursus['kur_nama'] ?? '')}}</strong>.</p>
+            <p>{{ $pengguna['pen_nama'] ?? '[NAMA PEMOHON]' }},</p>
+            <p>Permohonan <strong>{{ strtoupper($kursus['kur_nama'] ?? '[NAMA KURSUS]')}}</strong>.</p>
 
             <p>
-                Permohonan anda telah diterima dan sedang dalam proses sokongan oleh Pegawai Penyokong. Tuan/puan boleh
-                menyemak keputusan di dashboard pengguna. Berikut adalah maklumat kursus yang dipohon :-
+                Permohonan anda telah diterima dan sedang dalam proses sokongan oleh Pegawai Penyokong. Berikut adalah
+                maklumat kursus yang dipohon :-
             </p>
 
             <div class="info-table-wrapper">
                 <table class="info-table" cellpadding="4" cellspacing="0">
                     <tr>
                         <td>Nama Kursus</td>
-                        <td>: <strong>{{ $kursus['kur_nama'] ?? '' }}</strong></td>
+                        <td>: <strong>{{ $kursus['kur_nama'] ?? '[NAMA KURSUS]' }}</strong></td>
                     </tr>
                     <tr>
                         <td>Tarikh Kursus</td>
@@ -186,27 +186,29 @@
                         @endphp
                         <td>:
                             <strong>
-                                {{ $mula ? $mula->translatedFormat('d') : '' }} hingga
-                                {{ $tamat ? $tamat->translatedFormat('d F Y') : '' }}
+                                {{ $mula ? $mula->translatedFormat('d') : '[TARIKH MULA]' }} hingga
+                                {{ $tamat ? $tamat->translatedFormat('d F Y') : '[TARIKH TAMAT]' }}
                             </strong>
                         </td>
                     </tr>
                     <tr>
                         <td>Lokasi Kursus</td>
-                        <td>: <strong>{{ $kursus['eproTempat']['tem_keterangan'] ?? '' }}</strong></td>
+                        <td>: <strong>{{ $kursus['eproTempat']['tem_keterangan'] ?? '[TEMPAT KURSUS]' }}</strong></td>
                     </tr>
                 </table>
             </div>
             <p style="text-align: center; color: red;">
-                Pemilihan peserta tertakluk kepada urusetia dan kekosongan kuota.
+                Keputusan permohonan boleh disemak di Dashboard Pengguna. Pemilihan peserta tertakluk kepada urusetia
+                dan kekosongan kuota.
             </p>
 
             <p>Sekian, terima kasih.</p>
-            <p><strong>Pentadbir Sistem {{ config('app.name') }}</strong></p>
+            <p style="margin: 0;"><strong>Urusetia {{ config('app.name') }}</strong></p>
+            <p style="margin-top: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
             <p style="text-align: center; font-size: 14px; color: #777;">
-                <em>Nota : Emel ini dijana secara automatik, sila jangan balas e-mel ini.</em>
+                <em>Nota : Emel ini dijana secara automatik. Tiada sebarang tindakan.</em>
             </p>
         </div>
     </div>
