@@ -128,21 +128,24 @@ $customizerHidden = 'customizer-hide';
 
                         <!-- Password -->
                         <div class="mb-3 form-password-toggle">
-                            <label for="password" class="form-label">
-                                Kata Laluan
-                                @if (!$errors->has('password'))
-                                    <br><small class="text-muted">Melebihi 12 aksara dan mengandungi huruf besar, huruf kecil, nombor serta simbol.</small>
-                                @endif
-                            </label>
+                            <label for="password" class="form-label">Kata Laluan</label>
+
                             <div class="input-group input-group-merge">
                                 <input id="password" type="password" name="password" autocomplete="new-password"
                                     class="form-control @error('password') is-invalid @enderror">
-                                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
+                                <span class="input-group-text cursor-pointer">
+                                    <i class="ti ti-eye-off" id="toggle-password"></i>
+                                </span>
                             </div>
+
                             @error('password')
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback d-block">
                                     {{ $message }}
                                 </div>
+                            @else
+                                <small class="text-muted">
+                                    Melebihi 12 aksara dan mengandungi huruf besar, huruf kecil, nombor serta simbol.
+                                </small>
                             @enderror
                         </div>
 

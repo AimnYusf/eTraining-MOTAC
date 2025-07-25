@@ -101,27 +101,40 @@
                             </div>
 
                             <!-- Password -->
-                            <div class="mb-3">
+                            <div class="mb-3 form-password-toggle">
                                 <label for="password" class="form-label">Kata Laluan</label>
-                                <input id="password" type="password" name="password" autocomplete="new-password"
-                                    class="form-control @error('password') is-invalid @enderror">
+
+                                <div class="input-group input-group-merge">
+                                    <input id="password" type="password" name="password" autocomplete="new-password"
+                                        class="form-control @error('password') is-invalid @enderror">
+                                    <span class="input-group-text cursor-pointer">
+                                        <i class="ti ti-eye-off" id="toggle-password"></i>
+                                    </span>
+                                </div>
+
                                 @error('password')
-                                    <div class="invalid-feedback">
+                                    <div class="invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
+                                @else
+                                    <small class="text-muted">
+                                        Melebihi 12 aksara dan mengandungi huruf besar, huruf kecil, nombor serta simbol.
+                                    </small>
                                 @enderror
                             </div>
 
                             <!-- Confirm Password -->
-                            <div class="mb-3 md-flex justify-content-between align-items-center">
+                            <div class="mb-4 form-password-toggle">
                                 <label for="password_confirmation" class="form-label">Sahkan Kata Laluan</label>
-                                <input id="password_confirmation" type="password" name="password_confirmation"
-                                    autocomplete="new-password"
+                                <div class="input-group input-group-merge">
+                                    <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password"
                                     class="form-control @error('password_confirmation') is-invalid @enderror">
+                                    <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
+                                </div>
                                 @error('password_confirmation')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
 
