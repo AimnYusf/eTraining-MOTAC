@@ -130,6 +130,11 @@
           "slug": "tetapan-kategori"
         },
         {
+          "url": "/tetapan/kumpulan",
+          "name": "Kumpulan",
+          "slug": "tetapan-kumpulan"
+        },
+        {
           "url": "/tetapan/tempat",
           "name": "Tempat",
           "slug": "tetapan-tempat"

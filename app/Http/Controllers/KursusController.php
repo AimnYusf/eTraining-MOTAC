@@ -24,7 +24,7 @@ class KursusController extends Controller
                 'kategori' => EproKategori::all(),
                 'penganjur' => EproPenganjur::all(),
                 'tempat' => EproTempat::orderBy('tem_keterangan', 'asc')->get(),
-                'kumpulan' => EproKumpulan::orderBy('kum_order', 'asc')->get(),
+                'kumpulan' => EproKumpulan::get(),
                 'urusetia' => EtraUrusetia::get()
             ];
 
