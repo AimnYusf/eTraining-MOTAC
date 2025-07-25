@@ -125,6 +125,11 @@
           "slug": "tetapan-jabatan"
         },
         {
+          "url": "/tetapan/kategori",
+          "name": "Kategori",
+          "slug": "tetapan-kategori"
+        },
+        {
           "url": "/tetapan/tempat",
           "name": "Tempat",
           "slug": "tetapan-tempat"
