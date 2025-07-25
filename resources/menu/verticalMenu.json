@@ -135,6 +135,11 @@
           "slug": "tetapan-kumpulan"
         },
         {
+          "url": "/tetapan/penganjur",
+          "name": "Penganjur",
+          "slug": "tetapan-penganjur"
+        },
+        {
           "url": "/tetapan/tempat",
           "name": "Tempat",
           "slug": "tetapan-tempat"
