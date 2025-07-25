@@ -123,7 +123,14 @@
 <body style="background-color: #f0f4f8; padding: 8px;">
     <div class="email-container">
         <div class="email-header-banner">
-            Permohonan Kursus Tidak Berjaya – {{ strtoupper($kursus->kur_nama ?? '[NAMA KURSUS]')}}
+            Permohonan Kursus
+            @isset($status)
+                {{ $status == 3 ? 'Tidak Disokong' : ($status == 5 ? 'Tidak Berjaya' : '') }}
+            @else
+                [STATUS]
+            @endisset
+            –
+            {{ strtoupper($kursus->kur_nama ?? '[NAMA KURSUS]')}}
         </div>
         <div class="email-content">
             <p>YBhg. Datuk/ Dato’/ YBrs. Dr./Tuan/Puan,</p>
@@ -135,8 +142,18 @@
                     {{ isset($kursus) && $kursus->kur_tkhmula
     ? \Carbon\Carbon::parse($kursus->kur_tkhmula)->translatedFormat('d F Y')
     : '[TARIKH KURSUS]' 
-    }} tidak berjaya
-                </strong>.
+    }}
+                </strong>
+
+                @isset($status)
+                    @if ($status == 3)
+                        tidak disokong oleh pegawai penyelia.
+                    @elseif($status == 5)
+                        tidak berjaya.
+                    @endif
+                @else
+                    [NOTIFIKASI].
+                @endisset
             </p>
 
             <p>Makluman dan perhatian Tuan/Puan amat dihargai.</p>

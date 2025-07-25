@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApplicationFailedMail;
+use App\Mail\ApplicationNotificationMail;
+use App\Models\EproKursus;
 use App\Models\EproPengguna;
 use App\Models\EproPermohonan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class PenyokongController extends Controller
 {
@@ -29,10 +33,31 @@ class PenyokongController extends Controller
 
     public function store(Request $request)
     {
-        EproPermohonan::where('per_id', $request->per_id)
-            ->update([
+        try {
+            // Update application status and action date
+            EproPermohonan::where('per_id', $request->per_id)->update([
                 'per_status' => $request->per_status,
-                'per_tkhtindakan' => now()->toDateTimeString()
+                'per_tkhtindakan' => now()->toDateTimeString(),
             ]);
+
+            // Retrieve user and course data
+            $pengguna = EproPengguna::where('pen_idusers', $request->pen_id)->first();
+            $kursus = EproKursus::with('eproTempat')->find($request->kur_id);
+            $status = $request->per_status;
+
+            // Ensure the user exists before proceeding
+            if ($status == 2) {
+                Mail::to($pengguna->pen_emel)->queue(
+                    new ApplicationNotificationMail($pengguna, $kursus, $status)
+                );
+            }
+            if ($status == 3) {
+                Mail::to($pengguna->pen_emel)
+                    ->queue(new ApplicationFailedMail($kursus, $status));
+            }
+
+        } catch (\Exception $e) {
+            Log::error('Gagal mengemaskini permohonan: ' . $e->getMessage());
+        }
     }
 }

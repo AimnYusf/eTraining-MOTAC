@@ -75,24 +75,25 @@ class PermohonanController extends Controller
     public function update(Request $request, $id)
     {
         $permohonan = EproPermohonan::with('eproPengguna')->find($id);
+        $status = $request->per_status;
 
         if (!$permohonan) {
             return response()->json(['message' => 'Application not found'], 404);
         }
 
-        $permohonan->update(['per_status' => $request->per_status]);
+        $permohonan->update(['per_status' => $status]);
 
         $kursus = EproKursus::with(['eproTempat', 'eproPenganjur'])
             ->where('kur_id', $permohonan->per_idkursus)
             ->first();
 
-        switch ($request->per_status) {
+        switch ($status) {
             case 4:
                 return $this->generateQR($permohonan, $kursus);
 
             case 5:
                 $userEmail = $permohonan->eproPengguna->pen_emel;
-                Mail::to($userEmail)->queue(mailable: new ApplicationFailedMail($kursus));
+                Mail::to($userEmail)->queue(mailable: new ApplicationFailedMail($kursus, $status));
                 break;
         }
 
@@ -129,7 +130,7 @@ class PermohonanController extends Controller
 
                 case 5:
                     Mail::to($permohonan->eproPengguna->pen_emel)
-                        ->queue(new ApplicationFailedMail($kursus));
+                        ->queue(new ApplicationFailedMail($kursus, $status));
                     break;
             }
         }

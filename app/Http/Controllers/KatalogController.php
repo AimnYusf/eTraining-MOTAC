@@ -94,6 +94,8 @@ class KatalogController extends Controller
                 ['id' => $permohonan->per_id]
             );
 
+            Log::info($url);
+
             $mailData = [
                 'url' => $url,
                 'nama' => $pengguna->pen_nama,
@@ -109,7 +111,7 @@ class KatalogController extends Controller
 
             // Attempt to send email
             Mail::to($pengguna->pen_ppemel)->queue(new ApprovalRequestMail($mailData));
-            Mail::to($pengguna->pen_emel)->queue(new ApplicationNotificationMail($pengguna, $kursus));
+            Mail::to($pengguna->pen_emel)->queue(new ApplicationNotificationMail($pengguna, $kursus, 1));
 
             DB::commit();
 

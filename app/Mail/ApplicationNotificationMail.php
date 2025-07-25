@@ -12,14 +12,15 @@ use Illuminate\Queue\SerializesModels;
 class ApplicationNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $pengguna, $kursus;
+    public $pengguna, $kursus, $status;
     /**
      * Create a new message instance.
      */
-    public function __construct($pengguna, $kursus)
+    public function __construct($pengguna, $kursus, $status)
     {
         $this->pengguna = $pengguna;
         $this->kursus = $kursus;
+        $this->status = $status;
     }
 
     /**
@@ -27,8 +28,10 @@ class ApplicationNotificationMail extends Mailable
      */
     public function envelope(): Envelope
     {
+        $statusText = ($this->status == 1) ? 'Dihantar' : 'Disokong';
+
         return new Envelope(
-            subject: 'Notifikasi: Permohonan Kursus' . strtoupper($this->kursus['kur_nama']) . ' Telah Dihantar',
+            subject: 'Notifikasi: Permohonan Kursus' . strtoupper($this->kursus['kur_nama']) . ' Telah ' . $statusText,
         );
     }
 

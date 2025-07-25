@@ -157,7 +157,12 @@
                 Notifikasi: Permohonan Kursus
                 <span style="text-transform: uppercase;">
                     {{ $kursus['kur_nama'] ?? '[NAMA KURSUS]' }}
-                </span> Telah Dihantar
+                </span> Telah
+                @isset($status)
+                    {{ $status == 1 ? 'Dihantar' : ($status == 2 ? 'Disokong' : '') }}
+                @else
+                    [STATUS]
+                @endisset
             </div>
 
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
@@ -166,10 +171,23 @@
             <p>{{ $pengguna['pen_nama'] ?? '[NAMA PEMOHON]' }},</p>
             <p>Permohonan <strong>{{ strtoupper($kursus['kur_nama'] ?? '[NAMA KURSUS]')}}</strong>.</p>
 
-            <p>
-                Permohonan anda telah diterima dan sedang dalam proses sokongan oleh Pegawai Penyokong. Berikut adalah
-                maklumat kursus yang dipohon :-
-            </p>
+            @isset($status)
+                @if ($status == 1)
+                    <p>
+                        Permohonan anda telah diterima dan sedang dalam proses sokongan oleh Pegawai Penyokong. Berikut adalah
+                        maklumat kursus yang dipohon :-
+                    </p>
+                @elseif($status == 2)
+                    <p>
+                        Permohonan anda telah disokong oleh Pegawai Penyokong. Berikut adalah maklumat kursus yang dipohon
+                        :-
+                    </p>
+                @endif
+            @else
+                <p>
+                    [NOTIFIKASI]
+                </p>
+            @endisset
 
             <div class="info-table-wrapper">
                 <table class="info-table" cellpadding="4" cellspacing="0">

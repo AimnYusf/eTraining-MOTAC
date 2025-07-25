@@ -13,13 +13,14 @@ class ApplicationFailedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $kursus;
+    public $kursus, $status;
     /**
      * Create a new message instance.
      */
-    public function __construct($kursus)
+    public function __construct($kursus, $status)
     {
         $this->kursus = $kursus;
+        $this->status = $status;
     }
 
     /**
@@ -27,8 +28,10 @@ class ApplicationFailedMail extends Mailable
      */
     public function envelope(): Envelope
     {
+        $statusText = ($this->status == 3) ? 'Disokong' : 'Berjaya';
+
         return new Envelope(
-            subject: 'Makluman Permohonan Kursus Tidak Berjaya – ' . strtoupper($this->kursus['nama']),
+            subject: 'Makluman Permohonan Kursus Tidak ' . $statusText . ' – ' . strtoupper($this->kursus['nama']),
         );
     }
 
