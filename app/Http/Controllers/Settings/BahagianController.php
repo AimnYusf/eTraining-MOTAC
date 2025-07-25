@@ -45,7 +45,7 @@ class BahagianController extends Controller
             $request->validate([
                 'bah_id' => 'nullable|integer|exists:epro_bahagian,bah_id',
                 'bah_ketring' => 'required|string',
-                'bah_ketpenu' => 'nullable|string'
+                'bah_ketpenu' => 'required|string'
             ]);
 
             $bahagian = EproBahagian::updateOrCreate(

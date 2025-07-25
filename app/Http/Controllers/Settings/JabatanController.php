@@ -45,7 +45,7 @@ class JabatanController extends Controller
             $request->validate([
                 'jab_id' => 'nullable|integer|exists:epro_jabatan,jab_id',
                 'jab_ketring' => 'required|string',
-                'jab_ketpenu' => 'nullable|string'
+                'jab_ketpenu' => 'required|string'
             ]);
 
             $jabatan = EproJabatan::updateOrCreate(

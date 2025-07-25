@@ -71,7 +71,7 @@
         </div>
         <div class="col-12">
         <label class="form-label" for="bah_ketring">Ringkasan</label>
-        <input type="text" id="bah_ketring" name="bah_ketring" class="form-control" placeholder="Nama Ringkasan" />
+        <input type="text" id="bah_ketring" name="bah_ketring" class="form-control" placeholder="Ringkasan" />
         </div>
         <div class="col-12 text-center">
         <button type="reset" class="btn btn-label-secondary me-3" data-bs-dismiss="modal"
