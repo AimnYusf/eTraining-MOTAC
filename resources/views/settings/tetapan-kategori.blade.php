@@ -66,8 +66,7 @@
         <input type="hidden" id="kat_id" name="kat_id">
         <div class="col-12">
         <label class="form-label" for="kat_keterangan">Kategori</label>
-        <input type="text" id="kat_keterangan" name="kat_keterangan" class="form-control"
-          placeholder="Keterangan" />
+        <input type="text" id="kat_keterangan" name="kat_keterangan" class="form-control" placeholder="Kategori" />
         </div>
         <div class="col-12 text-center">
         <button type="reset" class="btn btn-label-secondary me-3" data-bs-dismiss="modal"
