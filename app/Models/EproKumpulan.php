@@ -11,7 +11,6 @@ class EproKumpulan extends Model
     protected $fillable = [
         'kum_ketring',
         'kum_ketpenu',
-        'kum_order'
     ];
 
     public function eproKursus()

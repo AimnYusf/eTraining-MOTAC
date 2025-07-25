@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->id('kum_id');
             $table->string('kum_ketring')->nullable();
             $table->string('kum_ketpenu');
-            $table->integer('kum_order');
             $table->timestamps();
         });
     }
