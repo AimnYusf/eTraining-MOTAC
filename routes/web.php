@@ -13,6 +13,7 @@ use App\Http\Controllers\PenyokongController;
 use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\Settings\BahagianController;
+use App\Http\Controllers\Settings\JabatanController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\Settings\TempatController;
 use Illuminate\Support\Facades\Route;
@@ -117,6 +118,7 @@ Route::middleware('auth')->group(function () {
 
         // ========== Tetapan ==========
         Route::resource('tetapan/bahagian', BahagianController::class)->names(['index' => 'tetapan-bahagian']);
+        Route::resource('tetapan/jabatan', JabatanController::class)->names(['index' => 'tetapan-jabatan']);
         Route::resource('/tetapan/tempat', TempatController::class)->names(['index' => 'tetapan-tempat']);
     });
 

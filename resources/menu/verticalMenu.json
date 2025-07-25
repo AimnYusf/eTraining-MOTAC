@@ -120,6 +120,11 @@
           "slug": "tetapan-bahagian"
         },
         {
+          "url": "/tetapan/jabatan",
+          "name": "Jabatan",
+          "slug": "tetapan-jabatan"
+        },
+        {
           "url": "/tetapan/tempat",
           "name": "Tempat",
           "slug": "tetapan-tempat"
