@@ -10,8 +10,6 @@ class EproPenganjur extends Model
     protected $primaryKey = 'pjr_id';
     protected $fillable = [
         'pjr_keterangan',
-        'pjr_noted',
-        'pjr_emel'
     ];
 
     public function eproKursus()
