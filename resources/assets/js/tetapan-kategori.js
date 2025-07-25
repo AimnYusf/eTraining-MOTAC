@@ -74,6 +74,7 @@ $(function () {
           className: 'btn btn-primary ms-2 ms-sm-0 waves-effect waves-light',
           action: () => {
             $('#crudForm')[0].reset();
+            $('#kat_id').val(null);
             $('#kat_tajuk').html('Tambah Kategori');
             $('#crudModal').modal('show');
           }
