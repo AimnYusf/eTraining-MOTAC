@@ -28,10 +28,10 @@ class ApplicationFailedMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        $statusText = ($this->status == 3) ? 'Disokong' : 'Berjaya';
+        $statusText = ($this->status == 3) ? 'Tidak Disokong' : 'Tidak Berjaya';
 
         return new Envelope(
-            subject: 'Makluman Permohonan Kursus Tidak ' . $statusText . ' – ' . strtoupper($this->kursus['nama']),
+            subject: 'Makluman Permohonan Kursus ' . $statusText . ' – ' . strtoupper($this->kursus['nama']),
         );
     }
 

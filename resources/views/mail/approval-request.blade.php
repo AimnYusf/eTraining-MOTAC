@@ -194,8 +194,8 @@
                         <td>Tarikh Kursus</td>
                         @php
                             \Carbon\Carbon::setLocale('ms');
-                            $mula = !empty($mailData['tarikh_mula']) ?? \Carbon\Carbon::parse($mailData['tarikh_mula']);
-                            $tamat = !empty($mailData['tarikh_tamat']) ?? \Carbon\Carbon::parse($mailData['tarikh_tamat']);
+                            $mula = !empty($mailData['tarikh_mula']) ? \Carbon\Carbon::parse($mailData['tarikh_mula']) : null;
+                            $tamat = !empty($mailData['tarikh_tamat']) ? \Carbon\Carbon::parse($mailData['tarikh_tamat']) : null;
                         @endphp
                         <td>:
                             <strong>

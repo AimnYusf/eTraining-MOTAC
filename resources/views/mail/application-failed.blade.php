@@ -121,14 +121,25 @@
 </head>
 
 <body style="background-color: #f0f4f8; padding: 8px;">
+
+    @php
+        $statusText = '';
+        $description = '';
+
+        if (isset($status)) {
+            if ($status == 3) {
+                $statusText = 'Tidak Disokong';
+                $description = 'tidak disokong oleh pegawai penyelia.';
+            } elseif ($status == 5) {
+                $statusText = 'Tidak Berjaya';
+                $description = 'tidak berjaya.';
+            }
+        }
+    @endphp
+
     <div class="email-container">
         <div class="email-header-banner">
-            Permohonan Kursus
-            @isset($status)
-                {{ $status == 3 ? 'Tidak Disokong' : ($status == 5 ? 'Tidak Berjaya' : '') }}
-            @else
-                [STATUS]
-            @endisset
+            Permohonan Kursus {{ $statusText ?? '[STATUS]' }}
             –
             {{ strtoupper($kursus->kur_nama ?? '[NAMA KURSUS]')}}
         </div>
@@ -143,17 +154,7 @@
     ? \Carbon\Carbon::parse($kursus->kur_tkhmula)->translatedFormat('d F Y')
     : '[TARIKH KURSUS]' 
     }}
-                </strong>
-
-                @isset($status)
-                    @if ($status == 3)
-                        tidak disokong oleh pegawai penyelia.
-                    @elseif($status == 5)
-                        tidak berjaya.
-                    @endif
-                @else
-                    [NOTIFIKASI].
-                @endisset
+                </strong>{{ $description ?? '[NOTIFIKASI]' }}
             </p>
 
             <p>Makluman dan perhatian Tuan/Puan amat dihargai.</p>

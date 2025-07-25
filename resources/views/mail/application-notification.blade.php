@@ -152,17 +152,28 @@
     <div class="container">
         <div class="container-header">
         </div>
+
+        @php
+            $statusText = '';
+            $description = '';
+
+            if (isset($status)) {
+                if ($status == 1) {
+                    $statusText = 'Dihantar';
+                    $description = 'Permohonan anda telah diterima dan sedang dalam proses sokongan oleh Pegawai Penyokong. Berikut adalah maklumat kursus yang dipohon :-';
+                } elseif ($status == 2) {
+                    $statusText = 'Disokong';
+                    $description = 'Permohonan anda telah disokong oleh Pegawai Penyokong. Berikut adalah maklumat kursus yang dipohon :-';
+                }
+            }
+        @endphp
+
         <div class="content">
             <div class="header">
                 Notifikasi: Permohonan Kursus
                 <span style="text-transform: uppercase;">
                     {{ $kursus['kur_nama'] ?? '[NAMA KURSUS]' }}
-                </span> Telah
-                @isset($status)
-                    {{ $status == 1 ? 'Dihantar' : ($status == 2 ? 'Disokong' : '') }}
-                @else
-                    [STATUS]
-                @endisset
+                </span> Telah {{ $statusText ?? '[STATUS]' }}
             </div>
 
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
@@ -171,23 +182,7 @@
             <p>{{ $pengguna['pen_nama'] ?? '[NAMA PEMOHON]' }},</p>
             <p>Permohonan <strong>{{ strtoupper($kursus['kur_nama'] ?? '[NAMA KURSUS]')}}</strong>.</p>
 
-            @isset($status)
-                @if ($status == 1)
-                    <p>
-                        Permohonan anda telah diterima dan sedang dalam proses sokongan oleh Pegawai Penyokong. Berikut adalah
-                        maklumat kursus yang dipohon :-
-                    </p>
-                @elseif($status == 2)
-                    <p>
-                        Permohonan anda telah disokong oleh Pegawai Penyokong. Berikut adalah maklumat kursus yang dipohon
-                        :-
-                    </p>
-                @endif
-            @else
-                <p>
-                    [NOTIFIKASI]
-                </p>
-            @endisset
+            <p>{{ $description ?? '[NOTIFIKASI]' }}</p>
 
             <div class="info-table-wrapper">
                 <table class="info-table" cellpadding="4" cellspacing="0">

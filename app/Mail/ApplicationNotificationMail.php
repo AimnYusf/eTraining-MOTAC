@@ -31,7 +31,7 @@ class ApplicationNotificationMail extends Mailable
         $statusText = ($this->status == 1) ? 'Dihantar' : 'Disokong';
 
         return new Envelope(
-            subject: 'Notifikasi: Permohonan Kursus' . strtoupper($this->kursus['kur_nama']) . ' Telah ' . $statusText,
+            subject: 'Notifikasi: Permohonan ' . strtoupper($this->kursus['kur_nama']) . ' Telah ' . $statusText,
         );
     }
 
