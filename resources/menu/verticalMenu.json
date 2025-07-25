@@ -115,8 +115,13 @@
       "slug": "tetapan",
       "submenu": [
         {
+          "url": "/tetapan/bahagian",
+          "name": "Bahagian",
+          "slug": "tetapan-bahagian"
+        },
+        {
           "url": "/tetapan/tempat",
-          "name": "Senarai Tempat",
+          "name": "Tempat",
           "slug": "tetapan-tempat"
         }
       ]
