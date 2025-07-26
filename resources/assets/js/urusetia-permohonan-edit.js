@@ -120,7 +120,7 @@ $(function () {
           className: 'text-center',
           width: '20%',
           render: function (data, type, full, meta) {
-            return `<span class="badge bg-label-${full.epro_status.stp_class}" style="white-space: normal;">${full.epro_status.stp_ketring}</span>`;
+            return `<span class="badge bg-label-${full.etra_status.stp_class}" style="white-space: normal;">${full.etra_status.stp_keterangan}</span>`;
           }
         },
         {

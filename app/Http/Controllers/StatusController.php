@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EproKursus;
 use App\Models\EproPermohonan;
-use App\Models\EproStatus;
+use App\Models\EtraStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,12 +12,12 @@ class StatusController extends Controller
 {
     public function index(Request $request)
     {
-        $permohonan = EproPermohonan::with(['eproKursus', 'eproStatus'])
+        $permohonan = EproPermohonan::with(['eproKursus', 'EtraStatus'])
             ->where('per_idusers', Auth::id())
             ->orderBy('per_tkhmohon', 'desc')
             ->get();
 
-        $status = EproStatus::get();
+        $status = EtraStatus::get();
 
         // dd($permohonan->toArray());
         if ($request->ajax()) {

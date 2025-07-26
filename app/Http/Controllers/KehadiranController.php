@@ -19,7 +19,7 @@ class KehadiranController extends Controller
             $kursus = EproKursus::where('kur_id', $kid)->first();
             $permohonan = EproPermohonan::with([
                 'eproPengguna.eproJabatan',
-                'eproStatus',
+                'EtraStatus',
                 'eproKursus',
                 'eproPengguna.eproKehadiran' => function ($query) use ($kid) {
                     $query->where('keh_idkursus', $kid);
@@ -35,7 +35,7 @@ class KehadiranController extends Controller
                     'data' => $permohonan
                 ]);
             }
-            return view('pages.urusetia-kehadiran-pegawai', compact('kursus', 'permohonan',));
+            return view('pages.urusetia-kehadiran-pegawai', compact('kursus', 'permohonan', ));
         }
 
         return view('pages.urusetia-kehadiran');

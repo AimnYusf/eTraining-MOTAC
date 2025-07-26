@@ -10,10 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('epro_status', function (Blueprint $table) {
+        Schema::create('etra_status', function (Blueprint $table) {
             $table->id('stp_id');
-            $table->string('stp_ketring');
-            $table->string('stp_ketpenu');
+            $table->string('stp_keterangan');
             $table->string('stp_class');
             $table->timestamps();
         });
@@ -24,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('epro_status');
+        Schema::dropIfExists('etra_status');
     }
 };

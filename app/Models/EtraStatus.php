@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EproStatus extends Model
+class EtraStatus extends Model
 {
-    protected $table = 'epro_status';
+    protected $table = 'etra_status';
     protected $primaryKey = 'stp_id';
     protected $fillable = [
-        'stp_ketring',
-        'stp_ketpenu'
+        'stp_keterangan'
     ];
 
     public function eproPermohonan()

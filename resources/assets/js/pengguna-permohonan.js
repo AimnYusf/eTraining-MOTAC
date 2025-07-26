@@ -12,7 +12,7 @@ $(function () {
   const statusObj = [];
 
   window.statusData.forEach(item => {
-    statusObj.push(item.stp_ketring);
+    statusObj.push(item.stp_keterangan);
   });
   // const statusObj = [
   //   'Menunggu Sokongan Pegawai Penyelia',
@@ -67,7 +67,7 @@ $(function () {
           targets: 3,
           width: '20%',
           render: function (data, type, full, meta) {
-            return `<span class="badge bg-label-${full.epro_status.stp_class}" style="white-space: normal;">${full.epro_status.stp_ketring}</span>`;
+            return `<span class="badge bg-label-${full.etra_status.stp_class}" style="white-space: normal;">${full.etra_status.stp_keterangan}</span>`;
           }
         },
         {

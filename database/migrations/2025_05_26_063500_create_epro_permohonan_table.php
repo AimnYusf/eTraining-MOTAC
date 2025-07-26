@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->date('per_tkhtindakan')->nullable();
             $table->string('per_pengangkutan')->nullable();
             $table->string('per_makanan')->nullable();
-            $table->foreignId('per_status')->constrained('epro_status', 'stp_id');
+            $table->foreignId('per_status')->constrained('etra_status', 'stp_id');
             $table->timestamps();
         });
     }
