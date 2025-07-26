@@ -4,7 +4,12 @@ $(function () {
   // Variables
   const dateFields = ['#isy_tkhmula', '#isy_tkhtamat'];
   const dt_table = $('.datatables');
-  const statusObj = ['Baru', 'Pengesahan', 'Tidak Lulus', 'Berjaya', 'Tidak Berjaya', 'KIV'];
+
+  const statusObj = [];
+  window.statusData.forEach(item => {
+    statusObj.push(item.stp_keterangan);
+  });
+
   let fv;
   const formAuthentication = document.querySelector('#courseForm');
 
@@ -46,7 +51,8 @@ $(function () {
         },
         {
           targets: 1,
-          render: data => `<span class="text-uppercase">${data}</span>`
+          render: (data, type, full, meta) =>
+            `<span class="text-uppercase cursor-pointer view-record" data-id=${full.isy_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus">${data}</span>`
         },
         {
           targets: 2,
@@ -68,7 +74,7 @@ $(function () {
           orderable: false,
           render: (data, type, full) =>
             `<div class="d-inline-block text-nowrap">
-              <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.isy_id} data-bs-toggle="tooltip" title="Lihat">
+              <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.isy_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus">
                 <i class="ti ti-eye ti-md"></i>
               </button>
             </div>`

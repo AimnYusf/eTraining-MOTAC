@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EproIsytihar;
+use App\Models\EtraStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,13 +16,15 @@ class IsytiharController extends Controller
             ->where('isy_idusers', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
+        $status = EtraStatus::get();
+
         if ($request->ajax()) {
             return response()->json([
                 'data' => $isytihar
             ]);
         }
 
-        return view('pages.pengguna-isytihar');
+        return view('pages.pengguna-isytihar', compact('status'));
     }
 
     public function show($id)
