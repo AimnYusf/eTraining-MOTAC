@@ -1,7 +1,3 @@
-/**
- * Urusetia Tempat
- */
-
 'use strict';
 
 $(function () {

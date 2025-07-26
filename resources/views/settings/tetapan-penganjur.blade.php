@@ -31,7 +31,7 @@
 @endsection
 
 @section('content')
-  <!-- Course List Table -->
+  <!-- List Table -->
   <div class="card">
     <div class="card-header">
     <div class="d-flex justify-content-between">
@@ -50,9 +50,9 @@
     </table>
     </div>
   </div>
-  <!--/ Course List Table -->
+  <!--/ List Table -->
 
-  <!-- Place Modal -->
+  <!-- Modal -->
   <div class="modal fade" id="crudModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
     <div class="modal-content">
@@ -78,5 +78,5 @@
     </div>
     </div>
   </div>
-  <!--/ Place Modal -->
+  <!--/ Modal -->
 @endsection
