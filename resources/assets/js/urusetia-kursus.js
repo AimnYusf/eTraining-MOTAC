@@ -46,7 +46,7 @@ $(function () {
         {
           targets: 1,
           render: function (data, type, full, meta) {
-            return `<span class="view-record text-uppercase" style="cursor: pointer;" data-bs-toggle="tooltip" title="Lihat" data-id="${full.kur_id}" >${data}</span>`;
+            return `<span class="view-record text-uppercase" style="cursor: pointer;" data-bs-toggle="tooltip" title="Papar Perincian Kursus" data-id="${full.kur_id}" >${data}</span>`;
           }
         },
         {
@@ -97,7 +97,7 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-block text-nowrap">' +
-              `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.kur_id} data-bs-toggle="tooltip" title="Lihat"><i class="ti ti-eye ti-md"></i></button>` +
+              `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.kur_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus"><i class="ti ti-eye ti-md"></i></button>` +
               `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light edit-record" data-id=${full.kur_id} data-bs-toggle="tooltip" title="Edit"><i class="ti ti-edit ti-md"></i></button>` +
               '</div>'
             );
