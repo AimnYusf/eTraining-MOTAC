@@ -8,13 +8,19 @@
 $(function () {
   // Variable declaration
   var dt_table = $('.datatables');
-  const statusObj = [
-    'Menunggu Sokongan Pegawai Penyelia',
-    'Menunggu Kelulusan Urusetia',
-    'Tidak Disokong Pegawai Penyelia',
-    'Berjaya',
-    'Tidak Berjaya'
-  ];
+
+  const statusObj = [];
+
+  window.statusData.forEach(item => {
+    statusObj.push(item.stp_ketring);
+  });
+  // const statusObj = [
+  //   'Menunggu Sokongan Pegawai Penyelia',
+  //   'Menunggu Kelulusan Urusetia',
+  //   'Tidak Disokong Pegawai Penyelia',
+  //   'Berjaya',
+  //   'Tidak Berjaya'
+  // ];
 
   // Status Permohonan datatable
   if (dt_table.length) {
@@ -41,7 +47,7 @@ $(function () {
         {
           targets: 1,
           render: function (data, type, full, meta) {
-            return `<span class="text-uppercase">${data}</span>`;
+            return `<span class="text-uppercase cursor-pointer view-record" data-id=${full.epro_kursus.kur_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus">${data}</span>`;
           }
         },
         {
@@ -152,14 +158,19 @@ $(function () {
     const kur_id = $(this).data('id');
 
     $.get(`/kursus/${kur_id}`, function (data) {
+      let dateText =
+        data.kur_tkhmula === data.kur_tkhtamat
+          ? formatDate(data.kur_tkhmula)
+          : `${formatDate(data.kur_tkhmula)} hingga ${formatDate(data.kur_tkhtamat)}`;
+
       $('#kur_id').val(data.kur_id);
       $('#kur_nama').html(data.kur_nama);
       $('#kur_kategori').html(data.epro_kategori.kat_keterangan);
-      $('#kur_tarikh').html(': ' + formatDate(data.kur_tkhmula) + ' hingga ' + formatDate(data.kur_tkhtamat));
-      $('#kur_tempat').html(': ' + data.epro_tempat.tem_keterangan);
-      $('#kur_bilpeserta').html(': ' + data.kur_bilpeserta);
-      $('#kur_kumpulan').html(': ' + data.epro_kumpulan.kum_ketpenu);
-      $('#kur_penganjur').html(': ' + data.epro_penganjur.pjr_keterangan);
+      $('#kur_tarikh').html(`: ${dateText}`);
+      $('#kur_tempat').html(`: ${data.epro_tempat.tem_keterangan}`);
+      $('#kur_bilpeserta').html(`: ${data.kur_bilpeserta}`);
+      $('#kur_kumpulan').html(`: ${data.epro_kumpulan.kum_ketpenu}`);
+      $('#kur_penganjur').html(`: ${data.epro_penganjur.pjr_keterangan}`);
       $('#kur_objektif').html(data.kur_objektif);
 
       $('.btn-close-modal').removeClass('d-none');

@@ -53,4 +53,8 @@
 
   @include('_partials/_modals/modal-course')
 
+  <script>
+    window.statusData = @json($status);
+  </script>
+
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EproKursus;
 use App\Models\EproPermohonan;
+use App\Models\EproStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +17,8 @@ class StatusController extends Controller
             ->orderBy('per_tkhmohon', 'desc')
             ->get();
 
+        $status = EproStatus::get();
+
         // dd($permohonan->toArray());
         if ($request->ajax()) {
             return response()->json([
@@ -23,7 +26,7 @@ class StatusController extends Controller
             ]);
         }
 
-        return view('pages.pengguna-permohonan');
+        return view('pages.pengguna-permohonan', compact('status'));
     }
 
     public function show($id)
