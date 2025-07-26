@@ -143,6 +143,11 @@
           "url": "/tetapan/tempat",
           "name": "Tempat",
           "slug": "tetapan-tempat"
+        },
+        {
+          "url": "/tetapan/urusetia",
+          "name": "Urusetia",
+          "slug": "tetapan-urusetia"
         }
       ]
     },

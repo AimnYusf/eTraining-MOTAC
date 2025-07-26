@@ -222,8 +222,8 @@
             <div class="col-md-9">
               <select id="kur_urusetia" class="selectpicker w-100" name="kur_urusetia[]" data-style="btn-default" multiple data-icon-base="ti" data-tick-icon="ti-check text-white" title="Sila Pilih">
                 @foreach ($urusetia as $data)
-                <option value="{{ $data->urus_id }}" {{ in_array((string) $data->urus_id, array_map('strval', $selectedIds)) ? 'selected' : '' }}>
-                  {{ $data->urus_nama }}
+                <option value="{{ $data->pic_id }}" {{ in_array((string) $data->pic_id, array_map('strval', $selectedIds)) ? 'selected' : '' }}>
+                  {{ $data->pic_nama }}
                 </option>
                 @endforeach
               </select>

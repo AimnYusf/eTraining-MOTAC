@@ -17,6 +17,7 @@ use App\Http\Controllers\Settings\JabatanController;
 use App\Http\Controllers\Settings\KategoriController;
 use App\Http\Controllers\Settings\KumpulanController;
 use App\Http\Controllers\Settings\PenganjurController;
+use App\Http\Controllers\Settings\UrusetiaController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\Settings\TempatController;
 use Illuminate\Support\Facades\Route;
@@ -126,6 +127,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('tetapan/kumpulan', KumpulanController::class)->names(['index' => 'tetapan-kumpulan']);
         Route::resource('tetapan/penganjur', PenganjurController::class)->names(['index' => 'tetapan-penganjur']);
         Route::resource('tetapan/tempat', TempatController::class)->names(['index' => 'tetapan-tempat']);
+        Route::resource('tetapan/urusetia', UrusetiaController::class)->names(['index' => 'tetapan-urusetia']);
     });
 
     // ========== Sementara ==========
