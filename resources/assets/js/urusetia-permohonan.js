@@ -29,7 +29,7 @@ $(function () {
         { data: 'kur_nama' },
         { data: 'epro_kategori.kat_keterangan' },
         { data: 'kur_tkhmula' },
-        { data: 'kur_tkhtutup' },
+        { data: 'kur_tkhtamat' },
         { data: '' }
       ],
       columnDefs: [
@@ -37,6 +37,12 @@ $(function () {
           targets: 0,
           searchable: false,
           render: (data, type, full, meta) => `<span>${meta.row + 1}</span>`
+        },
+        {
+          targets: 1,
+          searchable: false,
+          render: (data, type, full, meta) =>
+            `<span class="text-uppercase cursor-pointer view-record" data-id=${full.kur_id} data-bs-toggle="tooltip" title="Lihat">${data}</span>`
         },
         {
           targets: 2,
