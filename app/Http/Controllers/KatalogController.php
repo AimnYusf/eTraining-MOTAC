@@ -26,6 +26,7 @@ class KatalogController extends Controller
 
         // Retrieve available courses for the user that they haven't applied for
         $kursus = EproKursus::with(['eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
+            ->where('kur_status', 1)
             ->get();
 
 

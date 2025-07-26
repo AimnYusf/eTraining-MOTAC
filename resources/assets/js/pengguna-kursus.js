@@ -7,29 +7,18 @@ $(function () {
     return `${day}/${month}/${year}`;
   }
   function getPageLengthByResolution() {
-    return window.innerWidth <= 1440 ? 3 : 4;
+    return window.innerWidth <= 1440 ? 6 : 8;
   }
 
   var table = $('.data-list').DataTable({
     ajax: {
       url: '/kursus',
-      type: 'GET',
-      dataSrc: function (json) {
-        // Check if data is empty
-        if (!json.data || json.data.length === 0) {
-          $('#no-data-message').show();
-          $('.course-table').hide();
-        } else {
-          $('#no-data-message').hide();
-          $('.course-table').show();
-        }
-        return json.data;
-      }
+      type: 'GET'
     },
     order: [[1, 'desc']],
     columns: [
       {
-        data: 'category',
+        data: null,
         render: function (data, type, row) {
           const today = new Date();
           const releaseDate = new Date(row.kur_tkhbuka);
@@ -48,6 +37,11 @@ $(function () {
             statusText = 'Dibuka';
             statusClass = 'active-status bg-success';
           }
+
+          let dateText =
+            data.kur_tkhmula === data.kur_tkhtamat
+              ? formatDate(data.kur_tkhmula)
+              : `${formatDate(data.kur_tkhmula)} hingga ${formatDate(data.kur_tkhtamat)}`;
 
           return `
           <style>
@@ -93,7 +87,7 @@ $(function () {
             }
           </style>
 
-          <div class="card shadow-lg border-0 h-100 d-flex flex-column p-0">
+          <div class="card shadow-lg border-0 h-100 d-flex flex-column p-0" data-status="${statusText}">
             <div class="position-relative rounded-top overflow-hidden" style="aspect-ratio: 1 / 1.414; width: 100%; max-width: 600px; margin: auto;">
               <a href="/kursus?kid=${row.kur_id}">
                 <img src="${row.kur_poster}" alt="${row.kur_nama}" class="img-fluid w-100 h-100 object-fit-cover transition" style="transform: scale(1); transition: transform 0.3s ease-in-out;">
@@ -107,7 +101,7 @@ $(function () {
               
               <div class="mb-3">
                 <h6 class="mb-1 text-muted"><i class="ti ti-calendar-event me-2 text-primary"></i>Tarikh</h6>
-                <p class="mb-0 fw-bold">${formatDate(row.kur_tkhmula)} - ${formatDate(row.kur_tkhtamat)}</p>
+                <p class="mb-0 fw-bold">${dateText}</p>
               </div>
 
               <div class="mb-3">
@@ -155,6 +149,37 @@ $(function () {
     initComplete: function () {
       // Remove the default thead
       $('.data-list thead').remove();
+
+      var api = this.api();
+      const targetContainer = $('.status_kursus').length ? $('.status_kursus') : $('.custom-filter-container');
+      const statusFilterDropdown = $(`
+    <select id="statusFilter" class="selectpicker" data-style="btn-default">
+      <option value="">Semua Status</option>
+      <option value="Dibuka">Dibuka</option>
+      <option value="Belum Dibuka">Belum Dibuka</option>
+      <option value="Permohonan Tamat">Permohonan Tamat</option>
+    </select>
+  `);
+
+      statusFilterDropdown.appendTo(targetContainer).on('change', function () {
+        api.draw();
+      });
+
+      // Set "Semua Status" as selected and trigger a draw immediately on load
+      statusFilterDropdown.val('').trigger('change');
+
+      $('.selectpicker').selectpicker();
+
+      // --- Check for no data after each draw ---
+      api.on('draw.dt', function () {
+        if (api.rows({ filter: 'applied' }).count() === 0) {
+          $('#no-data-message').show();
+          $('.course-table').hide();
+        } else {
+          $('#no-data-message').hide();
+          $('.course-table').show();
+        }
+      });
     },
     rowCallback: function (row, data, index) {
       $(row)
@@ -165,5 +190,24 @@ $(function () {
       $(row).find('td').remove();
       $(row).addClass('mb-6');
     }
+  });
+
+  // Custom filtering for the data-status attribute
+  $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+    // Ensure this filter only applies to the specific DataTables instance
+    if (settings.nTable !== $('.data-list')[0]) {
+      return true;
+    }
+
+    var statusFilter = $('#statusFilter').val();
+    var rowNode = settings.aoData[dataIndex].nTr;
+    var rowStatus = $(rowNode).find('.card').data('status');
+
+    // If "Semua Status" is selected (empty string) OR the row's status matches the filter
+    if (statusFilter === '' || rowStatus === statusFilter) {
+      return true; // Show the row
+    }
+
+    return false; // Hide the row
   });
 });

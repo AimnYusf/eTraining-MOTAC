@@ -47,7 +47,13 @@ use Carbon\Carbon;
             </div>
             <div class="flex-grow-1">
               <h5 class="mb-1 text-primary">Tarikh</h5>
-              <span class="text-dark">{{ Carbon::parse($kursus->kur_tkhmula)->format('d/m/Y') }} <strong class="text-muted">hingga</strong> {{ Carbon::parse($kursus->kur_tkhtamat)->format('d/m/Y') }}</span>
+              <span class="text-dark">
+                  @if (Carbon::parse($kursus->kur_tkhmula)->format('Y-m-d') == Carbon::parse($kursus->kur_tkhtamat)->format('Y-m-d'))
+                      {{ Carbon::parse($kursus->kur_tkhmula)->format('d/m/Y') }}
+                  @else
+                      {{ Carbon::parse($kursus->kur_tkhmula)->format('d/m/Y') }} <strong class="text-muted">hingga</strong> {{ Carbon::parse($kursus->kur_tkhtamat)->format('d/m/Y') }}
+                  @endif
+              </span>
             </div>
           </li>
           <li class="mb-5 d-flex align-items-center">

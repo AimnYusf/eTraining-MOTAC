@@ -31,15 +31,17 @@
   <!-- Course List Table -->
   <div class="card">
 
-    <div class="card-header d-flex flex-wrap justify-content-between gap-4">
-    <div class="card-title mb-0 me-1">
+    <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div class="card-title mb-0">
       <h5 class="mb-0">Katalog Kursus</h5>
+    </div>
+    <div class="status_kursus">
     </div>
     </div>
     <div class="card-body">
     <div id="no-data-message" class="text-center my-5" style="display: none;">
       <div class="alert alert-warning" role="alert">
-      Tiada kursus tersedia buat masa ini.
+      Tiada kursus untuk dipaparkan.
       </div>
     </div>
     <div class="course-table">
