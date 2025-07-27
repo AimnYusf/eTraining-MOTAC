@@ -25,7 +25,7 @@ class EproIsytihar extends Model
         return $this->belongsTo(EproPengguna::class, 'isy_idusers', 'pen_idusers');
     }
 
-    public function EtraStatus()
+    public function etraStatus()
     {
         return $this->belongsTo(EtraStatus::class, 'isy_status', 'stp_id');
     }

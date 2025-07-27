@@ -19,7 +19,7 @@ class KehadiranController extends Controller
             $kursus = EproKursus::where('kur_id', $kid)->first();
             $permohonan = EproPermohonan::with([
                 'eproPengguna.eproJabatan',
-                'EtraStatus',
+                'etraStatus',
                 'eproKursus',
                 'eproPengguna.eproKehadiran' => function ($query) use ($kid) {
                     $query->where('keh_idkursus', $kid);

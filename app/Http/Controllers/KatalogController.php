@@ -82,7 +82,7 @@ class KatalogController extends Controller
                 'per_tkhmohon' => now(),
                 'per_status' => 1,
             ]);
-            $permohonan->load('EtraStatus');
+            $permohonan->load('etraStatus');
 
             // Get user and course details
             $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
@@ -106,7 +106,7 @@ class KatalogController extends Controller
                 'tarikh_mula' => $kursus->kur_tkhmula,
                 'tarikh_tamat' => $kursus->kur_tkhtamat,
                 'tempat' => $kursus->eproTempat->tem_keterangan,
-                'status' => $permohonan->EtraStatus->stp_keterangan ?? 'N/A',
+                'status' => $permohonan->etraStatus->stp_keterangan ?? 'N/A',
                 'tarikh_mohon' => $permohonan->per_tkhmohon
             ];
 

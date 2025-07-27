@@ -20,7 +20,7 @@ class PermohonanController extends Controller
         $kid = $request->query('kid');
 
         if ($kid !== null) {
-            $permohonan = EproPermohonan::with('eproPengguna.eproJabatan', 'EtraStatus', 'eproPengguna.eproBahagian')
+            $permohonan = EproPermohonan::with('eproPengguna.eproJabatan', 'etraStatus', 'eproPengguna.eproBahagian')
                 ->where('per_idkursus', $kid)
                 ->whereNotIn('per_status', [1, 3])
                 ->get();
@@ -52,7 +52,7 @@ class PermohonanController extends Controller
             'eproPengguna.eproBahagian',
             'eproPengguna.eproJabatan',
             'eproKursus.eproTempat',
-            'EtraStatus'
+            'etraStatus'
         ])
             ->where('per_id', $id)
             ->whereNotIn('per_status', [1, 3])

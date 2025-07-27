@@ -21,7 +21,7 @@ class KelulusanController extends Controller
         $kelulusan = collect();
 
         if ($bahagian) {
-            $kelulusan = EproIsytihar::with('eproPengguna', 'EtraStatus')
+            $kelulusan = EproIsytihar::with('eproPengguna', 'etraStatus')
                 ->whereHas('eproPengguna', function ($query) use ($bahagian) {
                     $query->where('pen_idbahagian', $bahagian->bah_id);
                 })
