@@ -211,8 +211,7 @@ use Illuminate\Support\Facades\Auth;
               <div class="col-sm-9">
                 <button type="submit" class="btn btn-primary me-2"><i
                     class="ti ti-device-floppy me-1"></i>Kemaskini</button>
-                <button type="button" class="btn btn-label-secondary"><i class="ti ti-lock-cog me-1"></i>Tukar Kata
-                  Laluan</button>
+                <a href="/" class="btn btn-label-secondary">Kembali</a>
               </div>
             </div>
           </div>
