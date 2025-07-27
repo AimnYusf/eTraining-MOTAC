@@ -122,7 +122,6 @@ $(function () {
         $('#pen_bahagian').text(data.epro_bahagian.bah_ketring);
         $('#pen_notel').text(data.pen_notel);
         $('#pen_nohp').text(data.pen_nohp);
-        $('#pen_nofaks').text(data.pen_nofaks);
         $('#pen_emel').text(data.pen_emel);
 
         $('#role').val(data.user.role);

@@ -95,23 +95,41 @@ use Illuminate\Support\Facades\Auth;
             </div>
           </div>
           <div class="row mb-5">
-            <label for="pen_nofaks" class="col-md-3 col-form-label">No. Faksimili</label>
-            <div class="col-md-9">
-              <input type="text" id="pen_nofaks" class="form-control" name="pen_nofaks"
-                value="{{ $pengguna->pen_nofaks ?? ''}}" placeholder="No. Faksimili" />
-            </div>
+              <label for="pen_idjabatan" class="col-md-3 col-form-label">Kementerian/Jabatan/Agensi<span
+                      class="text-danger">*</span></label>
+              <div class="col-md-9">
+                  <select id="pen_idjabatan" class="selectpicker w-100" name="pen_idjabatan" data-style="btn-default"
+                      title="Sila Pilih">
+                      @foreach ($jabatan as $item)
+                      <option value="{{ $item->jab_id }}"
+                          {{ isset($pengguna->pen_idjabatan) && $pengguna->pen_idjabatan == $item->jab_id ? 'selected' : '' }}>
+                          {{ $item->jab_ketpenu }}</option>
+                      @endforeach
+                  </select>
+              </div>
           </div>
-          <div class="row mb-5">
-            <label for="pen_idbahagian" class="col-md-3 col-form-label">Bahagian <span
-                class="text-danger">*</span></label>
-            <div class="col-md-9">
-              <select id="pen_idbahagian" class="selectpicker w-100" name="pen_idbahagian" data-style="btn-default"
-                data-live-search="true" title="Sila Pilih">
-                @foreach ($bahagian as $item)
-                <option value="{{ $item->bah_id }}" {{ isset($pengguna->pen_idbahagian) && $pengguna->pen_idbahagian == $item->bah_id ? 'selected' : '' }}>{{ $item->bah_ketpenu }}</option>
-                @endforeach
-              </select>
-            </div>
+
+          <div id="bahagianCollapse">
+              <div class="row mb-5" id="bahagianSelectRow">
+                  <label for="pen_idbahagian" class="col-md-3 col-form-label">Bahagian <span
+                          class="text-danger">*</span></label>
+                  <div class="col-md-9">
+                    <select id="pen_idbahagian" class="selectpicker w-100" name="pen_idbahagian" data-style="btn-default"
+                        data-live-search="true" title="Sila Pilih"> @foreach ($bahagian as $item)
+                        <option value="{{ $item->bah_id }}" {{ isset($pengguna->pen_idbahagian) && $pengguna->pen_idbahagian == $item->bah_id ? 'selected' : '' }}>{{ $item->bah_ketpenu }}</option>
+                        @endforeach
+                    </select>
+                  </div>
+              </div>
+
+              <div class="row mb-5" id="bahagianInputRow">
+                  <label for="pen_bahagianlain" class="col-md-3 col-form-label">Bahagian <span
+                          class="text-danger">*</span></label>
+                  <div class="col-md-9">
+                      <input type="text" id="pen_bahagianlain" class="form-control" name="pen_bahagianlain"
+                          value="{{ $pengguna->pen_bahagianlain ?? ''}}" placeholder="Bahagian" />
+                  </div>
+              </div>
           </div>
           <div class="row mb-5">
             <label for="pen_jawatan" class="col-md-3 col-form-label">Jawatan <span class="text-danger">*</span></label>
@@ -141,19 +159,7 @@ use Illuminate\Support\Facades\Auth;
               </select>
             </div>
           </div>
-          <div class="row mb-5">
-            <label for="pen_idjabatan" class="col-md-3 col-form-label">Kementerian <span
-                class="text-danger">*</span></label>
-            <div class="col-md-9">
-              <select id="pen_idjabatan" class="selectpicker w-100" name="pen_idjabatan" data-style="btn-default"
-                title="Sila Pilih">
-                @foreach ($jabatan as $item)
-                <option value="{{ $item->jab_id }}" {{ isset($pengguna->pen_idjabatan) && $pengguna->pen_idjabatan == $item->jab_id ? 'selected' : '' }}>{{ $item->jab_ketpenu }}</option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-
+          
           <div class="col-12">
             <h6 class="mt-10 mb-1">2. MAKLUMAT PEGAWAI PENYOKONG</h6>
             <label class="mb-4 text-danger small">

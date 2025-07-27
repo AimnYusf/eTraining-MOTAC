@@ -165,7 +165,6 @@ $(function () {
         $('#pen_bahagian').text(pengguna.epro_bahagian.bah_ketpenu);
         $('#pen_notel').text(pengguna.pen_notel);
         $('#pen_nohp').text(pengguna.pen_nohp);
-        $('#pen_nofaks').text(pengguna.pen_nofaks);
         $('#pen_emel').text(pengguna.pen_emel);
 
         $('#isy_status').val(isytihar.isy_status);

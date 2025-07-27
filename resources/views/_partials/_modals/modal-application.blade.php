@@ -61,10 +61,6 @@
               <div id="pen_nohp" class="col-sm-9"></div>
             </div>
             <div class="row ps-2 mb-2">
-              <div class="col-sm-3 d-flex justify-content-between">No. Faks<span>:</span></div>
-              <div id="pen_nofaks" class="col-sm-9"></div>
-            </div>
-            <div class="row ps-2 mb-2">
               <div class="col-sm-3 d-flex justify-content-between">E-Mel Rasmi<span>:</span></div>
               <div id="pen_emel" class="col-sm-9"></div>
             </div>
