@@ -147,7 +147,7 @@
         <thead class="border-top table-dark">
           <tr>
           <th class="text-center" style="width: 10%;"><small>Pilih Semua</small></th>
-          <th class="text-center">Nama Peserta</th>
+          <th class="text-center">Nama Pegawai</th>
           @foreach ($dates as $dateItem)
         <th class="text-center">{{ $dateItem->format('d/m/Y') }}</th>
       @endforeach
