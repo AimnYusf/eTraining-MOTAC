@@ -6,6 +6,7 @@ use App\Mail\ApplicationApprovedMail;
 use App\Mail\ApplicationFailedMail;
 use App\Models\EproKursus;
 use App\Models\EproPermohonan;
+use App\Models\EtraStatus;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use Illuminate\Http\Request;
@@ -26,12 +27,13 @@ class PermohonanController extends Controller
                 ->get();
 
             $kursus = EproKursus::where('kur_id', $kid)->first();
+            $status = EtraStatus::get();
 
             if ($request->ajax()) {
                 return response()->json(['data' => $permohonan]);
             }
 
-            return view('pages.urusetia-permohonan-edit', compact('kursus'));
+            return view('pages.urusetia-permohonan-edit', compact('kursus', 'status'));
         }
 
         $kursus = EproKursus::with('eproKategori', 'eproTempat')

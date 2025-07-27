@@ -14,13 +14,6 @@ $(function () {
   window.statusData.forEach(item => {
     statusObj.push(item.stp_keterangan);
   });
-  // const statusObj = [
-  //   'Menunggu Sokongan Pegawai Penyelia',
-  //   'Menunggu Kelulusan Urusetia',
-  //   'Tidak Disokong Pegawai Penyelia',
-  //   'Berjaya',
-  //   'Tidak Berjaya'
-  // ];
 
   // Status Permohonan datatable
   if (dt_table.length) {

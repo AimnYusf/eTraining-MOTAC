@@ -20,13 +20,11 @@ $(function () {
   // Initially hide the buttons container using d-none class
   batchActionButtonsContainer.addClass('d-none');
 
-  const statusObj = [
-    'Menunggu Sokongan Pegawai Penyelia',
-    'Menunggu Kelulusan Urusetia',
-    'Tidak Disokong Pegawai Penyelia',
-    'Berjaya',
-    'Tidak Berjaya'
-  ];
+  const statusObj = [];
+
+  window.statusData.forEach(item => {
+    statusObj.push(item.stp_keterangan);
+  });
 
   // Format date from YYYY-MM-DD to DD/MM/YYYY
   const formatDate = dateStr => {

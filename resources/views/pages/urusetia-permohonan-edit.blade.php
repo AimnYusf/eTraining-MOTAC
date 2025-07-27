@@ -69,4 +69,8 @@
 
   @include('_partials/_modals/modal-application')
 
+  <script>
+    window.statusData = @json($status);
+  </script>
+
 @endsection
