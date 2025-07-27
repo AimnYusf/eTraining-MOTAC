@@ -41,6 +41,7 @@ $(function () {
     .catch(err => {
       console.error('QR scanning error:', err);
     });
+
   function generateDateColumns(start, end) {
     const dateColumns = [];
     const current = new Date(start);
@@ -60,6 +61,21 @@ $(function () {
           return attended
             ? '<span class="badge badge-center rounded-pill bg-success"><i class="ti ti-check"></i></span>'
             : '<span class="badge badge-center rounded-pill bg-danger"><i class="ti ti-x"></i></span>';
+        },
+        exportOptions: {
+          format: {
+            body: function (inner, row, column) {
+              const attendances = row.epro_pengguna.epro_kehadiran || [];
+              const displayDate = table.column(column).header().textContent;
+
+              // Convert to YYYY-MM-DD for comparison
+              const parts = displayDate.split('/');
+              const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+
+              const attended = attendances.some(item => item.keh_tkhmasuk === isoDate);
+              return attended ? '1' : '0';
+            }
+          }
         }
       });
 
@@ -85,20 +101,38 @@ $(function () {
           filter: $('#filter').val()
         })
       },
-      columns: [{ data: 'per_id' }, { data: 'epro_pengguna.pen_nama' }, ...dynamicDateColumns],
+      columns: [
+        { data: 'per_id' },
+        { data: 'epro_pengguna.pen_nama' },
+        { data: 'epro_pengguna.epro_kumpulan.kum_ketpenu', visible: false, title: 'Kumpulan' }, // Added title for export
+        {
+          data: 'epro_pengguna.pen_jantina',
+          visible: false,
+          title: 'Jantina', // Added title for export
+          exportOptions: {
+            format: {
+              body: function (data, rowIdx, colIdx, node) {
+                // Convert 1 to 'Lelaki' and 2 to 'Perempuan'
+                return data === 1 ? 'Lelaki' : data === 2 ? 'Perempuan' : '';
+              }
+            }
+          }
+        },
+        ...dynamicDateColumns
+      ],
       columnDefs: [
         {
           targets: 0,
           searchable: false,
           className: 'text-center',
-          render: (data, type, full, meta) => `<span>${meta.row + 1}</span>`
+          render: (data, type, full, meta) => `${meta.row + 1}`
         }
       ],
       dom: `
         <"card-header d-flex border-top rounded-0 flex-wrap py-0 flex-column flex-md-row align-items-start"
           <"me-5 ms-n4 pe-5 mb-n6 mb-md-0"f>
           <"d-flex justify-content-start justify-content-md-end align-items-baseline"
-            <"dt-action-buttons d-flex flex-column align-items-start align-items-sm-center justify-content-sm-center pt-0 gap-sm-4 gap-sm-0 flex-sm-row"l>
+            <"dt-action-buttons d-flex flex-column align-items-start align-items-sm-center justify-content-sm-center pt-0 gap-sm-4 gap-sm-0 flex-sm-row"lB>
           >
         >t
         <"row"
@@ -117,6 +151,67 @@ $(function () {
           previous: '<i class="ti ti-chevron-left ti-sm"></i>'
         }
       },
+      buttons: [
+        {
+          extend: 'excel',
+          className: 'btn btn-label-primary waves-effect waves-light border-none',
+          text: '<i class="ti ti-file-spreadsheet ti-xs me-sm-1"></i> <span class="d-none d-sm-inline-block">Excel</span>',
+          exportOptions: {
+            // Include ALL columns, regardless of visibility
+            columns: ':visible, :hidden',
+            format: {
+              body: function (data, rowIdx, colIdx, node) {
+                const column = table.column(colIdx);
+                const columnData = column.dataSrc(); // Get the data source of the column
+
+                // Check if it's the 'pen_jantina' column
+                if (columnData === 'epro_pengguna.pen_jantina') {
+                  const rowData = table.row(rowIdx).data();
+                  const jantinaValue = rowData.epro_pengguna.pen_jantina;
+                  return jantinaValue === 1 ? 'Lelaki' : jantinaValue === 2 ? 'Perempuan' : '';
+                }
+
+                // Check if it's one of the dynamic date columns
+                // We need to compare column titles for dynamic columns
+                const columnTitle = column.header().textContent;
+                const kurTkhMula = new Date($('#kur_tkhmula').val());
+                const kurTkhTamat = new Date($('#kur_tkhtamat').val());
+                const current = new Date(kurTkhMula);
+                let isDynamicDateColumn = false;
+
+                while (current <= kurTkhTamat) {
+                  const display = current.toLocaleDateString('ms-MY', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                  });
+                  if (columnTitle === display) {
+                    isDynamicDateColumn = true;
+                    break;
+                  }
+                  current.setDate(current.getDate() + 1);
+                }
+
+                if (isDynamicDateColumn) {
+                  const rowData = table.row(rowIdx).data();
+                  const attendances = rowData.epro_pengguna.epro_kehadiran || [];
+                  const parts = columnTitle.split('/');
+                  const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                  const attended = attendances.some(item => item.keh_tkhmasuk === isoDate);
+                  return attended ? '1' : '0';
+                }
+
+                return data; // For other columns, return the original data
+              },
+              // For header, ensure hidden columns get their title
+              header: function (data, columnIdx, node) {
+                const column = table.column(columnIdx);
+                return column.header().textContent;
+              }
+            }
+          }
+        }
+      ],
       drawCallback: () => {
         const tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
         tooltipElements.forEach(el => new bootstrap.Tooltip(el));

@@ -183,7 +183,7 @@ $(function () {
         // --- Year Filter ---
         const currentYear = new Date().getFullYear();
         const years = [];
-        for (let i = currentYear - 5; i <= currentYear + 1; i++) {
+        for (let i = currentYear - 2; i <= currentYear + 2; i++) {
           years.push(i);
         }
 
