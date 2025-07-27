@@ -105,6 +105,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/urusetia/kehadiran', KehadiranController::class)->names([
             'index' => 'urusetia-kehadiran'
         ]);
+        Route::post('/urusetia/kehadiran-update', [KehadiranController::class, 'update'])->name('kehadiran.update');
+
         // Urusetia Pengguna
         Route::resource('/urusetia/pengguna', PenggunaController::class)->names([
             'index' => 'urusetia-pengguna'

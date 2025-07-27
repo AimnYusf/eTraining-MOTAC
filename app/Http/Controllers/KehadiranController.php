@@ -8,6 +8,7 @@ use App\Models\EproKursus;
 use App\Models\EproPermohonan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KehadiranController extends Controller
 {
@@ -58,5 +59,44 @@ class KehadiranController extends Controller
             'keh_idkursus' => $request->keh_idkursus,
             'keh_tkhmasuk' => $keh_tkhmasuk,
         ]);
+    }
+
+    public function update(Request $request)
+    {
+        $kursusId = $request->input('kursus_id');
+        $attendanceData = $request->input('attendance');
+
+        if (!$kursusId || !is_array($attendanceData)) {
+            return redirect()->back()->with('error', 'Invalid attendance data provided.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            foreach ($attendanceData as $userId => $dates) {
+                foreach ($dates as $date => $attended) {
+                    $date = Carbon::parse($date)->format('Y-m-d');
+
+                    if ($attended) {
+                        EproKehadiran::firstOrCreate([
+                            'keh_idusers' => $userId,
+                            'keh_idkursus' => $kursusId,
+                            'keh_tkhmasuk' => $date,
+                        ]);
+                    } else {
+                        EproKehadiran::where('keh_idusers', $userId)
+                            ->where('keh_idkursus', $kursusId)
+                            ->where('keh_tkhmasuk', $date)
+                            ->delete();
+                    }
+                }
+            }
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Attendance updated successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to update attendance.');
+        }
     }
 }

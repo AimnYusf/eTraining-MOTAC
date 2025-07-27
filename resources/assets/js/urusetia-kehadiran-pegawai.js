@@ -1,21 +1,22 @@
+// resources/assets/js/urusetia-kehadiran-pegawai.js
 'use strict';
 
 $(function () {
-  const dtTable = $('.datatables');
+  const dtTable = $('#attendanceTable');
   const kur_id = $('#kur_id').val();
-  let table;
+  let dataTable;
 
   // Initialize flatpickr for the attendance date input
-  const kehTkhmasukElement = document.querySelector('#keh_tkhmasuk');
-  if (kehTkhmasukElement) {
-    flatpickr(kehTkhmasukElement, {
+  const attendanceDateInput = document.querySelector('#keh_tkhmasuk');
+  if (attendanceDateInput) {
+    flatpickr(attendanceDateInput, {
       dateFormat: 'd/m/Y'
     });
   }
 
-  // Handles successful QR code scans
   let isProcessingScan = false;
 
+  // Handles successful QR code scans
   function onScanSuccess(decodedText) {
     if (isProcessingScan) {
       return;
@@ -42,17 +43,18 @@ $(function () {
       console.error('QR scanning error:', err);
     });
 
-  function generateDateColumns(start, end) {
+  // Generates dynamic date columns for the DataTable
+  function generateDateColumns(startDateStr, endDateStr) {
     const dateColumns = [];
-    const current = new Date(start);
-    const last = new Date(end);
+    const current = new Date(startDateStr);
+    const last = new Date(endDateStr);
 
     while (current <= last) {
       const isoDate = current.toISOString().split('T')[0];
-      const display = current.toLocaleDateString('ms-MY', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const displayDate = current.toLocaleDateString('ms-MY', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
       dateColumns.push({
-        title: display,
+        title: displayDate,
         data: null,
         className: 'text-center',
         render: function (data, type, row) {
@@ -64,35 +66,29 @@ $(function () {
         },
         exportOptions: {
           format: {
-            body: function (inner, row, column) {
-              const attendances = row.epro_pengguna.epro_kehadiran || [];
-              const displayDate = table.column(column).header().textContent;
-
-              // Convert to YYYY-MM-DD for comparison
-              const parts = displayDate.split('/');
-              const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-
-              const attended = attendances.some(item => item.keh_tkhmasuk === isoDate);
+            body: function (inner, rowData, columnIdx) {
+              const attendances = rowData.epro_pengguna.epro_kehadiran || [];
+              const columnHeader = dataTable.column(columnIdx).header().textContent;
+              const parts = columnHeader.split('/');
+              const exportIsoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+              const attended = attendances.some(item => item.keh_tkhmasuk === exportIsoDate);
               return attended ? '1' : '0';
             }
           }
         }
       });
-
       current.setDate(current.getDate() + 1);
     }
-
     return dateColumns;
   }
 
-  // Get course start and end dates from hidden inputs
   const kur_tkhmula = $('#kur_tkhmula').val();
   const kur_tkhtamat = $('#kur_tkhtamat').val();
   const dynamicDateColumns = generateDateColumns(kur_tkhmula, kur_tkhtamat);
 
-  // Initialize DataTable if the element exists
+  // Initialize DataTable for "Papar Kehadiran" tab
   if (dtTable.length) {
-    table = dtTable.DataTable({
+    dataTable = dtTable.DataTable({
       ajax: {
         url: `/urusetia/kehadiran?kid=${kur_id}`,
         type: 'GET',
@@ -104,15 +100,14 @@ $(function () {
       columns: [
         { data: 'per_id' },
         { data: 'epro_pengguna.pen_nama' },
-        { data: 'epro_pengguna.epro_kumpulan.kum_ketpenu', visible: false, title: 'Kumpulan' }, // Added title for export
+        { data: 'epro_pengguna.epro_kumpulan.kum_ketpenu', visible: false, title: 'Kumpulan' },
         {
           data: 'epro_pengguna.pen_jantina',
           visible: false,
-          title: 'Jantina', // Added title for export
+          title: 'Jantina',
           exportOptions: {
             format: {
-              body: function (data, rowIdx, colIdx, node) {
-                // Convert 1 to 'Lelaki' and 2 to 'Perempuan'
+              body: function (data) {
                 return data === 1 ? 'Lelaki' : data === 2 ? 'Perempuan' : '';
               }
             }
@@ -129,7 +124,7 @@ $(function () {
         }
       ],
       dom: `
-        <"card-header d-flex border-top rounded-0 flex-wrap py-0 flex-column flex-md-row align-items-start"
+        <"card-header d-flex rounded-0 flex-wrap py-0 flex-column flex-md-row align-items-start"
           <"me-5 ms-n4 pe-5 mb-n6 mb-md-0"f>
           <"d-flex justify-content-start justify-content-md-end align-items-baseline"
             <"dt-action-buttons d-flex flex-column align-items-start align-items-sm-center justify-content-sm-center pt-0 gap-sm-4 gap-sm-0 flex-sm-row"lB>
@@ -154,46 +149,44 @@ $(function () {
       buttons: [
         {
           extend: 'excel',
-          className: 'btn btn-label-primary waves-effect waves-light border-none',
+          className: 'btn btn-label-primary waves-effect waves-light border-none me-2',
           text: '<i class="ti ti-file-spreadsheet ti-xs me-sm-1"></i> <span class="d-none d-sm-inline-block">Excel</span>',
           exportOptions: {
-            // Include ALL columns, regardless of visibility
             columns: ':visible, :hidden',
             format: {
-              body: function (data, rowIdx, colIdx, node) {
-                const column = table.column(colIdx);
-                const columnData = column.dataSrc(); // Get the data source of the column
+              body: function (data, rowIdx, colIdx) {
+                const column = dataTable.column(colIdx);
+                const columnDataSrc = column.dataSrc();
+                const rowData = dataTable.row(rowIdx).data();
 
-                // Check if it's the 'pen_jantina' column
-                if (columnData === 'epro_pengguna.pen_jantina') {
-                  const rowData = table.row(rowIdx).data();
-                  const jantinaValue = rowData.epro_pengguna.pen_jantina;
-                  return jantinaValue === 1 ? 'Lelaki' : jantinaValue === 2 ? 'Perempuan' : '';
+                if (columnDataSrc === 'epro_pengguna.pen_jantina') {
+                  return rowData.epro_pengguna.pen_jantina === 1
+                    ? 'Lelaki'
+                    : rowData.epro_pengguna.pen_jantina === 2
+                      ? 'Perempuan'
+                      : '';
                 }
 
-                // Check if it's one of the dynamic date columns
-                // We need to compare column titles for dynamic columns
                 const columnTitle = column.header().textContent;
                 const kurTkhMula = new Date($('#kur_tkhmula').val());
                 const kurTkhTamat = new Date($('#kur_tkhtamat').val());
-                const current = new Date(kurTkhMula);
-                let isDynamicDateColumn = false;
+                let currentDate = new Date(kurTkhMula);
+                let isDynamicDateCol = false;
 
-                while (current <= kurTkhTamat) {
-                  const display = current.toLocaleDateString('ms-MY', {
+                while (currentDate <= kurTkhTamat) {
+                  const displayDate = currentDate.toLocaleDateString('ms-MY', {
                     day: '2-digit',
                     month: '2-digit',
                     year: 'numeric'
                   });
-                  if (columnTitle === display) {
-                    isDynamicDateColumn = true;
+                  if (columnTitle === displayDate) {
+                    isDynamicDateCol = true;
                     break;
                   }
-                  current.setDate(current.getDate() + 1);
+                  currentDate.setDate(currentDate.getDate() + 1);
                 }
 
-                if (isDynamicDateColumn) {
-                  const rowData = table.row(rowIdx).data();
+                if (isDynamicDateCol) {
                   const attendances = rowData.epro_pengguna.epro_kehadiran || [];
                   const parts = columnTitle.split('/');
                   const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
@@ -201,20 +194,25 @@ $(function () {
                   return attended ? '1' : '0';
                 }
 
-                return data; // For other columns, return the original data
+                return data;
               },
-              // For header, ensure hidden columns get their title
-              header: function (data, columnIdx, node) {
-                const column = table.column(columnIdx);
-                return column.header().textContent;
+              header: function (data, columnIdx) {
+                return dataTable.column(columnIdx).header().textContent;
               }
             }
+          }
+        },
+        // Add the "Rekod Baru" button here
+        {
+          text: '<i class="ti ti-plus me-1"></i> <span class="d-none d-sm-inline-block">Rekod Baru</span>',
+          className: 'btn btn-primary',
+          action: function () {
+            $('#crudCollapse').collapse('toggle'); // Toggles the collapse section
           }
         }
       ],
       drawCallback: () => {
-        const tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-        tooltipElements.forEach(el => new bootstrap.Tooltip(el));
+        document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
       }
     });
 
@@ -227,10 +225,8 @@ $(function () {
     }, 300);
   }
 
-  // request record attendance
   $('#submit-form').on('click', recordAttendance);
 
-  // function to send an AJAX request
   function recordAttendance() {
     const formData = $('#kehadiranForm').serialize();
     $.ajax({
@@ -239,7 +235,7 @@ $(function () {
       data: formData,
       success: function () {
         Swal.fire({
-          title: 'Berjaya !',
+          title: 'Berjaya!',
           icon: 'success',
           timer: 2500,
           timerProgressBar: true,
@@ -249,7 +245,7 @@ $(function () {
           },
           buttonsStyling: false
         }).then(() => {
-          table.ajax.reload();
+          dataTable.ajax.reload();
           isProcessingScan = false;
         });
       },
@@ -259,8 +255,52 @@ $(function () {
           text: 'Gagal merekod kehadiran.',
           icon: 'error'
         });
-        console.error(xhr.responseText);
+        console.error('Attendance record error:', xhr.responseText);
+        isProcessingScan = false;
       }
     });
   }
+
+  // Handle toggle all checkboxes in a row based on the row checkbox
+  document.querySelectorAll('.select-row-checkbox').forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
+      const userId = this.getAttribute('data-user-id');
+      const rowCheckboxes = document.querySelectorAll(`.attendance-checkbox[data-user-id="${userId}"]`);
+      rowCheckboxes.forEach(cb => (cb.checked = this.checked));
+    });
+  });
+
+  // Clicking on column 0 or 1 toggles the row checkbox
+  document.querySelectorAll('.pilih-seluruh-ruangan').forEach(function (cell) {
+    cell.addEventListener('click', function (e) {
+      if (e.target.tagName.toLowerCase() === 'input') return;
+
+      const userId = this.getAttribute('data-user-id');
+      const checkbox = document.querySelector(`.select-row-checkbox[data-user-id="${userId}"]`);
+      if (checkbox) {
+        checkbox.checked = !checkbox.checked;
+        checkbox.dispatchEvent(new Event('change'));
+      }
+    });
+  });
+
+  // Optional: Console log for selected checkboxes when submitting the "Isi Kehadiran" form
+  const attendanceForm = document.getElementById('attendanceForm');
+  const courseName = document.getElementById('courseName')?.value ?? '';
+
+  attendanceForm?.addEventListener('submit', function () {
+    const selected = [];
+    attendanceForm.querySelectorAll('.attendance-checkbox').forEach(box => {
+      if (box.checked) {
+        const row = box.closest('tr');
+        const name = row?.querySelector('.participant-name')?.value ?? '';
+        selected.push({
+          kur_nama: courseName,
+          pen_nama: name,
+          selected_date_column: box.dataset.date
+        });
+      }
+    });
+    console.log('Collected Attendance Data for submission:', selected);
+  });
 });
