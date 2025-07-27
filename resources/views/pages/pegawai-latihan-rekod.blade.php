@@ -40,6 +40,7 @@
         <th>Gred</th>
         <th>Kumpulan</th>
         <th>Jumlah Hari</th>
+        <th>%5 Hari</th>
       </tr>
       </thead>
     </table>
