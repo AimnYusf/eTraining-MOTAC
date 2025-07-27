@@ -138,6 +138,10 @@ $(function () {
               </div>
             </div>
           `
+        },
+        {
+          targets: '_all',
+          className: 'cursor-pointer'
         }
       ],
       dom: `
