@@ -22,9 +22,29 @@ use Carbon\Carbon;
 <!-- Record List -->
 <div class="card mb-8">
 
-  <div class="card-header d-flex flex-wrap justify-content-between gap-4">
-    <div class="card-title mb-0 me-1 d-flex justify-content-between align-items-center">
-      <h5 class="mb-0 flex-grow-1">Rekod Keseluruhan</h5>
+  <div class="card-header">
+    <div class="card-title mb-0 me-1">
+      <div class="d-flex justify-content-between align-items-center w-100">
+        <h5 class="mb-0">Rekod Keseluruhan</h5>
+        <div>
+          <button type="button" class="btn btn-label-primary dropdown-toggle me-0 waves-effect waves-light border-none" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="ti ti-file-export ti-xs me-sm-1"></i>
+            <span class="d-none d-sm-inline-block">Eksport</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);" id="printButton">
+                <i class="ti ti-printer me-1"></i> Cetak
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);" id="excelButton">
+                <i class="ti ti-file-spreadsheet me-1"></i> Excel
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
   <div class="card-body">
@@ -41,7 +61,7 @@ use Carbon\Carbon;
         </select>
 
         {{-- Select Bahagian --}}
-        <select class="selectpicker w-75 ms-3 me-3" name="bahagian" data-style="btn-default"
+        <select class="selectpicker w-75 ms-3" name="bahagian" data-style="btn-default"
           onchange="this.form.submit()">
           @foreach ($bahagian as $item)
           <option value="{{ $item->bah_id }}" {{ request('bahagian', $pengguna->pen_idbahagian) == $item->bah_id ? 'selected' : '' }}>
@@ -55,7 +75,7 @@ use Carbon\Carbon;
     <hr>
 
     <!-- Dinamic Table -->
-    <table class="table table-bordered mb-4">
+    <table id="datatables" class="table table-bordered mb-4">
       <thead class="table-dark">
         <tr>
           <th class="text-center">#</th>
@@ -67,10 +87,9 @@ use Carbon\Carbon;
         </tr>
       </thead>
       <tbody>
-        @php $number = 1; @endphp
-        @foreach ($rekodKeseluruhan as $rekod)
+        @foreach ($rekodKeseluruhan as $index => $rekod)
         <tr>
-          <td class="align-top text-center ">{{ $number }}</td>
+          <td class="align-top text-center ">{{ $index + 1 }}</td> {{-- DataTables handles numbering, but keeping for initial render --}}
           <td class="align-top text-uppercase ">{{ $rekod['nama'] }}</td>
           <td class="align-top text-center ">{{ $rekod['jawatan'] }}</td>
           <td class="align-top text-center ">{{ $rekod['gred'] }}</td>
@@ -82,7 +101,6 @@ use Carbon\Carbon;
           </td>
           <td class="align-top text-center ">{{ $rekod['jumlah_hari'] ?? '-' }}</td> {{-- Use ?? '-' to handle null --}}
         </tr>
-        @php $number++; @endphp
         @endforeach
       </tbody>
     </table>
@@ -90,4 +108,51 @@ use Carbon\Carbon;
 </div>
 <!--/ Record List -->
 
+@endsection
+
+@section('page-script')
+<script>
+  $(document).ready(function() {
+    // Initialize DataTables
+    var table = $('#datatables').DataTable({
+      dom:
+        '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-end"f>>' +
+        '<"table-responsive"t>' ,
+      responsive: true,
+      // Disable default DataTables buttons as we are using custom ones
+      buttons: [
+        {
+          extend: 'print',
+          text: '<i class="ti ti-printer me-1"></i>Print',
+          className: 'd-none', // Hide this button, we will trigger it via custom button
+          exportOptions: {
+            columns: ':visible'
+          }
+        },
+        {
+          extend: 'excel',
+          text: '<i class="ti ti-file-spreadsheet me-1"></i>Excel',
+          className: 'd-none', // Hide this button, we will trigger it via custom button
+          exportOptions: {
+            columns: ':visible'
+          }
+        }
+      ],
+      // Optional: Disable searching, ordering, and pagination if not needed
+      searching: false,
+      ordering: false,
+      paging: false
+    });
+
+    // Trigger DataTables print button when custom print button is clicked
+    $('#printButton').on('click', function() {
+      table.button('.buttons-print').trigger();
+    });
+
+    // Trigger DataTables excel button when custom excel button is clicked
+    $('#excelButton').on('click', function() {
+      table.button('.buttons-excel').trigger();
+    });
+  });
+</script>
 @endsection
