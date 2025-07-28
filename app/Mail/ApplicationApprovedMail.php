@@ -40,7 +40,7 @@ class ApplicationApprovedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Pengesahan Permohonan Kursus Berjaya – ' . strtoupper($this->kursus['kur_nama']),
+            subject: 'Permohonan Berjaya – ' . strtoupper($this->kursus['kur_nama']),
         );
     }
 

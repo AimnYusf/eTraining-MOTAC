@@ -104,7 +104,7 @@
             <!-- This header can be used for a logo or a small title if needed, currently empty -->
         </div>
         <div class="content">
-            <div class="header">Tetapan Semula Kata Laluan Sistem {{ config('app.name') }}</div>
+            <div class="header">Set Semula Kata Laluan Sistem {{ config('app.name') }}</div>
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
 
             <p>YBhg. Datuk / Dato’ / YBrs. Dr. / Ts. / Tuan / Puan,</p>
@@ -129,7 +129,7 @@
             </p>
 
             <p>Sekian, terima kasih.</p>
-            <p style="margin: 0;"><strong>Urusetia {{ config('app.name') }}</strong></p>
+            <p style="margin: 0;"><strong>Urus Setia {{ config('app.name') }}</strong></p>
             <p style="margin-top: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 

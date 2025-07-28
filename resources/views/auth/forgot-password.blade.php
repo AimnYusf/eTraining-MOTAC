@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="alert alert-secondary p-4">
-                    Sila masukkan e-mel rasmi yang telah didaftarkan untuk tetapan semula kata laluan.
+                    Sila masukkan e-mel rasmi yang telah didaftarkan untuk penetapan semula kata laluan.
                 </div>
 
                 <!-- Session Status -->
@@ -40,7 +40,7 @@
                             Kembali
                         </a>
                         <button type="submit" class="btn btn-primary">
-                            Emel Pautan Tetapan Semula Kata Laluan
+                            Emel Pautan Set Semula Kata Laluan
                         </button>
                     </div>
                 </form>

@@ -142,7 +142,7 @@
             </p>
 
             <p>Sekian, terima kasih.</p>
-            <p style="margin: 0;"><strong>Urusetia {{ config('app.name') }}</strong></p>
+            <p style="margin: 0;"><strong>Urus Setia {{ config('app.name') }}</strong></p>
             <p style="margin-top: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 

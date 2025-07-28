@@ -227,7 +227,8 @@
             </div>
 
             <p style="text-align: center; color: red;">
-                Pemilihan peserta tertakluk kepada urusetia dan kekosongan kuota.
+                Tindakan sokongan hendaklah diambil dalam tempoh <strong>7 hari</strong> dari masa e-mel
+                ini dihantar. Pemilihan peserta tertakluk kepada urus setia dan kekosongan kuota.
             </p>
 
             <p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
@@ -237,7 +238,7 @@
             </p>
 
             <p>Sekian, terima kasih.</p>
-            <p style="margin: 0;"><strong>Urusetia {{ config('app.name') }}</strong></p>
+            <p style="margin: 0;"><strong>Urus Setia {{ config('app.name') }}</strong></p>
             <p style="margin-top: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 

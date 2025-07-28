@@ -170,7 +170,7 @@
 
         <div class="content">
             <div class="header">
-                Notifikasi: Permohonan Kursus
+                Notifikasi: Permohonan
                 <span style="text-transform: uppercase;">
                     {{ $kursus['kur_nama'] ?? '[NAMA KURSUS]' }}
                 </span> Telah {{ $statusText ?? '[STATUS]' }}
@@ -211,12 +211,12 @@
                 </table>
             </div>
             <p style="text-align: center; color: red;">
-                Keputusan permohonan boleh disemak di Dashboard Pengguna. Pemilihan peserta tertakluk kepada urusetia
+                Keputusan permohonan boleh disemak di Dashboard Pengguna. Pemilihan peserta tertakluk kepada urus setia
                 dan kekosongan kuota.
             </p>
 
             <p>Sekian, terima kasih.</p>
-            <p style="margin: 0;"><strong>Urusetia {{ config('app.name') }}</strong></p>
+            <p style="margin: 0;"><strong>Urus Setia {{ config('app.name') }}</strong></p>
             <p style="margin-top: 0;">Kementerian Pelancongan, Seni dan Budaya</p>
             <hr style="width: 25%; border: none; border-top: 1px solid #eee; margin: 0 auto 20px auto;">
 
