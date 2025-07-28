@@ -125,6 +125,7 @@ use Carbon\Carbon;
           extend: 'print',
           text: '<i class="ti ti-printer me-1"></i>Print',
           className: 'd-none', // Hide this button, we will trigger it via custom button
+          title: '<h4 class="text-uppercase fw-bold" style="text-align: center;">Rekod Keseluruhan</h4>',
           exportOptions: {
             columns: ':visible'
           }
