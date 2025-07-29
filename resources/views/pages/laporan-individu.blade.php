@@ -5,6 +5,92 @@
     'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
     'resources/assets/vendor/libs/bootstrap-select/bootstrap-select.scss',
   ])
+  {{-- Styles for printing --}}
+  <style>
+    @media print {
+
+    /* Hide the filter form and print button when printing */
+    .no-print {
+      display: none !important;
+    }
+
+    /* Make cards look clean on print */
+    .card {
+      border: none !important;
+      box-shadow: none !important;
+      margin-bottom: 1.5rem !important;
+    }
+
+    /* Style the table for printing */
+    table {
+      width: 100% !important;
+      /* Make table fit page width */
+      table-layout: fixed !important;
+      /* Helps columns fit */
+      border-collapse: collapse !important;
+      margin-bottom: 0.5rem !important;
+    }
+
+    /* Style table cells for printing */
+    th,
+    td {
+      border: 1px solid #ddd !important;
+      padding: 4px 6px !important;
+      font-size: 9pt !important;
+      /* Smaller text for more content */
+      word-wrap: break-word !important;
+      /* Break long words */
+      overflow-wrap: break-word !important;
+    }
+
+    /* Adjust column widths for better fit on print */
+    table th:nth-child(1),
+    table td:nth-child(1) {
+      width: 30% !important;
+    }
+
+    /* Kursus */
+    table th:nth-child(2),
+    table td:nth-child(2),
+    /* T/Mula */
+    table th:nth-child(3),
+    table td:nth-child(3) {
+      width: 12% !important;
+    }
+
+    /* T/Tamat */
+    table th:nth-child(4),
+    table td:nth-child(4) {
+      width: 15% !important;
+    }
+
+    /* Tempat */
+    table th:nth-child(5),
+    table td:nth-child(5) {
+      width: 15% !important;
+    }
+
+    /* Anjuran */
+    table th:nth-child(6),
+    table td:nth-child(6),
+    /* Hari */
+    table th:nth-child(7),
+    table td:nth-child(7),
+    /* Jam */
+    table th:nth-child(8),
+    table td:nth-child(8) {
+      width: 8% !important;
+    }
+
+    /* Jumlah */
+
+    /* Keep table parts and cards from splitting across pages badly */
+    table,
+    .card-body {
+      page-break-inside: avoid;
+    }
+    }
+  </style>
 @endsection
 
 @section('vendor-script')
@@ -19,16 +105,21 @@
 @endphp
 
 @section('content')
-  <!-- Record List -->
   <div class="card mb-8">
 
     <div class="card-header d-flex flex-wrap justify-content-between gap-4">
     <div class="card-title mb-0 me-1 d-flex justify-content-between align-items-center">
       <h5 class="mb-0 flex-grow-1">Rekod Individu</h5>
     </div>
+    {{-- Print Button --}}
+    <div class="d-flex align-items-center no-print">
+      <button type="button" class="btn bg-label-primary" onclick="window.print()">
+      <i class="ti ti-printer me-1"></i> Cetak
+      </button>
+    </div>
     </div>
     <div class="card-body">
-    <form method="GET" class="mb-4">
+    <form method="GET" class="mb-4 no-print">
       <div class="d-flex align-items-center">
 
       {{-- Select Tahun --}}
@@ -41,8 +132,7 @@
       </select>
 
       {{-- Select Bahagian --}}
-      <select class="selectpicker w-75 ms-3 me-3" name="bahagian" data-style="btn-default"
-        onchange="this.form.submit()">
+      <select class="selectpicker w-75 ms-3" name="bahagian" data-style="btn-default" onchange="this.form.submit()">
         @foreach ($bahagian as $item)
       <option value="{{ $item->bah_id }}" {{ request('bahagian', $pengguna->pen_idbahagian) == $item->bah_id ? 'selected' : '' }}>
       {{ $item->bah_ketpenu }}
@@ -54,13 +144,9 @@
     </form>
     </div>
   </div>
-  <!--/ Record List -->
-
-  <!-- Dinamic Table -->
   @foreach($rekodIndividu as $userId => $attendances)
     <div class="card mb-8">
 
-    <!-- User Information -->
     <div class="card-header">
     <div class="row ps-2 mb-1">
       <div class="col-sm-2 d-flex justify-content-between fw-bold">Nama Pegawai<span>:</span></div>
@@ -80,7 +166,6 @@
     </div>
     </div>
 
-    <!-- User Course Application -->
     <div class="card-body">
     <table class="table table-bordered mb-4">
       <thead class="table-dark">
@@ -100,13 +185,10 @@
       @php $jumlah = 0; @endphp
       @foreach($attendances as $row)
       @php
-
-      // Ensure 'hari' and 'jam' are treated as numbers
       $bilangan_hari = (float) ($row['bilangan_hari'] ?? 0);
       $bilangan_jam = (float) ($row['bilangan_jam'] ?? 0);
       $jumlah += $bilangan_hari + $bilangan_jam;
 
-      // Apply rounding logic
       $decimal = $jumlah - floor($jumlah);
       if ($decimal >= 0.6) {
       $jumlah = $jumlah + 0.4;
@@ -136,6 +218,4 @@
     </div>
     </div>
   @endforeach
-  <!-- /Dinamic Table -->
-
 @endsection

@@ -39,23 +39,13 @@ use Carbon\Carbon;
         </form>
 
         {{-- Export Button --}}
-        <div class="dropdown">
-          <button type="button" class="btn btn-label-primary dropdown-toggle waves-effect waves-light border-none" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="ti ti-file-export ti-xs me-sm-1"></i>
-            <span class="d-none d-sm-inline-block">Eksport</span>
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-label-primary waves-effect waves-light" id="excelButton">
+            <i class="ti ti-file-spreadsheet me-1"></i> Excel
           </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <a class="dropdown-item" href="javascript:void(0);" id="printButton">
-                <i class="ti ti-printer me-1"></i> Cetak
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="javascript:void(0);" id="excelButton">
-                <i class="ti ti-file-spreadsheet me-1"></i> Excel
-              </a>
-            </li>
-          </ul>
+          <button type="button" class="btn btn-icon btn-label-primary waves-effect waves-light" id="printButton" data-bs-toggle="tooltip" data-placement="top" title="Cetak">
+            <i class="ti ti-printer"></i>
+          </button>
         </div>
       </div>
     </div>
