@@ -12,8 +12,12 @@ $(function () {
     }
   });
 
-  const dtTable = $('.datatables'),
-    statusObj = ['Baru', 'Pengesahan', 'Tidak Lulus', 'Berjaya', 'Tidak Berjaya', 'KIV'];
+  const dtTable = $('.datatables');
+  const statusObj = [];
+
+  window.statusData.forEach(item => {
+    statusObj.push(item.stp_keterangan);
+  });
 
   // Format date from YYYY-MM-DD to DD/MM/YYYY
   const formatDate = dateStr => {
@@ -25,7 +29,7 @@ $(function () {
   if (dtTable.length) {
     const table = dtTable.DataTable({
       ajax: {
-        url: `/kelulusan`,
+        url: `/pengesahan`,
         type: 'GET',
         data: d => ({
           ...d,
@@ -65,11 +69,9 @@ $(function () {
         {
           targets: 5,
           className: 'text-center',
-          render: (data, type, full) => `
-            <span class="badge bg-label-${full.etra_status.stp_class}" style="white-space: normal;">
-              ${full.etra_status.stp_keterangan}
-            </span>
-          `
+          render: function (data, type, full, meta) {
+            return `<span class="badge bg-label-${full.etra_status.stp_class}" style="white-space: normal;">${full.etra_status.stp_keterangan}</span>`;
+          }
         },
         {
           targets: -1,
@@ -81,8 +83,8 @@ $(function () {
                 <i class="ti ti-dots-vertical ti-md"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-end m-0">
-                <button class="update-record dropdown-item" data-id="${full.isy_id}" data-status="4">Berjaya</button>
-                <button class="update-record dropdown-item" data-id="${full.isy_id}" data-status="5">Tidak Berjaya</button>
+                <button class="update-record dropdown-item" data-id="${full.isy_id}" data-status="8">Disahkan</button>
+                <button class="update-record dropdown-item" data-id="${full.isy_id}" data-status="9">Tidak Disahkan</button>
               </div>
             </div>
           `
@@ -111,32 +113,32 @@ $(function () {
           previous: '<i class="ti ti-chevron-left ti-sm"></i>'
         }
       },
-      // initComplete: function () {
-      //   this.api()
-      //     .columns(5)
-      //     .every(function () {
-      //       var column = this;
-      //       var select = $(
-      //         '<select id="filterStatus" class="selectpicker" data-style="btn-default" title="Status"></select>'
-      //       )
-      //         .appendTo('.dt-action-buttons')
-      //         .on('change', function () {
-      //           var val = $.fn.dataTable.util.escapeRegex($(this).val());
-      //           column.search(val ? '^' + val + '$' : '', true, false).draw();
-      //         });
+      initComplete: function () {
+        this.api()
+          .columns(5)
+          .every(function () {
+            var column = this;
+            var select = $(
+              '<select id="filterStatus" class="selectpicker" data-style="btn-default" title="Status"><option value="">Semua</option></select>'
+            )
+              .appendTo('.dt-action-buttons')
+              .on('change', function () {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                column.search(val ? '^' + val + '$' : '', true, false).draw();
+              });
 
-      //       column
-      //         .data()
-      //         .unique()
-      //         .sort()
-      //         .each(function (d, j) {
-      //           select.append('<option value="' + statusObj[d - 1] + '">' + statusObj[d - 1] + '</option>');
-      //         });
-      //     });
+            column
+              .data()
+              .unique()
+              .sort()
+              .each(function (d, j) {
+                select.append('<option value="' + statusObj[d - 1] + '">' + statusObj[d - 1] + '</option>');
+              });
+          });
 
-      //   // Bootstrap Select
-      //   $('.selectpicker').selectpicker();
-      // },
+        // Bootstrap Select
+        $('.selectpicker').selectpicker();
+      },
       drawCallback: () => {
         const tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
         tooltipElements.forEach(el => new bootstrap.Tooltip(el));
@@ -151,7 +153,7 @@ $(function () {
     dtTable.on('click', '.view-record', function () {
       const isy_id = $(this).data('id');
 
-      $.get(`/kelulusan/${isy_id}`, ({ isytihar, pengguna }) => {
+      $.get(`/pengesahan/${isy_id}`, ({ isytihar, pengguna }) => {
         $('#isy_id').val(isytihar.isy_id);
         $('#isy_nama').text(isytihar.isy_nama);
         $('#isy_tarikh').text(`${formatDate(isytihar.isy_tkhmula)} hingga ${formatDate(isytihar.isy_tkhtamat)}`);
@@ -189,7 +191,7 @@ $(function () {
     // Update record function
     const updateRecord = (id, status) => {
       $.ajax({
-        url: `/kelulusan/${id}`,
+        url: `/pengesahan/${id}`,
         type: 'PUT',
         data: { isy_status: status },
         success: () => {

@@ -36,7 +36,7 @@
         $allowed = match ($role) {
         1 => in_array($menu->slug, ['dashboard', 'profil']),
         2 => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod-kursus', 'profil']),
-        3 => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod-kursus', 'profil', 'plb', 'plb-kelulusan', 'plb-rekod-baru', 'plb-rekod-pegawai']),
+        3 => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod-kursus', 'profil', 'plb', 'plb-pengesahan', 'plb-rekod-baru', 'plb-rekod-pegawai']),
         4 => in_array($menu->slug, [
         'dashboard',
         'kursus',

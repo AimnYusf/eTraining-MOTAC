@@ -30,7 +30,7 @@ class PegawaiLatihanController extends Controller
                     'isy_jam' => $request->isy_jam,
                     'isy_tempat' => $request->isy_tempat,
                     'isy_anjuran' => $request->isy_anjuran,
-                    'isy_status' => '4',
+                    'isy_status' => 8,
                 ]
             );
         }
@@ -42,7 +42,7 @@ class PegawaiLatihanController extends Controller
                 ->first();
         })->get();
 
-        return view('pages.pegawai-latihan-tambah', compact('pengguna'));
+        return view('pages.pentadbir-latihan-tambah', compact('pengguna'));
     }
 
     public function rekodPegawai(Request $request)
@@ -76,7 +76,7 @@ class PegawaiLatihanController extends Controller
             $pengguna = EproPengguna::with('eproKumpulan')
                 ->where('pen_idusers', $pid)->first();
 
-            return view('pages.pegawai-latihan-maklumat', compact(
+            return view('pages.pentadbir-latihan-maklumat', compact(
                 'rekodPengguna',
                 'rekodBulananPengguna',
                 'jumlahPermohonanPengguna',
@@ -84,6 +84,6 @@ class PegawaiLatihanController extends Controller
             ));
         }
 
-        return view('pages.pegawai-latihan-rekod');
+        return view('pages.pentadbir-latihan-rekod');
     }
 }

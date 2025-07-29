@@ -42,10 +42,10 @@
       "slug": "plb"
     },
     {
-      "url": "/kelulusan",
-      "name": "Menunggu Kelulusan",
+      "url": "/pengesahan",
+      "name": "Menunggu Pengesahan",
       "icon": "menu-icon tf-icons ti ti-user-check",
-      "slug": "plb-kelulusan"
+      "slug": "plb-pengesahan"
     },
     {
       "url": "/rekod-baru",

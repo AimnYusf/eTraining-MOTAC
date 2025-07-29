@@ -22,7 +22,7 @@
 
 @section('page-script')
 @vite([
-'resources/assets/js/pegawai-latihan-tambah.js'
+'resources/assets/js/pentadbir-latihan-tambah.js'
 ])
 @endsection
 

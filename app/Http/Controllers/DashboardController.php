@@ -31,9 +31,9 @@ class DashboardController extends Controller
         $permohonanSubquery = DB::table('epro_permohonan')
             ->selectRaw("
                 COUNT(*) AS jumlah,
-                SUM(CASE WHEN per_status IN (1, 2) THEN 1 ELSE 0 END) AS baru,
-                SUM(CASE WHEN per_status = 4 THEN 1 ELSE 0 END) AS berjaya,
-                SUM(CASE WHEN per_status IN (3, 5) THEN 1 ELSE 0 END) AS tidak_berjaya
+                SUM(CASE WHEN per_status IN (1, 2, 7) THEN 1 ELSE 0 END) AS baru,
+                SUM(CASE WHEN per_status IN (4, 8) THEN 1 ELSE 0 END) AS berjaya,
+                SUM(CASE WHEN per_status IN (3, 5, 9) THEN 1 ELSE 0 END) AS tidak_berjaya
             ")
             ->where('per_idusers', $userId);
 
@@ -41,9 +41,9 @@ class DashboardController extends Controller
         $isytiharSubquery = DB::table('epro_isytihar')
             ->selectRaw("
                 COUNT(*) AS jumlah,
-                SUM(CASE WHEN isy_status IN (1, 2) THEN 1 ELSE 0 END) AS baru,
-                SUM(CASE WHEN isy_status = 4 THEN 1 ELSE 0 END) AS berjaya,
-                SUM(CASE WHEN isy_status IN (3, 5) THEN 1 ELSE 0 END) AS tidak_berjaya
+                SUM(CASE WHEN isy_status IN (1, 2, 7) THEN 1 ELSE 0 END) AS baru,
+                SUM(CASE WHEN isy_status IN (4, 8) THEN 1 ELSE 0 END) AS berjaya,
+                SUM(CASE WHEN isy_status IN (3, 5, 9) THEN 1 ELSE 0 END) AS tidak_berjaya
             ")
             ->where('isy_idusers', $userId);
 
@@ -88,7 +88,7 @@ class DashboardController extends Controller
 
         // Query for declaration data ($isytihar)
         $isytihar = DB::table('epro_isytihar')
-            ->where('isy_status', '4')
+            ->where('isy_status', 8)
             ->selectRaw("
                 epro_isytihar.isy_tkhmula as tarikh,
                 CASE

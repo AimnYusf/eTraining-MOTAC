@@ -124,7 +124,7 @@ $(function () {
           .every(function () {
             const column = this;
             const select = $(
-              '<select id="filterStatus" class="selectpicker" data-style="btn-default" title="Status"></select>'
+              '<select id="filterStatus" class="selectpicker" data-style="btn-default" title="Status"><option value="">Semua</option></select>'
             )
               .insertBefore('.dt-action-buttons .dt-buttons')
               .on('change', function () {

@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
           instance.on('core.form.valid', function () {
             Swal.fire({
               icon: 'question',
-              title: 'Teruskan pengesahan?',
+              title: 'Teruskan sokongan?',
               showCancelButton: true,
               confirmButtonText: 'Ya',
               cancelButtonText: 'Batal',
@@ -88,12 +88,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
               if (result.value) {
                 $.ajax({
                   data: $('#formAuthentication').serialize(),
-                  url: '/pengesahan',
+                  url: '/penyokong',
                   type: 'POST',
                   success: function () {
                     Swal.fire({
                       icon: 'success',
-                      title: 'Pengesahan Berjaya!',
+                      title: 'Sokongan Berjaya!',
                       customClass: {
                         title: 'm-0',
                         confirmButton: 'btn btn-primary waves-effect waves-light'

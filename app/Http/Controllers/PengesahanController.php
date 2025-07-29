@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\EproBahagian;
 use App\Models\EproIsytihar;
 use App\Models\EproPengguna;
+use App\Models\EtraStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class KelulusanController extends Controller
+class PengesahanController extends Controller
 {
     public function index(Request $request)
     {
@@ -18,23 +19,26 @@ class KelulusanController extends Controller
             })
             ->first();
 
-        $kelulusan = collect();
+        $pengesahan = collect();
+        $status = EtraStatus::get();
 
         if ($bahagian) {
-            $kelulusan = EproIsytihar::with('eproPengguna', 'etraStatus')
+            $pengesahan = EproIsytihar::with('eproPengguna', 'etraStatus')
                 ->whereHas('eproPengguna', function ($query) use ($bahagian) {
                     $query->where('pen_idbahagian', $bahagian->bah_id);
                 })
+                ->latest()
+                ->orderBy('isy_status')
                 ->get();
         }
 
         if ($request->ajax()) {
             return response()->json([
-                'data' => $kelulusan
+                'data' => $pengesahan
             ]);
         }
 
-        return view('pages.pegawai-latihan-kelulusan');
+        return view('pages.pentadbir-latihan-pengesahan', compact('status'));
     }
 
     public function show($id)
@@ -43,6 +47,7 @@ class KelulusanController extends Controller
             ->where('isy_id', $id)->first();
         $pengguna = EproPengguna::with('eproJabatan', 'eproBahagian')
             ->where('pen_idusers', $isytihar->isy_idusers)->first();
+
         return response()->json([
             'isytihar' => $isytihar,
             'pengguna' => $pengguna

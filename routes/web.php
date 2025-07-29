@@ -4,10 +4,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IsytiharController;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\KehadiranController;
-use App\Http\Controllers\KelulusanController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PegawaiLatihanController;
+use App\Http\Controllers\PengesahanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenyokongController;
 use App\Http\Controllers\PermohonanController;
@@ -29,17 +29,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Pegawai Penyokong
-Route::get('/pengesahan/{id}', [PenyokongController::class, 'show'])
+Route::get('/penyokong/{id}', [PenyokongController::class, 'show'])
     ->middleware('signed')
-    ->name('pengesahan.show');
-Route::post('/pengesahan', [PenyokongController::class, 'store'])->name('pengesahan.store');
+    ->name('penyokong.show');
+Route::post('/penyokong', [PenyokongController::class, 'store'])->name('penyokong.store');
 
 // Dashboard (All Authenticated Users)
 Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 // Pegawai Penyokong
-Route::get('/pengesahan/{id}', [PenyokongController::class, 'show'])->name('pengesahan.show');
-Route::post('/pengesahan', [PenyokongController::class, 'store'])->name('pengesahan.store');
+Route::get('/penyokong/{id}', [PenyokongController::class, 'show'])->name('penyokong.show');
+Route::post('/penyokong', [PenyokongController::class, 'store'])->name('penyokong.store');
 
 Route::middleware('auth')->group(function () {
     // Profil
@@ -77,8 +77,8 @@ Route::middleware('auth')->group(function () {
     */
     Route::middleware('role:3,5')->group(function () {
         // Pengguna Kursus
-        Route::resource('kelulusan', KelulusanController::class)->names([
-            'index' => 'plb-kelulusan'
+        Route::resource('pengesahan', PengesahanController::class)->names([
+            'index' => 'plb-pengesahan'
         ]);
         Route::any('/rekod-baru', [PegawaiLatihanController::class, 'rekodBaru'])->name('plb-rekod-baru');
         Route::get('/rekod-pegawai', [PegawaiLatihanController::class, 'rekodPegawai'])->name('plb-rekod-pegawai');

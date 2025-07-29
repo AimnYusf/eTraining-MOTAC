@@ -107,7 +107,7 @@ $(function () {
           .every(function () {
             var column = this;
             var select = $(
-              '<select id="filterStatus" class="selectpicker" data-style="btn-default" title="Status"></select>'
+              '<select id="filterStatus" class="selectpicker" data-style="btn-default" title="Status"><option value="">Semua</option></select>'
             )
               .appendTo('.dt-action-buttons')
               .on('change', function () {

@@ -70,7 +70,7 @@ class Records
             );
 
         $isytiharQuery = EproIsytihar::query()
-            ->where('isy_status', '4')
+            ->where('isy_status', 8)
             ->join('epro_pengguna', 'epro_isytihar.isy_idusers', '=', 'epro_pengguna.pen_idusers')
             ->join('epro_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'epro_kumpulan.kum_id')
             ->join('epro_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'epro_bahagian.bah_id')
@@ -181,9 +181,9 @@ class Records
         $jumlahPermohonanPengguna = DB::query()
             ->fromSub($permohonanQuery->unionAll($isytiharQuery), 'gabungan')
             ->selectRaw('COUNT(*) as jumlah')
-            ->selectRaw('SUM(CASE WHEN status IN (1, 2) THEN 1 ELSE 0 END) as dalam_proses')
-            ->selectRaw('SUM(CASE WHEN status = 4 THEN 1 ELSE 0 END) as berjaya')
-            ->selectRaw('SUM(CASE WHEN status IN (3, 5) THEN 1 ELSE 0 END) as tidak_berjaya')
+            ->selectRaw('SUM(CASE WHEN status IN (1, 2, 7) THEN 1 ELSE 0 END) as dalam_proses')
+            ->selectRaw('SUM(CASE WHEN status IN (4, 8) THEN 1 ELSE 0 END) as berjaya')
+            ->selectRaw('SUM(CASE WHEN status IN (3, 5, 9) THEN 1 ELSE 0 END) as tidak_berjaya')
             ->first();
 
         return $jumlahPermohonanPengguna;

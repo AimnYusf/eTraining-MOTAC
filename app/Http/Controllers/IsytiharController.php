@@ -47,7 +47,7 @@ class IsytiharController extends Controller
             'isy_jam' => $request->isy_jam,
             'isy_tempat' => $request->isy_tempat,
             'isy_anjuran' => $request->isy_anjuran,
-            'isy_status' => 1
+            'isy_status' => 6
         ]);
     }
 }

@@ -90,7 +90,7 @@ class KatalogController extends Controller
 
             // Prepare data for email
             $url = URL::temporarySignedRoute(
-                'pengesahan.show',
+                'penyokong.show',
                 now()->addDays(7),
                 ['id' => $permohonan->per_id]
             );
