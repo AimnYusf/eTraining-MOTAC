@@ -24,18 +24,28 @@ class ProfilController extends Controller
 
     public function store(Request $request)
     {
-        //update role
-        if (Auth::user()->role == 'guest') {
+        $request->validate([
+            'pen_nama' => 'required|string|max:255',
+            'pen_nokp' => 'required|string|max:20',
+            'pen_emel' => 'nullable|email',
+            'pen_notel' => 'nullable|string|max:20',
+            'pen_nohp' => 'nullable|string|max:20',
+            // Add other validations as necessary
+        ]);
+
+        // Update role if guest
+        if (Auth::user()->role === 'guest') {
             User::updateOrCreate(
                 ['id' => Auth::id()],
                 ['role' => 'user']
             );
         }
 
+        // Store user profile
         EproPengguna::updateOrCreate(
             ['pen_idusers' => Auth::id()],
             [
-                'pen_nama' => $request->pen_nama,
+                'pen_nama' => strtoupper($request->pen_nama),
                 'pen_nokp' => $request->pen_nokp,
                 'pen_jantina' => $request->pen_jantina,
                 'pen_jawatan' => $request->pen_jawatan,
@@ -47,15 +57,24 @@ class ProfilController extends Controller
                 'pen_emel' => $request->pen_emel,
                 'pen_notel' => $request->pen_notel,
                 'pen_nohp' => $request->pen_nohp,
-                'pen_kjnama' => $request->pen_kjnama,
-                'pen_kjgelaran' => $request->pen_kjgelaran,
+                'pen_kjnama' => strtoupper($request->pen_kjnama),
+                'pen_kjgelaran' => strtoupper($request->pen_kjgelaran),
                 'pen_kjemel' => $request->pen_kjemel,
-                'pen_ppnama' => $request->pen_ppnama,
+                'pen_ppnama' => strtoupper($request->pen_ppnama),
                 'pen_ppemel' => $request->pen_ppemel,
                 'pen_ppgred' => $request->pen_ppgred,
             ]
         );
+
+        // Update user name
+        User::updateOrCreate(
+            ['id' => Auth::id()],
+            ['name' => strtoupper($request->pen_nama)]
+        );
+
+        return redirect()->back()->with('success', 'Maklumat pengguna berjaya disimpan.');
     }
+
 
     //Delete Later
     public function update(Request $request)

@@ -104,9 +104,9 @@ $customizerHidden = 'customizer-hide';
 
                         <!-- Name -->
                         <div class="mb-3">
-                            <label for="name" class="form-label">Nama</label>
+                            <label for="name" class="form-label">Nama Penuh</label>
                             <input id="name" type="text" name="name" value="{{ old('name') }}" autofocus autocomplete="name"
-                                class="form-control @error('name') is-invalid @enderror">
+                                class="form-control @error('name') is-invalid @enderror" oninput="this.value = this.value.toUpperCase();">
                             @error('name')
                             <div class="invalid-feedback">
                                 {{ $message }}

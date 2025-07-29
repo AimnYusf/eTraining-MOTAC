@@ -48,7 +48,7 @@ use Illuminate\Support\Facades\Auth;
             <label for="pen_nama" class="col-md-3 col-form-label">Nama <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" id="pen_nama" class="form-control" name="pen_nama" value="{{ Auth::user()->name }}"
-                placeholder="Nama" readonly />
+                placeholder="Nama"  oninput="this.value = this.value.toUpperCase();"/>
             </div>
           </div>
           <div class="row mb-5">
@@ -173,7 +173,7 @@ use Illuminate\Support\Facades\Auth;
             <label for="pen_ppnama" class="col-md-3 col-form-label">Nama <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" id="pen_ppnama" class="form-control" name="pen_ppnama"
-                value="{{ $pengguna->pen_ppnama ?? ''}}" placeholder="Nama Pegawai Penyelia" />
+                value="{{ $pengguna->pen_ppnama ?? ''}}" placeholder="Nama Pegawai Penyelia" oninput="this.value = this.value.toUpperCase();"/>
             </div>
           </div>
 
