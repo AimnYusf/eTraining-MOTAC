@@ -15,6 +15,7 @@ $(function () {
   }
 
   let isProcessingScan = false;
+  let html5QrCode = null; // Declare html5QrCode here so it's accessible globally within the scope
 
   // Handles successful QR code scans
   function onScanSuccess(decodedText) {
@@ -28,20 +29,50 @@ $(function () {
     recordAttendance();
   }
 
-  // Initialize Html5Qrcode for QR code scanning
-  const html5QrCode = new Html5Qrcode('reader');
-  html5QrCode
-    .start(
-      { facingMode: 'environment' },
-      {
-        fps: 10,
-        qrbox: 250
-      },
-      onScanSuccess
-    )
-    .catch(err => {
-      console.error('QR scanning error:', err);
-    });
+  // Function to start the QR code reader
+  function startQrReader() {
+    if (!html5QrCode) {
+      html5QrCode = new Html5Qrcode('reader');
+    }
+
+    html5QrCode
+      .start(
+        { facingMode: 'environment' },
+        {
+          fps: 10,
+          qrbox: 250
+        },
+        onScanSuccess
+      )
+      .catch(err => {
+        console.error('QR scanning error:', err);
+      });
+  }
+
+  // Function to stop the QR code reader
+  function stopQrReader() {
+    if (html5QrCode && html5QrCode.isScanning) {
+      html5QrCode
+        .stop()
+        .then(() => {
+          console.log('QR scanning stopped.');
+        })
+        .catch(err => {
+          console.error('Failed to stop QR scanning.', err);
+        });
+    }
+  }
+
+  // Attach event listeners to the collapse element
+  $('#crudCollapse').on('shown.bs.collapse', function () {
+    // When the collapse section is shown, start the QR reader
+    startQrReader();
+  });
+
+  $('#crudCollapse').on('hidden.bs.collapse', function () {
+    // When the collapse section is hidden, stop the QR reader
+    stopQrReader();
+  });
 
   // Generates dynamic date columns for the DataTable
   function generateDateColumns(startDateStr, endDateStr) {
