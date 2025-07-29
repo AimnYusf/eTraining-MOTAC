@@ -69,4 +69,8 @@ class User extends Authenticatable implements MustVerifyEmail
   {
     return $this->hasOne(EproPengguna::class, 'pen_idusers');
   }
+  public function etraPeranan()
+  {
+    return $this->belongsTo(EtraPeranan::class, 'role', 'prn_id');
+  }
 }

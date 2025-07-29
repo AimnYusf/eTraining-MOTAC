@@ -34,10 +34,10 @@ class ProfilController extends Controller
         ]);
 
         // Update role if guest
-        if (Auth::user()->role === 'guest') {
+        if (Auth::user()->role === '1') {
             User::updateOrCreate(
                 ['id' => Auth::id()],
-                ['role' => 'user']
+                ['role' => '2']
             );
         }
 

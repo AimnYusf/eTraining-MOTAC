@@ -54,9 +54,9 @@
               <div class="col-sm-3 d-flex justify-content-between align-items-center">Peranan<span>:</span></div>
               <div class="col-sm-9">
                 <select id="role" name="role" class="form-select w-50" data-style="btn-default">
-                  <option value="user">Pengguna</option>
-                  <option value="supervisor">Pentadbir Latihan Bahagian</option>
-                  <option value="administrator">Urus Setia</option>
+                  <option value="2">Pengguna</option>
+                  <option value="3">Pentadbir Latihan Bahagian</option>
+                  <option value="4">Urus Setia</option>
                 </select>
               </div>
             </div>

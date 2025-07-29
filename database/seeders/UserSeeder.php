@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'name' => 'Muhammad Aiman Yusuf',
             'email' => 'admin@mail.com',
             'password' => Hash::make('asd123'),
-            'role' => 'guest',
+            'role' => '1',
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ]);

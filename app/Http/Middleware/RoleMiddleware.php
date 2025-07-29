@@ -16,7 +16,7 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         $user = $request->user();
-        $userRole = $user?->role ?? 'guest';
+        $userRole = $user?->role ?? '1';
 
         if (!in_array($userRole, $roles)) {
             abort(403, 'Unauthorized.');

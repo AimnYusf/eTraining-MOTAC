@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
     | Routes for Roles: user, supervisor, administrator
     |--------------------------------------------------------------------------
     */
-    Route::middleware('role:user,supervisor,administrator')->group(function () {
+    Route::middleware('role:2,3,4,5')->group(function () {
 
         // Pengguna Kursus
         Route::resource('kursus', KatalogController::class)->names([
@@ -75,7 +75,7 @@ Route::middleware('auth')->group(function () {
     | Routes for Roles: supervisor
     |--------------------------------------------------------------------------
     */
-    Route::middleware('role:supervisor')->group(function () {
+    Route::middleware('role:3,5')->group(function () {
         // Pengguna Kursus
         Route::resource('kelulusan', KelulusanController::class)->names([
             'index' => 'plb-kelulusan'
@@ -89,7 +89,7 @@ Route::middleware('auth')->group(function () {
     | Routes for Roles: administrator
     |--------------------------------------------------------------------------
     */
-    Route::middleware('role:administrator')->group(function () {
+    Route::middleware('role:4,5')->group(function () {
 
         // Urusetia Kursus
         Route::resource('/urusetia/kursus', KursusController::class)->names([

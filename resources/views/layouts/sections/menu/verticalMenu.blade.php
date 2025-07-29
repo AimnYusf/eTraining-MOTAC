@@ -34,10 +34,10 @@
         $role = Auth::check() ? Auth::user()->role : 'guest';
 
         $allowed = match ($role) {
-        'guest' => in_array($menu->slug, ['dashboard', 'profil']),
-        'user' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod-kursus', 'profil']),
-        'supervisor' => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod-kursus', 'profil', 'plb', 'plb-kelulusan', 'plb-rekod-baru', 'plb-rekod-pegawai']),
-        'administrator' => in_array($menu->slug, [
+        1 => in_array($menu->slug, ['dashboard', 'profil']),
+        2 => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod-kursus', 'profil']),
+        3 => in_array($menu->slug, ['dashboard', 'kursus', 'permohonan', 'isytihar', 'rekod-kursus', 'profil', 'plb', 'plb-kelulusan', 'plb-rekod-baru', 'plb-rekod-pegawai']),
+        4 => in_array($menu->slug, [
         'dashboard',
         'kursus',
         'permohonan',
