@@ -19,6 +19,10 @@ class StatusSeeder extends Seeder
             ['stp_id' => 3, 'stp_keterangan' => 'Tidak Disokong', 'stp_class' => 'danger'],
             ['stp_id' => 4, 'stp_keterangan' => 'Berjaya', 'stp_class' => 'success'],
             ['stp_id' => 5, 'stp_keterangan' => 'Tidak Berjaya', 'stp_class' => 'danger'],
+            ['stp_id' => 6, 'stp_keterangan' => 'Baru', 'stp_class' => 'info'],
+            ['stp_id' => 7, 'stp_keterangan' => 'Menunggu Pengesahan Pentadbir Latihan Bahagian', 'stp_class' => 'warning'],
+            ['stp_id' => 8, 'stp_keterangan' => 'Disahkan', 'stp_class' => 'success'],
+            ['stp_id' => 9, 'stp_keterangan' => 'Tidak Disahkan', 'stp_class' => 'danger'],
         ];
 
         foreach ($statusPermohonan as $status) {
