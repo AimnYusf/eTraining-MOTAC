@@ -13,7 +13,17 @@ $(function () {
   var table = $('.data-list').DataTable({
     ajax: {
       url: '/kursus',
-      type: 'GET'
+      type: 'GET',
+      dataSrc: function (json) {
+        // Check if no data was returned
+        if (!json.data || json.data.length === 0) {
+          $('#no-data-message').show();
+          $('.course-table').hide();
+        }
+
+        // Always return the data array (even if empty)
+        return json.data;
+      }
     },
     order: [[1, 'desc']],
     columns: [
