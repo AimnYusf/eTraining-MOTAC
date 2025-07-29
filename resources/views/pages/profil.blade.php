@@ -45,7 +45,7 @@ use Illuminate\Support\Facades\Auth;
           </div>
 
           <div class="row mb-5">
-            <label for="pen_nama" class="col-md-3 col-form-label">Nama <span class="text-danger">*</span></label>
+            <label for="pen_nama" class="col-md-3 col-form-label">Nama Penuh <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" id="pen_nama" class="form-control" name="pen_nama" value="{{ Auth::user()->name }}"
                 placeholder="Nama"  oninput="this.value = this.value.toUpperCase();"/>
