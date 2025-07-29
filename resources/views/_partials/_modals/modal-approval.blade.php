@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header justify-content-center">
-        <h5 class="modal-title">TINDAKAN PENYELIA</h5>
+        <h5 class="modal-title">MAKLUMAT PERMOHONAN</h5>
       </div>
 
       <form id="approvalFrom">
@@ -12,18 +12,18 @@
 
           <section class="mb-8">
             <div class="divider text-start">
-              <h5 class="divider-text m-0">MAKLUMAT KURSUS</h5>
+              <h5 class="divider-text m-0">MAKLUMAT TERPERINCI</h5>
             </div>
             <div class="row ps-2 mb-2">
-              <div class="col-sm-3 d-flex justify-content-between">Nama Kursus<span>:</span></div>
+              <div class="col-sm-3 d-flex justify-content-between">Nama<span>:</span></div>
               <div id="isy_nama" class="col-sm-9"></div>
             </div>
             <div class="row ps-2 mb-2">
-              <div class="col-sm-3 d-flex justify-content-between">Tarikh Kursus<span>:</span></div>
+              <div class="col-sm-3 d-flex justify-content-between">Tarikh<span>:</span></div>
               <div id="isy_tarikh" class="col-sm-9"></div>
             </div>
             <div class="row ps-2 mb-2">
-              <div class="col-sm-3 d-flex justify-content-between">Tempat Kursus<span>:</span></div>
+              <div class="col-sm-3 d-flex justify-content-between">Tempat<span>:</span></div>
               <div id="isy_tempat" class="col-sm-9"></div>
             </div>
             <div class="row ps-2 mb-2">
@@ -70,9 +70,9 @@
             </div>
           </section>
 
-          <section>
+          <!-- <section>
             <div class="divider text-start">
-              <h5 class="divider-text m-0">TINDAKAN PENYELIA</h5>
+              <h5 class="divider-text m-0">TINDAKAN PENTADBIR LATIHAN BAHAGIAN</h5>
             </div>
             <div class="row ps-2 mb-2">
               <div class="col-sm-3 d-flex justify-content-between align-items-center">Status<span>:</span></div>
@@ -84,14 +84,16 @@
                 </select>
               </div>
             </div>
-          </section>
+          </section> -->
         </div>
 
         <div class="modal-footer justify-content-center">
-          <button type="reset" class="btn btn-label-secondary me-2" data-bs-dismiss="modal"
+          <!-- <button type="reset" class="btn btn-label-secondary me-2" data-bs-dismiss="modal"
             aria-label="Close">Batal</button>
           <button type="submit" class="btn btn-primary" aria-label="Close"><i
-              class="ti ti-device-floppy me-2"></i>Kemaskini</button>
+              class="ti ti-device-floppy me-2"></i>Kemaskini</button> -->
+          <button type="reset" class="btn btn-label-secondary me-2" data-bs-dismiss="modal"
+            aria-label="Close">Tutup</button>
         </div>
       </form>
     </div>

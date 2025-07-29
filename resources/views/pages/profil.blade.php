@@ -173,7 +173,7 @@ use Illuminate\Support\Facades\Auth;
             <label for="pen_ppnama" class="col-md-3 col-form-label">Nama <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" id="pen_ppnama" class="form-control" name="pen_ppnama"
-                value="{{ $pengguna->pen_ppnama ?? ''}}" placeholder="Nama Pegawai Penyelia" oninput="this.value = this.value.toUpperCase();"/>
+                value="{{ $pengguna->pen_ppnama ?? ''}}" placeholder="Nama Pegawai Penyokong" oninput="this.value = this.value.toUpperCase();"/>
             </div>
           </div>
 
@@ -181,7 +181,7 @@ use Illuminate\Support\Facades\Auth;
             <label for="pen_ppemel" class="col-md-3 col-form-label">E-Mel <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <input type="text" id="pen_ppemel" class="form-control" name="pen_ppemel"
-                value="{{ $pengguna->pen_ppemel ?? ''}}" placeholder="E-Mel Pegawai Penyelia" />
+                value="{{ $pengguna->pen_ppemel ?? ''}}" placeholder="E-Mel Pegawai Penyokong" />
             </div>
           </div>
 

@@ -218,7 +218,7 @@
           @endphp
 
           <div class="row mb-4">
-            <label for="kur_urusetia" class="col-md-3 col-form-label">Urusetia</label>
+            <label for="kur_urusetia" class="col-md-3 col-form-label">Urus Setia</label>
             <div class="col-md-9">
               <select id="kur_urusetia" class="selectpicker w-100" name="kur_urusetia[]" data-style="btn-default" multiple data-icon-base="ti" data-tick-icon="ti-check text-white" title="Sila Pilih">
                 @foreach ($urusetia as $data)

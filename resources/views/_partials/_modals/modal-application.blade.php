@@ -12,18 +12,18 @@
 
           <section class="mb-8">
             <div class="divider text-start">
-              <h5 class="divider-text m-0">MAKLUMAT KURSUS</h5>
+              <h5 class="divider-text m-0">MAKLUMAT TERPERINCI</h5>
             </div>
             <div class="row ps-2 mb-2">
-              <div class="col-sm-3 d-flex justify-content-between">Nama Kursus<span>:</span></div>
+              <div class="col-sm-3 d-flex justify-content-between">Nama<span>:</span></div>
               <div id="kur_nama" class="col-sm-9"></div>
             </div>
             <div class="row ps-2 mb-2">
-              <div class="col-sm-3 d-flex justify-content-between">Tarikh Kursus<span>:</span></div>
+              <div class="col-sm-3 d-flex justify-content-between">Tarikh<span>:</span></div>
               <div id="kur_tarikh" class="col-sm-9"></div>
             </div>
             <div class="row ps-2 mb-2">
-              <div class="col-sm-3 d-flex justify-content-between">Tempat Kursus<span>:</span></div>
+              <div class="col-sm-3 d-flex justify-content-between">Tempat<span>:</span></div>
               <div id="kur_tempat" class="col-sm-9"></div>
             </div>
           </section>

@@ -14,8 +14,8 @@ class StatusSeeder extends Seeder
     public function run(): void
     {
         $statusPermohonan = [
-            ['stp_id' => 1, 'stp_keterangan' => 'Menunggu Sokongan Pegawai Penyelia', 'stp_class' => 'warning'],
-            ['stp_id' => 2, 'stp_keterangan' => 'Menunggu Kelulusan Urusetia', 'stp_class' => 'warning'],
+            ['stp_id' => 1, 'stp_keterangan' => 'Menunggu Sokongan Pegawai Penyokong', 'stp_class' => 'warning'],
+            ['stp_id' => 2, 'stp_keterangan' => 'Menunggu Kelulusan Urus Setia', 'stp_class' => 'warning'],
             ['stp_id' => 3, 'stp_keterangan' => 'Tidak Disokong', 'stp_class' => 'danger'],
             ['stp_id' => 4, 'stp_keterangan' => 'Berjaya', 'stp_class' => 'success'],
             ['stp_id' => 5, 'stp_keterangan' => 'Tidak Berjaya', 'stp_class' => 'danger'],

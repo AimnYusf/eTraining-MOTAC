@@ -35,7 +35,7 @@
 <div class="card">
   <div class="card-header">
     <div class="d-flex justify-content-between">
-      <h5 class="card-title">Senarai Urusetia</h5>
+      <h5 class="card-title">Senarai Urus Setia</h5>
     </div>
   </div>
   <div class="card-datatable table-responsive">

@@ -129,7 +129,7 @@
         if (isset($status)) {
             if ($status == 3) {
                 $statusText = 'Tidak Disokong';
-                $description = 'tidak disokong oleh pegawai penyelia.';
+                $description = 'tidak disokong oleh pegawai penyokong.';
             } elseif ($status == 5) {
                 $statusText = 'Tidak Berjaya';
                 $description = 'tidak berjaya.';

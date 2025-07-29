@@ -70,7 +70,7 @@ $(function () {
             var $color = $peratus < 40 ? 'danger' : $peratus > 80 ? 'success' : 'warning';
             return `
               <div class="d-flex align-items-center">
-                <div class="progress w-100 view-record" style="height: 10px;">
+                <div class="progress w-100" style="height: 10px;">
                   <div class="progress-bar progress-bar-striped progress-bar-animated bg-${$color}" role="progressbar" style="width: ${$peratus}%;"></div>
                 </div>
               </div>

@@ -71,7 +71,7 @@ $(function () {
           action: () => {
             $('#crudForm')[0].reset();
             $('#pic_id').val(null);
-            $('#pic_tajuk').html('Tambah Urusetia');
+            $('#pic_tajuk').html('Tambah Urus Setia Kursus');
             $('#crudModal').modal('show');
           }
         }
@@ -180,7 +180,7 @@ $(function () {
       url: `/tetapan/urusetia/${pic_id}`,
       type: 'GET',
       success: function (data) {
-        $('#pic_tajuk').html('Edit Urusetia');
+        $('#pic_tajuk').html('Edit Urus Setia Kursus');
         $('#pic_id').val(data.pic_id);
         $('#pic_nama').val(data.pic_nama);
         $('#pic_emel').val(data.pic_emel);

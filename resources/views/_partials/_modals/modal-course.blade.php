@@ -19,7 +19,7 @@
         </div>
         <div class="card academy-content shadow-none border">
           <div class="card-body pt-4">
-            <h5>Maklumat Kursus</h5>
+            <h5>Maklumat Terperinci</h5>
             <div class="row mb-2">
               <div class="col-sm-4">
                 <i class="ti ti-calendar-event me-2 align-top"></i>
@@ -64,7 +64,7 @@
             <div class="row mb-2">
               <div class="col-sm-4">
                 <i class="ti ti-user-cog me-2 align-top"></i>
-                <span>Urusetia</span>
+                <span>Urus Setia</span>
               </div>
               <div class="col-sm-8">
                 <span id="kur_penganjur"></span>

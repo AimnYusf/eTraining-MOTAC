@@ -105,7 +105,7 @@ use Carbon\Carbon;
 
         @if (!is_null($kursus->kur_urusetia))
         <hr class="my-6 border-top border-light">
-        <h5 class="mb-3 text-primary">Urusetia Program</h5>
+        <h5 class="mb-3 text-primary">Urus Setia</h5>
         <div class="text-muted">
           @php
           $selectedIds = (array) $kursus->kur_urusetia;

@@ -48,15 +48,15 @@
 
           <section>
             <div class="divider text-start">
-              <h5 class="divider-text m-0">TINDAKAN URUSETIA</h5>
+              <h5 class="divider-text m-0">TINDAKAN URUS SETIA</h5>
             </div>
             <div class="row ps-2 mb-2">
               <div class="col-sm-3 d-flex justify-content-between align-items-center">Peranan<span>:</span></div>
               <div class="col-sm-9">
                 <select id="role" name="role" class="form-select w-50" data-style="btn-default">
                   <option value="user">Pengguna</option>
-                  <option value="supervisor">Pegawai Latihan Bahagian</option>
-                  <option value="administrator">Urusetia</option>
+                  <option value="supervisor">Pentadbir Latihan Bahagian</option>
+                  <option value="administrator">Urus Setia</option>
                 </select>
               </div>
             </div>

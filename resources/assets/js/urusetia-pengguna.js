@@ -15,7 +15,7 @@ $(function () {
   const dtTable = $('.datatables');
   const roleObj = {
     user: { badge: 'bg-label-success', text: 'Pengguna' },
-    supervisor: { badge: 'bg-label-info', text: 'Pegawai Latihan Bahagian' },
+    supervisor: { badge: 'bg-label-info', text: 'Pentadbir Latihan Bahagian' },
     administrator: { badge: 'bg-label-primary', text: 'Urusetia' }
   };
 

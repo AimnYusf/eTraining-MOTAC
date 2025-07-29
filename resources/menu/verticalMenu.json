@@ -38,7 +38,7 @@
     },
 
     {
-      "menuHeader": "Pegawai Latihan Bahagian",
+      "menuHeader": "Pentadbir Latihan Bahagian",
       "slug": "plb"
     },
     {
@@ -60,8 +60,8 @@
       "slug": "plb-rekod-pegawai"
     },
     {
-      "menuHeader": "Pentadbir",
-      "slug": "pentadbir"
+      "menuHeader": "Urus Setia",
+      "slug": "urus setia"
     },
     {
       "url": "/urusetia/kursus",
@@ -146,7 +146,7 @@
         },
         {
           "url": "/tetapan/urusetia",
-          "name": "Urusetia",
+          "name": "Urus Setia Kursus",
           "slug": "tetapan-urusetia"
         }
       ]
