@@ -13,15 +13,23 @@ class PenggunaController extends Controller
 {
     public function index(Request $request)
     {
-        $pengguna = EproPengguna::with('user', 'eproBahagian')
-            ->where('pen_idusers', '!=', Auth::id())
+        $authRole = Auth::user()->role;
+
+        $pengguna = EproPengguna::with(['user.etraPeranan', 'eproBahagian'])
+            ->whereHas('user', function ($query) use ($authRole) {
+                $query->where('id', '!=', Auth::id())
+                    ->where('role', '<=', $authRole); // or any condition you want
+            })
             ->get();
+
+
         if ($request->ajax()) {
             return response()->json([
                 'data' => $pengguna
             ]);
         }
 
+        Log::info($pengguna->toArray());
         return view('pages.urusetia-pengguna');
     }
 

@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('etra_peranan', function (Blueprint $table) {
             $table->id('prn_id');
             $table->string('prn_keterangan');
+            $table->string('prn_class');
             $table->timestamps();
         });
     }

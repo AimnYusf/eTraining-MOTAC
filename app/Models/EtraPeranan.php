@@ -10,6 +10,7 @@ class EtraPeranan extends Model
     protected $primaryKey = 'prn_id';
     protected $fillable = [
         'prn_keterangan',
+        'prn_class',
     ];
 
     public function users()

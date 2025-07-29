@@ -13,11 +13,6 @@ $(function () {
   });
 
   const dtTable = $('.datatables');
-  const roleObj = {
-    user: { badge: 'bg-label-success', text: 'Pengguna' },
-    supervisor: { badge: 'bg-label-info', text: 'Pentadbir Latihan Bahagian' },
-    administrator: { badge: 'bg-label-primary', text: 'Urusetia' }
-  };
 
   // Initialize DataTable
   if (dtTable.length) {
@@ -35,7 +30,7 @@ $(function () {
         { data: 'pen_nama' },
         { data: 'pen_emel' },
         { data: 'epro_bahagian.bah_ketring' },
-        { data: 'user.role' },
+        { data: 'user.etra_peranan.prn_keterangan' },
         { data: '' }
       ],
       columnDefs: [
@@ -48,7 +43,7 @@ $(function () {
         {
           targets: 1,
           render: (data, type, full) => `
-            <span class="text-uppercase"">
+            <span class="text-uppercase">
               ${data}
             </span>
           `
@@ -61,9 +56,7 @@ $(function () {
           targets: 4,
           className: 'text-center',
           render: (data, type, full) => {
-            const badgeClass = roleObj[data].badge;
-            const roleText = roleObj[data].text;
-            return `<span class="badge ${badgeClass} mt-2 mb-2 table-badges">${roleText}</span>`;
+            return `<span class="badge bg-label-${full.user.etra_peranan.prn_class} mt-2 mb-2 table-badges">${data}</span>`;
           }
         },
         {
@@ -119,7 +112,7 @@ $(function () {
         $('#pen_nokp').text(data.pen_nokp);
         $('#pen_jawatan').text(`${data.pen_jawatan} ${data.pen_gred}`);
         $('#pen_agensi').text(`${data.epro_jabatan.jab_ketpenu}, ${data.epro_jabatan.jab_ketring}`);
-        $('#pen_bahagian').text(data.epro_bahagian.bah_ketring);
+        $('#pen_bahagian').text(data.id_bahagian ? data.epro_bahagian.bah_ketring : data.pen_bahagianlain);
         $('#pen_notel').text(data.pen_notel);
         $('#pen_nohp').text(data.pen_nohp);
         $('#pen_emel').text(data.pen_emel);

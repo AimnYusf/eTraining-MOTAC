@@ -1,3 +1,7 @@
+@php
+  use Illuminate\Support\Facades\Auth;
+  @endphp
+
 <div class="modal fade" id="editRecord" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -53,10 +57,13 @@
             <div class="row ps-2 mb-2">
               <div class="col-sm-3 d-flex justify-content-between align-items-center">Peranan<span>:</span></div>
               <div class="col-sm-9">
-                <select id="role" name="role" class="form-select w-50" data-style="btn-default">
+                <select id="role" name="role" class="selectpicker w-50" data-style="btn-default">
                   <option value="2">Pengguna</option>
                   <option value="3">Pentadbir Latihan Bahagian</option>
                   <option value="4">Urus Setia</option>
+                  @if(Auth::user()->role == 5)
+            <option value="5">Pentadbir Sistem</option>
+          @endif
                 </select>
               </div>
             </div>
