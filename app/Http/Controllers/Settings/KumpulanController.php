@@ -44,14 +44,12 @@ class KumpulanController extends Controller
             // Validate the request data
             $request->validate([
                 'kum_id' => 'nullable|integer|exists:epro_kumpulan,kum_id',
-                'kum_ketring' => 'nullable|string',
                 'kum_ketpenu' => 'required|string'
             ]);
 
             $kumpulan = EproKumpulan::updateOrCreate(
                 ['kum_id' => $request->kum_id],
                 [
-                    'kum_ketring' => $request->kum_ketring,
                     'kum_ketpenu' => $request->kum_ketpenu
                 ]
             );

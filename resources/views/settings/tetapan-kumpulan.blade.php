@@ -35,7 +35,7 @@
   <div class="card">
     <div class="card-header">
     <div class="d-flex justify-content-between">
-      <h5 class="card-title">Senarai Kumpulan</h5>
+      <h5 class="card-title">Senarai Kumpulan Sasaran</h5>
     </div>
     </div>
     <div class="card-datatable table-responsive">
@@ -65,13 +65,8 @@
         @csrf
         <input type="hidden" id="kum_id" name="kum_id">
         <div class="col-12">
-        <label class="form-label" for="kum_ketpenu">Kumpulan</label>
+        <label class="form-label" for="kum_ketpenu">Kumpulan Sasaran</label>
         <input type="text" id="kum_ketpenu" name="kum_ketpenu" class="form-control" placeholder="Kumpulan" />
-        </div>
-        <div class="col-12">
-        <label class="form-label" for="kum_ketring">Ringkasan</label>
-        <p class="small"><em>(Isi jika ingin dipaparkan pada profil)</em></p>
-        <input type="text" id="kum_ketring" name="kum_ketring" class="form-control" placeholder="Ringkasan" />
         </div>
         <div class="col-12 text-center">
         <button type="reset" class="btn btn-label-secondary me-3" data-bs-dismiss="modal"
