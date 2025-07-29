@@ -140,6 +140,15 @@
       </div>
       </div>
 
+      @if (isset($permohonan->per_tkhtindakan))
+      <div class="row ps-2 mb-3">
+      <div class="col-sm-3 d-flex justify-content-between">Tarikh Tindakan<span>:</span></div>
+      <div class="col-sm-9">
+      <span>{{ Carbon::parse($pengguna->per_tkhtindakan)->translatedFormat('d/m/Y') }}</span>
+      </div>
+      </div>
+    @endif
+
       <form id="formAuthentication">
       @csrf
       <input type="hidden" id="per_id" name="per_id" value="{{ $permohonan->per_id }}">
@@ -148,11 +157,16 @@
       <div class="row ps-2 mb-3">
         <div class="col-sm-3 d-flex justify-content-between align-items-center">Status Sokongan<span>:</span></div>
         <div class="col-sm-9">
-        <select id="per_status" name="per_status" class="selectpicker w-50" data-style="btn-default"
-          title="Sila Pilih" required>
-          <option value="2">Disokong</option>
-          <option value="3">Tidak Disokong</option>
-        </select>
+        @if ($permohonan->per_status == 1)
+      <select id="per_status" name="per_status" class="selectpicker w-50" data-style="btn-default"
+        title="Sila Pilih" required>
+        <option value="2">Disokong</option>
+        <option value="3">Tidak Disokong</option>
+      </select>
+      @else
+      <span><strong>{{ $permohonan->etraStatus->stp_keterangan }}</strong></span>
+      @endif
+
         </div>
       </div>
     </section>

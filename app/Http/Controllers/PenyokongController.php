@@ -22,7 +22,10 @@ class PenyokongController extends Controller
             'eproPengguna.eproKumpulan',
             'eproPengguna.eproJabatan',
             'eproPengguna.eproBahagian',
+            'etraStatus'
         ])->findOrFail($id);
+
+        Log::info($permohonan->toArray());
 
         // Get pengguna from the permohonan's user
         $pengguna = $permohonan->eproPengguna;

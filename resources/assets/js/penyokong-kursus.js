@@ -98,6 +98,18 @@ document.addEventListener('DOMContentLoaded', function (e) {
                         title: 'm-0',
                         confirmButton: 'btn btn-primary waves-effect waves-light'
                       }
+                    }).then(function () {
+                      location.reload();
+                    });
+                  },
+                  error: function (xhr, status, error) {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Ralat!',
+                      text: 'Terdapat ralat semasa menghantar sokongan. Sila cuba lagi.',
+                      customClass: {
+                        confirmButton: 'btn btn-danger waves-effect waves-light'
+                      }
                     });
                   }
                 });
