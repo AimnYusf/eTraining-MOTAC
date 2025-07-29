@@ -39,15 +39,18 @@ class IsytiharController extends Controller
         $isy_tkhmula = Carbon::createFromFormat('d/m/Y', $request->isy_tkhmula)->format('Y-m-d');
         $isy_tkhtamat = Carbon::createFromFormat('d/m/Y', $request->isy_tkhtamat)->format('Y-m-d');
 
-        EproIsytihar::create([
-            'isy_idusers' => Auth::id(),
-            'isy_nama' => $request->isy_nama,
-            'isy_tkhmula' => $isy_tkhmula,
-            'isy_tkhtamat' => $isy_tkhtamat,
-            'isy_jam' => $request->isy_jam,
-            'isy_tempat' => $request->isy_tempat,
-            'isy_anjuran' => $request->isy_anjuran,
-            'isy_status' => 6
-        ]);
+        EproIsytihar::updateOrCreate(
+            ['isy_id' => $request->isy_id],
+            [
+                'isy_idusers' => Auth::id(),
+                'isy_nama' => $request->isy_nama,
+                'isy_tkhmula' => $isy_tkhmula,
+                'isy_tkhtamat' => $isy_tkhtamat,
+                'isy_jam' => $request->isy_jam,
+                'isy_tempat' => $request->isy_tempat,
+                'isy_anjuran' => $request->isy_anjuran,
+                'isy_status' => $request->isy_status
+            ]
+        );
     }
 }

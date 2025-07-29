@@ -51,8 +51,7 @@ $(function () {
         },
         {
           targets: 1,
-          render: (data, type, full, meta) =>
-            `<span class="text-uppercase cursor-pointer view-record" data-id=${full.isy_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus">${data}</span>`
+          render: (data, type, full, meta) => `<span class="text-uppercase">${data}</span>`
         },
         {
           targets: 2,
@@ -72,12 +71,22 @@ $(function () {
           targets: -1,
           searchable: false,
           orderable: false,
-          render: (data, type, full) =>
-            `<div class="d-inline-block text-nowrap">
-              <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.isy_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus">
-                <i class="ti ti-eye ti-md"></i>
-              </button>
-            </div>`
+          render: function (data, type, full) {
+            var button;
+            if (full.isy_status == 6) {
+              button = `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light edit-record" data-id=${full.isy_id} data-bs-toggle="tooltip" title="Edit">
+                  <i class="ti ti-edit ti-md"></i>
+                </button>`;
+            } else {
+              button = `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.isy_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus">
+                  <i class="ti ti-eye ti-md"></i>
+                </button>`;
+            }
+
+            return `<div class="d-inline-block text-nowrap">
+              ${button}
+            </div>`;
+          }
         },
         {
           targets: [0, 2, 3, 4, 5],
@@ -111,9 +120,11 @@ $(function () {
           className: 'add-new btn btn-primary ms-2 ms-sm-0 waves-effect waves-light',
           action: function () {
             initializePicker();
+            $('#courseForm')[0].reset();
+            $('#message').removeClass('d-none');
             $('#isy_tajuk').html('Tambah Rekod Kursus');
-            $('.close-btn').html('Batal');
             $('.submit-btn').removeClass('d-none');
+            $('.close-btn').addClass('d-none');
             $('#manageRecord').modal('show');
           }
         }
@@ -158,64 +169,53 @@ $(function () {
     $('.dataTables_length .form-select').removeClass('form-select-sm');
   }, 300);
 
-  // View Record
-  table.on('click', '.view-record', function () {
-    const isy_id = $(this).data('id');
-
+  function getRecord(isy_id, isViewMode) {
     $.get(`/isytihar/${isy_id}`, data => {
-      dateFields.forEach(selector => {
-        const instance = $(selector)[0]._flatpickr;
-        if (instance) instance.destroy();
-      });
+      if (isViewMode) {
+        dateFields.forEach(selector => {
+          $(selector)[0]._flatpickr?.destroy();
+        });
+      }
 
-      ['isy_nama', 'isy_tkhmula', 'isy_tkhtamat', 'isy_jam', 'isy_tempat', 'isy_anjuran'].forEach(field => {
+      ['isy_id', 'isy_nama', 'isy_tkhmula', 'isy_tkhtamat', 'isy_jam', 'isy_tempat', 'isy_anjuran'].forEach(field => {
         const value = ['isy_tkhmula', 'isy_tkhtamat'].includes(field) ? formatDate(data[field]) : data[field];
-        $(`#${field}`).val(value).prop('readonly', true);
+        $(`#${field}`).val(value).prop('readonly', isViewMode);
       });
 
       $('#isy_tajuk').html('Maklumat Kursus');
-      $('.close-btn').html('Tutup');
-      $('.submit-btn').addClass('d-none');
+
+      // Manage button visibility based on mode
+      $('.submit-btn').toggleClass('d-none', isViewMode);
+      $('.close-btn').toggleClass('d-none', !isViewMode);
+
       $('#manageRecord').modal('show');
     });
+  }
+
+  table.on('click', '.edit-record', function () {
+    $('#message').removeClass('d-none');
+    getRecord($(this).data('id'), false);
   });
 
+  table.on('click', '.view-record', function () {
+    $('#message').addClass('d-none');
+    getRecord($(this).data('id'), true);
+  });
+
+  // Form Validation & Submission
   // Form Validation & Submission
   if (formAuthentication) {
     fv = FormValidation.formValidation(formAuthentication, {
       fields: {
-        isy_nama: {
-          validators: {
-            notEmpty: { message: 'Sila masukkan nama kursus' }
-          }
-        },
-        isy_tkhmula: {
-          validators: {
-            notEmpty: { message: 'Sila pilih tarikh mula kursus' }
-          }
-        },
-        isy_tkhtamat: {
-          validators: {
-            notEmpty: { message: 'Sila pilih tarikh tamat kursus' }
-          }
-        },
-        isy_tempat: {
-          validators: {
-            notEmpty: { message: 'Sila masukkan tempat kursus' }
-          }
-        },
-        isy_anjuran: {
-          validators: {
-            notEmpty: { message: 'Sila masukkan penganjur kursus' }
-          }
-        }
+        isy_nama: { validators: { notEmpty: { message: 'Sila masukkan nama kursus' } } },
+        isy_tkhmula: { validators: { notEmpty: { message: 'Sila pilih tarikh mula kursus' } } },
+        isy_tkhtamat: { validators: { notEmpty: { message: 'Sila pilih tarikh tamat kursus' } } },
+        isy_tempat: { validators: { notEmpty: { message: 'Sila masukkan tempat kursus' } } },
+        isy_anjuran: { validators: { notEmpty: { message: 'Sila masukkan penganjur kursus' } } }
       },
       plugins: {
         trigger: new FormValidation.plugins.Trigger(),
-        bootstrap5: new FormValidation.plugins.Bootstrap5({
-          eleValidClass: '',
-          rowSelector: '.validate'
-        }),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({ eleValidClass: '', rowSelector: '.validate' }),
         submitButton: new FormValidation.plugins.SubmitButton(),
         autoFocus: new FormValidation.plugins.AutoFocus()
       },
@@ -227,25 +227,73 @@ $(function () {
         });
 
         instance.on('core.form.valid', () => {
-          $.ajax({
-            data: $(formAuthentication).serialize(),
-            url: 'isytihar',
-            type: 'POST',
-            success: () => {
-              Swal.fire({
-                title: 'Berjaya ditambah!',
-                icon: 'success',
-                customClass: {
-                  title: 'm-0',
-                  confirmButton: 'btn btn-primary waves-effect waves-light'
-                },
-                buttonsStyling: false
-              }).then(() => {
-                table.ajax.reload();
-                $('#manageRecord').modal('hide');
-              });
-            }
-          });
+          const isy_status = $(formAuthentication)
+            .find('button[type="submit"][name="isy_status"][value="7"]')
+            .is(':focus')
+            ? '7'
+            : '6';
+
+          if (isy_status === '7') {
+            Swal.fire({
+              icon: 'question',
+              title: 'Hantar permohonan?',
+              showCancelButton: true,
+              confirmButtonText: 'Ya',
+              cancelButtonText: 'Batal',
+              customClass: {
+                title: 'm-0',
+                confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+                cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+              },
+              buttonsStyling: false
+            }).then(result => {
+              if (result.isConfirmed) {
+                performAjaxSubmission(isy_status);
+              }
+            });
+          } else {
+            performAjaxSubmission(isy_status);
+          }
+        });
+      }
+    });
+  }
+
+  function performAjaxSubmission(statusValue) {
+    const formData = $(formAuthentication).serializeArray();
+    let statusFound = false;
+    for (let i = 0; i < formData.length; i++) {
+      if (formData[i].name === 'isy_status') {
+        formData[i].value = statusValue;
+        statusFound = true;
+        break;
+      }
+    }
+    if (!statusFound) {
+      formData.push({ name: 'isy_status', value: statusValue });
+    }
+
+    $.ajax({
+      data: $.param(formData),
+      url: 'isytihar',
+      type: 'POST',
+      success: () => {
+        Swal.fire({
+          title:
+            $('#isy_id').val() == ''
+              ? 'Berjaya ditambah!'
+              : statusValue == 6
+                ? 'Berjaya dikemaskini!'
+                : 'Berjaya dihantar!',
+          icon: 'success',
+          customClass: {
+            title: 'm-0',
+            confirmButton: 'btn btn-primary waves-effect waves-light'
+          },
+          buttonsStyling: false
+        }).then(() => {
+          table.ajax.reload();
+          $('#manageRecord').modal('hide');
         });
       }
     });

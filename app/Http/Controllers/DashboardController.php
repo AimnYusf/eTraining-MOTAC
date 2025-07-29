@@ -31,7 +31,7 @@ class DashboardController extends Controller
         $permohonanSubquery = DB::table('epro_permohonan')
             ->selectRaw("
                 COUNT(*) AS jumlah,
-                SUM(CASE WHEN per_status IN (1, 2, 7) THEN 1 ELSE 0 END) AS baru,
+                SUM(CASE WHEN per_status IN (1, 2, 6, 7) THEN 1 ELSE 0 END) AS baru,
                 SUM(CASE WHEN per_status IN (4, 8) THEN 1 ELSE 0 END) AS berjaya,
                 SUM(CASE WHEN per_status IN (3, 5, 9) THEN 1 ELSE 0 END) AS tidak_berjaya
             ")
@@ -41,7 +41,7 @@ class DashboardController extends Controller
         $isytiharSubquery = DB::table('epro_isytihar')
             ->selectRaw("
                 COUNT(*) AS jumlah,
-                SUM(CASE WHEN isy_status IN (1, 2, 7) THEN 1 ELSE 0 END) AS baru,
+                SUM(CASE WHEN isy_status IN (1, 2, 6, 7) THEN 1 ELSE 0 END) AS baru,
                 SUM(CASE WHEN isy_status IN (4, 8) THEN 1 ELSE 0 END) AS berjaya,
                 SUM(CASE WHEN isy_status IN (3, 5, 9) THEN 1 ELSE 0 END) AS tidak_berjaya
             ")

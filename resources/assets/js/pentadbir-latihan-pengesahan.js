@@ -14,6 +14,7 @@ $(function () {
 
   const dtTable = $('.datatables');
   const statusObj = [];
+  let table;
 
   window.statusData.forEach(item => {
     statusObj.push(item.stp_keterangan);
@@ -27,7 +28,7 @@ $(function () {
 
   // Initialize DataTable
   if (dtTable.length) {
-    const table = dtTable.DataTable({
+    table = dtTable.DataTable({
       ajax: {
         url: `/pengesahan`,
         type: 'GET',
@@ -51,6 +52,12 @@ $(function () {
           searchable: false,
           className: 'text-center',
           render: (data, type, full, meta) => `<span>${meta.row + 1}</span>`
+        },
+        {
+          targets: 1,
+          render: function (data, type, full, meta) {
+            return `<span class="text-uppercase cursor-pointer view-record" data-id=${full.isy_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus">${data}</span>`;
+          }
         },
         {
           targets: 3,
@@ -77,14 +84,24 @@ $(function () {
           targets: -1,
           className: 'text-center',
           render: (data, type, full) => `
-            <div class="d-inline-block">
-            <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.isy_id} data-bs-toggle="tooltip" title="Lihat"><i class="ti ti-eye ti-md"></i></button>
-              <a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                <i class="ti ti-dots-vertical ti-md"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end m-0">
-                <button class="update-record dropdown-item" data-id="${full.isy_id}" data-status="8">Disahkan</button>
-                <button class="update-record dropdown-item" data-id="${full.isy_id}" data-status="9">Tidak Disahkan</button>
+            <div class="d-inline-flex align-items-center">
+              <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id="${full.isy_id}" data-bs-toggle="tooltip" title="Papar Perincian Kursus">
+                <i class="ti ti-eye ti-md"></i>
+              </button>
+              <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light delete-record" 
+                data-id="${full.isy_id}" 
+                data-bs-toggle="tooltip" 
+                title="Padam">
+                <i class="ti ti-trash ti-md"></i>
+              </button>
+              <div class="dropdown">
+                <a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="ti ti-dots-vertical ti-md"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end m-0">
+                  <button class="update-record dropdown-item" data-id="${full.isy_id}" data-status="8">Disahkan</button>
+                  <button class="update-record dropdown-item" data-id="${full.isy_id}" data-status="9">Tidak Disahkan</button>
+                </div>
               </div>
             </div>
           `
@@ -217,4 +234,46 @@ $(function () {
       $('.dataTables_length .form-select').removeClass('form-select-sm');
     }, 300);
   }
+
+  // Delete Record
+  $(document).on('click', '.delete-record', function () {
+    const isy_id = $(this).data('id');
+
+    Swal.fire({
+      icon: 'question',
+      title: 'Teruskan tindakan?',
+      showCancelButton: true,
+      confirmButtonText: 'Ya',
+      cancelButtonText: 'Batal',
+      customClass: {
+        title: 'm-0',
+        confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+        cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+      },
+      buttonsStyling: false
+    }).then(function (result) {
+      if (result.value) {
+        $.ajax({
+          url: `/pengesahan/${isy_id}`,
+          type: 'POST',
+          data: {
+            _method: 'DELETE',
+            _token: $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function () {
+            Swal.fire({
+              icon: 'success',
+              title: 'Berjaya dipadam!',
+              customClass: {
+                title: 'm-0',
+                confirmButton: 'btn btn-primary waves-effect'
+              }
+            }).then(() => {
+              table.ajax.reload();
+            });
+          }
+        });
+      }
+    });
+  });
 });

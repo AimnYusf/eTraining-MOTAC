@@ -181,7 +181,7 @@ class Records
         $jumlahPermohonanPengguna = DB::query()
             ->fromSub($permohonanQuery->unionAll($isytiharQuery), 'gabungan')
             ->selectRaw('COUNT(*) as jumlah')
-            ->selectRaw('SUM(CASE WHEN status IN (1, 2, 7) THEN 1 ELSE 0 END) as dalam_proses')
+            ->selectRaw('SUM(CASE WHEN status IN (1, 2, 6, 7) THEN 1 ELSE 0 END) as dalam_proses')
             ->selectRaw('SUM(CASE WHEN status IN (4, 8) THEN 1 ELSE 0 END) as berjaya')
             ->selectRaw('SUM(CASE WHEN status IN (3, 5, 9) THEN 1 ELSE 0 END) as tidak_berjaya')
             ->first();

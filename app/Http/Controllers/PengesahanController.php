@@ -24,6 +24,7 @@ class PengesahanController extends Controller
 
         if ($bahagian) {
             $pengesahan = EproIsytihar::with('eproPengguna', 'etraStatus')
+                ->where('isy_status', '!=', 6)
                 ->whereHas('eproPengguna', function ($query) use ($bahagian) {
                     $query->where('pen_idbahagian', $bahagian->bah_id);
                 })
@@ -60,5 +61,18 @@ class PengesahanController extends Controller
         if ($isytihar) {
             $isytihar->update(['isy_status' => $request->isy_status]);
         }
+    }
+
+    public function destroy($id)
+    {
+        $isytihar = EproIsytihar::find($id);
+
+        if (!$isytihar) {
+            return response()->json(['message' => 'Rekod tidak dijumpai.'], 404);
+        }
+
+        $isytihar->delete();
+
+        return response()->json(['message' => 'Rekod berjaya dipadam.']);
     }
 }
