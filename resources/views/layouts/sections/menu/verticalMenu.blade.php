@@ -6,7 +6,6 @@
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
-  <!-- ! Hide app brand if navbar-full -->
   @if(!isset($navbarFull))
     <div class="app-brand demo">
     <a href="{{ url('/') }}" class="app-brand-link d-flex align-items-center">
@@ -29,9 +28,10 @@
   <ul class="menu-inner py-1">
     @foreach ($menuData[0]->menu as $menu)
 
-      <!-- menu allowed -->
       @php
         $role = Auth::check() ? Auth::user()->role : 'guest';
+        $userEmail = Auth::check() ? Auth::user()->email : null;
+        $isMotacUser = $userEmail && str_ends_with($userEmail, '@motac.gov.my');
 
         $allowed = match ($role) {
         1 => in_array($menu->slug, ['dashboard', 'profil']),
@@ -57,9 +57,13 @@
         'tetapan-tempat',
         'urusetia-pengguna'
         ]),
-
         default => true
         };
+
+        // Add condition to hide 'isytihar' for non-MOTAC users
+        if ($menu->slug === 'isytihar' && !$isMotacUser) {
+        $allowed = false;
+        }
       @endphp
 
       @if ($allowed)

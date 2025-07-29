@@ -38,7 +38,7 @@
     $tkh_mohon = Carbon::parse($permohonan->per_tkhmohon)->translatedFormat('d F Y');
     $tkh_mula = Carbon::parse($permohonan->eproKursus->kur_tkhmula);
     $tkh_tamat = Carbon::parse($permohonan->eproKursus->kur_tkhtamat);
-  @endphp
+    @endphp
 
   <div class="card">
     <div class="card-header pb-3 pt-3 d-flex justify-content-between align-items-center">
@@ -101,7 +101,8 @@
       'Nama' => $pengguna->pen_nama,
       'No. MyKad (Baru)' => $pengguna->pen_nokp,
       'Jawatan / Gred' => $pengguna->pen_jawatan . ' / ' . $pengguna->pen_gred,
-      'Bahagian' => $pengguna->eproBahagian->bah_ketpenu,
+      'Kementerian/Jabatan/Agensi' => $pengguna->eproJabatan->jab_ketpenu,
+      'Bahagian' => $pengguna->pen_idbahagian ? $pengguna->eproBahagian->bah_ketpenu : $pengguna->pen_bahagianlain,
       'No. Telefon (P)' => $pengguna->pen_notel,
       'No. Telefon (HP)' => $pengguna->pen_nohp,
       'E-Mel Rasmi' => $pengguna->pen_emel,

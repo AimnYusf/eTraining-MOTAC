@@ -58,7 +58,7 @@ $(function () {
         { data: 'per_id' },
         { data: 'epro_pengguna.pen_nama' },
         { data: 'epro_pengguna.pen_jawatan', visible: false },
-        { data: 'epro_pengguna.epro_jabatan.jab_ketring' },
+        { data: 'epro_pengguna.pen_idjabatan' },
         { data: 'epro_pengguna.pen_nokp', visible: false },
         { data: 'epro_pengguna.pen_emel', visible: false },
         { data: 'per_tkhmohon' },
@@ -100,10 +100,10 @@ $(function () {
           targets: 4,
           className: 'text-center',
           render: (data, type, full) => {
-            if (data === 'MOTAC') {
+            if (data == 1) {
               return `${full.epro_pengguna.epro_bahagian.bah_ketpenu}`;
             }
-            return data;
+            return full.epro_pengguna.epro_jabatan.jab_ketpenu;
           }
         },
         {
@@ -266,7 +266,7 @@ $(function () {
         $('#pen_nokp').text(pengguna.pen_nokp);
         $('#pen_jawatan').text(`${pengguna.pen_jawatan} ${pengguna.pen_gred}`);
         $('#pen_agensi').text(pengguna.epro_jabatan.jab_ketpenu);
-        $('#pen_bahagian').text(pengguna.epro_bahagian.bah_ketpenu);
+        $('#pen_bahagian').text(pengguna.id_bahagian ? pengguna.epro_bahagian.bah_ketring : pengguna.pen_bahagianlain);
         $('#pen_notel').text(pengguna.pen_notel);
         $('#pen_nohp').text(pengguna.pen_nohp);
         $('#pen_emel').text(pengguna.pen_emel);
