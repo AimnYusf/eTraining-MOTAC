@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
                 'lowercase',
                 'email',
                 'max:255',
-                'regex:/^[a-zA-Z0-9._%+-]+@motac\.gov\.my$/',
+                'regex:/^[a-zA-Z0-9._%+-]+@(tourism\.gov\.my|kraftangan\.gov\.my|aswara\.edu\.my|artgallery\.gov\.my|motac\.gov\.my|jkkn\.gov\.my|heritage\.gov\.my|matic\.gov\.my|istanabudaya\.gov\.my)$/',
                 'unique:' . User::class,
             ],
             'password' => [
@@ -63,7 +63,7 @@ class RegisteredUserController extends Controller
             'email.lowercase' => 'Emel mesti dalam huruf kecil.',
             'email.email' => 'Emel mesti alamat emel yang sah.',
             'email.max' => 'Emel tidak boleh melebihi 255 aksara.',
-            'email.regex' => 'Emel mesti merupakan emel rasmi MOTAC.',
+            'email.regex' => 'Emel mesti merupakan emel rasmi Kementerian/Jabatan/Agensi.',
             'email.unique' => 'Emel ini sudah wujud.',
 
             'password.required' => 'Ruangan Kata Laluan wajib diisi.',

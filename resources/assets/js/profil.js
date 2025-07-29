@@ -185,8 +185,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
               message: 'Sila masukkan emel pegawai penyokong'
             },
             regexp: {
-              regexp: /^[a-zA-Z0-9._%+-]+@motac\.gov\.my$/,
-              message: 'Emel mesti merupakan emel rasmi MOTAC.'
+              regexp:
+                /^[a-zA-Z0-9._%+-]+@(tourism\.gov\.my|kraftangan\.gov\.my|aswara\.edu\.my|artgallery\.gov\.my|motac\.gov\.my|jkkn\.gov\.my|heritage\.gov\.my|matic\.gov\.my|istanabudaya\.gov\.my)$/,
+              message: 'Emel mesti merupakan emel rasmi Kementerian/Jabatan/Agensi.'
             }
           }
         },
