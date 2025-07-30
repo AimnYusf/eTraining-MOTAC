@@ -23,8 +23,8 @@ return new class extends Migration {
             $table->string('pen_bahagianlain', 200)->nullable();
             $table->string('pen_jawatan', 200)->nullable();
             $table->string('pen_gred', 100)->nullable();
-            $table->integer('pen_idkumpulan')->nullable()->constrained('etra_kumpulan', 'kum_id');
-            $table->integer('pen_idjabatan')->nullable()->constrained('etra_jabatan', 'jab_id');
+            $table->foreignId('pen_idkumpulan')->nullable()->constrained('etra_kumpulan', 'kum_id');
+            $table->foreignId('pen_idjabatan')->nullable()->constrained('etra_jabatan', 'jab_id');
             $table->string('pen_ppnama')->nullable();
             $table->string('pen_ppemel')->nullable();
             $table->string('pen_ppgred')->nullable();
