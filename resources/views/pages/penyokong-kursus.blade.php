@@ -174,7 +174,9 @@
     </div>
 
     <div class="card-footer text-center">
+    @if(!isset($permohonan->per_tkhtindakan))
     <button type="submit" class="btn btn-primary">Hantar</button>
+    @endif
     </div>
     </form>
   </div>
