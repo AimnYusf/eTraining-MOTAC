@@ -154,11 +154,10 @@
         </div>
         <div class="content">
             <div class="header">
-                Tindakan: Permohonan Kursus
-                <span style="text-transform: uppercase;">
-                    {{ $mailData['nama'] ?? '' }}
-                </span> Untuk Sokongan
+                Tindakan: Permohonan <span style="text-transform: uppercase;">{{ $mailData['nama_kursus'] ?? '' }},
+                    {{ $mailData['nama'] ?? '' }}</span> Untuk Sokongan
             </div>
+
 
             <hr style="margin-top: 20px; margin-bottom: 20px; border: none; border-top: 1px solid #eee;">
 
