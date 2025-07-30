@@ -24,7 +24,7 @@ class PengesahanController extends Controller
 
         if ($bahagian) {
             $pengesahan = EtraIsytihar::with('etraPengguna', 'etraStatus')
-                ->where('isy_status', '!=', 6)
+                ->where('isy_status', 7)
                 ->whereHas('etraPengguna', function ($query) use ($bahagian) {
                     $query->where('pen_idbahagian', $bahagian->bah_id);
                 })

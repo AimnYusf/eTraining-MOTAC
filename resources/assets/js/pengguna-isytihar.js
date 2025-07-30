@@ -121,6 +121,7 @@ $(function () {
           action: function () {
             initializePicker();
             $('#courseForm')[0].reset();
+            $('#isy_id').val('');
             $('#message').removeClass('d-none');
             $('#isy_tajuk').html('Tambah Rekod Kursus');
             $('.submit-btn').removeClass('d-none');

@@ -130,32 +130,6 @@ $(function () {
           previous: '<i class="ti ti-chevron-left ti-sm"></i>'
         }
       },
-      initComplete: function () {
-        this.api()
-          .columns(5)
-          .every(function () {
-            var column = this;
-            var select = $(
-              '<select id="filterStatus" class="selectpicker" data-style="btn-default" title="Status"><option value="">Semua</option></select>'
-            )
-              .appendTo('.dt-action-buttons')
-              .on('change', function () {
-                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                column.search(val ? '^' + val + '$' : '', true, false).draw();
-              });
-
-            column
-              .data()
-              .unique()
-              .sort()
-              .each(function (d, j) {
-                select.append('<option value="' + statusObj[d - 1] + '">' + statusObj[d - 1] + '</option>');
-              });
-          });
-
-        // Bootstrap Select
-        $('.selectpicker').selectpicker();
-      },
       drawCallback: () => {
         const tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
         tooltipElements.forEach(el => new bootstrap.Tooltip(el));
