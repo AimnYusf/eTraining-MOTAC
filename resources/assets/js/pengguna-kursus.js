@@ -38,7 +38,7 @@ $(function () {
           let statusClass = '';
 
           if (today > closeDate) {
-            statusText = 'Permohonan Tamat';
+            statusText = 'Tutup';
             statusClass = 'bg-danger';
           } else if (today < releaseDate) {
             statusText = 'Belum Dibuka';
@@ -167,7 +167,7 @@ $(function () {
       <option value="">Semua Status</option>
       <option value="Dibuka">Dibuka</option>
       <option value="Belum Dibuka">Belum Dibuka</option>
-      <option value="Permohonan Tamat">Permohonan Tamat</option>
+      <option value="Tutup">Tutup</option>
     </select>
   `);
 
