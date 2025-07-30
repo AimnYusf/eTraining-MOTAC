@@ -36,7 +36,7 @@ class PermohonanController extends Controller
             return view('pages.urusetia-permohonan-edit', compact('kursus', 'status'));
         }
 
-        $kursus = EproKursus::with('etraKategori', 'eproTempat')
+        $kursus = EproKursus::with('etraKategori', 'etraTempat')
             ->orderBy('kur_tkhmula', 'desc')
             ->get();
 
@@ -53,7 +53,7 @@ class PermohonanController extends Controller
             'eproPengguna.eproKumpulan',
             'eproPengguna.eproBahagian',
             'eproPengguna.eproJabatan',
-            'eproKursus.eproTempat',
+            'eproKursus.etraTempat',
             'etraStatus'
         ])
             ->where('per_id', $id)
@@ -85,7 +85,7 @@ class PermohonanController extends Controller
 
         $permohonan->update(['per_status' => $status]);
 
-        $kursus = EproKursus::with(['eproTempat', 'etraPenganjur'])
+        $kursus = EproKursus::with(['etraTempat', 'etraPenganjur'])
             ->where('kur_id', $permohonan->per_idkursus)
             ->first();
 
@@ -121,7 +121,7 @@ class PermohonanController extends Controller
                 ['per_status' => $status] // values to update
             );
 
-            $kursus = EproKursus::with(['eproTempat', 'etraPenganjur'])
+            $kursus = EproKursus::with(['etraTempat', 'etraPenganjur'])
                 ->where('kur_id', $permohonan->per_idkursus)
                 ->first();
 

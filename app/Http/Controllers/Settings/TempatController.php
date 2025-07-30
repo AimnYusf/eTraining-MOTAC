@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\EproTempat;
+use App\Models\EtraTempat;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Exception;
@@ -15,7 +15,7 @@ class TempatController extends Controller
      */
     public function index(Request $request)
     {
-        $tempat = EproTempat::orderBy('tem_keterangan', 'asc')->get();
+        $tempat = EtraTempat::orderBy('tem_keterangan', 'asc')->get();
 
         if ($request->ajax()) {
             return response()->json([
@@ -31,7 +31,7 @@ class TempatController extends Controller
      */
     public function show($id)
     {
-        $tempat = EproTempat::where('tem_id', $id)->firstOrFail();
+        $tempat = EtraTempat::where('tem_id', $id)->firstOrFail();
         return response()->json($tempat);
     }
 
@@ -43,13 +43,13 @@ class TempatController extends Controller
         try {
             // Validate the request data
             $request->validate([
-                'tem_id' => 'nullable|integer|exists:epro_tempat,tem_id',
+                'tem_id' => 'nullable|integer|exists:etra_tempat,tem_id',
                 'tem_keterangan' => 'required|string|max:255',
                 'tem_alamat' => 'nullable|string',
                 'tem_gmaps' => 'nullable|url'
             ]);
 
-            $tempat = EproTempat::updateOrCreate(
+            $tempat = EtraTempat::updateOrCreate(
                 ['tem_id' => $request->tem_id],
                 [
                     'tem_keterangan' => $request->tem_keterangan,
@@ -83,7 +83,7 @@ class TempatController extends Controller
      */
     public function destroy($id)
     {
-        $tempat = EproTempat::find($id);
+        $tempat = EtraTempat::find($id);
 
         if (!$tempat) {
             return response()->json(['message' => 'Rekod tidak dijumpai.'], 404);

@@ -6,7 +6,7 @@ use App\Models\EtraKategori;
 use App\Models\EproKumpulan;
 use App\Models\EproKursus;
 use App\Models\EtraPenganjur;
-use App\Models\EproTempat;
+use App\Models\EtraTempat;
 use App\Models\EtraUrusetia;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class KursusController extends Controller
             $sharedData = [
                 'kategori' => EtraKategori::all(),
                 'penganjur' => EtraPenganjur::all(),
-                'tempat' => EproTempat::orderBy('tem_keterangan', 'asc')->get(),
+                'tempat' => EtraTempat::orderBy('tem_keterangan', 'asc')->get(),
                 'kumpulan' => EproKumpulan::get(),
                 'urusetia' => EtraUrusetia::get()
             ];
@@ -67,14 +67,14 @@ class KursusController extends Controller
             'kursus' => $kursus,
             'kategori' => EtraKategori::get(),
             'penganjur' => EtraPenganjur::get(),
-            'tempat' => EproTempat::get(),
+            'tempat' => EtraTempat::get(),
             'kumpulan' => EproKumpulan::get()
         ]);
     }
 
     public function show($id)
     {
-        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'eproTempat', 'eproKumpulan'])
+        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'eproKumpulan'])
             ->where('kur_id', $id)
             ->first();
 

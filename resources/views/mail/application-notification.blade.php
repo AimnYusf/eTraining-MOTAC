@@ -206,7 +206,7 @@
                     </tr>
                     <tr>
                         <td>Lokasi Kursus</td>
-                        <td>: <strong>{{ $kursus['eproTempat']['tem_keterangan'] ?? '[TEMPAT KURSUS]' }}</strong></td>
+                        <td>: <strong>{{ $kursus['etraTempat']['tem_keterangan'] ?? '[TEMPAT KURSUS]' }}</strong></td>
                     </tr>
                 </table>
             </div>

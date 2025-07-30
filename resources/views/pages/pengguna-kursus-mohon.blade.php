@@ -62,7 +62,7 @@ use Carbon\Carbon;
             </div>
             <div class="flex-grow-1">
               <h5 class="mb-1 text-primary">Tempat</h5>
-              <span class="text-dark">{{ $kursus->eproTempat->tem_keterangan }}</span>
+              <span class="text-dark">{{ $kursus->etraTempat->tem_keterangan }}</span>
             </div>
           </li>
           <li class="mb-5 d-flex align-items-center">

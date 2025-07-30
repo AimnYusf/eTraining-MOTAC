@@ -18,7 +18,7 @@ class PenyokongController extends Controller
     {
         // Fetch the permohonan with related kursus, tempat, pengguna, jabatan, bahagian & kumpulan
         $permohonan = EproPermohonan::with([
-            'eproKursus.eproTempat',
+            'eproKursus.etraTempat',
             'eproPengguna.eproKumpulan',
             'eproPengguna.eproJabatan',
             'eproPengguna.eproBahagian',
@@ -45,7 +45,7 @@ class PenyokongController extends Controller
 
             // Retrieve user and course data
             $pengguna = EproPengguna::where('pen_idusers', $request->pen_id)->first();
-            $kursus = EproKursus::with('eproTempat')->find($request->kur_id);
+            $kursus = EproKursus::with('etraTempat')->find($request->kur_id);
             $status = $request->per_status;
 
             // Ensure the user exists before proceeding

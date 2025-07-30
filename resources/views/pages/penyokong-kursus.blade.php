@@ -38,7 +38,7 @@
     $tkh_mohon = Carbon::parse($permohonan->per_tkhmohon)->translatedFormat('d F Y');
     $tkh_mula = Carbon::parse($permohonan->eproKursus->kur_tkhmula);
     $tkh_tamat = Carbon::parse($permohonan->eproKursus->kur_tkhtamat);
-    @endphp
+  @endphp
 
   <div class="card">
     <div class="card-header pb-3 pt-3 d-flex justify-content-between align-items-center">
@@ -78,7 +78,7 @@
       <div class="row ps-2 mb-3">
       <div class="col-sm-3 d-flex justify-content-between">Tempat Kursus<span>:</span></div>
       <div class="col-sm-9">
-        <span>{{ $permohonan->eproKursus->eproTempat->tem_keterangan }}</span>
+        <span>{{ $permohonan->eproKursus->etraTempat->tem_keterangan }}</span>
       </div>
       </div>
 

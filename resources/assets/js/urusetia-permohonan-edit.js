@@ -260,7 +260,7 @@ $(function () {
         $('#per_id').val(permohonan.per_id);
         $('#kur_nama').text(kursus.kur_nama);
         $('#kur_tarikh').text(`${formatDate(kursus.kur_tkhmula)} hingga ${formatDate(kursus.kur_tkhtamat)}`);
-        $('#kur_tempat').text(kursus.epro_tempat.tem_alamat);
+        $('#kur_tempat').text(kursus.etra_tempat.tem_alamat);
 
         $('#pen_nama').text(pengguna.pen_nama);
         $('#pen_nokp').text(pengguna.pen_nokp);

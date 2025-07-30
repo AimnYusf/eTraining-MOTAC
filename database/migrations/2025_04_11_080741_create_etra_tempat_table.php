@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('epro_tempat', function (Blueprint $table) {
+        Schema::create('etra_tempat', function (Blueprint $table) {
             $table->id('tem_id');
             $table->string('tem_keterangan', 200);
             $table->text('tem_alamat')->nullable();
@@ -24,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('epro_tempat');
+        Schema::dropIfExists('etra_tempat');
     }
 };

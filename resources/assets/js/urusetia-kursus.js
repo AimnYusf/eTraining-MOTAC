@@ -292,7 +292,7 @@ $(function () {
       $('#kur_nama').html(data.kur_nama);
       $('#kur_kategori').html(data.etra_kategori.kat_keterangan);
       $('#kur_tarikh').html(': ' + formatDate(data.kur_tkhmula) + ' hingga ' + formatDate(data.kur_tkhtamat));
-      $('#kur_tempat').html(': ' + data.epro_tempat.tem_keterangan);
+      $('#kur_tempat').html(': ' + data.etra_tempat.tem_keterangan);
       $('#kur_bilpeserta').html(': ' + data.kur_bilpeserta);
       $('#kur_kumpulan').html(': ' + data.epro_kumpulan.kum_ketpenu);
       $('#kur_penganjur').html(': ' + data.etra_penganjur.pjr_keterangan);

@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->date('kur_tkhtamat')->nullable();
             $table->string('kur_msatamat', 100)->nullable();
             $table->integer('kur_bilhari')->nullable();
-            $table->foreignId('kur_idtempat')->nullable()->constrained('epro_tempat', 'tem_id')->onDelete('cascade');
+            $table->foreignId('kur_idtempat')->nullable()->constrained('etra_tempat', 'tem_id')->onDelete('cascade');
             $table->date('kur_tkhbuka')->nullable();
             $table->date('kur_tkhtutup')->nullable();
             $table->integer('kur_bilpeserta')->nullable();

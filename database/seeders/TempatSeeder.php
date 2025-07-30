@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\EproTempat;
+use App\Models\EtraTempat;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -46,7 +46,7 @@ class TempatSeeder extends Seeder
         ];
 
         foreach ($tempatKursus as $tempat) {
-            EproTempat::create($tempat);
+            EtraTempat::create($tempat);
         }
     }
 }

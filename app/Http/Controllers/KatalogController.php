@@ -25,7 +25,7 @@ class KatalogController extends Controller
         $urusetia = EtraUrusetia::get();
 
         // Retrieve available courses for the user that they haven't applied for
-        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'eproTempat', 'eproKumpulan'])
+        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'eproKumpulan'])
             ->where('kur_status', 1)
             ->get();
 
@@ -63,7 +63,7 @@ class KatalogController extends Controller
 
     public function show($id)
     {
-        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'eproTempat', 'eproKumpulan'])
+        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'eproKumpulan'])
             ->where('kur_id', $id)
             ->first();
 
@@ -86,7 +86,7 @@ class KatalogController extends Controller
 
             // Get user and course details
             $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
-            $kursus = EproKursus::with('eproTempat')->find($request->kur_id);
+            $kursus = EproKursus::with('etraTempat')->find($request->kur_id);
 
             // Prepare data for email
             $url = URL::temporarySignedRoute(
@@ -105,7 +105,7 @@ class KatalogController extends Controller
                 'nama_kursus' => $kursus->kur_nama,
                 'tarikh_mula' => $kursus->kur_tkhmula,
                 'tarikh_tamat' => $kursus->kur_tkhtamat,
-                'tempat' => $kursus->eproTempat->tem_keterangan,
+                'tempat' => $kursus->etraTempat->tem_keterangan,
                 'status' => $permohonan->etraStatus->stp_keterangan ?? 'N/A',
                 'tarikh_mohon' => $permohonan->per_tkhmohon
             ];
@@ -127,7 +127,7 @@ class KatalogController extends Controller
 
     public function maklumatKursus($id)
     {
-        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'eproTempat', 'eproKumpulan'])
+        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'eproKumpulan'])
             ->where('kur_id', $id)
             ->first();
 

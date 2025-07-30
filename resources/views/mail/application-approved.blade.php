@@ -201,7 +201,7 @@
                     </tr>
                     <tr>
                         <td><strong>Tempat</strong></td>
-                        <td>: {{ $kursus->eproTempat->tem_keterangan ?? '[TEMPAT KURSUS]' }}</td>
+                        <td>: {{ $kursus->etraTempat->tem_keterangan ?? '[TEMPAT KURSUS]' }}</td>
                     </tr>
                     <tr>
                         <td><strong>Anjuran</strong></td>
