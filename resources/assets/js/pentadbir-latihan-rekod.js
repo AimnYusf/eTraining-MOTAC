@@ -94,28 +94,21 @@ $(function () {
       },
       buttons: [
         {
-          extend: 'collection',
-          className: 'btn btn-label-primary dropdown-toggle waves-effect waves-light border-none',
-          text: '<i class="ti ti-file-export ti-xs me-sm-1"></i> <span class="d-none d-sm-inline-block">Eksport</span>',
-          buttons: [
-            {
-              extend: 'print',
-              text: '<i class="ti ti-printer me-1" ></i>Cetak',
-              className: 'dropdown-item',
-              exportOptions: {
-                columns: [1, 2, 3, 4, 5]
-              },
-              title: '<h4 class="text-uppercase fw-bold" style="text-align: center;">Rekod Pegawai</h4>'
-            },
-            {
-              extend: 'excel',
-              text: '<i class="ti ti-file-spreadsheet me-1"></i>Excel',
-              className: 'dropdown-item',
-              exportOptions: {
-                columns: [1, 2, 3, 4, 5]
-              }
-            }
-          ]
+          extend: 'excel',
+          text: '<i class="ti ti-file-spreadsheet me-1"></i>Excel',
+          className: 'btn btn-label-primary waves-effect waves-light me-1', // You can adjust class for styling
+          exportOptions: {
+            columns: [1, 2, 3, 4, 5]
+          }
+        },
+        {
+          extend: 'print',
+          text: '<i class="ti ti-printer" ></i>',
+          className: 'btn btn-icon btn-label-primary waves-effect waves-light', // You can adjust class for styling
+          exportOptions: {
+            columns: [1, 2, 3, 4, 5]
+          },
+          title: '<h4 class="text-uppercase fw-bold" style="text-align: center;">Rekod Pegawai</h4>'
         }
       ],
       drawCallback: function () {

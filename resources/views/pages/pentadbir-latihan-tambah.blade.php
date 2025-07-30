@@ -77,7 +77,7 @@
           <div class="row mb-5">
             <label for="isy_jam" class="col-md-3 col-form-label">Jumlah Jam <br><span class="small"><em>(Jika kursus tidak lebih 1 hari)</em></span></label>
             <div class="col-md-9">
-              <input type="text" id="isy_jam" class="form-control" name="isy_jam"
+              <input type="number" id="isy_jam" class="form-control" name="isy_jam"
                 placeholder="Jumlah Jam">
             </div>
           </div>
