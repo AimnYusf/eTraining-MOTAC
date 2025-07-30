@@ -47,9 +47,9 @@ class EtraPengguna extends Model
         return $this->belongsTo(EtraJabatan::class, 'pen_idjabatan', 'jab_id');
     }
 
-    public function eproPermohonan()
+    public function etraPermohonan()
     {
-        return $this->hasMany(EproPermohonan::class, 'per_idusers', 'pen_idusers');
+        return $this->hasMany(EtraPermohonan::class, 'per_idusers', 'pen_idusers');
     }
 
     public function eproKehadiran()

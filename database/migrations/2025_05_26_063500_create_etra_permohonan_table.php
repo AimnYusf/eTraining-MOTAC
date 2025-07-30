@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('epro_permohonan', function (Blueprint $table) {
+        Schema::create('etra_permohonan', function (Blueprint $table) {
             $table->id('per_id');
             $table->foreignId('per_idusers')->constrained('users')->onDelete('cascade');
             $table->foreignId('per_idkursus')->constrained('etra_kursus', 'kur_id')->onDelete('cascade');
@@ -28,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('epro_permohonan');
+        Schema::dropIfExists('etra_permohonan');
     }
 };

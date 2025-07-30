@@ -12,9 +12,9 @@ class EtraStatus extends Model
         'stp_keterangan'
     ];
 
-    public function eproPermohonan()
+    public function etraPermohonan()
     {
-        return $this->hasMany(EproPermohonan::class, 'per_status', 'stp_id');
+        return $this->hasMany(EtraPermohonan::class, 'per_status', 'stp_id');
     }
 
     public function eproIsytihar()

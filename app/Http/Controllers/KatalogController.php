@@ -7,7 +7,7 @@ use App\Mail\ApprovalRequestMail;
 use App\Models\EtraKumpulan;
 use App\Models\EtraKursus;
 use App\Models\EtraPengguna;
-use App\Models\EproPermohonan;
+use App\Models\EtraPermohonan;
 use App\Models\EtraUrusetia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +34,7 @@ class KatalogController extends Controller
         $kid = $request->query('kid');
 
         if ($kid) {
-            $permohonan = EproPermohonan::where('per_idusers', Auth::id())
+            $permohonan = EtraPermohonan::where('per_idusers', Auth::id())
                 ->where('per_idkursus', $kid)
                 ->first();
 
@@ -76,7 +76,7 @@ class KatalogController extends Controller
             DB::beginTransaction();
 
             // Create the application
-            $permohonan = EproPermohonan::create([
+            $permohonan = EtraPermohonan::create([
                 'per_idusers' => Auth::id(),
                 'per_idkursus' => $request->kur_id,
                 'per_tkhmohon' => now(),

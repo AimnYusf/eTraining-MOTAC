@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\EproKehadiran;
 use App\Models\EtraKursus;
-use App\Models\EproPermohonan;
+use App\Models\EtraPermohonan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +18,7 @@ class KehadiranController extends Controller
 
         if ($kid != null) {
             $kursus = EtraKursus::where('kur_id', $kid)->first();
-            $permohonan = EproPermohonan::with([
+            $permohonan = EtraPermohonan::with([
                 'etraPengguna.etraJabatan',
                 'etraPengguna.etraKumpulan',
                 'etraStatus',

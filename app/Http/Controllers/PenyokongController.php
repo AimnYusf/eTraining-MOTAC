@@ -6,7 +6,7 @@ use App\Mail\ApplicationFailedMail;
 use App\Mail\ApplicationNotificationMail;
 use App\Models\EtraKursus;
 use App\Models\EtraPengguna;
-use App\Models\EproPermohonan;
+use App\Models\EtraPermohonan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
@@ -17,7 +17,7 @@ class PenyokongController extends Controller
     public function show($id)
     {
         // Fetch the permohonan with related kursus, tempat, pengguna, jabatan, bahagian & kumpulan
-        $permohonan = EproPermohonan::with([
+        $permohonan = EtraPermohonan::with([
             'etraKursus.etraTempat',
             'etraPengguna.etraKumpulan',
             'etraPengguna.etraJabatan',
@@ -38,7 +38,7 @@ class PenyokongController extends Controller
     {
         try {
             // Update application status and action date
-            EproPermohonan::where('per_id', $request->per_id)->update([
+            EtraPermohonan::where('per_id', $request->per_id)->update([
                 'per_status' => $request->per_status,
                 'per_tkhtindakan' => now()->toDateTimeString(),
             ]);

@@ -6,7 +6,7 @@ use App\Helpers\Records;
 use App\Http\Controllers\Controller;
 use App\Models\EproIsytihar;
 use App\Models\EproKehadiran;
-use App\Models\EproPermohonan;
+use App\Models\EtraPermohonan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -27,8 +27,8 @@ class DashboardController extends Controller
 
     private function getUserApplication($userId)
     {
-        // Subquery for epro_permohonan table
-        $permohonanSubquery = DB::table('epro_permohonan')
+        // Subquery for etra_permohonan table
+        $permohonanSubquery = DB::table('etra_permohonan')
             ->selectRaw("
                 COUNT(*) AS jumlah,
                 SUM(CASE WHEN per_status IN (1, 2, 6, 7) THEN 1 ELSE 0 END) AS baru,

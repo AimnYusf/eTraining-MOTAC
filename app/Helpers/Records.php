@@ -5,7 +5,7 @@ namespace App\Helpers;
 use App\Models\EproIsytihar;
 use App\Models\EproKehadiran;
 use App\Models\EtraPengguna;
-use App\Models\EproPermohonan;
+use App\Models\EtraPermohonan;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -167,7 +167,7 @@ class Records
         $carianId = $carianId ?? Auth::id();
         $carianTahun = $carianTahun ?? Carbon::now()->year;
 
-        $permohonanQuery = EproPermohonan::query()
+        $permohonanQuery = EtraPermohonan::query()
             ->select('per_status as status')
             ->where('per_idusers', $carianId)
             ->whereYear('per_tkhmohon', $carianTahun);

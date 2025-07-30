@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ApplicationApprovedMail;
 use App\Mail\ApplicationFailedMail;
 use App\Models\EtraKursus;
-use App\Models\EproPermohonan;
+use App\Models\EtraPermohonan;
 use App\Models\EtraStatus;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
@@ -21,7 +21,7 @@ class PermohonanController extends Controller
         $kid = $request->query('kid');
 
         if ($kid !== null) {
-            $permohonan = EproPermohonan::with('etraPengguna.etraJabatan', 'etraStatus', 'etraPengguna.etraBahagian')
+            $permohonan = EtraPermohonan::with('etraPengguna.etraJabatan', 'etraStatus', 'etraPengguna.etraBahagian')
                 ->where('per_idkursus', $kid)
                 ->whereNotIn('per_status', [1, 3])
                 ->get();
@@ -49,7 +49,7 @@ class PermohonanController extends Controller
 
     public function show(Request $request, $id)
     {
-        $permohonan = EproPermohonan::with([
+        $permohonan = EtraPermohonan::with([
             'etraPengguna.etraKumpulan',
             'etraPengguna.etraBahagian',
             'etraPengguna.etraJabatan',
@@ -76,7 +76,7 @@ class PermohonanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $permohonan = EproPermohonan::with('etraPengguna')->find($id);
+        $permohonan = EtraPermohonan::with('etraPengguna')->find($id);
         $status = $request->per_status;
 
         if (!$permohonan) {
@@ -108,7 +108,7 @@ class PermohonanController extends Controller
         $status = $request->per_status;
 
         foreach ($ids as $id) {
-            $permohonan = EproPermohonan::with('etraPengguna')->find($id);
+            $permohonan = EtraPermohonan::with('etraPengguna')->find($id);
 
             if (!$permohonan) {
                 // Optionally skip or create a new one based on your logic
@@ -116,7 +116,7 @@ class PermohonanController extends Controller
             }
 
             // Use updateOrCreate (based on per_id)
-            EproPermohonan::updateOrCreate(
+            EtraPermohonan::updateOrCreate(
                 ['per_id' => $id], // condition
                 ['per_status' => $status] // values to update
             );
