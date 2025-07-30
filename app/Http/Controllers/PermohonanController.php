@@ -50,7 +50,7 @@ class PermohonanController extends Controller
     public function show(Request $request, $id)
     {
         $permohonan = EproPermohonan::with([
-            'eproPengguna.eproKumpulan',
+            'eproPengguna.etraKumpulan',
             'eproPengguna.eproBahagian',
             'eproPengguna.eproJabatan',
             'eproKursus.etraTempat',

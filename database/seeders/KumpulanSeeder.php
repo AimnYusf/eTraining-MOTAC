@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\EproKumpulan;
+use App\Models\EtraKumpulan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -26,7 +26,7 @@ class KumpulanSeeder extends Seeder
         ];
 
         foreach ($kumpulanKursus as $kumpulan) {
-            EproKumpulan::create($kumpulan);
+            EtraKumpulan::create($kumpulan);
         }
     }
 }

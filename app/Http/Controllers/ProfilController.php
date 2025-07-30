@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EproBahagian;
 use App\Models\EproJabatan;
-use App\Models\EproKumpulan;
+use App\Models\EtraKumpulan;
 use App\Models\EproPengguna;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class ProfilController extends Controller
             'pengguna' => EproPengguna::where('pen_idusers', Auth::id())->first(),
             'bahagian' => EproBahagian::all(),
             'jabatan' => EproJabatan::all(),
-            'kumpulan' => EproKumpulan::whereNotNull('kum_ketring')->get(),
+            'kumpulan' => EtraKumpulan::whereNotNull('kum_ketring')->get(),
         ]);
     }
 

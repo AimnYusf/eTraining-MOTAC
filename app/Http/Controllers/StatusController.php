@@ -31,7 +31,7 @@ class StatusController extends Controller
 
     public function show($id)
     {
-        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'eproKumpulan'])
+        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
             ->where('kur_id', $id)
             ->first();
 

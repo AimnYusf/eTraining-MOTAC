@@ -32,9 +32,9 @@ class EproPengguna extends Model
         return $this->belongsTo(User::class, 'pen_idusers');
     }
 
-    public function eproKumpulan()
+    public function etraKumpulan()
     {
-        return $this->belongsTo(EproKumpulan::class, 'pen_idkumpulan', 'kum_id');
+        return $this->belongsTo(EtraKumpulan::class, 'pen_idkumpulan', 'kum_id');
     }
 
     public function eproBahagian()

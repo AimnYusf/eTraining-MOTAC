@@ -54,7 +54,7 @@
     </div>
     <div class="row ps-2 mb-1">
       <div class="col-sm-2 d-flex justify-content-between fw-bold">Kumpulan<span>:</span></div>
-      <div class="col-sm-10">{{ $pengguna->eproKumpulan->kum_ketpenu }}</div>
+      <div class="col-sm-10">{{ $pengguna->etraKumpulan->kum_ketpenu }}</div>
     </div>
     </div>
     <div class="card-body">

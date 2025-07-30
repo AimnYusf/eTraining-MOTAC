@@ -35,7 +35,7 @@ class PenggunaController extends Controller
 
     public function show($id)
     {
-        $pengguna = EproPengguna::with('user', 'eproKumpulan', 'eproBahagian', 'eproJabatan')
+        $pengguna = EproPengguna::with('user', 'etraKumpulan', 'eproBahagian', 'eproJabatan')
             ->where('pen_id', $id)
             ->first();
         return response()->json($pengguna);

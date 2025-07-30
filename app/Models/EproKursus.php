@@ -46,9 +46,9 @@ class EproKursus extends Model
     {
         return $this->belongsTo(EtraTempat::class, 'kur_idtempat', 'tem_id');
     }
-    public function eproKumpulan()
+    public function etraKumpulan()
     {
-        return $this->belongsTo(EproKumpulan::class, 'kur_idkumpulan', 'kum_id');
+        return $this->belongsTo(EtraKumpulan::class, 'kur_idkumpulan', 'kum_id');
     }
 
     public function eproPermohonan()

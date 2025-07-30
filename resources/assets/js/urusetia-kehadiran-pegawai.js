@@ -131,7 +131,7 @@ $(function () {
       columns: [
         { data: 'per_id' },
         { data: 'epro_pengguna.pen_nama' },
-        { data: 'epro_pengguna.epro_kumpulan.kum_ketpenu', visible: false, title: 'Kumpulan' },
+        { data: 'epro_pengguna.etra_kumpulan.kum_ketpenu', visible: false, title: 'Kumpulan' },
         {
           data: 'epro_pengguna.pen_jantina',
           visible: false,

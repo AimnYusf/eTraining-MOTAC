@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('epro_kumpulan', function (Blueprint $table) {
+        Schema::create('etra_kumpulan', function (Blueprint $table) {
             $table->id('kum_id');
             $table->string('kum_ketring')->nullable();
             $table->string('kum_ketpenu');
@@ -23,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('epro_kumpulan');
+        Schema::dropIfExists('etra_kumpulan');
     }
 };

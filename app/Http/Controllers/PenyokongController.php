@@ -19,7 +19,7 @@ class PenyokongController extends Controller
         // Fetch the permohonan with related kursus, tempat, pengguna, jabatan, bahagian & kumpulan
         $permohonan = EproPermohonan::with([
             'eproKursus.etraTempat',
-            'eproPengguna.eproKumpulan',
+            'eproPengguna.etraKumpulan',
             'eproPengguna.eproJabatan',
             'eproPengguna.eproBahagian',
             'etraStatus'

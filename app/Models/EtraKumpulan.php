@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EproKumpulan extends Model
+class EtraKumpulan extends Model
 {
-    protected $table = 'epro_kumpulan';
+    protected $table = 'etra_kumpulan';
     protected $primaryKey = 'kum_id';
     protected $fillable = [
         'kum_ketring',

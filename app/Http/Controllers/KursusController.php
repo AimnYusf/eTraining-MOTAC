@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EtraKategori;
-use App\Models\EproKumpulan;
+use App\Models\EtraKumpulan;
 use App\Models\EproKursus;
 use App\Models\EtraPenganjur;
 use App\Models\EtraTempat;
@@ -24,7 +24,7 @@ class KursusController extends Controller
                 'kategori' => EtraKategori::all(),
                 'penganjur' => EtraPenganjur::all(),
                 'tempat' => EtraTempat::orderBy('tem_keterangan', 'asc')->get(),
-                'kumpulan' => EproKumpulan::get(),
+                'kumpulan' => EtraKumpulan::get(),
                 'urusetia' => EtraUrusetia::get()
             ];
 
@@ -68,13 +68,13 @@ class KursusController extends Controller
             'kategori' => EtraKategori::get(),
             'penganjur' => EtraPenganjur::get(),
             'tempat' => EtraTempat::get(),
-            'kumpulan' => EproKumpulan::get()
+            'kumpulan' => EtraKumpulan::get()
         ]);
     }
 
     public function show($id)
     {
-        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'eproKumpulan'])
+        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
             ->where('kur_id', $id)
             ->first();
 

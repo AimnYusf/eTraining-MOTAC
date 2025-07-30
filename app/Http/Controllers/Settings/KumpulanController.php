@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\EproKumpulan;
+use App\Models\EtraKumpulan;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Exception;
@@ -15,7 +15,7 @@ class KumpulanController extends Controller
      */
     public function index(Request $request)
     {
-        $kumpulan = EproKumpulan::get();
+        $kumpulan = EtraKumpulan::get();
 
         if ($request->ajax()) {
             return response()->json([
@@ -31,7 +31,7 @@ class KumpulanController extends Controller
      */
     public function show($id)
     {
-        $kumpulan = EproKumpulan::where('kum_id', $id)->firstOrFail();
+        $kumpulan = EtraKumpulan::where('kum_id', $id)->firstOrFail();
         return response()->json($kumpulan);
     }
 
@@ -43,11 +43,11 @@ class KumpulanController extends Controller
         try {
             // Validate the request data
             $request->validate([
-                'kum_id' => 'nullable|integer|exists:epro_kumpulan,kum_id',
+                'kum_id' => 'nullable|integer|exists:etra_kumpulan,kum_id',
                 'kum_ketpenu' => 'required|string'
             ]);
 
-            $kumpulan = EproKumpulan::updateOrCreate(
+            $kumpulan = EtraKumpulan::updateOrCreate(
                 ['kum_id' => $request->kum_id],
                 [
                     'kum_ketpenu' => $request->kum_ketpenu
@@ -79,7 +79,7 @@ class KumpulanController extends Controller
      */
     public function destroy($id)
     {
-        $kumpulan = EproKumpulan::find($id);
+        $kumpulan = EtraKumpulan::find($id);
 
         if (!$kumpulan) {
             return response()->json(['message' => 'Rekod tidak dijumpai.'], 404);

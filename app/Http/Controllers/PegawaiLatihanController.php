@@ -73,7 +73,7 @@ class PegawaiLatihanController extends Controller
 
             $rekodBulananPengguna = Records::rekodBulananPengguna($pid, $carianTahun);
             $jumlahPermohonanPengguna = Records::jumlahPermohonanPengguna($pid, $carianTahun);
-            $pengguna = EproPengguna::with('eproKumpulan')
+            $pengguna = EproPengguna::with('etraKumpulan')
                 ->where('pen_idusers', $pid)->first();
 
             return view('pages.pentadbir-latihan-maklumat', compact(

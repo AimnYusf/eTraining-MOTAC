@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Records;
 use App\Models\EproBahagian;
-use App\Models\EproKumpulan;
+use App\Models\EtraKumpulan;
 use App\Models\EproPengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +39,7 @@ class LaporanController extends Controller
     public function rekodKumpulan(Request $request)
     {
         $carianTahun = $request->input('tahun') ?? Carbon::now()->year;
-        $kumpulan = EproKumpulan::whereNotNull('kum_ketring')->get();
+        $kumpulan = EtraKumpulan::whereNotNull('kum_ketring')->get();
         $rekodKumpulan = Records::rekodKumpulan($carianTahun);
 
         return view('pages.laporan-kumpulan', compact('rekodKumpulan', 'kumpulan'));
