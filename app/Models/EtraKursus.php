@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EproKursus extends Model
+class EtraKursus extends Model
 {
-    protected $table = 'epro_kursus';
+    protected $table = 'etra_kursus';
     protected $primaryKey = 'kur_id';
 
     protected $casts = [

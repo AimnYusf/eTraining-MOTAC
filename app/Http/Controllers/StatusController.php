@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EproKursus;
+use App\Models\EtraKursus;
 use App\Models\EproPermohonan;
 use App\Models\EtraStatus;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class StatusController extends Controller
 {
     public function index(Request $request)
     {
-        $permohonan = EproPermohonan::with(['eproKursus', 'etraStatus'])
+        $permohonan = EproPermohonan::with(['etraKursus', 'etraStatus'])
             ->where('per_idusers', Auth::id())
             ->orderBy('per_tkhmohon', 'desc')
             ->get();
@@ -31,7 +31,7 @@ class StatusController extends Controller
 
     public function show($id)
     {
-        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
+        $kursus = EtraKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
             ->where('kur_id', $id)
             ->first();
 

@@ -12,8 +12,8 @@ class EtraPenganjur extends Model
         'pjr_keterangan',
     ];
 
-    public function eproKursus()
+    public function etraKursus()
     {
-        return $this->hasMany(EproKursus::class, 'kur_idpenganjur', 'pjr_id');
+        return $this->hasMany(EtraKursus::class, 'kur_idpenganjur', 'pjr_id');
     }
 }

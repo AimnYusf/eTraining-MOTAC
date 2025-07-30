@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('epro_permohonan', function (Blueprint $table) {
             $table->id('per_id');
             $table->foreignId('per_idusers')->constrained('users')->onDelete('cascade');
-            $table->foreignId('per_idkursus')->constrained('epro_kursus', 'kur_id')->onDelete('cascade');
+            $table->foreignId('per_idkursus')->constrained('etra_kursus', 'kur_id')->onDelete('cascade');
             $table->date('per_tkhmohon')->nullable();
             $table->date('per_tkhtindakan')->nullable();
             $table->string('per_pengangkutan')->nullable();

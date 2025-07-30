@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EtraKategori;
 use App\Models\EtraKumpulan;
-use App\Models\EproKursus;
+use App\Models\EtraKursus;
 use App\Models\EtraPenganjur;
 use App\Models\EtraTempat;
 use App\Models\EtraUrusetia;
@@ -37,7 +37,7 @@ class KursusController extends Controller
             }
 
             // Edit existing
-            $kursus = EproKursus::where('kur_id', $kid)->first();
+            $kursus = EtraKursus::where('kur_id', $kid)->first();
             return view('pages.urusetia-kursus-tambah', [
                 'tajuk' => 'Kemaskini rekod',
                 'kursus' => $kursus,
@@ -46,7 +46,7 @@ class KursusController extends Controller
         }
 
         // Main list page
-        $kursus = EproKursus::with('etraKategori')
+        $kursus = EtraKursus::with('etraKategori')
             ->orderBy('kur_tkhmula', 'desc')
             ->get();
 
@@ -59,7 +59,7 @@ class KursusController extends Controller
 
     public function tambahKursus(Request $request)
     {
-        $kursus = $request->query('kid') ? EproKursus::find($request->query('kid')) : null;
+        $kursus = $request->query('kid') ? EtraKursus::find($request->query('kid')) : null;
         $tajuk = $kursus ? 'Kemaskini Kursus' : 'Tambah Kursus';
 
         return view('pages.urusetia-kursus-tambah', [
@@ -74,7 +74,7 @@ class KursusController extends Controller
 
     public function show($id)
     {
-        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
+        $kursus = EtraKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
             ->where('kur_id', $id)
             ->first();
 
@@ -93,14 +93,14 @@ class KursusController extends Controller
             $imagePath = 'poster/' . $customName;
         } else {
             // If no new file uploaded and existing record has no image, use default
-            $existing = EproKursus::find($request->kur_id);
+            $existing = EtraKursus::find($request->kur_id);
 
             $imagePath = $existing && $existing->kur_poster
                 ? $existing->kur_poster
                 : 'poster/no-image.jpg';
         }
 
-        EproKursus::updateOrCreate(
+        EtraKursus::updateOrCreate(
             ['kur_id' => $request->kur_id],
             [
                 'kur_nama' => $request->kur_nama,

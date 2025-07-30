@@ -30,9 +30,9 @@ class Records
     {
         $kehadiranQuery = EproKehadiran::query()
             ->join('etra_pengguna', 'epro_kehadiran.keh_idusers', '=', 'etra_pengguna.pen_idusers')
-            ->join('epro_kursus', 'epro_kehadiran.keh_idkursus', '=', 'epro_kursus.kur_id')
-            ->join('etra_tempat', 'epro_kursus.kur_idtempat', '=', 'etra_tempat.tem_id')
-            ->join('etra_penganjur', 'epro_kursus.kur_idpenganjur', '=', 'etra_penganjur.pjr_id')
+            ->join('etra_kursus', 'epro_kehadiran.keh_idkursus', '=', 'etra_kursus.kur_id')
+            ->join('etra_tempat', 'etra_kursus.kur_idtempat', '=', 'etra_tempat.tem_id')
+            ->join('etra_penganjur', 'etra_kursus.kur_idpenganjur', '=', 'etra_penganjur.pjr_id')
             ->join('etra_kumpulan', 'etra_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
             ->join('etra_bahagian', 'etra_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
             ->select(
@@ -43,13 +43,13 @@ class Records
                 'etra_kumpulan.kum_ketpenu as kumpulan',
                 'etra_bahagian.bah_ketpenu as bahagian',
                 'etra_pengguna.pen_idbahagian as id_bahagian',
-                'epro_kursus.kur_nama as nama_kursus',
-                'epro_kursus.kur_tkhmula as tarikh_mula',
-                'epro_kursus.kur_tkhtamat as tarikh_tamat',
+                'etra_kursus.kur_nama as nama_kursus',
+                'etra_kursus.kur_tkhmula as tarikh_mula',
+                'etra_kursus.kur_tkhtamat as tarikh_tamat',
                 'etra_tempat.tem_keterangan as tempat',
                 'etra_penganjur.pjr_keterangan as penganjur',
-                DB::raw('CASE WHEN epro_kursus.kur_tkhmula !=  epro_kursus.kur_tkhtamat THEN COUNT(epro_kehadiran.keh_idusers) ELSE NULL END as bilangan_hari'),
-                DB::raw('CASE WHEN epro_kursus.kur_tkhmula =  epro_kursus.kur_tkhtamat THEN (epro_kursus.kur_msatamat - epro_kursus.kur_msamula) / 10 ELSE NULL END as bilangan_jam')
+                DB::raw('CASE WHEN etra_kursus.kur_tkhmula !=  etra_kursus.kur_tkhtamat THEN COUNT(epro_kehadiran.keh_idusers) ELSE NULL END as bilangan_hari'),
+                DB::raw('CASE WHEN etra_kursus.kur_tkhmula =  etra_kursus.kur_tkhtamat THEN (etra_kursus.kur_msatamat - etra_kursus.kur_msamula) / 10 ELSE NULL END as bilangan_jam')
             )
             ->groupBy(
                 'epro_kehadiran.keh_idusers',
@@ -59,14 +59,14 @@ class Records
                 'etra_kumpulan.kum_ketpenu',
                 'etra_bahagian.bah_ketpenu',
                 'etra_pengguna.pen_idbahagian',
-                'epro_kursus.kur_nama',
-                'epro_kursus.kur_tkhmula',
-                'epro_kursus.kur_tkhtamat',
+                'etra_kursus.kur_nama',
+                'etra_kursus.kur_tkhmula',
+                'etra_kursus.kur_tkhtamat',
                 'etra_tempat.tem_keterangan',
                 'etra_penganjur.pjr_keterangan',
-                'epro_kursus.kur_bilhari',
-                'epro_kursus.kur_msatamat',
-                'epro_kursus.kur_msamula'
+                'etra_kursus.kur_bilhari',
+                'etra_kursus.kur_msatamat',
+                'etra_kursus.kur_msamula'
             );
 
         $isytiharQuery = EproIsytihar::query()

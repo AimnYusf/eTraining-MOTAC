@@ -12,8 +12,8 @@ class EtraKategori extends Model
         'kat_keterangan',
     ];
 
-    public function eproKursus()
+    public function etraKursus()
     {
-        return $this->hasMany(EproKursus::class, 'kur_idkategori', 'kat_id');
+        return $this->hasMany(EtraKursus::class, 'kur_idkategori', 'kat_id');
     }
 }

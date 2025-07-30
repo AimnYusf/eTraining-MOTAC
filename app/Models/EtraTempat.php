@@ -14,8 +14,8 @@ class EtraTempat extends Model
         'tem_gmaps'
     ];
 
-    public function eproKursus()
+    public function etraKursus()
     {
-        return $this->hasMany(EproKursus::class, 'kur_idtempat', 'tem_id');
+        return $this->hasMany(EtraKursus::class, 'kur_idtempat', 'tem_id');
     }
 }

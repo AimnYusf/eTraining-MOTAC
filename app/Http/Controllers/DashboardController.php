@@ -65,25 +65,25 @@ class DashboardController extends Controller
     {
         // Query for attendance data ($kehadiran)
         $kehadiran = DB::table('epro_kehadiran')
-            ->join('epro_kursus', 'epro_kursus.kur_id', '=', 'epro_kehadiran.keh_idkursus')
+            ->join('etra_kursus', 'etra_kursus.kur_id', '=', 'epro_kehadiran.keh_idkursus')
             ->selectRaw("
-                epro_kursus.kur_tkhmula as tarikh,
+                etra_kursus.kur_tkhmula as tarikh,
                 CASE
-                    WHEN epro_kursus.kur_bilhari > 1
-                    THEN epro_kursus.kur_bilhari
+                    WHEN etra_kursus.kur_bilhari > 1
+                    THEN etra_kursus.kur_bilhari
                     ELSE NULL
                 END as bilangan_hari,
                 CASE
-                    WHEN epro_kursus.kur_bilhari = 1
-                    THEN (epro_kursus.kur_msatamat - epro_kursus.kur_msamula) / 10
+                    WHEN etra_kursus.kur_bilhari = 1
+                    THEN (etra_kursus.kur_msatamat - etra_kursus.kur_msamula) / 10
                     ELSE NULL
                 END as bilangan_jam
             ")
             ->groupBy(
-                'epro_kursus.kur_tkhmula',
-                'epro_kursus.kur_bilhari',
-                'epro_kursus.kur_msatamat',
-                'epro_kursus.kur_msamula'
+                'etra_kursus.kur_tkhmula',
+                'etra_kursus.kur_bilhari',
+                'etra_kursus.kur_msatamat',
+                'etra_kursus.kur_msamula'
             );
 
         // Query for declaration data ($isytihar)

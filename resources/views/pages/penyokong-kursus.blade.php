@@ -7,7 +7,7 @@
 @extends('layouts/layoutMaster')
 
 @section('page-style')
-    @vite([
+  @vite([
     'resources/assets/vendor/scss/pages/app-invoice.scss',
     'resources/assets/vendor/libs/bootstrap-select/bootstrap-select.scss',
     'resources/assets/vendor/libs/@form-validation/form-validation.scss',
@@ -16,7 +16,7 @@
 @endsection
 
 @section('vendor-script')
-    @vite([
+  @vite([
     'resources/assets/vendor/libs/bootstrap-select/bootstrap-select.js',
     'resources/assets/vendor/libs/@form-validation/popular.js',
     'resources/assets/vendor/libs/@form-validation/bootstrap5.js',
@@ -26,21 +26,21 @@
 @endsection
 
 @section('page-script')
-    @vite(['resources/assets/js/penyokong-kursus.js'])
+  @vite(['resources/assets/js/penyokong-kursus.js'])
 @endsection
 
 @section('content')
 
-    @php
+  @php
     use Carbon\Carbon;
     Carbon::setLocale('ms');
 
     $tkh_mohon = Carbon::parse($permohonan->per_tkhmohon)->translatedFormat('d F Y');
-    $tkh_mula = Carbon::parse($permohonan->eproKursus->kur_tkhmula);
-    $tkh_tamat = Carbon::parse($permohonan->eproKursus->kur_tkhtamat);
-  @endphp
+    $tkh_mula = Carbon::parse($permohonan->etraKursus->kur_tkhmula);
+    $tkh_tamat = Carbon::parse($permohonan->etraKursus->kur_tkhtamat);
+    @endphp
 
-    <div class="card">
+  <div class="card">
     <div class="card-header pb-3 pt-3 d-flex justify-content-between align-items-center">
     <div class="d-flex align-items-center gap-3">
       <img src="{{ asset('images/logo-kementerian.png') }}" alt="Logo" class="img-fluid rounded"
@@ -64,28 +64,28 @@
       <div class="row ps-2 mb-3">
       <div class="col-sm-3 d-flex justify-content-between">Nama Kursus<span>:</span></div>
       <div class="col-sm-9">
-      <span>{{ $permohonan->eproKursus->kur_nama }}</span>
+        <span>{{ $permohonan->etraKursus->kur_nama }}</span>
       </div>
       </div>
 
       <div class="row ps-2 mb-3">
       <div class="col-sm-3 d-flex justify-content-between">Tarikh Kursus<span>:</span></div>
       <div class="col-sm-9">
-      <span>{{ $tkh_mula->translatedFormat('d') }} hingga {{ $tkh_tamat->translatedFormat('d F Y') }}</span>
+        <span>{{ $tkh_mula->translatedFormat('d') }} hingga {{ $tkh_tamat->translatedFormat('d F Y') }}</span>
       </div>
       </div>
 
       <div class="row ps-2 mb-3">
       <div class="col-sm-3 d-flex justify-content-between">Tempat Kursus<span>:</span></div>
       <div class="col-sm-9">
-      <span>{{ $permohonan->eproKursus->etraTempat->tem_keterangan }}</span>
+        <span>{{ $permohonan->etraKursus->etraTempat->tem_keterangan }}</span>
       </div>
       </div>
 
       <div class="row ps-2 mb-3">
       <div class="col-sm-3 d-flex justify-content-between">Tarikh Mohon<span>:</span></div>
       <div class="col-sm-9">
-      <span>{{ $tkh_mohon }}</span>
+        <span>{{ $tkh_mohon }}</span>
       </div>
       </div>
     </section>
@@ -130,14 +130,14 @@
       <div class="row ps-2 mb-3">
       <div class="col-sm-3 d-flex justify-content-between">Nama<span>:</span></div>
       <div class="col-sm-9">
-      <span>{{ $pengguna->pen_ppnama }}</span>
+        <span>{{ $pengguna->pen_ppnama }}</span>
       </div>
       </div>
 
       <div class="row ps-2 mb-3">
       <div class="col-sm-3 d-flex justify-content-between">E-Mel<span>:</span></div>
       <div class="col-sm-9">
-      <span>{{ $pengguna->pen_ppemel }}</span>
+        <span>{{ $pengguna->pen_ppemel }}</span>
       </div>
       </div>
 
@@ -156,19 +156,19 @@
       <input type="hidden" id="pen_id" name="pen_id" value="{{ $permohonan->per_idusers }}">
       <input type="hidden" id="kur_id" name="kur_id" value="{{ $permohonan->per_idkursus }}">
       <div class="row ps-2 mb-3">
-      <div class="col-sm-3 d-flex justify-content-between align-items-center">Status Sokongan<span>:</span></div>
-      <div class="col-sm-9">
-      @if ($permohonan->per_status == 1)
+        <div class="col-sm-3 d-flex justify-content-between align-items-center">Status Sokongan<span>:</span></div>
+        <div class="col-sm-9">
+        @if ($permohonan->per_status == 1)
       <select id="per_status" name="per_status" class="selectpicker w-50" data-style="btn-default"
-      title="Sila Pilih" required>
-      <option value="2">Disokong</option>
-      <option value="3">Tidak Disokong</option>
+        title="Sila Pilih" required>
+        <option value="2">Disokong</option>
+        <option value="3">Tidak Disokong</option>
       </select>
       @else
       <span><strong>{{ $permohonan->etraStatus->stp_keterangan }}</strong></span>
-    @endif
+      @endif
 
-      </div>
+        </div>
       </div>
     </section>
     </div>
@@ -177,5 +177,5 @@
     <button type="submit" class="btn btn-primary">Hantar</button>
     </div>
     </form>
-    </div>
+  </div>
 @endsection

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ApplicationNotificationMail;
 use App\Mail\ApprovalRequestMail;
 use App\Models\EtraKumpulan;
-use App\Models\EproKursus;
+use App\Models\EtraKursus;
 use App\Models\EtraPengguna;
 use App\Models\EproPermohonan;
 use App\Models\EtraUrusetia;
@@ -25,7 +25,7 @@ class KatalogController extends Controller
         $urusetia = EtraUrusetia::get();
 
         // Retrieve available courses for the user that they haven't applied for
-        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
+        $kursus = EtraKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
             ->where('kur_status', 1)
             ->get();
 
@@ -63,7 +63,7 @@ class KatalogController extends Controller
 
     public function show($id)
     {
-        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
+        $kursus = EtraKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
             ->where('kur_id', $id)
             ->first();
 
@@ -86,7 +86,7 @@ class KatalogController extends Controller
 
             // Get user and course details
             $pengguna = EtraPengguna::where('pen_idusers', Auth::id())->first();
-            $kursus = EproKursus::with('etraTempat')->find($request->kur_id);
+            $kursus = EtraKursus::with('etraTempat')->find($request->kur_id);
 
             // Prepare data for email
             $url = URL::temporarySignedRoute(
@@ -127,7 +127,7 @@ class KatalogController extends Controller
 
     public function maklumatKursus($id)
     {
-        $kursus = EproKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
+        $kursus = EtraKursus::with(['etraKategori', 'etraPenganjur', 'etraTempat', 'etraKumpulan'])
             ->where('kur_id', $id)
             ->first();
 

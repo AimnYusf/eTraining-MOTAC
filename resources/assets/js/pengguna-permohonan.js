@@ -24,7 +24,7 @@ $(function () {
       },
       columns: [
         { data: 'per_id' },
-        { data: 'epro_kursus.kur_nama' },
+        { data: 'etra_kursus.kur_nama' },
         { data: 'per_tkhmohon' },
         { data: 'per_status' },
         { data: '' }
@@ -40,7 +40,7 @@ $(function () {
         {
           targets: 1,
           render: function (data, type, full, meta) {
-            return `<span class="text-uppercase cursor-pointer view-record" data-id=${full.epro_kursus.kur_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus">${data}</span>`;
+            return `<span class="text-uppercase cursor-pointer view-record" data-id=${full.etra_kursus.kur_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus">${data}</span>`;
           }
         },
         {
@@ -71,7 +71,7 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-block text-nowrap">' +
-              `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.epro_kursus.kur_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus"><i class="ti ti-eye ti-md"></i></button>` +
+              `<button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect waves-light view-record" data-id=${full.etra_kursus.kur_id} data-bs-toggle="tooltip" title="Papar Perincian Kursus"><i class="ti ti-eye ti-md"></i></button>` +
               '</div>'
             );
           }

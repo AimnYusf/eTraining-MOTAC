@@ -25,9 +25,9 @@ class EproPermohonan extends Model
         return $this->belongsTo(EtraPengguna::class, 'per_idusers', 'pen_idusers');
     }
 
-    public function eproKursus()
+    public function etraKursus()
     {
-        return $this->belongsTo(EproKursus::class, 'per_idkursus', 'kur_id');
+        return $this->belongsTo(EtraKursus::class, 'per_idkursus', 'kur_id');
     }
 
     public function etraStatus()

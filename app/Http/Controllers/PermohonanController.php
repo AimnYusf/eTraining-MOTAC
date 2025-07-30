@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ApplicationApprovedMail;
 use App\Mail\ApplicationFailedMail;
-use App\Models\EproKursus;
+use App\Models\EtraKursus;
 use App\Models\EproPermohonan;
 use App\Models\EtraStatus;
 use chillerlan\QRCode\QRCode;
@@ -26,7 +26,7 @@ class PermohonanController extends Controller
                 ->whereNotIn('per_status', [1, 3])
                 ->get();
 
-            $kursus = EproKursus::where('kur_id', $kid)->first();
+            $kursus = EtraKursus::where('kur_id', $kid)->first();
             $status = EtraStatus::get();
 
             if ($request->ajax()) {
@@ -36,7 +36,7 @@ class PermohonanController extends Controller
             return view('pages.urusetia-permohonan-edit', compact('kursus', 'status'));
         }
 
-        $kursus = EproKursus::with('etraKategori', 'etraTempat')
+        $kursus = EtraKursus::with('etraKategori', 'etraTempat')
             ->orderBy('kur_tkhmula', 'desc')
             ->get();
 
@@ -53,7 +53,7 @@ class PermohonanController extends Controller
             'etraPengguna.etraKumpulan',
             'etraPengguna.etraBahagian',
             'etraPengguna.etraJabatan',
-            'eproKursus.etraTempat',
+            'etraKursus.etraTempat',
             'etraStatus'
         ])
             ->where('per_id', $id)
@@ -65,7 +65,7 @@ class PermohonanController extends Controller
         }
 
         $pengguna = $permohonan->etraPengguna;
-        $kursus = $permohonan->eproKursus;
+        $kursus = $permohonan->etraKursus;
 
         return response()->json([
             'permohonan' => $permohonan,
@@ -85,7 +85,7 @@ class PermohonanController extends Controller
 
         $permohonan->update(['per_status' => $status]);
 
-        $kursus = EproKursus::with(['etraTempat', 'etraPenganjur'])
+        $kursus = EtraKursus::with(['etraTempat', 'etraPenganjur'])
             ->where('kur_id', $permohonan->per_idkursus)
             ->first();
 
@@ -121,7 +121,7 @@ class PermohonanController extends Controller
                 ['per_status' => $status] // values to update
             );
 
-            $kursus = EproKursus::with(['etraTempat', 'etraPenganjur'])
+            $kursus = EtraKursus::with(['etraTempat', 'etraPenganjur'])
                 ->where('kur_id', $permohonan->per_idkursus)
                 ->first();
 

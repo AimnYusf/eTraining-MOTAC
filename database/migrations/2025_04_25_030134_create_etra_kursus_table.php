@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('epro_kursus', function (Blueprint $table) {
+        Schema::create('etra_kursus', function (Blueprint $table) {
             $table->id('kur_id'); // Auto-incrementing primary key
             $table->string('kur_nama', 200)->nullable();
             $table->text('kur_objektif')->nullable();
@@ -38,6 +38,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('epro_kursus');
+        Schema::dropIfExists('etra_kursus');
     }
 };
