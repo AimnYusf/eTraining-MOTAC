@@ -142,8 +142,7 @@
 <body style="background-color: #f0f4f8; padding: 8px;">
     <div class="email-container">
         <div class="email-header-banner">
-            Permohonan Berjaya –
-            <span style="text-transform: uppercase">{{ strtoupper($kursus->kur_nama ?? '') }}</span>
+            Permohonan Berjaya
         </div>
 
         <div class="email-content">

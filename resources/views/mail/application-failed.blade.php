@@ -140,8 +140,6 @@
     <div class="email-container">
         <div class="email-header-banner">
             Permohonan {{ $statusText ?? '[STATUS]' }}
-            –
-            {{ strtoupper($kursus->kur_nama ?? '[NAMA KURSUS]')}}
         </div>
         <div class="email-content">
             <p>YBhg. Datuk/ Dato’/ YBrs. Dr./Tuan/Puan,</p>

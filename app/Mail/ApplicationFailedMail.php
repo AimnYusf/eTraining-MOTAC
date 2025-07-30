@@ -31,7 +31,7 @@ class ApplicationFailedMail extends Mailable
         $statusText = ($this->status == 3) ? 'Tidak Disokong' : 'Tidak Berjaya';
 
         return new Envelope(
-            subject: 'Permohonan ' . $statusText . ' – ' . strtoupper($this->kursus['kur_nama']),
+            subject: 'Makluman eTraining: Permohonan ' . $statusText,
         );
     }
 
