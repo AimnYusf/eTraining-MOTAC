@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->date('kur_tkhtutup')->nullable();
             $table->integer('kur_bilpeserta')->nullable();
             $table->foreignId('kur_idkumpulan')->nullable()->constrained('epro_kumpulan', 'kum_id')->onDelete('cascade');
-            $table->foreignId('kur_idpenganjur')->nullable()->constrained('epro_penganjur', 'pjr_id')->onDelete('cascade');
+            $table->foreignId('kur_idpenganjur')->nullable()->constrained('etra_penganjur', 'pjr_id')->onDelete('cascade');
             $table->json('kur_urusetia')->nullable();
             $table->string('kur_poster')->nullable();
             $table->integer('kur_status')->nullable();

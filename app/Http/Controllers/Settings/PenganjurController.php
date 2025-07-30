@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\EproPenganjur;
+use App\Models\EtraPenganjur;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Exception;
@@ -15,7 +15,7 @@ class PenganjurController extends Controller
      */
     public function index(Request $request)
     {
-        $penganjur = EproPenganjur::get();
+        $penganjur = EtraPenganjur::get();
 
         if ($request->ajax()) {
             return response()->json([
@@ -31,7 +31,7 @@ class PenganjurController extends Controller
      */
     public function show($id)
     {
-        $penganjur = EproPenganjur::where('pjr_id', $id)->firstOrFail();
+        $penganjur = EtraPenganjur::where('pjr_id', $id)->firstOrFail();
         return response()->json($penganjur);
     }
 
@@ -43,11 +43,11 @@ class PenganjurController extends Controller
         try {
             // Validate the request data
             $request->validate([
-                'pjr_id' => 'nullable|integer|exists:epro_penganjur,pjr_id',
+                'pjr_id' => 'nullable|integer|exists:etra_penganjur,pjr_id',
                 'pjr_keterangan' => 'required|string',
             ]);
 
-            $penganjur = EproPenganjur::updateOrCreate(
+            $penganjur = EtraPenganjur::updateOrCreate(
                 ['pjr_id' => $request->pjr_id],
                 [
                     'pjr_keterangan' => $request->pjr_keterangan,
@@ -79,7 +79,7 @@ class PenganjurController extends Controller
      */
     public function destroy($id)
     {
-        $penganjur = EproPenganjur::find($id);
+        $penganjur = EtraPenganjur::find($id);
 
         if (!$penganjur) {
             return response()->json(['message' => 'Rekod tidak dijumpai.'], 404);

@@ -98,7 +98,7 @@ use Carbon\Carbon;
             </div>
             <div class="flex-grow-1">
               <h5 class="mb-1 text-primary">Penganjur</h5>
-              <span class="text-dark">{{ $kursus->eproPenganjur->pjr_keterangan }}</span>
+              <span class="text-dark">{{ $kursus->etraPenganjur->pjr_keterangan }}</span>
             </div>
           </li>
         </ul>

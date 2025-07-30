@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\EproPenganjur;
+use App\Models\EtraPenganjur;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,7 +18,7 @@ class PenganjurSeeder extends Seeder
         ];
 
         foreach ($penganjurKursus as $penganjur) {
-            EproPenganjur::create($penganjur);
+            EtraPenganjur::create($penganjur);
         }
     }
 }

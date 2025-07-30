@@ -205,7 +205,7 @@
                     </tr>
                     <tr>
                         <td><strong>Anjuran</strong></td>
-                        <td>: {{ $kursus->eproPenganjur->pjr_keterangan ?? '[PENGANJUR KURSUS]' }}</td>
+                        <td>: {{ $kursus->etraPenganjur->pjr_keterangan ?? '[PENGANJUR KURSUS]' }}</td>
                     </tr>
                 </table>
             </div>

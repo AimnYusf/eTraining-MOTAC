@@ -85,7 +85,7 @@ class PermohonanController extends Controller
 
         $permohonan->update(['per_status' => $status]);
 
-        $kursus = EproKursus::with(['eproTempat', 'eproPenganjur'])
+        $kursus = EproKursus::with(['eproTempat', 'etraPenganjur'])
             ->where('kur_id', $permohonan->per_idkursus)
             ->first();
 
@@ -121,7 +121,7 @@ class PermohonanController extends Controller
                 ['per_status' => $status] // values to update
             );
 
-            $kursus = EproKursus::with(['eproTempat', 'eproPenganjur'])
+            $kursus = EproKursus::with(['eproTempat', 'etraPenganjur'])
                 ->where('kur_id', $permohonan->per_idkursus)
                 ->first();
 

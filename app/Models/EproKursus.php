@@ -37,9 +37,9 @@ class EproKursus extends Model
         return $this->belongsTo(EtraKategori::class, 'kur_idkategori', 'kat_id');
     }
 
-    public function eproPenganjur()
+    public function etraPenganjur()
     {
-        return $this->belongsTo(EproPenganjur::class, 'kur_idpenganjur', 'pjr_id');
+        return $this->belongsTo(EtraPenganjur::class, 'kur_idpenganjur', 'pjr_id');
     }
 
     public function eproTempat()

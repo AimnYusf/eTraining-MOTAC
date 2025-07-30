@@ -116,7 +116,7 @@ $(function () {
 
               <div class="mb-3">
                 <h6 class="mb-1 text-muted"><i class="ti ti-user-cog me-2 text-primary"></i>Anjuran</h6>
-                <p class="mb-0 fw-bold">${row.epro_penganjur.pjr_keterangan}</p>
+                <p class="mb-0 fw-bold">${row.etra_penganjur.pjr_keterangan}</p>
               </div>
 
               <div class="mt-auto">

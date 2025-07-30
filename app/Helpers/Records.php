@@ -32,7 +32,7 @@ class Records
             ->join('epro_pengguna', 'epro_kehadiran.keh_idusers', '=', 'epro_pengguna.pen_idusers')
             ->join('epro_kursus', 'epro_kehadiran.keh_idkursus', '=', 'epro_kursus.kur_id')
             ->join('epro_tempat', 'epro_kursus.kur_idtempat', '=', 'epro_tempat.tem_id')
-            ->join('epro_penganjur', 'epro_kursus.kur_idpenganjur', '=', 'epro_penganjur.pjr_id')
+            ->join('etra_penganjur', 'epro_kursus.kur_idpenganjur', '=', 'etra_penganjur.pjr_id')
             ->join('epro_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'epro_kumpulan.kum_id')
             ->join('epro_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'epro_bahagian.bah_id')
             ->select(
@@ -47,7 +47,7 @@ class Records
                 'epro_kursus.kur_tkhmula as tarikh_mula',
                 'epro_kursus.kur_tkhtamat as tarikh_tamat',
                 'epro_tempat.tem_keterangan as tempat',
-                'epro_penganjur.pjr_keterangan as penganjur',
+                'etra_penganjur.pjr_keterangan as penganjur',
                 DB::raw('CASE WHEN epro_kursus.kur_tkhmula !=  epro_kursus.kur_tkhtamat THEN COUNT(epro_kehadiran.keh_idusers) ELSE NULL END as bilangan_hari'),
                 DB::raw('CASE WHEN epro_kursus.kur_tkhmula =  epro_kursus.kur_tkhtamat THEN (epro_kursus.kur_msatamat - epro_kursus.kur_msamula) / 10 ELSE NULL END as bilangan_jam')
             )
@@ -63,7 +63,7 @@ class Records
                 'epro_kursus.kur_tkhmula',
                 'epro_kursus.kur_tkhtamat',
                 'epro_tempat.tem_keterangan',
-                'epro_penganjur.pjr_keterangan',
+                'etra_penganjur.pjr_keterangan',
                 'epro_kursus.kur_bilhari',
                 'epro_kursus.kur_msatamat',
                 'epro_kursus.kur_msamula'
