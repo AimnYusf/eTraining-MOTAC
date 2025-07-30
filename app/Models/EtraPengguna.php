@@ -57,8 +57,8 @@ class EtraPengguna extends Model
         return $this->hasMany(EproKehadiran::class, 'keh_idusers', 'pen_idusers');
     }
 
-    public function eproIsytihar()
+    public function etraIsytihar()
     {
-        return $this->hasMany(EproIsytihar::class, 'isy_idusers', 'pen_idusers');
+        return $this->hasMany(EtraIsytihar::class, 'isy_idusers', 'pen_idusers');
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EtraBahagian;
-use App\Models\EproIsytihar;
+use App\Models\EtraIsytihar;
 use App\Models\EtraPengguna;
 use App\Models\EtraStatus;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class PengesahanController extends Controller
         $status = EtraStatus::get();
 
         if ($bahagian) {
-            $pengesahan = EproIsytihar::with('etraPengguna', 'etraStatus')
+            $pengesahan = EtraIsytihar::with('etraPengguna', 'etraStatus')
                 ->where('isy_status', '!=', 6)
                 ->whereHas('etraPengguna', function ($query) use ($bahagian) {
                     $query->where('pen_idbahagian', $bahagian->bah_id);
@@ -44,7 +44,7 @@ class PengesahanController extends Controller
 
     public function show($id)
     {
-        $isytihar = EproIsytihar::with('etraPengguna')
+        $isytihar = EtraIsytihar::with('etraPengguna')
             ->where('isy_id', $id)->first();
         $pengguna = EtraPengguna::with('etraJabatan', 'etraBahagian')
             ->where('pen_idusers', $isytihar->isy_idusers)->first();
@@ -57,7 +57,7 @@ class PengesahanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $isytihar = EproIsytihar::findOrFail($id);
+        $isytihar = EtraIsytihar::findOrFail($id);
         if ($isytihar) {
             $isytihar->update(['isy_status' => $request->isy_status]);
         }
@@ -65,7 +65,7 @@ class PengesahanController extends Controller
 
     public function destroy($id)
     {
-        $isytihar = EproIsytihar::find($id);
+        $isytihar = EtraIsytihar::find($id);
 
         if (!$isytihar) {
             return response()->json(['message' => 'Rekod tidak dijumpai.'], 404);

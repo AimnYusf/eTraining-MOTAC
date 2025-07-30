@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EproIsytihar;
+use App\Models\EtraIsytihar;
 use App\Models\EtraStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class IsytiharController extends Controller
 {
     public function index(Request $request)
     {
-        $isytihar = EproIsytihar::with('etraPengguna', 'etraStatus')
+        $isytihar = EtraIsytihar::with('etraPengguna', 'etraStatus')
             ->where('isy_idusers', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
@@ -29,7 +29,7 @@ class IsytiharController extends Controller
 
     public function show($id)
     {
-        $isytihar = EproIsytihar::where('isy_id', $id)->first();
+        $isytihar = EtraIsytihar::where('isy_id', $id)->first();
         return response($isytihar);
     }
 
@@ -39,7 +39,7 @@ class IsytiharController extends Controller
         $isy_tkhmula = Carbon::createFromFormat('d/m/Y', $request->isy_tkhmula)->format('Y-m-d');
         $isy_tkhtamat = Carbon::createFromFormat('d/m/Y', $request->isy_tkhtamat)->format('Y-m-d');
 
-        EproIsytihar::updateOrCreate(
+        EtraIsytihar::updateOrCreate(
             ['isy_id' => $request->isy_id],
             [
                 'isy_idusers' => Auth::id(),

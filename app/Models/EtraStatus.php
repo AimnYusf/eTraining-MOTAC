@@ -17,8 +17,8 @@ class EtraStatus extends Model
         return $this->hasMany(EtraPermohonan::class, 'per_status', 'stp_id');
     }
 
-    public function eproIsytihar()
+    public function etraIsytihar()
     {
-        return $this->hasMany(EproIsytihar::class, 'isy_status', 'stp_id');
+        return $this->hasMany(EtraIsytihar::class, 'isy_status', 'stp_id');
     }
 }

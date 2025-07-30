@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Records;
 use App\Http\Controllers\Controller;
-use App\Models\EproIsytihar;
+use App\Models\EtraIsytihar;
 use App\Models\EproKehadiran;
 use App\Models\EtraPermohonan;
 use Illuminate\Http\Request;
@@ -37,8 +37,8 @@ class DashboardController extends Controller
             ")
             ->where('per_idusers', $userId);
 
-        // Subquery for epro_isytihar table
-        $isytiharSubquery = DB::table('epro_isytihar')
+        // Subquery for etra_isytihar table
+        $isytiharSubquery = DB::table('etra_isytihar')
             ->selectRaw("
                 COUNT(*) AS jumlah,
                 SUM(CASE WHEN isy_status IN (1, 2, 6, 7) THEN 1 ELSE 0 END) AS baru,
@@ -87,25 +87,25 @@ class DashboardController extends Controller
             );
 
         // Query for declaration data ($isytihar)
-        $isytihar = DB::table('epro_isytihar')
+        $isytihar = DB::table('etra_isytihar')
             ->where('isy_status', 8)
             ->selectRaw("
-                epro_isytihar.isy_tkhmula as tarikh,
+                etra_isytihar.isy_tkhmula as tarikh,
                 CASE
-                    WHEN epro_isytihar.isy_tkhmula != epro_isytihar.isy_tkhtamat
-                    THEN TIMESTAMPDIFF(DAY, epro_isytihar.isy_tkhmula, epro_isytihar.isy_tkhtamat) + 1
+                    WHEN etra_isytihar.isy_tkhmula != etra_isytihar.isy_tkhtamat
+                    THEN TIMESTAMPDIFF(DAY, etra_isytihar.isy_tkhmula, etra_isytihar.isy_tkhtamat) + 1
                     ELSE NULL
                 END as bilangan_hari,
                 CASE
-                    WHEN epro_isytihar.isy_tkhmula = epro_isytihar.isy_tkhtamat
-                    THEN epro_isytihar.isy_jam / 10
+                    WHEN etra_isytihar.isy_tkhmula = etra_isytihar.isy_tkhtamat
+                    THEN etra_isytihar.isy_jam / 10
                     ELSE NULL
                 END as bilangan_jam
             ")
             ->groupBy(
-                'epro_isytihar.isy_tkhmula',
-                'epro_isytihar.isy_tkhtamat',
-                'epro_isytihar.isy_jam'
+                'etra_isytihar.isy_tkhmula',
+                'etra_isytihar.isy_tkhtamat',
+                'etra_isytihar.isy_jam'
             );
 
         $kehadiran = $kehadiran->unionAll($isytihar)

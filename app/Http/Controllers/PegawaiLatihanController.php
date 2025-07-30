@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Records;
 use App\Models\EtraBahagian;
-use App\Models\EproIsytihar;
+use App\Models\EtraIsytihar;
 use App\Models\EtraPengguna;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class PegawaiLatihanController extends Controller
     public function rekodBaru(Request $request)
     {
         if ($request->isMethod('post')) {
-            EproIsytihar::create(
+            EtraIsytihar::create(
                 [
                     'isy_idusers' => $request->isy_idusers,
                     'isy_nama' => $request->isy_nama,

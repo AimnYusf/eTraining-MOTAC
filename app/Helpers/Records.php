@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Models\EproIsytihar;
+use App\Models\EtraIsytihar;
 use App\Models\EproKehadiran;
 use App\Models\EtraPengguna;
 use App\Models\EtraPermohonan;
@@ -69,41 +69,41 @@ class Records
                 'etra_kursus.kur_msamula'
             );
 
-        $isytiharQuery = EproIsytihar::query()
+        $isytiharQuery = EtraIsytihar::query()
             ->where('isy_status', 8)
-            ->join('etra_pengguna', 'epro_isytihar.isy_idusers', '=', 'etra_pengguna.pen_idusers')
+            ->join('etra_pengguna', 'etra_isytihar.isy_idusers', '=', 'etra_pengguna.pen_idusers')
             ->join('etra_kumpulan', 'etra_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
             ->join('etra_bahagian', 'etra_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
             ->select(
-                'epro_isytihar.isy_idusers as id_pengguna',
+                'etra_isytihar.isy_idusers as id_pengguna',
                 'etra_pengguna.pen_nama as nama',
                 'etra_pengguna.pen_jawatan as jawatan',
                 'etra_pengguna.pen_gred as gred',
                 'etra_kumpulan.kum_ketpenu as kumpulan',
                 'etra_bahagian.bah_ketpenu as bahagian', // Added for consistency with kehadiranQuery
                 'etra_pengguna.pen_idbahagian as id_bahagian',
-                'epro_isytihar.isy_nama as nama_kursus',
-                'epro_isytihar.isy_tkhmula as tarikh_mula',
-                'epro_isytihar.isy_tkhtamat as tarikh_tamat',
-                'epro_isytihar.isy_tempat as tempat',
-                'epro_isytihar.isy_anjuran as penganjur',
-                DB::raw('CASE WHEN epro_isytihar.isy_tkhmula != epro_isytihar.isy_tkhtamat THEN TIMESTAMPDIFF(DAY, epro_isytihar.isy_tkhmula, epro_isytihar.isy_tkhtamat) + 1 ELSE NULL END as bilangan_hari'),
-                DB::raw('CASE WHEN epro_isytihar.isy_tkhmula = epro_isytihar.isy_tkhtamat THEN epro_isytihar.isy_jam / 10 ELSE NULL END as bilangan_jam')
+                'etra_isytihar.isy_nama as nama_kursus',
+                'etra_isytihar.isy_tkhmula as tarikh_mula',
+                'etra_isytihar.isy_tkhtamat as tarikh_tamat',
+                'etra_isytihar.isy_tempat as tempat',
+                'etra_isytihar.isy_anjuran as penganjur',
+                DB::raw('CASE WHEN etra_isytihar.isy_tkhmula != etra_isytihar.isy_tkhtamat THEN TIMESTAMPDIFF(DAY, etra_isytihar.isy_tkhmula, etra_isytihar.isy_tkhtamat) + 1 ELSE NULL END as bilangan_hari'),
+                DB::raw('CASE WHEN etra_isytihar.isy_tkhmula = etra_isytihar.isy_tkhtamat THEN etra_isytihar.isy_jam / 10 ELSE NULL END as bilangan_jam')
             )
             ->groupBy(
-                'epro_isytihar.isy_idusers',
+                'etra_isytihar.isy_idusers',
                 'etra_pengguna.pen_nama',
                 'etra_pengguna.pen_jawatan',
                 'etra_pengguna.pen_gred',
                 'etra_kumpulan.kum_ketpenu',
                 'etra_bahagian.bah_ketpenu',
                 'etra_pengguna.pen_idbahagian',
-                'epro_isytihar.isy_nama',
-                'epro_isytihar.isy_tkhmula',
-                'epro_isytihar.isy_tkhtamat',
-                'epro_isytihar.isy_tempat',
-                'epro_isytihar.isy_anjuran',
-                'epro_isytihar.isy_jam'
+                'etra_isytihar.isy_nama',
+                'etra_isytihar.isy_tkhmula',
+                'etra_isytihar.isy_tkhtamat',
+                'etra_isytihar.isy_tempat',
+                'etra_isytihar.isy_anjuran',
+                'etra_isytihar.isy_jam'
             );
 
         $rekodKehadiran = $kehadiranQuery->get();
@@ -172,7 +172,7 @@ class Records
             ->where('per_idusers', $carianId)
             ->whereYear('per_tkhmohon', $carianTahun);
 
-        $isytiharQuery = EproIsytihar::query()
+        $isytiharQuery = EtraIsytihar::query()
             ->select('isy_status as status')
             ->where('isy_idusers', $carianId)
             ->whereYear('isy_tkhmula', $carianTahun);
