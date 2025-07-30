@@ -12,7 +12,7 @@ class IsytiharController extends Controller
 {
     public function index(Request $request)
     {
-        $isytihar = EproIsytihar::with('eproPengguna', 'etraStatus')
+        $isytihar = EproIsytihar::with('etraPengguna', 'etraStatus')
             ->where('isy_idusers', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();

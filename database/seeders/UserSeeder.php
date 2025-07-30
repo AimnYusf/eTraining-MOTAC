@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\EproPengguna;
+use App\Models\EtraPengguna;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -27,8 +27,8 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        // Create the EproPengguna record
-        EproPengguna::create([
+        // Create the EtraPengguna record
+        EtraPengguna::create([
             'pen_id' => 1,
             'pen_idusers' => 1,
             'pen_nama' => 'MUHAMMAD AIMAN YUSUF',

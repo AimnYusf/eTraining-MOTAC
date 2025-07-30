@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EtraBahagian;
 use App\Models\EtraJabatan;
 use App\Models\EtraKumpulan;
-use App\Models\EproPengguna;
+use App\Models\EtraPengguna;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +15,7 @@ class ProfilController extends Controller
     public function index()
     {
         return view('pages.profil', [
-            'pengguna' => EproPengguna::where('pen_idusers', Auth::id())->first(),
+            'pengguna' => EtraPengguna::where('pen_idusers', Auth::id())->first(),
             'bahagian' => EtraBahagian::all(),
             'jabatan' => EtraJabatan::all(),
             'kumpulan' => EtraKumpulan::whereNotNull('kum_ketring')->get(),
@@ -42,7 +42,7 @@ class ProfilController extends Controller
         }
 
         // Store user profile
-        EproPengguna::updateOrCreate(
+        EtraPengguna::updateOrCreate(
             ['pen_idusers' => Auth::id()],
             [
                 'pen_nama' => strtoupper($request->pen_nama),

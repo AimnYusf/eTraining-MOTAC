@@ -14,9 +14,9 @@ class EproKehadiran extends Model
         'keh_tkhmasuk',
     ];
 
-    public function eproPengguna()
+    public function etraPengguna()
     {
-        return $this->belongsTo(EproPengguna::class, 'keh_idusers', 'pen_idusers');
+        return $this->belongsTo(EtraPengguna::class, 'keh_idusers', 'pen_idusers');
     }
 
     public function eproKursus()

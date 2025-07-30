@@ -13,8 +13,8 @@ class EtraBahagian extends Model
         'bah_ketpenu',
     ];
 
-    public function eproPengguna()
+    public function etraPengguna()
     {
-        return $this->hasMany(EproPengguna::class, 'pen_idbahagian', 'bah_id');
+        return $this->hasMany(EtraPengguna::class, 'pen_idbahagian', 'bah_id');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use App\Models\EproIsytihar;
 use App\Models\EproKehadiran;
-use App\Models\EproPengguna;
+use App\Models\EtraPengguna;
 use App\Models\EproPermohonan;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -29,20 +29,20 @@ class Records
     public static function rekodPengguna()
     {
         $kehadiranQuery = EproKehadiran::query()
-            ->join('epro_pengguna', 'epro_kehadiran.keh_idusers', '=', 'epro_pengguna.pen_idusers')
+            ->join('etra_pengguna', 'epro_kehadiran.keh_idusers', '=', 'etra_pengguna.pen_idusers')
             ->join('epro_kursus', 'epro_kehadiran.keh_idkursus', '=', 'epro_kursus.kur_id')
             ->join('etra_tempat', 'epro_kursus.kur_idtempat', '=', 'etra_tempat.tem_id')
             ->join('etra_penganjur', 'epro_kursus.kur_idpenganjur', '=', 'etra_penganjur.pjr_id')
-            ->join('etra_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
-            ->join('etra_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
+            ->join('etra_kumpulan', 'etra_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
+            ->join('etra_bahagian', 'etra_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
             ->select(
                 'epro_kehadiran.keh_idusers as id_pengguna',
-                'epro_pengguna.pen_nama as nama',
-                'epro_pengguna.pen_jawatan as jawatan',
-                'epro_pengguna.pen_gred as gred',
+                'etra_pengguna.pen_nama as nama',
+                'etra_pengguna.pen_jawatan as jawatan',
+                'etra_pengguna.pen_gred as gred',
                 'etra_kumpulan.kum_ketpenu as kumpulan',
                 'etra_bahagian.bah_ketpenu as bahagian',
-                'epro_pengguna.pen_idbahagian as id_bahagian',
+                'etra_pengguna.pen_idbahagian as id_bahagian',
                 'epro_kursus.kur_nama as nama_kursus',
                 'epro_kursus.kur_tkhmula as tarikh_mula',
                 'epro_kursus.kur_tkhtamat as tarikh_tamat',
@@ -53,12 +53,12 @@ class Records
             )
             ->groupBy(
                 'epro_kehadiran.keh_idusers',
-                'epro_pengguna.pen_nama',
-                'epro_pengguna.pen_jawatan',
-                'epro_pengguna.pen_gred',
+                'etra_pengguna.pen_nama',
+                'etra_pengguna.pen_jawatan',
+                'etra_pengguna.pen_gred',
                 'etra_kumpulan.kum_ketpenu',
                 'etra_bahagian.bah_ketpenu',
-                'epro_pengguna.pen_idbahagian',
+                'etra_pengguna.pen_idbahagian',
                 'epro_kursus.kur_nama',
                 'epro_kursus.kur_tkhmula',
                 'epro_kursus.kur_tkhtamat',
@@ -71,17 +71,17 @@ class Records
 
         $isytiharQuery = EproIsytihar::query()
             ->where('isy_status', 8)
-            ->join('epro_pengguna', 'epro_isytihar.isy_idusers', '=', 'epro_pengguna.pen_idusers')
-            ->join('etra_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
-            ->join('etra_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
+            ->join('etra_pengguna', 'epro_isytihar.isy_idusers', '=', 'etra_pengguna.pen_idusers')
+            ->join('etra_kumpulan', 'etra_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
+            ->join('etra_bahagian', 'etra_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
             ->select(
                 'epro_isytihar.isy_idusers as id_pengguna',
-                'epro_pengguna.pen_nama as nama',
-                'epro_pengguna.pen_jawatan as jawatan',
-                'epro_pengguna.pen_gred as gred',
+                'etra_pengguna.pen_nama as nama',
+                'etra_pengguna.pen_jawatan as jawatan',
+                'etra_pengguna.pen_gred as gred',
                 'etra_kumpulan.kum_ketpenu as kumpulan',
                 'etra_bahagian.bah_ketpenu as bahagian', // Added for consistency with kehadiranQuery
-                'epro_pengguna.pen_idbahagian as id_bahagian',
+                'etra_pengguna.pen_idbahagian as id_bahagian',
                 'epro_isytihar.isy_nama as nama_kursus',
                 'epro_isytihar.isy_tkhmula as tarikh_mula',
                 'epro_isytihar.isy_tkhtamat as tarikh_tamat',
@@ -92,12 +92,12 @@ class Records
             )
             ->groupBy(
                 'epro_isytihar.isy_idusers',
-                'epro_pengguna.pen_nama',
-                'epro_pengguna.pen_jawatan',
-                'epro_pengguna.pen_gred',
+                'etra_pengguna.pen_nama',
+                'etra_pengguna.pen_jawatan',
+                'etra_pengguna.pen_gred',
                 'etra_kumpulan.kum_ketpenu',
                 'etra_bahagian.bah_ketpenu',
-                'epro_pengguna.pen_idbahagian',
+                'etra_pengguna.pen_idbahagian',
                 'epro_isytihar.isy_nama',
                 'epro_isytihar.isy_tkhmula',
                 'epro_isytihar.isy_tkhtamat',
@@ -136,17 +136,17 @@ class Records
 
         // Add users who have no course records
         $presentUserIds = $rekodPengguna->pluck('id_pengguna')->unique()->toArray();
-        $missingUsers = EproPengguna::join('etra_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
-            ->join('etra_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
-            ->whereNotIn('epro_pengguna.pen_idusers', $presentUserIds)
+        $missingUsers = EtraPengguna::join('etra_kumpulan', 'etra_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
+            ->join('etra_bahagian', 'etra_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
+            ->whereNotIn('etra_pengguna.pen_idusers', $presentUserIds)
             ->select(
-                'epro_pengguna.pen_idusers as id_pengguna',
-                'epro_pengguna.pen_nama as nama',
-                'epro_pengguna.pen_jawatan as jawatan',
-                'epro_pengguna.pen_gred as gred',
+                'etra_pengguna.pen_idusers as id_pengguna',
+                'etra_pengguna.pen_nama as nama',
+                'etra_pengguna.pen_jawatan as jawatan',
+                'etra_pengguna.pen_gred as gred',
                 'etra_kumpulan.kum_ketpenu as kumpulan',
                 'etra_bahagian.bah_ketpenu as bahagian',
-                'epro_pengguna.pen_idbahagian as id_bahagian',
+                'etra_pengguna.pen_idbahagian as id_bahagian',
                 DB::raw('NULL as nama_kursus'),
                 DB::raw('NULL as tarikh_mula'),
                 DB::raw('NULL as tarikh_tamat'),

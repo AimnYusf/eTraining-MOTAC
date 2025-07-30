@@ -18,8 +18,8 @@ class EtraKumpulan extends Model
         return $this->hasMany(EproKursus::class, 'kur_idkumpulan', 'kum_id');
     }
 
-    public function eproPengguna()
+    public function etraPengguna()
     {
-        return $this->hasMany(EproPengguna::class, 'pen_idkumpulan', 'kum_id');
+        return $this->hasMany(EtraPengguna::class, 'pen_idkumpulan', 'kum_id');
     }
 }

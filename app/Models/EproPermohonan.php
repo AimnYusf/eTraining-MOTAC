@@ -20,9 +20,9 @@ class EproPermohonan extends Model
         'per_status',
     ];
 
-    public function eproPengguna()
+    public function etraPengguna()
     {
-        return $this->belongsTo(EproPengguna::class, 'per_idusers', 'pen_idusers');
+        return $this->belongsTo(EtraPengguna::class, 'per_idusers', 'pen_idusers');
     }
 
     public function eproKursus()

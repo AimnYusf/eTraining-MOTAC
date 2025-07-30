@@ -62,7 +62,7 @@
           <select id="keh_idusers" name="keh_idusers" class="form-select selectpicker w-100"
             data-style="btn-default" data-live-search="true" title="Pilih nama pegawai">
             @foreach ($permohonan as $item)
-        <option value="{{ $item->per_idusers }}">{{ $item->eproPengguna->pen_nama }}</option>
+        <option value="{{ $item->per_idusers }}">{{ $item->etraPengguna->pen_nama }}</option>
         @endforeach
           </select>
           </div>
@@ -157,23 +157,23 @@
           @forelse ($permohonan as $application)
         <tr>
         <td class="text-center cursor-pointer pilih-seluruh-ruangan"
-          data-user-id="{{ $application->eproPengguna->pen_idusers }}">
+          data-user-id="{{ $application->etraPengguna->pen_idusers }}">
           <input type="checkbox" class="form-check-input select-row-checkbox"
-          data-user-id="{{ $application->eproPengguna->pen_idusers }}">
+          data-user-id="{{ $application->etraPengguna->pen_idusers }}">
         </td>
 
         <td class="cursor-pointer pilih-seluruh-ruangan"
-          data-user-id="{{ $application->eproPengguna->pen_idusers }}">
-          {{ $application->eproPengguna->pen_nama }}
-          <input type="hidden" class="participant-name" value="{{ $application->eproPengguna->pen_nama }}">
+          data-user-id="{{ $application->etraPengguna->pen_idusers }}">
+          {{ $application->etraPengguna->pen_nama }}
+          <input type="hidden" class="participant-name" value="{{ $application->etraPengguna->pen_nama }}">
           <input type="hidden" class="participant-idusers"
-          value="{{ $application->eproPengguna->pen_idusers }}">
+          value="{{ $application->etraPengguna->pen_idusers }}">
         </td>
 
         @foreach ($dates as $dateItem)
         @php
-        $hasAttended = $application->eproPengguna->eproKehadiran->contains(function ($keh) use ($application, $kursus, $dateItem) {
-        return $keh->keh_idusers === $application->eproPengguna->pen_idusers &&
+        $hasAttended = $application->etraPengguna->eproKehadiran->contains(function ($keh) use ($application, $kursus, $dateItem) {
+        return $keh->keh_idusers === $application->etraPengguna->pen_idusers &&
         $keh->keh_idkursus === $kursus->kur_id &&
         \Carbon\Carbon::parse($keh->keh_tkhmasuk)->isSameDay($dateItem);
         });
@@ -181,13 +181,13 @@
         <td class="text-center">
         <div class="form-check d-flex justify-content-center">
         <input type="hidden"
-          name="attendance[{{ $application->eproPengguna->pen_idusers }}][{{ $dateItem->format('Y-m-d') }}]"
+          name="attendance[{{ $application->etraPengguna->pen_idusers }}][{{ $dateItem->format('Y-m-d') }}]"
           value="0" class="hidden-attendance-input" />
         <input class="form-check-input attendance-checkbox" type="checkbox"
-          data-user-id="{{ $application->eproPengguna->pen_idusers }}"
+          data-user-id="{{ $application->etraPengguna->pen_idusers }}"
           data-date="{{ $dateItem->format('Y-m-d') }}"
-          name="attendance[{{ $application->eproPengguna->pen_idusers }}][{{ $dateItem->format('Y-m-d') }}]"
-          id="attendance_{{ $application->eproPengguna->pen_idusers }}_{{ $dateItem->format('Y_m_d') }}"
+          name="attendance[{{ $application->etraPengguna->pen_idusers }}][{{ $dateItem->format('Y-m-d') }}]"
+          id="attendance_{{ $application->etraPengguna->pen_idusers }}_{{ $dateItem->format('Y_m_d') }}"
           value="1" {{ $hasAttended ? 'checked' : '' }} />
         </div>
         </td>

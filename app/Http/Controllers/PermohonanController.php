@@ -21,7 +21,7 @@ class PermohonanController extends Controller
         $kid = $request->query('kid');
 
         if ($kid !== null) {
-            $permohonan = EproPermohonan::with('eproPengguna.etraJabatan', 'etraStatus', 'eproPengguna.etraBahagian')
+            $permohonan = EproPermohonan::with('etraPengguna.etraJabatan', 'etraStatus', 'etraPengguna.etraBahagian')
                 ->where('per_idkursus', $kid)
                 ->whereNotIn('per_status', [1, 3])
                 ->get();
@@ -50,9 +50,9 @@ class PermohonanController extends Controller
     public function show(Request $request, $id)
     {
         $permohonan = EproPermohonan::with([
-            'eproPengguna.etraKumpulan',
-            'eproPengguna.etraBahagian',
-            'eproPengguna.etraJabatan',
+            'etraPengguna.etraKumpulan',
+            'etraPengguna.etraBahagian',
+            'etraPengguna.etraJabatan',
             'eproKursus.etraTempat',
             'etraStatus'
         ])
@@ -64,7 +64,7 @@ class PermohonanController extends Controller
             return response()->json(['message' => 'Application not found'], 404);
         }
 
-        $pengguna = $permohonan->eproPengguna;
+        $pengguna = $permohonan->etraPengguna;
         $kursus = $permohonan->eproKursus;
 
         return response()->json([
@@ -76,7 +76,7 @@ class PermohonanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $permohonan = EproPermohonan::with('eproPengguna')->find($id);
+        $permohonan = EproPermohonan::with('etraPengguna')->find($id);
         $status = $request->per_status;
 
         if (!$permohonan) {
@@ -94,7 +94,7 @@ class PermohonanController extends Controller
                 return $this->generateQR($permohonan, $kursus);
 
             case 5:
-                $userEmail = $permohonan->eproPengguna->pen_emel;
+                $userEmail = $permohonan->etraPengguna->pen_emel;
                 Mail::to($userEmail)->queue(mailable: new ApplicationFailedMail($kursus, $status));
                 break;
         }
@@ -108,7 +108,7 @@ class PermohonanController extends Controller
         $status = $request->per_status;
 
         foreach ($ids as $id) {
-            $permohonan = EproPermohonan::with('eproPengguna')->find($id);
+            $permohonan = EproPermohonan::with('etraPengguna')->find($id);
 
             if (!$permohonan) {
                 // Optionally skip or create a new one based on your logic
@@ -131,7 +131,7 @@ class PermohonanController extends Controller
                     break;
 
                 case 5:
-                    Mail::to($permohonan->eproPengguna->pen_emel)
+                    Mail::to($permohonan->etraPengguna->pen_emel)
                         ->queue(new ApplicationFailedMail($kursus, $status));
                     break;
             }
@@ -143,8 +143,8 @@ class PermohonanController extends Controller
 
     public function generateQR($permohonan, $kursus)
     {
-        $pengguna = $permohonan->eproPengguna;
-        $userEmail = $permohonan->eproPengguna->pen_emel;
+        $pengguna = $permohonan->etraPengguna;
+        $userEmail = $permohonan->etraPengguna->pen_emel;
         $supervisorEmail = $pengguna->pen_ppemel;
 
         $qrCodeFileName = 'qrcode_' . uniqid() . '.png';

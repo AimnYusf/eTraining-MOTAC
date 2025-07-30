@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\EproPengguna;
+use App\Models\EtraPengguna;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +15,7 @@ class PenggunaController extends Controller
     {
         $authRole = Auth::user()->role;
 
-        $pengguna = EproPengguna::with(['user.etraPeranan', 'etraBahagian'])
+        $pengguna = EtraPengguna::with(['user.etraPeranan', 'etraBahagian'])
             ->whereHas('user', function ($query) use ($authRole) {
                 $query->where('id', '!=', Auth::id())
                     ->where('role', '<=', $authRole); // or any condition you want
@@ -35,7 +35,7 @@ class PenggunaController extends Controller
 
     public function show($id)
     {
-        $pengguna = EproPengguna::with('user', 'etraKumpulan', 'etraBahagian', 'etraJabatan')
+        $pengguna = EtraPengguna::with('user', 'etraKumpulan', 'etraBahagian', 'etraJabatan')
             ->where('pen_id', $id)
             ->first();
         return response()->json($pengguna);
@@ -43,7 +43,7 @@ class PenggunaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $pengguna = EproPengguna::where('pen_id', $id)->first();
+        $pengguna = EtraPengguna::where('pen_id', $id)->first();
         if ($pengguna) {
             // Update user's role
             $pengguna->user->role = $request->role;

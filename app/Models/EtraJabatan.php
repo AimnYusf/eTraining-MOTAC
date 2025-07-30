@@ -13,8 +13,8 @@ class EtraJabatan extends Model
         'jab_ketpenu',
     ];
 
-    public function eproPengguna()
+    public function etraPengguna()
     {
-        return $this->hasMany(EproPengguna::class, 'pen_idjabatan', 'jab_id');
+        return $this->hasMany(EtraPengguna::class, 'pen_idjabatan', 'jab_id');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Records;
 use App\Models\EtraBahagian;
 use App\Models\EtraKumpulan;
-use App\Models\EproPengguna;
+use App\Models\EtraPengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -56,7 +56,7 @@ class LaporanController extends Controller
 
     public function rekodKeseluruhan(Request $request)
     {
-        $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
+        $pengguna = EtraPengguna::where('pen_idusers', Auth::id())->first();
         $bahagian = EtraBahagian::all();
         $carianBahagian = $request->input('bahagian') ?? $pengguna->pen_idbahagian;
         $carianTahun = $request->input('tahun') ?? Carbon::now()->year;
@@ -71,7 +71,7 @@ class LaporanController extends Controller
 
     public function rekodIndividu(Request $request)
     {
-        $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
+        $pengguna = EtraPengguna::where('pen_idusers', Auth::id())->first();
         $bahagian = EtraBahagian::all();
         $carianBahagian = $request->input('bahagian') ?? $pengguna->pen_idbahagian;
         $carianTahun = $request->input('tahun') ?? Carbon::now()->year;

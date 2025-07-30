@@ -56,11 +56,11 @@ $(function () {
       columns: [
         { data: null }, // New column for checkbox
         { data: 'per_id' },
-        { data: 'epro_pengguna.pen_nama' },
-        { data: 'epro_pengguna.pen_jawatan', visible: false },
-        { data: 'epro_pengguna.pen_idjabatan' },
-        { data: 'epro_pengguna.pen_nokp', visible: false },
-        { data: 'epro_pengguna.pen_emel', visible: false },
+        { data: 'etra_pengguna.pen_nama' },
+        { data: 'etra_pengguna.pen_jawatan', visible: false },
+        { data: 'etra_pengguna.pen_idjabatan' },
+        { data: 'etra_pengguna.pen_nokp', visible: false },
+        { data: 'etra_pengguna.pen_emel', visible: false },
         { data: 'per_tkhmohon' },
         { data: 'per_status' },
         { data: '' }
@@ -94,16 +94,16 @@ $(function () {
         },
         {
           targets: 3,
-          render: (data, type, full) => `${full.epro_pengguna.pen_jawatan} / ${full.epro_pengguna.pen_gred}`
+          render: (data, type, full) => `${full.etra_pengguna.pen_jawatan} / ${full.etra_pengguna.pen_gred}`
         },
         {
           targets: 4,
           className: 'text-center',
           render: (data, type, full) => {
             if (data == 1) {
-              return `${full.epro_pengguna.etra_bahagian.bah_ketpenu}`;
+              return `${full.etra_pengguna.etra_bahagian.bah_ketpenu}`;
             }
-            return full.epro_pengguna.etra_jabatan.jab_ketpenu;
+            return full.etra_pengguna.etra_jabatan.jab_ketpenu;
           }
         },
         {

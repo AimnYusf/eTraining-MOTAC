@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EtraBahagian;
 use App\Models\EproIsytihar;
-use App\Models\EproPengguna;
+use App\Models\EtraPengguna;
 use App\Models\EtraStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,8 +13,8 @@ class PengesahanController extends Controller
 {
     public function index(Request $request)
     {
-        $bahagian = EtraBahagian::with('EproPengguna')
-            ->whereHas('EproPengguna', function ($query) {
+        $bahagian = EtraBahagian::with('EtraPengguna')
+            ->whereHas('EtraPengguna', function ($query) {
                 $query->where('pen_idusers', Auth::id());
             })
             ->first();
@@ -23,9 +23,9 @@ class PengesahanController extends Controller
         $status = EtraStatus::get();
 
         if ($bahagian) {
-            $pengesahan = EproIsytihar::with('eproPengguna', 'etraStatus')
+            $pengesahan = EproIsytihar::with('etraPengguna', 'etraStatus')
                 ->where('isy_status', '!=', 6)
-                ->whereHas('eproPengguna', function ($query) use ($bahagian) {
+                ->whereHas('etraPengguna', function ($query) use ($bahagian) {
                     $query->where('pen_idbahagian', $bahagian->bah_id);
                 })
                 ->latest()
@@ -44,9 +44,9 @@ class PengesahanController extends Controller
 
     public function show($id)
     {
-        $isytihar = EproIsytihar::with('eproPengguna')
+        $isytihar = EproIsytihar::with('etraPengguna')
             ->where('isy_id', $id)->first();
-        $pengguna = EproPengguna::with('etraJabatan', 'etraBahagian')
+        $pengguna = EtraPengguna::with('etraJabatan', 'etraBahagian')
             ->where('pen_idusers', $isytihar->isy_idusers)->first();
 
         return response()->json([

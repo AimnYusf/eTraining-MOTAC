@@ -6,7 +6,7 @@ use App\Mail\ApplicationNotificationMail;
 use App\Mail\ApprovalRequestMail;
 use App\Models\EtraKumpulan;
 use App\Models\EproKursus;
-use App\Models\EproPengguna;
+use App\Models\EtraPengguna;
 use App\Models\EproPermohonan;
 use App\Models\EtraUrusetia;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class KatalogController extends Controller
     public function index(Request $request)
     {
         // Get authenticated user's group and their applied course IDs
-        $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
+        $pengguna = EtraPengguna::where('pen_idusers', Auth::id())->first();
         $urusetia = EtraUrusetia::get();
 
         // Retrieve available courses for the user that they haven't applied for
@@ -85,7 +85,7 @@ class KatalogController extends Controller
             $permohonan->load('etraStatus');
 
             // Get user and course details
-            $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
+            $pengguna = EtraPengguna::where('pen_idusers', Auth::id())->first();
             $kursus = EproKursus::with('etraTempat')->find($request->kur_id);
 
             // Prepare data for email

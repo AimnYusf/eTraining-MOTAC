@@ -20,9 +20,9 @@ class EproIsytihar extends Model
         'isy_status',
     ];
 
-    public function eproPengguna()
+    public function etraPengguna()
     {
-        return $this->belongsTo(EproPengguna::class, 'isy_idusers', 'pen_idusers');
+        return $this->belongsTo(EtraPengguna::class, 'isy_idusers', 'pen_idusers');
     }
 
     public function etraStatus()

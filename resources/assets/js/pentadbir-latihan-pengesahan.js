@@ -39,7 +39,7 @@ $(function () {
       },
       columns: [
         { data: 'isy_id' },
-        { data: 'epro_pengguna.pen_nama' },
+        { data: 'etra_pengguna.pen_nama' },
         { data: 'isy_nama' },
         { data: 'isy_tkhmula' },
         { data: 'isy_tkhtamat' },

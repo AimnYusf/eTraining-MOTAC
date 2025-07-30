@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ApplicationFailedMail;
 use App\Mail\ApplicationNotificationMail;
 use App\Models\EproKursus;
-use App\Models\EproPengguna;
+use App\Models\EtraPengguna;
 use App\Models\EproPermohonan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -19,16 +19,16 @@ class PenyokongController extends Controller
         // Fetch the permohonan with related kursus, tempat, pengguna, jabatan, bahagian & kumpulan
         $permohonan = EproPermohonan::with([
             'eproKursus.etraTempat',
-            'eproPengguna.etraKumpulan',
-            'eproPengguna.etraJabatan',
-            'eproPengguna.etraBahagian',
+            'etraPengguna.etraKumpulan',
+            'etraPengguna.etraJabatan',
+            'etraPengguna.etraBahagian',
             'etraStatus'
         ])->findOrFail($id);
 
         Log::info($permohonan->toArray());
 
         // Get pengguna from the permohonan's user
-        $pengguna = $permohonan->eproPengguna;
+        $pengguna = $permohonan->etraPengguna;
 
         // Return the view with data
         return view('pages.penyokong-kursus', compact('permohonan', 'pengguna'));
@@ -44,7 +44,7 @@ class PenyokongController extends Controller
             ]);
 
             // Retrieve user and course data
-            $pengguna = EproPengguna::where('pen_idusers', $request->pen_id)->first();
+            $pengguna = EtraPengguna::where('pen_idusers', $request->pen_id)->first();
             $kursus = EproKursus::with('etraTempat')->find($request->kur_id);
             $status = $request->per_status;
 

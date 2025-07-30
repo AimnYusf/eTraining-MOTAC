@@ -89,7 +89,7 @@ $(function () {
         data: null,
         className: 'text-center',
         render: function (data, type, row) {
-          const attendances = row.epro_pengguna.epro_kehadiran || [];
+          const attendances = row.etra_pengguna.epro_kehadiran || [];
           const attended = attendances.some(item => item.keh_tkhmasuk === isoDate);
           return attended
             ? '<span class="badge badge-center rounded-pill bg-success"><i class="ti ti-check"></i></span>'
@@ -98,7 +98,7 @@ $(function () {
         exportOptions: {
           format: {
             body: function (inner, rowData, columnIdx) {
-              const attendances = rowData.epro_pengguna.epro_kehadiran || [];
+              const attendances = rowData.etra_pengguna.epro_kehadiran || [];
               const columnHeader = dataTable.column(columnIdx).header().textContent;
               const parts = columnHeader.split('/');
               const exportIsoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
@@ -130,10 +130,10 @@ $(function () {
       },
       columns: [
         { data: 'per_id' },
-        { data: 'epro_pengguna.pen_nama' },
-        { data: 'epro_pengguna.etra_kumpulan.kum_ketpenu', visible: false, title: 'Kumpulan' },
+        { data: 'etra_pengguna.pen_nama' },
+        { data: 'etra_pengguna.etra_kumpulan.kum_ketpenu', visible: false, title: 'Kumpulan' },
         {
-          data: 'epro_pengguna.pen_jantina',
+          data: 'etra_pengguna.pen_jantina',
           visible: false,
           title: 'Jantina',
           exportOptions: {
@@ -190,10 +190,10 @@ $(function () {
                 const columnDataSrc = column.dataSrc();
                 const rowData = dataTable.row(rowIdx).data();
 
-                if (columnDataSrc === 'epro_pengguna.pen_jantina') {
-                  return rowData.epro_pengguna.pen_jantina === 1
+                if (columnDataSrc === 'etra_pengguna.pen_jantina') {
+                  return rowData.etra_pengguna.pen_jantina === 1
                     ? 'Lelaki'
-                    : rowData.epro_pengguna.pen_jantina === 2
+                    : rowData.etra_pengguna.pen_jantina === 2
                       ? 'Perempuan'
                       : '';
                 }
@@ -218,7 +218,7 @@ $(function () {
                 }
 
                 if (isDynamicDateCol) {
-                  const attendances = rowData.epro_pengguna.epro_kehadiran || [];
+                  const attendances = rowData.etra_pengguna.epro_kehadiran || [];
                   const parts = columnTitle.split('/');
                   const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
                   const attended = attendances.some(item => item.keh_tkhmasuk === isoDate);
