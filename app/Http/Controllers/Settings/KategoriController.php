@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\EproKategori;
+use App\Models\EtraKategori;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Exception;
@@ -15,7 +15,7 @@ class KategoriController extends Controller
      */
     public function index(Request $request)
     {
-        $kategori = EproKategori::get();
+        $kategori = EtraKategori::get();
 
         if ($request->ajax()) {
             return response()->json([
@@ -31,7 +31,7 @@ class KategoriController extends Controller
      */
     public function show($id)
     {
-        $kategori = EproKategori::where('kat_id', $id)->firstOrFail();
+        $kategori = EtraKategori::where('kat_id', $id)->firstOrFail();
         return response()->json($kategori);
     }
 
@@ -43,11 +43,11 @@ class KategoriController extends Controller
         try {
             // Validate the request data
             $request->validate([
-                'kat_id' => 'nullable|integer|exists:epro_kategori,kat_id',
+                'kat_id' => 'nullable|integer|exists:etra_kategori,kat_id',
                 'kat_keterangan' => 'required|string',
             ]);
 
-            $kategori = EproKategori::updateOrCreate(
+            $kategori = EtraKategori::updateOrCreate(
                 ['kat_id' => $request->kat_id],
                 [
                     'kat_keterangan' => $request->kat_keterangan,
@@ -79,7 +79,7 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
-        $kategori = EproKategori::find($id);
+        $kategori = EtraKategori::find($id);
 
         if (!$kategori) {
             return response()->json(['message' => 'Rekod tidak dijumpai.'], 404);

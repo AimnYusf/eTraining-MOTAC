@@ -29,7 +29,7 @@ $(function () {
       columns: [
         { data: 'kur_id' },
         { data: 'kur_nama' },
-        { data: 'epro_kategori.kat_keterangan' },
+        { data: 'etra_kategori.kat_keterangan' },
         { data: 'kur_tkhmula' },
         { data: 'kur_tkhtamat' },
         { data: 'kur_status' },
@@ -290,7 +290,7 @@ $(function () {
 
     $.get(`/urusetia/kursus/${kur_id}`, function (data) {
       $('#kur_nama').html(data.kur_nama);
-      $('#kur_kategori').html(data.epro_kategori.kat_keterangan);
+      $('#kur_kategori').html(data.etra_kategori.kat_keterangan);
       $('#kur_tarikh').html(': ' + formatDate(data.kur_tkhmula) + ' hingga ' + formatDate(data.kur_tkhtamat));
       $('#kur_tempat').html(': ' + data.epro_tempat.tem_keterangan);
       $('#kur_bilpeserta').html(': ' + data.kur_bilpeserta);

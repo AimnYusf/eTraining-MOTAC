@@ -17,7 +17,7 @@ $(function () {
       columns: [
         { data: 'kur_id' },
         { data: 'kur_nama' },
-        { data: 'epro_kategori.kat_keterangan' },
+        { data: 'etra_kategori.kat_keterangan' },
         { data: 'kur_tkhmula' },
         { data: 'kur_tkhtamat' },
         { data: '' }

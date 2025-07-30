@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\EproKategori;
+use App\Models\EtraKategori;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,7 +22,7 @@ class KategoriSeeder extends Seeder
         ];
 
         foreach ($kategoriKursus as $kategori) {
-            EproKategori::create($kategori);
+            EtraKategori::create($kategori);
         }
     }
 }

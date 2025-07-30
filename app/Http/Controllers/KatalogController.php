@@ -25,7 +25,7 @@ class KatalogController extends Controller
         $urusetia = EtraUrusetia::get();
 
         // Retrieve available courses for the user that they haven't applied for
-        $kursus = EproKursus::with(['eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
+        $kursus = EproKursus::with(['etraKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
             ->where('kur_status', 1)
             ->get();
 
@@ -63,7 +63,7 @@ class KatalogController extends Controller
 
     public function show($id)
     {
-        $kursus = EproKursus::with(['eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
+        $kursus = EproKursus::with(['etraKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
             ->where('kur_id', $id)
             ->first();
 
@@ -127,7 +127,7 @@ class KatalogController extends Controller
 
     public function maklumatKursus($id)
     {
-        $kursus = EproKursus::with(['eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
+        $kursus = EproKursus::with(['etraKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
             ->where('kur_id', $id)
             ->first();
 

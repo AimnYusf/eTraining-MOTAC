@@ -32,9 +32,9 @@ class EproKursus extends Model
         'kur_status',
     ];
 
-    public function eproKategori()
+    public function etraKategori()
     {
-        return $this->belongsTo(EproKategori::class, 'kur_idkategori', 'kat_id');
+        return $this->belongsTo(EtraKategori::class, 'kur_idkategori', 'kat_id');
     }
 
     public function eproPenganjur()

@@ -36,7 +36,7 @@ class PermohonanController extends Controller
             return view('pages.urusetia-permohonan-edit', compact('kursus', 'status'));
         }
 
-        $kursus = EproKursus::with('eproKategori', 'eproTempat')
+        $kursus = EproKursus::with('etraKategori', 'eproTempat')
             ->orderBy('kur_tkhmula', 'desc')
             ->get();
 

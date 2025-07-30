@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EproKategori;
+use App\Models\EtraKategori;
 use App\Models\EproKumpulan;
 use App\Models\EproKursus;
 use App\Models\EproPenganjur;
@@ -21,7 +21,7 @@ class KursusController extends Controller
         // If adding or editing a record
         if ($kid !== null) {
             $sharedData = [
-                'kategori' => EproKategori::all(),
+                'kategori' => EtraKategori::all(),
                 'penganjur' => EproPenganjur::all(),
                 'tempat' => EproTempat::orderBy('tem_keterangan', 'asc')->get(),
                 'kumpulan' => EproKumpulan::get(),
@@ -46,7 +46,7 @@ class KursusController extends Controller
         }
 
         // Main list page
-        $kursus = EproKursus::with('eproKategori')
+        $kursus = EproKursus::with('etraKategori')
             ->orderBy('kur_tkhmula', 'desc')
             ->get();
 
@@ -65,7 +65,7 @@ class KursusController extends Controller
         return view('pages.urusetia-kursus-tambah', [
             'tajuk' => $tajuk,
             'kursus' => $kursus,
-            'kategori' => EproKategori::get(),
+            'kategori' => EtraKategori::get(),
             'penganjur' => EproPenganjur::get(),
             'tempat' => EproTempat::get(),
             'kumpulan' => EproKumpulan::get()
@@ -74,7 +74,7 @@ class KursusController extends Controller
 
     public function show($id)
     {
-        $kursus = EproKursus::with(['eproKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
+        $kursus = EproKursus::with(['etraKategori', 'eproPenganjur', 'eproTempat', 'eproKumpulan'])
             ->where('kur_id', $id)
             ->first();
 

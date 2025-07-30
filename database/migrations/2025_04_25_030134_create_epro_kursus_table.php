@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id('kur_id'); // Auto-incrementing primary key
             $table->string('kur_nama', 200)->nullable();
             $table->text('kur_objektif')->nullable();
-            $table->foreignId('kur_idkategori')->nullable()->constrained('epro_kategori', 'kat_id')->onDelete('cascade');
+            $table->foreignId('kur_idkategori')->nullable()->constrained('etra_kategori', 'kat_id')->onDelete('cascade');
             $table->date('kur_tkhmula')->nullable();
             $table->string('kur_msamula', 100)->nullable();
             $table->date('kur_tkhtamat')->nullable();
