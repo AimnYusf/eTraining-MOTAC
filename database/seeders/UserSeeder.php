@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'name' => 'MUHAMMAD AIMAN YUSUF',
             'email' => 'yusuf.noor@motac.gov.my',
             'password' => Hash::make('asd123'),
-            'role' => 2,
+            'role' => 5,
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ]);
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'pen_nama' => 'MUHAMMAD AIMAN YUSUF',
             'pen_nokp' => '010710050109',
             'pen_jantina' => 1,
-            'pen_emel' => 'admin@motac.gov.my',
+            'pen_emel' => 'yusuf.noor@motac.gov.my',
             'pen_notel' => '7677',
             'pen_nohp' => '01117175349',
             'pen_idbahagian' => 16,
