@@ -56,8 +56,8 @@ class EtraKursus extends Model
         return $this->hasMany(EtraPermohonan::class, 'per_idkursus', 'kur_id');
     }
 
-    public function eproKehadiran()
+    public function etraKehadiran()
     {
-        return $this->hasMany(EproKehadiran::class, 'keh_idkursus', 'kur_id');
+        return $this->hasMany(EtraKehadiran::class, 'keh_idkursus', 'kur_id');
     }
 }

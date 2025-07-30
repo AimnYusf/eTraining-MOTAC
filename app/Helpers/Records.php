@@ -3,7 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\EtraIsytihar;
-use App\Models\EproKehadiran;
+use App\Models\EtraKehadiran;
 use App\Models\EtraPengguna;
 use App\Models\EtraPermohonan;
 use Carbon\Carbon;
@@ -28,15 +28,15 @@ class Records
 
     public static function rekodPengguna()
     {
-        $kehadiranQuery = EproKehadiran::query()
-            ->join('etra_pengguna', 'epro_kehadiran.keh_idusers', '=', 'etra_pengguna.pen_idusers')
-            ->join('etra_kursus', 'epro_kehadiran.keh_idkursus', '=', 'etra_kursus.kur_id')
+        $kehadiranQuery = EtraKehadiran::query()
+            ->join('etra_pengguna', 'etra_kehadiran.keh_idusers', '=', 'etra_pengguna.pen_idusers')
+            ->join('etra_kursus', 'etra_kehadiran.keh_idkursus', '=', 'etra_kursus.kur_id')
             ->join('etra_tempat', 'etra_kursus.kur_idtempat', '=', 'etra_tempat.tem_id')
             ->join('etra_penganjur', 'etra_kursus.kur_idpenganjur', '=', 'etra_penganjur.pjr_id')
             ->join('etra_kumpulan', 'etra_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
             ->join('etra_bahagian', 'etra_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
             ->select(
-                'epro_kehadiran.keh_idusers as id_pengguna',
+                'etra_kehadiran.keh_idusers as id_pengguna',
                 'etra_pengguna.pen_nama as nama',
                 'etra_pengguna.pen_jawatan as jawatan',
                 'etra_pengguna.pen_gred as gred',
@@ -48,11 +48,11 @@ class Records
                 'etra_kursus.kur_tkhtamat as tarikh_tamat',
                 'etra_tempat.tem_keterangan as tempat',
                 'etra_penganjur.pjr_keterangan as penganjur',
-                DB::raw('CASE WHEN etra_kursus.kur_tkhmula !=  etra_kursus.kur_tkhtamat THEN COUNT(epro_kehadiran.keh_idusers) ELSE NULL END as bilangan_hari'),
+                DB::raw('CASE WHEN etra_kursus.kur_tkhmula !=  etra_kursus.kur_tkhtamat THEN COUNT(etra_kehadiran.keh_idusers) ELSE NULL END as bilangan_hari'),
                 DB::raw('CASE WHEN etra_kursus.kur_tkhmula =  etra_kursus.kur_tkhtamat THEN (etra_kursus.kur_msatamat - etra_kursus.kur_msamula) / 10 ELSE NULL END as bilangan_jam')
             )
             ->groupBy(
-                'epro_kehadiran.keh_idusers',
+                'etra_kehadiran.keh_idusers',
                 'etra_pengguna.pen_nama',
                 'etra_pengguna.pen_jawatan',
                 'etra_pengguna.pen_gred',

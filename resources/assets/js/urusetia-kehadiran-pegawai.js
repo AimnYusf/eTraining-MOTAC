@@ -89,7 +89,7 @@ $(function () {
         data: null,
         className: 'text-center',
         render: function (data, type, row) {
-          const attendances = row.etra_pengguna.epro_kehadiran || [];
+          const attendances = row.etra_pengguna.etra_kehadiran || [];
           const attended = attendances.some(item => item.keh_tkhmasuk === isoDate);
           return attended
             ? '<span class="badge badge-center rounded-pill bg-success"><i class="ti ti-check"></i></span>'
@@ -98,7 +98,7 @@ $(function () {
         exportOptions: {
           format: {
             body: function (inner, rowData, columnIdx) {
-              const attendances = rowData.etra_pengguna.epro_kehadiran || [];
+              const attendances = rowData.etra_pengguna.etra_kehadiran || [];
               const columnHeader = dataTable.column(columnIdx).header().textContent;
               const parts = columnHeader.split('/');
               const exportIsoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
@@ -218,7 +218,7 @@ $(function () {
                 }
 
                 if (isDynamicDateCol) {
-                  const attendances = rowData.etra_pengguna.epro_kehadiran || [];
+                  const attendances = rowData.etra_pengguna.etra_kehadiran || [];
                   const parts = columnTitle.split('/');
                   const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
                   const attended = attendances.some(item => item.keh_tkhmasuk === isoDate);

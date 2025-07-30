@@ -52,9 +52,9 @@ class EtraPengguna extends Model
         return $this->hasMany(EtraPermohonan::class, 'per_idusers', 'pen_idusers');
     }
 
-    public function eproKehadiran()
+    public function etraKehadiran()
     {
-        return $this->hasMany(EproKehadiran::class, 'keh_idusers', 'pen_idusers');
+        return $this->hasMany(EtraKehadiran::class, 'keh_idusers', 'pen_idusers');
     }
 
     public function etraIsytihar()

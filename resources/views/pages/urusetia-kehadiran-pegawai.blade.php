@@ -172,7 +172,7 @@
 
         @foreach ($dates as $dateItem)
         @php
-        $hasAttended = $application->etraPengguna->eproKehadiran->contains(function ($keh) use ($application, $kursus, $dateItem) {
+        $hasAttended = $application->etraPengguna->etraKehadiran->contains(function ($keh) use ($application, $kursus, $dateItem) {
         return $keh->keh_idusers === $application->etraPengguna->pen_idusers &&
         $keh->keh_idkursus === $kursus->kur_id &&
         \Carbon\Carbon::parse($keh->keh_tkhmasuk)->isSameDay($dateItem);

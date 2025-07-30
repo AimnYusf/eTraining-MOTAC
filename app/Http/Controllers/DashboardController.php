@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Records;
 use App\Http\Controllers\Controller;
 use App\Models\EtraIsytihar;
-use App\Models\EproKehadiran;
+use App\Models\EtraKehadiran;
 use App\Models\EtraPermohonan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -64,8 +64,8 @@ class DashboardController extends Controller
     private function getUserAttendance($userId)
     {
         // Query for attendance data ($kehadiran)
-        $kehadiran = DB::table('epro_kehadiran')
-            ->join('etra_kursus', 'etra_kursus.kur_id', '=', 'epro_kehadiran.keh_idkursus')
+        $kehadiran = DB::table('etra_kehadiran')
+            ->join('etra_kursus', 'etra_kursus.kur_id', '=', 'etra_kehadiran.keh_idkursus')
             ->selectRaw("
                 etra_kursus.kur_tkhmula as tarikh,
                 CASE

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\EproKehadiran;
+use App\Models\EtraKehadiran;
 use App\Models\EtraKursus;
 use App\Models\EtraPermohonan;
 use Carbon\Carbon;
@@ -23,7 +23,7 @@ class KehadiranController extends Controller
                 'etraPengguna.etraKumpulan',
                 'etraStatus',
                 'etraKursus',
-                'etraPengguna.eproKehadiran' => function ($query) use ($kid) {
+                'etraPengguna.etraKehadiran' => function ($query) use ($kid) {
                     $query->where('keh_idkursus', $kid);
                 }
             ])
@@ -54,7 +54,7 @@ class KehadiranController extends Controller
             ? Carbon::createFromFormat('d/m/Y', $request->keh_tkhmasuk)->format('Y-m-d')
             : Carbon::today()->format('Y-m-d');
 
-        EproKehadiran::create([
+        EtraKehadiran::create([
             'keh_idusers' => $request->keh_idusers,
             'keh_idkursus' => $request->keh_idkursus,
             'keh_tkhmasuk' => $keh_tkhmasuk,
@@ -78,13 +78,13 @@ class KehadiranController extends Controller
                     $date = Carbon::parse($date)->format('Y-m-d');
 
                     if ($attended) {
-                        EproKehadiran::firstOrCreate([
+                        EtraKehadiran::firstOrCreate([
                             'keh_idusers' => $userId,
                             'keh_idkursus' => $kursusId,
                             'keh_tkhmasuk' => $date,
                         ]);
                     } else {
-                        EproKehadiran::where('keh_idusers', $userId)
+                        EtraKehadiran::where('keh_idusers', $userId)
                             ->where('keh_idkursus', $kursusId)
                             ->where('keh_tkhmasuk', $date)
                             ->delete();
