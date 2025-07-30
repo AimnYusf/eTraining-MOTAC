@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\EproJabatan;
+use App\Models\EtraJabatan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -31,7 +31,7 @@ class JabatanSeeder extends Seeder
         ];
 
         foreach ($jabatanPegawai as $jabatan) {
-            EproJabatan::create($jabatan);
+            EtraJabatan::create($jabatan);
         }
     }
 }

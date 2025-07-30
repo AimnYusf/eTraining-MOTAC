@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EtraBahagian;
-use App\Models\EproJabatan;
+use App\Models\EtraJabatan;
 use App\Models\EtraKumpulan;
 use App\Models\EproPengguna;
 use App\Models\User;
@@ -17,7 +17,7 @@ class ProfilController extends Controller
         return view('pages.profil', [
             'pengguna' => EproPengguna::where('pen_idusers', Auth::id())->first(),
             'bahagian' => EtraBahagian::all(),
-            'jabatan' => EproJabatan::all(),
+            'jabatan' => EtraJabatan::all(),
             'kumpulan' => EtraKumpulan::whereNotNull('kum_ketring')->get(),
         ]);
     }

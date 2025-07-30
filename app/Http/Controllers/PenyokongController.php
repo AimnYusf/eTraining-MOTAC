@@ -20,7 +20,7 @@ class PenyokongController extends Controller
         $permohonan = EproPermohonan::with([
             'eproKursus.etraTempat',
             'eproPengguna.etraKumpulan',
-            'eproPengguna.eproJabatan',
+            'eproPengguna.etraJabatan',
             'eproPengguna.etraBahagian',
             'etraStatus'
         ])->findOrFail($id);

@@ -46,7 +46,7 @@ class PengesahanController extends Controller
     {
         $isytihar = EproIsytihar::with('eproPengguna')
             ->where('isy_id', $id)->first();
-        $pengguna = EproPengguna::with('eproJabatan', 'etraBahagian')
+        $pengguna = EproPengguna::with('etraJabatan', 'etraBahagian')
             ->where('pen_idusers', $isytihar->isy_idusers)->first();
 
         return response()->json([

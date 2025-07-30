@@ -180,7 +180,7 @@ $(function () {
         $('#pen_nama').text(pengguna.pen_nama);
         $('#pen_nokp').text(pengguna.pen_nokp);
         $('#pen_jawatan').text(`${pengguna.pen_jawatan} ${pengguna.pen_gred}`);
-        $('#pen_agensi').text(pengguna.epro_jabatan.jab_ketpenu);
+        $('#pen_agensi').text(pengguna.etra_jabatan.jab_ketpenu);
         $('#pen_bahagian').text(pengguna.etra_bahagian.bah_ketpenu);
         $('#pen_notel').text(pengguna.pen_notel);
         $('#pen_nohp').text(pengguna.pen_nohp);

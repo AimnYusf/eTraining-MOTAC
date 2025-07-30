@@ -111,7 +111,7 @@ $(function () {
         $('#pen_nama').text(data.pen_nama);
         $('#pen_nokp').text(data.pen_nokp);
         $('#pen_jawatan').text(`${data.pen_jawatan} ${data.pen_gred}`);
-        $('#pen_agensi').text(`${data.epro_jabatan.jab_ketpenu}, ${data.epro_jabatan.jab_ketring}`);
+        $('#pen_agensi').text(`${data.etra_jabatan.jab_ketpenu}, ${data.etra_jabatan.jab_ketring}`);
         $('#pen_bahagian').text(data.id_bahagian ? data.etra_bahagian.bah_ketring : data.pen_bahagianlain);
         $('#pen_notel').text(data.pen_notel);
         $('#pen_nohp').text(data.pen_nohp);

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\EproJabatan;
+use App\Models\EtraJabatan;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Exception;
@@ -15,7 +15,7 @@ class JabatanController extends Controller
      */
     public function index(Request $request)
     {
-        $jabatan = EproJabatan::get();
+        $jabatan = EtraJabatan::get();
 
         if ($request->ajax()) {
             return response()->json([
@@ -31,7 +31,7 @@ class JabatanController extends Controller
      */
     public function show($id)
     {
-        $jabatan = EproJabatan::where('jab_id', $id)->firstOrFail();
+        $jabatan = EtraJabatan::where('jab_id', $id)->firstOrFail();
         return response()->json($jabatan);
     }
 
@@ -43,12 +43,12 @@ class JabatanController extends Controller
         try {
             // Validate the request data
             $request->validate([
-                'jab_id' => 'nullable|integer|exists:epro_jabatan,jab_id',
+                'jab_id' => 'nullable|integer|exists:etra_jabatan,jab_id',
                 'jab_ketring' => 'required|string',
                 'jab_ketpenu' => 'required|string'
             ]);
 
-            $jabatan = EproJabatan::updateOrCreate(
+            $jabatan = EtraJabatan::updateOrCreate(
                 ['jab_id' => $request->jab_id],
                 [
                     'jab_ketring' => $request->jab_ketring,
@@ -81,7 +81,7 @@ class JabatanController extends Controller
      */
     public function destroy($id)
     {
-        $jabatan = EproJabatan::find($id);
+        $jabatan = EtraJabatan::find($id);
 
         if (!$jabatan) {
             return response()->json(['message' => 'Rekod tidak dijumpai.'], 404);
