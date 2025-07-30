@@ -29,7 +29,7 @@ $(function () {
         { data: 'pen_id' },
         { data: 'pen_nama' },
         { data: 'pen_emel' },
-        { data: 'epro_bahagian.bah_ketring' },
+        { data: 'etra_bahagian.bah_ketring' },
         { data: 'user.etra_peranan.prn_keterangan' },
         { data: '' }
       ],
@@ -112,7 +112,7 @@ $(function () {
         $('#pen_nokp').text(data.pen_nokp);
         $('#pen_jawatan').text(`${data.pen_jawatan} ${data.pen_gred}`);
         $('#pen_agensi').text(`${data.epro_jabatan.jab_ketpenu}, ${data.epro_jabatan.jab_ketring}`);
-        $('#pen_bahagian').text(data.id_bahagian ? data.epro_bahagian.bah_ketring : data.pen_bahagianlain);
+        $('#pen_bahagian').text(data.id_bahagian ? data.etra_bahagian.bah_ketring : data.pen_bahagianlain);
         $('#pen_notel').text(data.pen_notel);
         $('#pen_nohp').text(data.pen_nohp);
         $('#pen_emel').text(data.pen_emel);

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\EproBahagian;
+use App\Models\EtraBahagian;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -57,7 +57,7 @@ class BahagianSeeder extends Seeder
         ];
 
         foreach ($bahagianPegawai as $bahagian) {
-            EproBahagian::create($bahagian);
+            EtraBahagian::create($bahagian);
         }
     }
 }

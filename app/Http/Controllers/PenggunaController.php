@@ -15,7 +15,7 @@ class PenggunaController extends Controller
     {
         $authRole = Auth::user()->role;
 
-        $pengguna = EproPengguna::with(['user.etraPeranan', 'eproBahagian'])
+        $pengguna = EproPengguna::with(['user.etraPeranan', 'etraBahagian'])
             ->whereHas('user', function ($query) use ($authRole) {
                 $query->where('id', '!=', Auth::id())
                     ->where('role', '<=', $authRole); // or any condition you want
@@ -35,7 +35,7 @@ class PenggunaController extends Controller
 
     public function show($id)
     {
-        $pengguna = EproPengguna::with('user', 'etraKumpulan', 'eproBahagian', 'eproJabatan')
+        $pengguna = EproPengguna::with('user', 'etraKumpulan', 'etraBahagian', 'eproJabatan')
             ->where('pen_id', $id)
             ->first();
         return response()->json($pengguna);

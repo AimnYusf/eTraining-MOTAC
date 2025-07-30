@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Records;
-use App\Models\EproBahagian;
+use App\Models\EtraBahagian;
 use App\Models\EproIsytihar;
 use App\Models\EproPengguna;
 use Carbon\Carbon;

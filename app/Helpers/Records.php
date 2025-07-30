@@ -34,14 +34,14 @@ class Records
             ->join('etra_tempat', 'epro_kursus.kur_idtempat', '=', 'etra_tempat.tem_id')
             ->join('etra_penganjur', 'epro_kursus.kur_idpenganjur', '=', 'etra_penganjur.pjr_id')
             ->join('etra_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
-            ->join('epro_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'epro_bahagian.bah_id')
+            ->join('etra_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
             ->select(
                 'epro_kehadiran.keh_idusers as id_pengguna',
                 'epro_pengguna.pen_nama as nama',
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
                 'etra_kumpulan.kum_ketpenu as kumpulan',
-                'epro_bahagian.bah_ketpenu as bahagian',
+                'etra_bahagian.bah_ketpenu as bahagian',
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 'epro_kursus.kur_nama as nama_kursus',
                 'epro_kursus.kur_tkhmula as tarikh_mula',
@@ -57,7 +57,7 @@ class Records
                 'epro_pengguna.pen_jawatan',
                 'epro_pengguna.pen_gred',
                 'etra_kumpulan.kum_ketpenu',
-                'epro_bahagian.bah_ketpenu',
+                'etra_bahagian.bah_ketpenu',
                 'epro_pengguna.pen_idbahagian',
                 'epro_kursus.kur_nama',
                 'epro_kursus.kur_tkhmula',
@@ -73,14 +73,14 @@ class Records
             ->where('isy_status', 8)
             ->join('epro_pengguna', 'epro_isytihar.isy_idusers', '=', 'epro_pengguna.pen_idusers')
             ->join('etra_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
-            ->join('epro_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'epro_bahagian.bah_id')
+            ->join('etra_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
             ->select(
                 'epro_isytihar.isy_idusers as id_pengguna',
                 'epro_pengguna.pen_nama as nama',
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
                 'etra_kumpulan.kum_ketpenu as kumpulan',
-                'epro_bahagian.bah_ketpenu as bahagian', // Added for consistency with kehadiranQuery
+                'etra_bahagian.bah_ketpenu as bahagian', // Added for consistency with kehadiranQuery
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 'epro_isytihar.isy_nama as nama_kursus',
                 'epro_isytihar.isy_tkhmula as tarikh_mula',
@@ -96,7 +96,7 @@ class Records
                 'epro_pengguna.pen_jawatan',
                 'epro_pengguna.pen_gred',
                 'etra_kumpulan.kum_ketpenu',
-                'epro_bahagian.bah_ketpenu',
+                'etra_bahagian.bah_ketpenu',
                 'epro_pengguna.pen_idbahagian',
                 'epro_isytihar.isy_nama',
                 'epro_isytihar.isy_tkhmula',
@@ -137,7 +137,7 @@ class Records
         // Add users who have no course records
         $presentUserIds = $rekodPengguna->pluck('id_pengguna')->unique()->toArray();
         $missingUsers = EproPengguna::join('etra_kumpulan', 'epro_pengguna.pen_idkumpulan', '=', 'etra_kumpulan.kum_id')
-            ->join('epro_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'epro_bahagian.bah_id')
+            ->join('etra_bahagian', 'epro_pengguna.pen_idbahagian', '=', 'etra_bahagian.bah_id')
             ->whereNotIn('epro_pengguna.pen_idusers', $presentUserIds)
             ->select(
                 'epro_pengguna.pen_idusers as id_pengguna',
@@ -145,7 +145,7 @@ class Records
                 'epro_pengguna.pen_jawatan as jawatan',
                 'epro_pengguna.pen_gred as gred',
                 'etra_kumpulan.kum_ketpenu as kumpulan',
-                'epro_bahagian.bah_ketpenu as bahagian',
+                'etra_bahagian.bah_ketpenu as bahagian',
                 'epro_pengguna.pen_idbahagian as id_bahagian',
                 DB::raw('NULL as nama_kursus'),
                 DB::raw('NULL as tarikh_mula'),

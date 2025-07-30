@@ -181,7 +181,7 @@ $(function () {
         $('#pen_nokp').text(pengguna.pen_nokp);
         $('#pen_jawatan').text(`${pengguna.pen_jawatan} ${pengguna.pen_gred}`);
         $('#pen_agensi').text(pengguna.epro_jabatan.jab_ketpenu);
-        $('#pen_bahagian').text(pengguna.epro_bahagian.bah_ketpenu);
+        $('#pen_bahagian').text(pengguna.etra_bahagian.bah_ketpenu);
         $('#pen_notel').text(pengguna.pen_notel);
         $('#pen_nohp').text(pengguna.pen_nohp);
         $('#pen_emel').text(pengguna.pen_emel);

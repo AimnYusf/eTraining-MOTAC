@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EproBahagian;
+use App\Models\EtraBahagian;
 use App\Models\EproIsytihar;
 use App\Models\EproPengguna;
 use App\Models\EtraStatus;
@@ -13,7 +13,7 @@ class PengesahanController extends Controller
 {
     public function index(Request $request)
     {
-        $bahagian = EproBahagian::with('EproPengguna')
+        $bahagian = EtraBahagian::with('EproPengguna')
             ->whereHas('EproPengguna', function ($query) {
                 $query->where('pen_idusers', Auth::id());
             })
@@ -46,7 +46,7 @@ class PengesahanController extends Controller
     {
         $isytihar = EproIsytihar::with('eproPengguna')
             ->where('isy_id', $id)->first();
-        $pengguna = EproPengguna::with('eproJabatan', 'eproBahagian')
+        $pengguna = EproPengguna::with('eproJabatan', 'etraBahagian')
             ->where('pen_idusers', $isytihar->isy_idusers)->first();
 
         return response()->json([

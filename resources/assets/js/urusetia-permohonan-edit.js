@@ -101,7 +101,7 @@ $(function () {
           className: 'text-center',
           render: (data, type, full) => {
             if (data == 1) {
-              return `${full.epro_pengguna.epro_bahagian.bah_ketpenu}`;
+              return `${full.epro_pengguna.etra_bahagian.bah_ketpenu}`;
             }
             return full.epro_pengguna.epro_jabatan.jab_ketpenu;
           }
@@ -266,7 +266,7 @@ $(function () {
         $('#pen_nokp').text(pengguna.pen_nokp);
         $('#pen_jawatan').text(`${pengguna.pen_jawatan} ${pengguna.pen_gred}`);
         $('#pen_agensi').text(pengguna.epro_jabatan.jab_ketpenu);
-        $('#pen_bahagian').text(pengguna.id_bahagian ? pengguna.epro_bahagian.bah_ketring : pengguna.pen_bahagianlain);
+        $('#pen_bahagian').text(pengguna.id_bahagian ? pengguna.etra_bahagian.bah_ketring : pengguna.pen_bahagianlain);
         $('#pen_notel').text(pengguna.pen_notel);
         $('#pen_nohp').text(pengguna.pen_nohp);
         $('#pen_emel').text(pengguna.pen_emel);

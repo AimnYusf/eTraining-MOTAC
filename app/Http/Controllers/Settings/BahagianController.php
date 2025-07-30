@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\EproBahagian;
+use App\Models\EtraBahagian;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Exception;
@@ -15,7 +15,7 @@ class BahagianController extends Controller
      */
     public function index(Request $request)
     {
-        $bahagian = EproBahagian::get();
+        $bahagian = EtraBahagian::get();
 
         if ($request->ajax()) {
             return response()->json([
@@ -31,7 +31,7 @@ class BahagianController extends Controller
      */
     public function show($id)
     {
-        $bahagian = EproBahagian::where('bah_id', $id)->firstOrFail();
+        $bahagian = EtraBahagian::where('bah_id', $id)->firstOrFail();
         return response()->json($bahagian);
     }
 
@@ -43,12 +43,12 @@ class BahagianController extends Controller
         try {
             // Validate the request data
             $request->validate([
-                'bah_id' => 'nullable|integer|exists:epro_bahagian,bah_id',
+                'bah_id' => 'nullable|integer|exists:etra_bahagian,bah_id',
                 'bah_ketring' => 'required|string',
                 'bah_ketpenu' => 'required|string'
             ]);
 
-            $bahagian = EproBahagian::updateOrCreate(
+            $bahagian = EtraBahagian::updateOrCreate(
                 ['bah_id' => $request->bah_id],
                 [
                     'bah_ketring' => $request->bah_ketring,
@@ -81,7 +81,7 @@ class BahagianController extends Controller
      */
     public function destroy($id)
     {
-        $bahagian = EproBahagian::find($id);
+        $bahagian = EtraBahagian::find($id);
 
         if (!$bahagian) {
             return response()->json(['message' => 'Rekod tidak dijumpai.'], 404);

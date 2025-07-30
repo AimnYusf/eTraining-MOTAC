@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('pen_emel', 200);
             $table->string('pen_notel', 100)->nullable();
             $table->string('pen_nohp', 100)->nullable();
-            $table->foreignId('pen_idbahagian')->nullable()->constrained('epro_bahagian', 'bah_id');
+            $table->foreignId('pen_idbahagian')->nullable()->constrained('etra_bahagian', 'bah_id');
             $table->string('pen_bahagianlain', 200)->nullable();
             $table->string('pen_jawatan', 200)->nullable();
             $table->string('pen_gred', 100)->nullable();

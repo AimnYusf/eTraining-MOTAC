@@ -21,7 +21,7 @@ class PenyokongController extends Controller
             'eproKursus.etraTempat',
             'eproPengguna.etraKumpulan',
             'eproPengguna.eproJabatan',
-            'eproPengguna.eproBahagian',
+            'eproPengguna.etraBahagian',
             'etraStatus'
         ])->findOrFail($id);
 

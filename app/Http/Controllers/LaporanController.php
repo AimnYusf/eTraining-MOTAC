@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Records;
-use App\Models\EproBahagian;
+use App\Models\EtraBahagian;
 use App\Models\EtraKumpulan;
 use App\Models\EproPengguna;
 use Illuminate\Http\Request;
@@ -48,7 +48,7 @@ class LaporanController extends Controller
     public function rekodBahagian(Request $request)
     {
         $carianTahun = $request->input('tahun') ?? Carbon::now()->year;
-        $bahagian = EproBahagian::all();
+        $bahagian = EtraBahagian::all();
         $rekodBahagian = Records::rekodBahagian($carianTahun);
 
         return view('pages.laporan-bahagian', compact('rekodBahagian', 'bahagian'));
@@ -57,7 +57,7 @@ class LaporanController extends Controller
     public function rekodKeseluruhan(Request $request)
     {
         $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
-        $bahagian = EproBahagian::all();
+        $bahagian = EtraBahagian::all();
         $carianBahagian = $request->input('bahagian') ?? $pengguna->pen_idbahagian;
         $carianTahun = $request->input('tahun') ?? Carbon::now()->year;
         $rekodKeseluruhan = Records::jumlahRekodPengguna($carianTahun, $carianBahagian);
@@ -72,7 +72,7 @@ class LaporanController extends Controller
     public function rekodIndividu(Request $request)
     {
         $pengguna = EproPengguna::where('pen_idusers', Auth::id())->first();
-        $bahagian = EproBahagian::all();
+        $bahagian = EtraBahagian::all();
         $carianBahagian = $request->input('bahagian') ?? $pengguna->pen_idbahagian;
         $carianTahun = $request->input('tahun') ?? Carbon::now()->year;
 
