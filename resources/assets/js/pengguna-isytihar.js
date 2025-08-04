@@ -195,6 +195,7 @@ $(function () {
 
   table.on('click', '.edit-record', function () {
     $('#message').removeClass('d-none');
+    initializePicker();
     getRecord($(this).data('id'), false);
   });
 
