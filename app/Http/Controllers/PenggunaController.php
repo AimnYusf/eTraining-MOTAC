@@ -29,7 +29,6 @@ class PenggunaController extends Controller
             ]);
         }
 
-        Log::info($pengguna->toArray());
         return view('pages.urusetia-pengguna');
     }
 

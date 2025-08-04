@@ -95,8 +95,6 @@ class KatalogController extends Controller
                 ['id' => $permohonan->per_id]
             );
 
-            Log::info($url);
-
             $mailData = [
                 'url' => $url,
                 'nama' => $pengguna->pen_nama,

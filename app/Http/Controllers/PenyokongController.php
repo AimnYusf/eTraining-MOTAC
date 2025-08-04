@@ -25,8 +25,6 @@ class PenyokongController extends Controller
             'etraStatus'
         ])->findOrFail($id);
 
-        Log::info($permohonan->toArray());
-
         // Get pengguna from the permohonan's user
         $pengguna = $permohonan->etraPengguna;
 
