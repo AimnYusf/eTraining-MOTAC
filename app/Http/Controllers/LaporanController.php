@@ -24,7 +24,8 @@ class LaporanController extends Controller
                 $item['id_pengguna'] == $carianId &&
                 !empty($item['tarikh_mula']) &&
                 Carbon::parse($item['tarikh_mula'])->year == $carianTahun
-            );
+            )
+            ->sortBy('tarikh_mula');
 
         $rekodBulananPengguna = Records::rekodBulananPengguna($carianId, $carianTahun);
         $jumlahPermohonanPengguna = Records::jumlahPermohonanPengguna($carianId, $carianTahun);
@@ -84,6 +85,7 @@ class LaporanController extends Controller
                 ) &&
                 $item['id_bahagian'] == $carianBahagian
             )
+            ->sortBy('tarikh_mula')
             ->groupBy('id_pengguna');
 
         return view('pages.laporan-individu', compact(
