@@ -76,7 +76,7 @@
 
       // Apply rounding logic
       $decimal = $jumlah - floor($jumlah);
-      if ($decimal >= 0.6) {
+      if ($decimal >= 0.6 || ($bilangan_hari == null && $decimal == 0.0)) {
       $jumlah = $jumlah + 0.4;
       }
       @endphp

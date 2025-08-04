@@ -15,15 +15,16 @@ use Illuminate\Support\Str;
 
 class Records
 {
-    public static function kiraJumlah($bilangan_hari, $bilangan_jam)
+    public static function kiraJumlah($jumlah, $bilangan_hari, $bilangan_jam)
     {
-        $kiraJumlah = $bilangan_hari + $bilangan_jam;
-        $decimal = $kiraJumlah - floor($kiraJumlah);
+        $jumlah += round(($bilangan_hari + $bilangan_jam), 1);
+        $decimal = $jumlah - floor($jumlah);
 
-        if ($decimal >= 0.6) {
-            $kiraJumlah += 0.4;
+        if ($decimal >= 0.6 || ($bilangan_hari == null && $decimal == 0.0)) {
+            $jumlah += 0.4;
         }
-        return $kiraJumlah;
+
+        return round($jumlah, 1);
     }
 
     public static function rekodPengguna()
@@ -209,8 +210,9 @@ class Records
             $bilangan_hari = (float) ($item['bilangan_hari'] ?? 0);
             $bilangan_jam = (float) ($item['bilangan_jam'] ?? 0);
 
-            $rekodBulananPengguna[$indeksBulan] += static::kiraJumlah($bilangan_hari, $bilangan_jam);
+            $rekodBulananPengguna[$indeksBulan] = static::kiraJumlah($rekodBulananPengguna[$indeksBulan], $bilangan_hari, $bilangan_jam);
         }
+        Log::info($rekodBulananPengguna);
 
         return $rekodBulananPengguna;
     }
@@ -240,7 +242,7 @@ class Records
                 foreach ($userData as $record) {
                     $bilangan_hari = (float) ($record['bilangan_hari'] ?? 0);
                     $bilangan_jam = (float) ($record['bilangan_jam'] ?? 0);
-                    $jumlah_hari += static::kiraJumlah($bilangan_hari, $bilangan_jam);
+                    $jumlah_hari = static::kiraJumlah($jumlah_hari, $bilangan_hari, $bilangan_jam);
                 }
                 return [
                     'id' => $id_pengguna,
@@ -278,7 +280,7 @@ class Records
                 foreach ($userData as $record) {
                     $bilangan_hari = (float) ($record['bilangan_hari'] ?? 0);
                     $bilangan_jam = (float) ($record['bilangan_jam'] ?? 0);
-                    $jumlah_hari += static::kiraJumlah($bilangan_hari, $bilangan_jam);
+                    $jumlah_hari = static::kiraJumlah($jumlah_hari, $bilangan_hari, $bilangan_jam);
                 }
 
                 return [
